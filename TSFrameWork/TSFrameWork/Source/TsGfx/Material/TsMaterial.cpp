@@ -33,7 +33,7 @@ TsBool TsMaterial::LoadTextureFromFile( TsDevice* pDev )
 	m_pTexture= TsNew( TsTexture2D );
 	m_pTexture->SetName( m_textureName );
 
-	ID3D11ShaderResourceView* pSRV = TsDirectXTex::LoadFromFile( pDev->GetDevD3D() , m_name.c_str() );
+	ID3D11ShaderResourceView* pSRV = TsDirectXTex::LoadFromFile( pDev->GetDevD3D() ,GetName().c_str() );
 	if( pSRV )
 		m_pTexture->SetSRV( pSRV );
 	else

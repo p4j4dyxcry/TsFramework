@@ -24,9 +24,9 @@
 #include "ITsStaticNameObjectList.h"
 #include "TsBinaryFile.h"
 
-
-
 #include "TsMeshLoader.h"
 #include "TsXLoader.h"
 #include "TsMqoLoader.h"
 #include "TsColladaLoader.h"
+
+#include "TsHDRTextureAnalizer.h"

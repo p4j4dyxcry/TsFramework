@@ -192,9 +192,6 @@
     <ClCompile Include="Source\TsGfx\TsMesh.cpp">
       <Filter>ソース ファイル\TsGfx\Header</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsMeshContainer.cpp">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsGfx\Material\TsMaterial.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
     </ClCompile>
@@ -251,6 +248,9 @@
     </ClCompile>
     <ClCompile Include="Source\TsUT\TsHDRTextureAnalizer.cpp">
       <Filter>ソース ファイル\TsUT\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TsAfx.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -401,9 +401,6 @@
     <ClInclude Include="Source\TsGfx\TsMesh.h">
       <Filter>ソース ファイル\TsGfx\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsMeshContainer.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Source\TsGfx\Material\TsMaterial.h">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
     </ClInclude>
@@ -463,6 +460,9 @@
     </ClInclude>
     <ClInclude Include="Source\TsUT\TsHDRTextureAnalizer.h">
       <Filter>ソース ファイル\TsUT\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="TsAfx.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

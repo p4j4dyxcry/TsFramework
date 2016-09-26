@@ -46,7 +46,6 @@
     <ClInclude Include="Source\TsGfx\TsDrawQueue.h" />
     <ClInclude Include="Source\TsGfx\TsGeometryObject.h" />
     <ClInclude Include="Source\TsGfx\TsMesh.h" />
-    <ClInclude Include="Source\TsGfx\TsMeshContainer.h" />
     <ClInclude Include="Source\TsGfx\TsRenderFlow.h" />
     <ClInclude Include="Source\TsGfx\TsIndexBuffer.h" />
     <ClInclude Include="Source\TsGfx\TsDrawObject.h" />
@@ -63,7 +62,6 @@
     <ClCompile Include="Source\TsGfx\TsDrawQueue.cpp" />
     <ClCompile Include="Source\TsGfx\TsGeometryObject.cpp" />
     <ClCompile Include="Source\TsGfx\TsMesh.cpp" />
-    <ClCompile Include="Source\TsGfx\TsMeshContainer.cpp" />
     <ClCompile Include="Source\TsGfx\TsRenderFlow.cpp" />
     <ClCompile Include="Source\TsGfx\TsObject.cpp" />
     <ClCompile Include="Source\TsGfx\TsRenderGeometry.cpp" />
@@ -98,6 +96,10 @@
     <ClCompile Include="Source\TsUT\TsNameObject.cpp" />
     <ClCompile Include="Source\TsUT\TsXLoader.cpp" />
     <ClCompile Include="Source\TsUT\TsXML.cpp" />
+    <ClCompile Include="TsAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="TSWinEntryPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +142,7 @@
     <ClInclude Include="Source\TSUT\TsUT.h" />
     <ClInclude Include="Source\TsUT\TsXLoader.h" />
     <ClInclude Include="Source\TsUT\TsXML.h" />
+    <ClInclude Include="TsAfx.h" />
     <ClInclude Include="TSWinEntryPoint.h" />
   </ItemGroup>
   <ItemGroup>
@@ -248,6 +251,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_TS_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>TsAfx.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>TsAfx.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
