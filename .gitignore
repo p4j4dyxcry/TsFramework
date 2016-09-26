@@ -2,4 +2,6 @@
 *.exe
 *.log
 *.obj
-bin/
+Debug/
+Release/
+*.tlog
