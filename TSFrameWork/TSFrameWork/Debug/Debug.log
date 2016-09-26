@@ -1,0 +1,23 @@
+TsNew
+	 file::tsdevice.cpp 
+	 func::TsDevice::GetRefreshRato 
+	 line::116
+TsDelete
+	 file::tsdevice.cpp 
+	 func::TsDevice::GetRefreshRato 
+	 line::134
+TsNew
+	 file::tsdevice.cpp 
+	 func::TsDevice::CreateDevice 
+	 line::71
+Add Objcet List 
+	 name = "ScreenRenderTargetView" 
+	 hash = d4dee2b8
+	 file::itshasstaticlistobject.h 
+	 func::ITsHasStaticObject<class TsRenderTarget>::AddObject 
+	 line::30
+Load Fail 
+	 Resource/Shader/TsSSAddPS.cso
+	 file::tsbinaryfile.cpp 
+	 func::TsBinary::Load 
+	 line::38

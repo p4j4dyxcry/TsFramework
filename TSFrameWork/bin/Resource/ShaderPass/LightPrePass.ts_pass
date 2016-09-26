@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+  <name name ="LightPrePass"/>
+  <Vertex Shader = "TsFWLambertVS"/>
+  <Pixel  Shader = "LightPrePassPS"/>
+  <Option
+    ZEnable ="True"
+    ZWriteEnable ="True"
+    CullMode ="CCW">    
+  </Option>
+</root>

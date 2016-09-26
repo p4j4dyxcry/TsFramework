@@ -1,0 +1,173 @@
+﻿8/16/2016 3:34:03 PM にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\TSFrameWork\TSFrameWork.vcxproj" (Build ターゲット)。
+     1>FxCompile:
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"main" /T ps_4_0_level_9_1 /Fo "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsFWLambertPS.cso" Source\TsGfx\hlsl\Forward\TsFWLambertPS.hlsl 
+         compilation object save succeeded; see C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsFWLambertPS.cso
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"main" /T vs_4_0 /Fo "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsFWLambertVS.cso" Source\TsGfx\hlsl\Forward\TsFWLambertVS.hlsl 
+         compilation object save succeeded; see C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsFWLambertVS.cso
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"main" /T ps_4_0_level_9_1 /Fo "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsGBufferPS.cso" Source\TsGfx\hlsl\GBuffer\TsGBufferPS.hlsl 
+         compilation object save succeeded; see C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsGBufferPS.cso
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"main" /T vs_4_0_level_9_1 /Fo "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsGBufferVS.cso" Source\TsGfx\hlsl\GBuffer\TsGBufferVS.hlsl 
+         compilation object save succeeded; see C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsGBufferVS.cso
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"main" /T ps_4_0_level_9_1 /Fo "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSBlendEdgePS.cso" Source\TsGfx\hlsl\ScreenSpace\TsSSBlendEdgePS.hlsl 
+         compilation object save succeeded; see C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSBlendEdgePS.cso
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"main" /T ps_4_0_level_9_1 /Fo "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSToneMappingPS.cso" Source\TsGfx\hlsl\ScreenSpace\TsSSToneMappingPS.hlsl 
+         compilation object save succeeded; see C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSToneMappingPS.cso
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"main" /T ps_4_0 /Fo "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSAddPS.cso" Source\TsGfx\hlsl\ScreenSpace\TsSSAddPS.hlsl 
+         compilation object save succeeded; see C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSAddPS.cso
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"main" /T ps_4_0_level_9_1 /Fo "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSBlendPS.cso" Source\TsGfx\hlsl\ScreenSpace\TsSSBlendPS.hlsl 
+         compilation object save succeeded; see C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSBlendPS.cso
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"main" /T vs_4_0_level_9_1 /Fo "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSDefaultVS.cso" Source\TsGfx\hlsl\ScreenSpace\TsSSDefaultVS.hlsl 
+         compilation object save succeeded; see C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSDefaultVS.cso
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Extern\DirectXTex\WICTextureLoader.cpp Source\TsCore\TsApplicationBase.cpp Source\TsCore\TsResourceManager.cpp Source\TsGfx\Light\TsLight.cpp Source\TsGfx\Material\TsLambertMatrial.cpp Source\TsGfx\Material\TsMaterial.cpp Source\TsGfx\Material\TsScreeSpaceMaterial.cpp Source\TsGfx\Mesh\TsMeshFactory.cpp Source\TsGfx\TsCamera.cpp Source\TsGfx\TsCBuffer.cpp Source\TsGfx\TsDepthStencil.cpp Source\TsGfx\TsDevice.cpp Source\TsGfx\TsDeviceContext.cpp Source\TsGfx\TsDirectXTex.cpp Source\TsGfx\TsDrawObject.cpp Source\TsGfx\TsDrawQueue.cpp Source\TsGfx\TsGeometryObject.cpp Source\TsGfx\TsMesh.cpp Source\TsGfx\TsMeshContainer.cpp Source\TsGfx\TsRenderFlow.cpp Source\TsGfx\TsObject.cpp Source\TsGfx\TsRenderGeometry.cpp Source\TsGfx\TsRenderPass.cpp Source\TsGfx\TsRenderSystem.cpp Source\TsGfx\TsRenderTarget.cpp Source\TsGfx\TsScreenObject.cpp Source\TsGfx\TsShader.cpp Source\TsGfx\TsShaderEffect.cpp Source\TsGfx\TsShaderResource.cpp Source\TsGfx\TsShaderTechnique.cpp Source\TsGfx\TsTransformCBuffer.cpp Source\TsGfx\TsVertexBuffer.cpp Source\TsGfx\TsViewport.cpp Source\TsMath\TsLisPSM.cpp Source\TsMath\TsMathUTility.cpp Source\TsMath\TsMatrix.cpp Source\TsMath\TsQuaternion.cpp Source\TsMath\TsTransForm.cpp Source\TsMath\TsVector2.cpp Source\TsMath\TsVector3.cpp Source\TsMath\TsVector4.cpp Source\TsOS\TsWindowsUtility.cpp Source\TsUT\TsAlloc.cpp Source\TsUT\TsBinaryFile.cpp Source\TsUT\TsFileUT.cpp Source\TSUT\TsLogger.cpp Source\TsUT\TsMeshLoader.cpp Source\TsUT\TsMqoLoader.cpp Source\TsUT\TsNameObject.cpp Source\TsUT\TsXLoader.cpp TSWinEntryPoint.cpp
+         WICTextureLoader.cpp
+         TsApplicationBase.cpp
+         TsResourceManager.cpp
+         TsLight.cpp
+         TsLambertMatrial.cpp
+         TsMaterial.cpp
+         TsScreeSpaceMaterial.cpp
+         TsMeshFactory.cpp
+         TsCamera.cpp
+         TsCBuffer.cpp
+         TsDepthStencil.cpp
+         TsDevice.cpp
+         TsDeviceContext.cpp
+         TsDirectXTex.cpp
+         TsDrawObject.cpp
+         TsDrawQueue.cpp
+         TsGeometryObject.cpp
+         TsMesh.cpp
+         TsMeshContainer.cpp
+         TsRenderFlow.cpp
+         コンパイル中...
+         TsObject.cpp
+         TsRenderGeometry.cpp
+         TsRenderPass.cpp
+         TsRenderSystem.cpp
+         TsRenderTarget.cpp
+         TsScreenObject.cpp
+         TsShader.cpp
+         TsShaderEffect.cpp
+         TsShaderResource.cpp
+         TsShaderTechnique.cpp
+         TsTransformCBuffer.cpp
+         TsVertexBuffer.cpp
+         TsViewport.cpp
+         TsLisPSM.cpp
+         TsMathUTility.cpp
+         TsMatrix.cpp
+         TsQuaternion.cpp
+         TsTransForm.cpp
+         TsVector2.cpp
+         TsVector3.cpp
+         コンパイル中...
+         TsVector4.cpp
+         TsWindowsUtility.cpp
+         TsAlloc.cpp
+         TsBinaryFile.cpp
+         TsFileUT.cpp
+         TsLogger.cpp
+         TsMeshLoader.cpp
+         TsMqoLoader.cpp
+         TsNameObject.cpp
+         TsXLoader.cpp
+         TSWinEntryPoint.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TSFrameWork.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TSFrameWork.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TSFrameWork.lib" /MACHINE:X86 /SAFESEH Release\WICTextureLoader.obj
+         Release\TsApplicationBase.obj
+         Release\TsResourceManager.obj
+         Release\TsLight.obj
+         Release\TsLambertMatrial.obj
+         Release\TsMaterial.obj
+         Release\TsScreeSpaceMaterial.obj
+         Release\TsMeshFactory.obj
+         Release\TsCamera.obj
+         Release\TsCBuffer.obj
+         Release\TsDepthStencil.obj
+         Release\TsDevice.obj
+         Release\TsDeviceContext.obj
+         Release\TsDirectXTex.obj
+         Release\TsDrawObject.obj
+         Release\TsDrawQueue.obj
+         Release\TsGeometryObject.obj
+         Release\TsMesh.obj
+         Release\TsMeshContainer.obj
+         Release\TsRenderFlow.obj
+         Release\TsObject.obj
+         Release\TsRenderGeometry.obj
+         Release\TsRenderPass.obj
+         Release\TsRenderSystem.obj
+         Release\TsRenderTarget.obj
+         Release\TsScreenObject.obj
+         Release\TsShader.obj
+         Release\TsShaderEffect.obj
+         Release\TsShaderResource.obj
+         Release\TsShaderTechnique.obj
+         Release\TsTransformCBuffer.obj
+         Release\TsVertexBuffer.obj
+         Release\TsViewport.obj
+         Release\TsLisPSM.obj
+         Release\TsMathUTility.obj
+         Release\TsMatrix.obj
+         Release\TsQuaternion.obj
+         Release\TsTransForm.obj
+         Release\TsVector2.obj
+         Release\TsVector3.obj
+         Release\TsVector4.obj
+         Release\TsWindowsUtility.obj
+         Release\TsAlloc.obj
+         Release\TsBinaryFile.obj
+         Release\TsFileUT.obj
+         Release\TsLogger.obj
+         Release\TsMeshLoader.obj
+         Release\TsMqoLoader.obj
+         Release\TsNameObject.obj
+         Release\TsXLoader.obj
+         Release\TSWinEntryPoint.obj
+         コード生成しています。
+         コード生成が終了しました。
+     1>DirectXTex.lib(BC.obj) : warning LNK4099: PDB 'directxtex.pdb' が 'DirectXTex.lib(BC.obj)' で、または 'C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\directxtex.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+     1>DirectXTex.lib(BC4BC5.obj) : warning LNK4099: PDB 'directxtex.pdb' が 'DirectXTex.lib(BC4BC5.obj)' で、または 'C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\directxtex.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+     1>DirectXTex.lib(BC6HBC7.obj) : warning LNK4099: PDB 'directxtex.pdb' が 'DirectXTex.lib(BC6HBC7.obj)' で、または 'C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\directxtex.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+     1>DirectXTex.lib(DirectXTexCompress.obj) : warning LNK4099: PDB 'directxtex.pdb' が 'DirectXTex.lib(DirectXTexCompress.obj)' で、または 'C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\directxtex.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+     1>DirectXTex.lib(DirectXTexConvert.obj) : warning LNK4099: PDB 'directxtex.pdb' が 'DirectXTex.lib(DirectXTexConvert.obj)' で、または 'C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\directxtex.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+     1>DirectXTex.lib(DirectXTexD3D11.obj) : warning LNK4099: PDB 'directxtex.pdb' が 'DirectXTex.lib(DirectXTexD3D11.obj)' で、または 'C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\directxtex.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+     1>DirectXTex.lib(DirectXTexImage.obj) : warning LNK4099: PDB 'directxtex.pdb' が 'DirectXTex.lib(DirectXTexImage.obj)' で、または 'C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\directxtex.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+     1>DirectXTex.lib(DirectXTexMipMaps.obj) : warning LNK4099: PDB 'directxtex.pdb' が 'DirectXTex.lib(DirectXTexMipMaps.obj)' で、または 'C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\directxtex.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+     1>DirectXTex.lib(DirectXTexUtil.obj) : warning LNK4099: PDB 'directxtex.pdb' が 'DirectXTex.lib(DirectXTexUtil.obj)' で、または 'C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\directxtex.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+     1>DirectXTex.lib(DirectXTexWIC.obj) : warning LNK4099: PDB 'directxtex.pdb' が 'DirectXTex.lib(DirectXTexWIC.obj)' で、または 'C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\directxtex.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+         TSFrameWork.vcxproj -> C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TSFrameWork.exe
+       PostBuildEvent:
+         xcopy /y /r "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\*.cso" "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\TSFrameWork\\Resource\Shader"
+         xcopy /y /r "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\*.cso" "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\TSFrameWork\..\bin\Resource\Shader"
+         xcopy /y /r "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\*.exe" "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\TSFrameWork\..\bin"
+         :VCEnd
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsFWLambertPS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsFWLambertVS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsGBufferPS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsGBufferVS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSAddPS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSBlendEdgePS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSBlendPS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSDefaultVS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSToneMappingPS.cso
+         9 個のファイルをコピーしました
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsFWLambertPS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsFWLambertVS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsGBufferPS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsGBufferVS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSAddPS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSBlendEdgePS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSBlendPS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSDefaultVS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TsSSToneMappingPS.cso
+         9 個のファイルをコピーしました
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Release\TSFrameWork.exe
+         1 個のファイルをコピーしました
+     1>プロジェクト "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\TSFrameWork\TSFrameWork.vcxproj" (Build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:51.61

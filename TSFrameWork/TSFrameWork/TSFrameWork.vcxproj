@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Extern\DirectXTex\WICTextureLoader.cpp" />
+    <ClCompile Include="Extern\XML\tinyxml2.cpp" />
+    <ClCompile Include="Source\TsCore\TsApplicationBase.cpp" />
+    <ClCompile Include="Source\TsCore\TsResourceManager.cpp" />
+    <ClCompile Include="Source\TsGfx\Light\TsLight.cpp" />
+    <ClCompile Include="Source\TsGfx\Material\TsLambertMatrial.cpp" />
+    <ClCompile Include="Source\TsGfx\Material\TsMaterial.cpp" />
+    <ClCompile Include="Source\TsGfx\Material\TsScreeSpaceMaterial.cpp" />
+    <ClCompile Include="Source\TsGfx\Mesh\TsMeshFactory.cpp" />
+    <ClCompile Include="Source\TsGfx\TsCamera.cpp" />
+    <ClCompile Include="Source\TsGfx\TsCBuffer.cpp" />
+    <ClCompile Include="Source\TsGfx\TsDepthStencil.cpp" />
+    <ClCompile Include="Source\TsGfx\TsDevice.cpp" />
+    <ClCompile Include="Source\TsGfx\TsDeviceContext.cpp" />
+    <ClInclude Include="Extern\DirectXTex\WICTextureLoader.h" />
+    <ClInclude Include="Extern\XML\tinyxml2.h" />
+    <ClInclude Include="Extern\xna\Xna.h" />
+    <ClInclude Include="Extern\xna\xnamath.h" />
+    <ClInclude Include="Source\TsCore\TsApplicationBase.h" />
+    <ClInclude Include="Source\TsCore\TsCore.h" />
+    <ClInclude Include="Source\TsCore\TsResourceManager.h" />
+    <ClInclude Include="Source\TsGfx\Light\TsLight.h" />
+    <ClInclude Include="Source\TsGfx\Material\TsDefaultMaterial.h" />
+    <ClInclude Include="Source\TsGfx\Material\TsLambertMaterial.h" />
+    <ClInclude Include="Source\TsGfx\Material\TsMaterial.h" />
+    <ClInclude Include="Source\TsGfx\Material\TsScreeSpaceMaterial.h" />
+    <ClInclude Include="Source\TsGfx\Mesh\TsMeshFactory.h" />
+    <ClInclude Include="Source\TsGfx\TsBuffer.h" />
+    <ClInclude Include="Source\TsGfx\TsCamera.h" />
+    <ClInclude Include="Source\TsGfx\TsCBuffer.h" />
+    <ClInclude Include="Source\TsGfx\TsDepthStencil.h" />
+    <ClInclude Include="Source\TsGfx\TsDirectXTex.h" />
+    <ClInclude Include="Source\TsGfx\TsDrawQueue.h" />
+    <ClInclude Include="Source\TsGfx\TsGeometryObject.h" />
+    <ClInclude Include="Source\TsGfx\TsMesh.h" />
+    <ClInclude Include="Source\TsGfx\TsMeshContainer.h" />
+    <ClInclude Include="Source\TsGfx\TsRenderFlow.h" />
+    <ClInclude Include="Source\TsGfx\TsIndexBuffer.h" />
+    <ClInclude Include="Source\TsGfx\TsDrawObject.h" />
+    <ClInclude Include="Source\TsGfx\TsRenderPass.h" />
+    <ClInclude Include="Source\TsGfx\TsRenderSystem.h" />
+    <ClInclude Include="Source\TsGfx\TsRenderTarget.h" />
+    <ClInclude Include="Source\TsGfx\TsScreenObject.h" />
+    <ClInclude Include="Source\TsGfx\TsShaderInl.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClCompile Include="Source\TsGfx\TsDirectXTex.cpp" />
+    <ClCompile Include="Source\TsGfx\TsDrawObject.cpp" />
+    <ClCompile Include="Source\TsGfx\TsDrawQueue.cpp" />
+    <ClCompile Include="Source\TsGfx\TsGeometryObject.cpp" />
+    <ClCompile Include="Source\TsGfx\TsMesh.cpp" />
+    <ClCompile Include="Source\TsGfx\TsMeshContainer.cpp" />
+    <ClCompile Include="Source\TsGfx\TsRenderFlow.cpp" />
+    <ClCompile Include="Source\TsGfx\TsObject.cpp" />
+    <ClCompile Include="Source\TsGfx\TsRenderGeometry.cpp" />
+    <ClCompile Include="Source\TsGfx\TsRenderPass.cpp" />
+    <ClCompile Include="Source\TsGfx\TsRenderSystem.cpp" />
+    <ClCompile Include="Source\TsGfx\TsRenderTarget.cpp" />
+    <ClCompile Include="Source\TsGfx\TsScreenObject.cpp" />
+    <ClCompile Include="Source\TsGfx\TsShader.cpp" />
+    <ClCompile Include="Source\TsGfx\TsShaderEffect.cpp" />
+    <ClCompile Include="Source\TsGfx\TsShaderResource.cpp" />
+    <ClCompile Include="Source\TsGfx\TsShaderTechnique.cpp" />
+    <ClCompile Include="Source\TsGfx\TsTransformCBuffer.cpp" />
+    <ClCompile Include="Source\TsGfx\TsVertexBuffer.cpp" />
+    <ClCompile Include="Source\TsGfx\TsViewport.cpp" />
+    <ClCompile Include="Source\TsMath\TsLisPSM.cpp" />
+    <ClCompile Include="Source\TsMath\TsMathUTility.cpp" />
+    <ClCompile Include="Source\TsMath\TsMatrix.cpp" />
+    <ClCompile Include="Source\TsMath\TsQuaternion.cpp" />
+    <ClCompile Include="Source\TsMath\TsTransForm.cpp" />
+    <ClCompile Include="Source\TsMath\TsVector2.cpp" />
+    <ClCompile Include="Source\TsMath\TsVector3.cpp" />
+    <ClCompile Include="Source\TsMath\TsVector4.cpp" />
+    <ClCompile Include="Source\TsOS\TsWindowsUtility.cpp" />
+    <ClCompile Include="Source\TsUT\TsAlloc.cpp" />
+    <ClCompile Include="Source\TsUT\TsBinaryFile.cpp" />
+    <ClCompile Include="Source\TsUT\TsColladaLoader.cpp" />
+    <ClCompile Include="Source\TsUT\TsFileUT.cpp" />
+    <ClCompile Include="Source\TsUT\TsHDRTextureAnalizer.cpp" />
+    <ClCompile Include="Source\TSUT\TsLogger.cpp" />
+    <ClCompile Include="Source\TsUT\TsMeshLoader.cpp" />
+    <ClCompile Include="Source\TsUT\TsMqoLoader.cpp" />
+    <ClCompile Include="Source\TsUT\TsNameObject.cpp" />
+    <ClCompile Include="Source\TsUT\TsXLoader.cpp" />
+    <ClCompile Include="Source\TsUT\TsXML.cpp" />
+    <ClCompile Include="TSWinEntryPoint.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\TsGfx\TsGfx.h" />
+    <ClInclude Include="Source\TsGfx\TsResourceDesc.h" />
+    <ClInclude Include="Source\TsGfx\TsDevice.h" />
+    <ClInclude Include="Source\TsGfx\TsDeviceContext.h" />
+    <ClInclude Include="Source\TsGfx\TsDx11.h" />
+    <ClInclude Include="Source\TsGfx\TsShader.h" />
+    <ClInclude Include="Source\TsGfx\TsShaderEffect.h" />
+    <ClInclude Include="Source\TsGfx\TsShaderResource.h" />
+    <ClInclude Include="Source\TsGfx\TsShaderTechnique.h" />
+    <ClInclude Include="Source\TsGfx\TsShaderUT.h" />
+    <ClInclude Include="Source\TsGfx\TsTexture.h" />
+    <ClInclude Include="Source\TsGfx\TsTransformCBuffer.h" />
+    <ClInclude Include="Source\TsGfx\TsVertex.h" />
+    <ClInclude Include="Source\TsGfx\TsVertexBuffer.h" />
+    <ClInclude Include="Source\TsGfx\TsViewport.h" />
+    <ClInclude Include="Source\TsMath\TsLisPSM.h" />
+    <ClInclude Include="Source\TsMath\TsMath.h" />
+    <ClInclude Include="Source\TsMath\TsMathUTility.h" />
+    <ClInclude Include="Source\TsMath\TsMatrix.h" />
+    <ClInclude Include="Source\TsMath\TsQuaternion.h" />
+    <ClInclude Include="Source\TsMath\TsTransForm.h" />
+    <ClInclude Include="Source\TsMath\TsVector.h" />
+    <ClInclude Include="Source\TsOS\TsWindowsUtility.h" />
+    <ClInclude Include="Source\TsUT\ITsStaticNameObjectList.h" />
+    <ClInclude Include="Source\TsUT\TsAlloc.h" />
+    <ClInclude Include="Source\TSUT\TsArrayType.h" />
+    <ClInclude Include="Source\TsUT\TsBinaryFile.h" />
+    <ClInclude Include="Source\TsUT\TsColladaLoader.h" />
+    <ClInclude Include="Source\TsUT\TsFileUT.h" />
+    <ClInclude Include="Source\TsUT\TsHDRTextureAnalizer.h" />
+    <ClInclude Include="Source\TsUT\TsHelper.h" />
+    <ClInclude Include="Source\TSUT\TsLogger.h" />
+    <ClInclude Include="Source\TsUT\TsMeshLoader.h" />
+    <ClInclude Include="Source\TsUT\TsMqoLoader.h" />
+    <ClInclude Include="Source\TsUT\TsNameObject.h" />
+    <ClInclude Include="Source\TSUT\TsType.h" />
+    <ClInclude Include="Source\TSUT\TsUT.h" />
+    <ClInclude Include="Source\TsUT\TsXLoader.h" />
+    <ClInclude Include="Source\TsUT\TsXML.h" />
+    <ClInclude Include="TSWinEntryPoint.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Extern\xna\xnamathconvert.inl" />
+    <None Include="Extern\xna\xnamathmatrix.inl" />
+    <None Include="Extern\xna\xnamathmisc.inl" />
+    <None Include="Extern\xna\xnamathvector.inl" />
+    <None Include="Source\TsGfx\hlsl\ScreenSpace\TsSS_common.hlsli" />
+    <None Include="Source\TsGfx\hlsl\TsDefaultShading_Common.hlsli" />
+    <None Include="Source\TsGfx\hlsl\TsMath.hlsli" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Source\TsGfx\hlsl\Forward\TsFWLambertPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\Forward\TsFWLambertVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\Forward\TsLightPrePassPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\Forward\TsLightPrePassVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\GBuffer\TsGBufferPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\GBuffer\TsGBufferVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSBlendEdgePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSToneMappingPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSAddPS.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <DisableOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DisableOptimizations>
+      <EnableDebuggingInformation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</EnableDebuggingInformation>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSBlendPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSDefaultVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{58754EA9-0ADA-485C-BF78-91C31C6EC48F}</ProjectGuid>
+    <RootNamespace>TSFrameWork</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_TS_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /r "$(TargetDir)*.cso" "$(ProjectDir)\Resource\Shader"
+xcopy /y /r "$(TargetDir)*.cso" "$(ProjectDir)..\bin\Resource\Shader"
+xcopy /y /r "$(TargetDir)*.exe" "$(ProjectDir)..\bin"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /r "$(TargetDir)*.cso" "$(ProjectDir)\Resource\Shader"
+xcopy /y /r "$(TargetDir)*.cso" "$(ProjectDir)..\bin\Resource\Shader"
+xcopy /y /r "$(TargetDir)*.exe" "$(ProjectDir)..\bin"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

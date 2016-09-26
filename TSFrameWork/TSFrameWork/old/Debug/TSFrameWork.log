@@ -1,0 +1,63 @@
+﻿5/31/2016 6:53:47 PM にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\TSFrameWork\TSFrameWork.vcxproj" (Build ターゲット)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _TS_DEBUG /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\TsGfx\TsDepthStencil.cpp Source\TsGfx\TsDevice.cpp Source\TsGfx\TsDeviceContext.cpp Source\TsGfx\TsDirectXTex.cpp Source\TsGfx\TsRenderTarget.cpp TSWinEntryPoint.cpp
+         TsRenderTarget.cpp
+         コードを生成中...
+         コンパイル中...
+         TSWinEntryPoint.cpp
+         TsDirectXTex.cpp
+         TsDeviceContext.cpp
+         TsDevice.cpp
+     1>c:\users\yuki.tsuneyama\desktop\tsframework\tsframework\source\tsgfx\tsdevice.cpp(75): warning C4101: 'depthStencil' : ローカル変数は 1 度も使われていません。
+         TsDepthStencil.cpp
+         コードを生成中...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\TSFrameWork.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\TSFrameWork.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\TSFrameWork.lib" /MACHINE:X86 Debug\WICTextureLoader.obj
+         Debug\TsSingleton.obj
+         Debug\TsDepthStencil.obj
+         Debug\TsDevice.obj
+         Debug\TsDeviceContext.obj
+         Debug\TsDirectXTex.obj
+         Debug\TsGfxRenderSystem.obj
+         Debug\TsGfxResourceManager.obj
+         Debug\TsRenderTarget.obj
+         Debug\TsMatrix.obj
+         Debug\TsQuaternion.obj
+         Debug\TsTransForm.obj
+         Debug\TsVector2.obj
+         Debug\TsVector3.obj
+         Debug\TsVector4.obj
+         Debug\TsWindowsUtility.obj
+         Debug\TsBinaryFile.obj
+         Debug\TsLogger.obj
+         Debug\TsMeshLoader.obj
+         Debug\TsResouceManager.obj
+         Debug\TSWinEntryPoint.obj
+         TSFrameWork.vcxproj -> C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\TSFrameWork.exe
+       PostBuildEvent:
+         xcopy /y /r "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\*.cso" "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\TSFrameWork\\Resource\Shader"
+         xcopy /y /r "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\*.cso" "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\TSFrameWork\..\bin\Resource\Shader"
+         xcopy /y /r "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\*.exe" "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\TSFrameWork\..\bin"
+         :VCEnd
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\PixelShader.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\TsSSAddPS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\TsSSBlendEdgePS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\TsSSBlendPS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\TsSSDefaultVS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\TsSSToneMappingPS.cso
+         6 個のファイルをコピーしました
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\PixelShader.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\TsSSAddPS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\TsSSBlendEdgePS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\TsSSBlendPS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\TsSSDefaultVS.cso
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\TsSSToneMappingPS.cso
+         6 個のファイルをコピーしました
+         C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\Debug\TSFrameWork.exe
+         1 個のファイルをコピーしました
+     1>プロジェクト "C:\Users\yuki.tsuneyama\Desktop\TSFrameWork\TSFrameWork\TSFrameWork.vcxproj" (Build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:07.65
