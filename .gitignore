@@ -7,9 +7,8 @@ Release/
 *.tlog
 *.cso
 *.opensdf
-*.suo
 *.pdb
 *.aps
 *.mak
 *.user
-
+*.suo
