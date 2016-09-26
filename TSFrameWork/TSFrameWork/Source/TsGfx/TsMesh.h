@@ -19,3 +19,4 @@ protected:
 	TsIndexBuffer*	m_indexBuffer;
 };
 
+
