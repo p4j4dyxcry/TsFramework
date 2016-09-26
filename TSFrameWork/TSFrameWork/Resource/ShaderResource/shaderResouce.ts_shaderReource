@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+
+  <Texture
+    Name ="Lisa"
+    Path ="sample.jpg">        
+  </Texture>
+  
+  <RenderTarget
+    Name  ="Normal"
+    Type  ="Texture2D"
+    Format="UNORM_R8G8B8A8"
+    Size ="-1 -1">
+        
+  </RenderTarget>
+  
+</root>

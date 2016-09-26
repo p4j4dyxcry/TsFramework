@@ -1,0 +1,190 @@
+TsNew
+	 file::tsbinaryfile.cpp 
+	 func::TsBinary::Load 
+	 line::44
+TsNew
+	 file::tshdrtextureanalizer.cpp 
+	 func::TsHDRTextureAnalizer::ReadPixelData 
+	 line::83
+TsNew
+	 file::tshdrtextureanalizer.cpp 
+	 func::TsHDRTextureAnalizer::ReadPixelData 
+	 line::102
+TsNew
+	 file::tsapplicationbase.cpp 
+	 func::TsApplicationBase::Initialize 
+	 line::32
+TsNew
+	 file::tsdevice.cpp 
+	 func::TsDevice::GetRefreshRato 
+	 line::142
+TsDelete
+	 file::tsdevice.cpp 
+	 func::TsDevice::GetRefreshRato 
+	 line::160
+TsNew
+	 file::tsdevice.cpp 
+	 func::TsDevice::CreateDevice 
+	 line::83
+StaticNameObjectList Add Name Object List 
+	 name = "ScreenRenderTargetView" 
+	 hash = d4dee2b8
+	 file::itsstaticnameobjectlist.h 
+	 func::ITsStaticNameObjectList<class TsRenderTarget>::AddObject 
+	 line::14
+TsNew
+	 file::tsdepthstencil.cpp 
+	 func::TsDepthStencil::CreateDSV 
+	 line::56
+StaticNameObjectList Add Name Object List 
+	 name = "MainDepthStencil" 
+	 hash = 3aa19f2
+	 file::itsstaticnameobjectlist.h 
+	 func::ITsStaticNameObjectList<class TsDepthStencil>::AddObject 
+	 line::14
+TsNew
+	 file::tsdevice.cpp 
+	 func::TsDevice::LoadDefaultShader 
+	 line::298
+TsNew
+	 file::tsbinaryfile.cpp 
+	 func::TsBinary::Load 
+	 line::44
+Load Success -> "Resource/Shader/TsSSDefaultVS.cso"
+	 file::tsshaderinl.cpp 
+	 func::TsShader<struct ID3D11VertexShader>::LoadFromCSO 
+	 line::71
+StaticNameObjectList Add Name Object List 
+	 name = "TsSSDefaultVS" 
+	 hash = 4faa823f
+	 file::itsstaticnameobjectlist.h 
+	 func::ITsStaticNameObjectList<class TsShader<struct ID3D11VertexShader> >::AddObject 
+	 line::14
+TsNew
+	 file::tsxml.cpp 
+	 func::TsXML::LoadXML 
+	 line::329
+TsNew
+	 file::tsxml.cpp 
+	 func::TsXML::LoadXML::<lambda_e35231683ccc1dfb209391a1b2102bf5>::operator () 
+	 line::340
+TsNew
+	 file::tsxml.cpp 
+	 func::TsXMLElement::SetElement 
+	 line::230
+TsNew
+	 file::tsxml.cpp 
+	 func::TsXML::LoadXML::<lambda_e35231683ccc1dfb209391a1b2102bf5>::operator () 
+	 line::349
+TsNew
+	 file::tsxml.cpp 
+	 func::TsXMLElement::SetElement 
+	 line::230
+TsNew
+	 file::tsxml.cpp 
+	 func::TsXML::LoadXML::<lambda_e35231683ccc1dfb209391a1b2102bf5>::operator () 
+	 line::349
+TsNew
+	 file::tsxml.cpp 
+	 func::TsXMLElement::SetElement 
+	 line::230
+TsNew
+	 file::tsxml.cpp 
+	 func::TsXML::LoadXML::<lambda_e35231683ccc1dfb209391a1b2102bf5>::operator () 
+	 line::349
+TsNew
+	 file::tsxml.cpp 
+	 func::TsXMLElement::SetElement 
+	 line::230
+TsNew
+	 file::tsxml.cpp 
+	 func::TsXMLElement::SetElement 
+	 line::230
+TsNew
+	 file::tsxml.cpp 
+	 func::TsXMLElement::SetElement 
+	 line::230
+TsNew
+	 file::tsrenderpass.cpp 
+	 func::TsRenderPass::LoadShaderFromXML 
+	 line::110
+TsNew
+	 file::tsrenderpass.cpp 
+	 func::TsRenderPass::LoadShaderFromXML 
+	 line::118
+TsNew
+	 file::tsbinaryfile.cpp 
+	 func::TsBinary::Load 
+	 line::44
+Load Success -> "Resource/Shader/TsFWLambertVS.cso"
+	 file::tsshaderinl.cpp 
+	 func::TsShader<struct ID3D11VertexShader>::LoadFromCSO 
+	 line::71
+StaticNameObjectList Add Name Object List 
+	 name = "TsFWLambertVS" 
+	 hash = 6f3b10a
+	 file::itsstaticnameobjectlist.h 
+	 func::ITsStaticNameObjectList<class TsShader<struct ID3D11VertexShader> >::AddObject 
+	 line::14
+TsNew
+	 file::tsrenderpass.cpp 
+	 func::TsRenderPass::LoadShaderFromXML 
+	 line::129
+TsNew
+	 file::tsbinaryfile.cpp 
+	 func::TsBinary::Load 
+	 line::44
+Load Success -> "Resource/Shader/TsLightPrePassPS.cso"
+	 file::tsshaderinl.cpp 
+	 func::TsShader<struct ID3D11PixelShader>::LoadFromCSO 
+	 line::71
+StaticNameObjectList Add Name Object List 
+	 name = "TsLightPrePassPS" 
+	 hash = 8e3b1e60
+	 file::itsstaticnameobjectlist.h 
+	 func::ITsStaticNameObjectList<class TsShader<struct ID3D11PixelShader> >::AddObject 
+	 line::14
+TsDelete
+	 file::tsxml.cpp 
+	 func::TsXMLElement::~TsXMLElement 
+	 line::186
+TsDelete
+	 file::tsxml.cpp 
+	 func::TsXMLElement::~TsXMLElement 
+	 line::186
+TsDelete
+	 file::tsxml.cpp 
+	 func::TsXMLElement::~TsXMLElement 
+	 line::186
+TsDelete
+	 file::tsxml.cpp 
+	 func::TsXMLElement::~TsXMLElement 
+	 line::182
+TsDelete
+	 file::tsxml.cpp 
+	 func::TsXMLElement::~TsXMLElement 
+	 line::186
+TsDelete
+	 file::tsxml.cpp 
+	 func::TsXMLElement::~TsXMLElement 
+	 line::182
+TsDelete
+	 file::tsxml.cpp 
+	 func::TsXMLElement::~TsXMLElement 
+	 line::186
+TsDelete
+	 file::tsxml.cpp 
+	 func::TsXMLElement::~TsXMLElement 
+	 line::182
+TsDelete
+	 file::tsxml.cpp 
+	 func::TsXMLElement::~TsXMLElement 
+	 line::186
+TsDelete
+	 file::tsxml.cpp 
+	 func::TsXMLElement::~TsXMLElement 
+	 line::183
+TsDelete
+	 file::tsxml.cpp 
+	 func::TsXML::~TsXML 
+	 line::361
