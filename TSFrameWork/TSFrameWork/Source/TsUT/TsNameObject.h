@@ -9,7 +9,6 @@ public:
 		m_hashCode = TSUT::StringToHash( str );
 	}
 	TS_HASH GetHashCode()const{ return m_hashCode; }
-	TS_HASH GetTypeIDHash();
 private:
 	TsString m_name;
 	TS_HASH m_hashCode;

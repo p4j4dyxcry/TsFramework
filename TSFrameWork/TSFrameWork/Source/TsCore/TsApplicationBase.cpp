@@ -7,20 +7,7 @@ m_pGfxDevice( nullptr )
 {
 
 }
-/*
 
-std::thread t1(process); // 別スレッドでprocessの処理を行う
-std::thread t2([&i](int x) {
-int counter = 0;
-while(counter++ < x) {
-i += counter;
-}
-}, 10); // 関数オブジェクトの引数に10を渡す
-t1.detach(); //スレッドt1の管理を放棄
-t2.join(); //スレッドt2の処理が終了するまで待機
-std::cout << i << std::endl;
-
-*/
 TsBool TsApplicationBase::Initialize( HINSTANCE hInstance , TsInt nWinMode )
 {
 	TSUT::TsLoggerInit();

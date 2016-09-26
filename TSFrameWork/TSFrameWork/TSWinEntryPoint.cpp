@@ -1,8 +1,4 @@
-#include "Source\TsOS\TsWindowsUtility.h"
-#include "Source\TsGfx\TsGfx.h"
-#include "Source\TsCore\TsCore.h"
-
-#include "../TSFrameWork/Source/TsUT/TsHDRTextureAnalizer.h"
+#include "TsAfx.h"
 
 int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lpszArgs , TsInt nWinMode )
 {
