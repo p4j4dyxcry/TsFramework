@@ -1,4 +1,5 @@
 #include "../TsUT/TsUT.h"
+#include <functional>
 
 #include "TsTransForm.h"
 #include "TsMatrix.h"
@@ -170,4 +171,23 @@ TsBool	TsTransForm::RemoveOfParantChild()
 	}
 
 	return TS_TRUE;
+}
+
+TsTransForm* TsTransForm::FindChildByName(const TsString& name)
+{
+	TS_HASH hash = TSUT::StringToHash(name);
+
+	std::function<TsTransForm*(TsTransForm*)> TreeSearch = [&](TsTransForm* p)
+	{
+		if (p->GetHashCode() == hash)
+			return p;
+		if (p->m_firstChild)
+			return TreeSearch(p->m_firstChild);
+		if (p->m_subling)
+			return TreeSearch(p->m_subling);
+
+		return (TsTransForm*)nullptr;
+	};
+
+	return TreeSearch(this);
 }

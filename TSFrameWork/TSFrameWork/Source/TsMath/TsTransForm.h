@@ -39,6 +39,8 @@ public:
 	TsTransForm& operator = ( const TsMatrix& m );
 	TsTransForm  operator * ( const TsMatrix& m );
 	TsTransForm& operator *= ( const TsMatrix& m );
+	TsTransForm* FindChildByName(const TsString&);
+	TsTransForm* FindChildByhash(TS_HASH);
 protected:
 	TsTransForm*		m_parent		= nullptr;
 	TsTransForm*		m_firstChild	= nullptr;
