@@ -252,6 +252,9 @@
     <ClCompile Include="TsAfx.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsUT\IHasTransform.cpp">
+      <Filter>ソース ファイル\TsUT\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -463,6 +466,9 @@
     </ClInclude>
     <ClInclude Include="TsAfx.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ITsHasTransform.h">
+      <Filter>ソース ファイル\TsUT\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
