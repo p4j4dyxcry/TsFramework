@@ -62,7 +62,6 @@ TsDepthStencil* TsDepthStencil::CreateDSV(	TsString name,
 		return dsv;
 	}
 	dsv->SetName( name );
-	AddObject( dsv );
 
 	return dsv;
 }

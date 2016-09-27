@@ -74,7 +74,7 @@ TsBool TsShader<T>::LoadFromCSO( ID3D11Device* pd3dDevice , const TsChar* filena
 	name = TSUT::PassToFileName( filename );
 	name = name.substr( 0 , name.rfind( '.' ) );
 	SetName( name );
-	AddObject( this );
+//	AddObject( this );
 	return TS_TRUE;
 }
 

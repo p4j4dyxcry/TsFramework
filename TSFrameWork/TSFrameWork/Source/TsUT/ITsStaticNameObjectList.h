@@ -4,18 +4,16 @@ template<class T>
 class ITsStaticNameObjectList
 {
 public:
+	ITsStaticNameObjectList()
+	{
+		AddObject( static_cast<T*>(this) );
+	}
+
 	virtual ~ITsStaticNameObjectList()
 	{
 		RemoveObject( (T*) this );
 	}
 
-	static TsBool AddObject( T* object )
-	{
-		TsDebugLog( "StaticNameObjectList Add Name Object List \n\t name = \"%s\" \n\t hash = %x\n" , object->GetName().c_str() , object->GetHashCode() );
-		m_objectList.push_back( object );
-
-		return TS_TRUE;
-	}
 
 	static T* Find( TsString name )
 	{
@@ -42,9 +40,18 @@ public:
 		RemoveObject( object );
 	}
 
-	static TsBool RemoveObject( T* object )
+private:
+	static TsBool AddObject(T* object)
 	{
-		m_objectList.remove( object );
+		TsDebugLog("StaticNameObjectList Add Name Object List \n\t name = \"%s\" \n\t hash = %x\n", object->GetName().c_str(), object->GetHashCode());
+		m_objectList.push_back(object);
+
+		return TS_TRUE;
+	}
+
+	static TsBool RemoveObject(T * object)
+	{
+		m_objectList.remove(object);
 		return TS_TRUE;
 	}
 private:
