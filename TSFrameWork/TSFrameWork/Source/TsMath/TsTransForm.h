@@ -12,10 +12,9 @@
 #include "TsQuaternion.h"
 #include "TsMatrix.h"
 
-class TsTransForm
+class TsTransForm : TsNameObject
 {
 public:
-	std::string m_name;
 	TsTransForm() :m_parent( nullptr ),
 				  m_localScale(1,1,1){};
 	TsTransForm( const TsVector3& translate ,
@@ -32,7 +31,7 @@ public:
 	TsMatrix	ToLocalMatrix();
 	TsTransForm* GetParent()const;
 	void SetParent( __inout TsTransForm* transform );
-
+	void AddChild( TsTransForm* transform );
 	TsVector3		m_localPosition;
 	TsQuaternion	m_localRotate;
 	TsVector3		m_localScale;
@@ -44,4 +43,7 @@ protected:
 	TsTransForm*		m_parent		= nullptr;
 	TsTransForm*		m_firstChild	= nullptr;
 	TsTransForm*		m_subling		= nullptr;
+private:
+	//! êeéqä÷åWÇÃâèú
+	TsBool	RemoveOfParantChild( );
 };

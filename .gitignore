@@ -12,3 +12,4 @@ Release/
 *.mak
 *.user
 *.suo
+*.ipch

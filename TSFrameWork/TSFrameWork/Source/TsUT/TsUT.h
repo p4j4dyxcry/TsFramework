@@ -22,6 +22,7 @@
 #include "TsHelper.h"
 #include "TsNameObject.h"
 #include "ITsStaticNameObjectList.h"
+#include "ITsHasTransform.h"
 #include "TsBinaryFile.h"
 
 #include "TsMeshLoader.h"

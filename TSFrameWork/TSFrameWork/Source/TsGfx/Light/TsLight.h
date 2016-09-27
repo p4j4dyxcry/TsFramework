@@ -22,7 +22,7 @@ public:
 		return *m_transform;
 	}
 
-	TsVector3 GetDir()
+	TsVector3 GetDir()const
 	{
 		return TsVector3::up * m_transform->ToWorldMatrix();
 	};
