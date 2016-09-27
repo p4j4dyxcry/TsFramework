@@ -58,7 +58,7 @@ TsBool TsRenderSystem::LoadShaderResourceFromXML(TsDevice* pDev, const TsString&
 
 	auto elm = xml.GetRootNode();
 
-	while (elm != nullptr)
+	for (; elm != nullptr;elm=elm->Next())
 	{
 		if (elm->GetName() == "Texture")
 		{

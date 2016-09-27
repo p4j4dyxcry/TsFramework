@@ -8,12 +8,10 @@ public:
 	TsLight()
 	{
 		m_transform = TsNew( TsTransForm );
-		TsLight::AddObject( this );
 	}
 	virtual ~TsLight()
 	{
 		TsSafeDelete( m_transform );
-		TsLight::RemoveObject( this );
 	}
 	TsBool SetRotate( TsQuaternion& q )
 	{

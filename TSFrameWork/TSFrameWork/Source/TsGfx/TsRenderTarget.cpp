@@ -85,7 +85,7 @@ TsRenderTarget* TsRenderTarget::CrateScreenRTV( const TsDevice& dev )
 	TsRenderTarget* rtv = new TsRenderTarget();
 	rtv->SetName( "ScreenRenderTargetView" );
 	rtv->m_rtv = pD3Drtv;
-	AddObject( rtv );
+	//AddObject( rtv );
 
 	return rtv;
 }
@@ -104,6 +104,6 @@ TsRenderTarget* TsRenderTarget::CreateRTV( TsString name ,
 		TsSafeDelete( rtv );
 		return nullptr;
 	}
-	AddObject( rtv );
+	//AddObject( rtv );
 	return rtv;
 }
