@@ -24,7 +24,7 @@ public:
 
 	TsVector3 GetDir()
 	{
-		return TsVector3::up * m_transform->m_localRotate.ToMatrix();
+		return TsVector3::up * m_transform->ToWorldMatrix();
 	};
 
 protected:
