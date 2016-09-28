@@ -88,9 +88,6 @@ TsRenderTarget* TsRenderTarget::CrateScreenRTV( const TsDevice& dev )
 
 	TsSafeRelease( pBackBuffer );
 	RTV_CREATE_ERR_TO_RETURN;
-
-	AddObject( rtv );
-
 	return rtv;
 }
 
@@ -109,6 +106,5 @@ TsRenderTarget* TsRenderTarget::CreateRTV( TsString name ,
 		TsSafeDelete( rtv );
 		return nullptr;
 	}
-	AddObject( rtv );
 	return rtv;
 }

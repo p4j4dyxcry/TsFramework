@@ -22,7 +22,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 	//shader to rendering pass
 	TsRenderPass pass;
 
-	pass.LoadShaderFromXML(pDev,"LightPrePass.ts_pass");
+	//pass.LoadShaderFromXML(pDev,"LightPrePass.ts_pass");
 
 	pass.SetInputSlot(0, 0);
 	//setrender target
