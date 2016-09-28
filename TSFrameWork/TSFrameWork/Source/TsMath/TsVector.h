@@ -92,13 +92,18 @@ public:
 
 	TsVector3  operator+ ( const XMFLOAT3& Float3 )const;
 	TsVector3  operator- ( const XMFLOAT3& Float3 )const;
+	TsVector3  operator* ( const XMFLOAT3&)const;
+	TsVector3  operator/ ( const XMFLOAT3&)const;
 	TsVector3  operator* ( TsF32 Float )const;
 	TsVector3  operator/ ( TsF32 Float )const;
+
 
 	TsVector3& operator+= ( const XMFLOAT3& Float3 );
 	TsVector3& operator-= ( const XMFLOAT3& Float3 );
 	TsVector3& operator*= ( TsF32 Float );
 	TsVector3& operator/= ( TsF32 Float );
+	TsVector3& operator*= ( const XMFLOAT3& Float);
+	TsVector3& operator/= ( const XMFLOAT3& Float);
 
 	TsVector3  operator*( const TsMatrix& mat )const;
 	TsVector3& operator*=( const TsMatrix& mat );
