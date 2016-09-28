@@ -2,8 +2,6 @@
 *.exe
 *.log
 *.obj
-Debug/
-Release/
 *.tlog
 *.cso
 *.opensdf
@@ -14,3 +12,18 @@ Release/
 *.suo
 *.ipch
 *.sdf
+*.user
+
+#Directory
+Debug/
+Release/
+
+#Resource
+*.xml
+*.mqo
+*.dae
+*.hdr
+*.fbx
+*.png
+*.gif
+*.jpeg
