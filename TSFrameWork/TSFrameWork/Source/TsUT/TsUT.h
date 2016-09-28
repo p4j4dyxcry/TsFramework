@@ -18,11 +18,14 @@
 #include "TsArrayType.h"
 #include "TsAlloc.h"
 #include "TsLogger.h"
+
 #include "TsFileUT.h"
 #include "TsHelper.h"
 #include "TsNameObject.h"
-#include "ITsStaticNameObjectList.h"
-#include "ITsHasTransform.h"
+#include "../TsMath/TsMath.h"
+
+#include "Intarface/ITsStaticNameObjectList.h"
+#include "Intarface/ITsHasTransform.h"
 #include "TsBinaryFile.h"
 
 #include "TsMeshLoader.h"
