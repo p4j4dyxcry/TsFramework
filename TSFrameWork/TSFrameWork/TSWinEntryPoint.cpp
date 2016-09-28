@@ -6,7 +6,6 @@
 //
 //=======================================================
 #include "TsAfx.h"
-
 int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lpszArgs , TsInt nWinMode )
 {
 	TSUT::TsLoggerInit();
@@ -30,7 +29,10 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 
 	TsDrawQueue queue;
 	TsRenderFlow flow;
+
+	flow.LoadFlowFromXML( pDev,"flow.ts_shaderflow" );
 	flow.SetRenderPass(&pass);
+
 
 	TsRenderSystem rs;
 	rs.LoadShaderResourceFromXML(pDev, "shaderResouce.ts_shaderReource");
