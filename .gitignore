@@ -16,6 +16,10 @@
 *.sdf
 *.user
 *.lastbuildstate
+*.idb
+*.pch
+*.db
+
 
 #Directory
 #Debug/
@@ -29,7 +33,6 @@
 *.fbx
 *.png
 *.gif
+*.jpg
 *.jpeg
-*.idb
-*.pch
-*.db
+
