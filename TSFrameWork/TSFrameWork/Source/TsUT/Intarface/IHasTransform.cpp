@@ -1,5 +1,6 @@
-#include "TsUT.h"
-#include "../TsMath/TsTransForm.h"
+#include "../../TsMath/TsTransForm.h"
+
+#include "../TsUT.h"
 
 IHasTransform::IHasTransform()
 :m_pTransform(nullptr)
@@ -26,8 +27,7 @@ TsVector3		IHasTransform::GetLocalScale()const
 
 TsVector3		IHasTransform::GetWorldPosition()const
 {
-	TsMatrix m = GetWorldMatrix();
-	return  TsVector3(m._41, m._42, m._43);
+	return  m_pTransform->GetWorldPos();
 }
 TsMatrix			IHasTransform::GetWorldMatrix()const
 {
@@ -39,34 +39,40 @@ const TsTransForm*	IHasTransform::GetTransformPtr()const
 	return m_pTransform;
 }
 
-TsBool				IHasTransform::SetParent(IHasTransform* parent)
+TsBool IHasTransform::SetParent(IHasTransform* parent)
 {
 	m_pTransform->SetParent(parent->m_pTransform);
 	return TS_TRUE;
 }
-TsBool				IHasTransform::AddChild(IHasTransform* child)
+TsBool	IHasTransform::AddChild(IHasTransform* child)
 {
-	m_pTransform->Add(child->m_pTransform);
+	m_pTransform->AddChild(child->m_pTransform);
 	return TS_TRUE;
 }
 
-TsBool				IHasTransform::SetWorldPos(const TsVector3&)
+TsBool IHasTransform::SetWorldPos(const TsVector3& pos)
 {
+	TsVector3 parentWorldPos = m_pTransform->GetWorldPos() - m_pTransform->m_localPosition;
+	m_pTransform->m_localPosition = pos - parentWorldPos;
+	return TS_TRUE;
 
 }
-TsBool				IHasTransform::SetLocalPos(const TsVector3&)
+TsBool				IHasTransform::SetLocalPos(const TsVector3& pos)
 {
-
+	m_pTransform->m_localPosition = pos ;
 }
 
-TsBool				IHasTransform::SetLocalRotate(const TsQuaternion&)
+TsBool				IHasTransform::SetLocalRotate(const TsQuaternion& q)
 {
-
+	m_pTransform->m_localRotate = q;
 }
 
-TsBool				IHasTransform::SetWorldScale(const TsVector3&)
+TsBool				IHasTransform::SetWorldScale(const TsVector3& s)
 {
-
+	TsVector3 scale = m_pTransform->GetWorldScale();
+	if (scale == 0)
+		return TS_FALSE;
+	TsVector3 invScale = TsVector3::one / scale;
 }
 TsBool				IHasTransform::SetLocalScale(const TsVector3&)
 {
