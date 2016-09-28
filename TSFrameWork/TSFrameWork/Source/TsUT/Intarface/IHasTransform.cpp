@@ -57,29 +57,36 @@ TsBool IHasTransform::SetWorldPos(const TsVector3& pos)
 	return TS_TRUE;
 
 }
-TsBool				IHasTransform::SetLocalPos(const TsVector3& pos)
+TsBool IHasTransform::SetLocalPos(const TsVector3& pos)
 {
 	m_pTransform->m_localPosition = pos ;
+	return TS_TRUE;
 }
 
-TsBool				IHasTransform::SetLocalRotate(const TsQuaternion& q)
+TsBool IHasTransform::SetLocalRotate(const TsQuaternion& q)
 {
 	m_pTransform->m_localRotate = q;
+	return TS_TRUE;
 }
 
-TsBool				IHasTransform::SetWorldScale(const TsVector3& s)
+TsBool IHasTransform::SetWorldScale(const TsVector3& s)
 {
 	TsVector3 scale = m_pTransform->GetWorldScale();
 	if (scale == 0)
 		return TS_FALSE;
 	TsVector3 invScale = TsVector3::one / scale;
+	m_pTransform->m_localScale = invScale * s;
+
+	return TS_TRUE;
 }
-TsBool				IHasTransform::SetLocalScale(const TsVector3&)
+TsBool				IHasTransform::SetLocalScale(const TsVector3& scale)
 {
-
+	m_pTransform->m_localScale = scale;
+	return TS_TRUE;
 }
 
-TsBool				IHasTransform::SetLcaoRotateAxis(const TsVector3&, TsF32 angle)
+TsBool				IHasTransform::SetLcaoRotateAxis(const TsVector3& v, TsF32 angle)
 {
-
+	m_pTransform->m_localRotate = TsQuaternion::AngleAxis(v, angle);
+	return TS_TRUE;
 }

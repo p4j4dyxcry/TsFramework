@@ -118,12 +118,31 @@ TsTransForm* TsTransForm::GetParent()const
 	return m_parent;
 }
 
-void TsTransForm::SetParent( __inout TsTransForm* parent )
+TsVector3 TsTransForm::GetWorldPos()
+{
+	TsMatrix m = ToWorldMatrix();
+	return TsVector3(m._42, m._42, m._43);
+}
+
+TsVector3 TsTransForm::GetWorldScale()
+{
+	TsTransForm t = ToWorldMatrix();
+	return t.m_localScale;
+}
+
+TsQuaternion TsTransForm::GetWorldRotate()
+{
+	TsTransForm t = ToWorldMatrix();
+	return t.m_localRotate;
+}
+
+TsBool TsTransForm::SetParent(__inout TsTransForm* parent)
 {
 	//既に親がいる場合はその親との関係を清算し、新しい親と関係を構築する必要がある。
 	if( m_parent )
 	{		
-		RemoveOfParantChild();
+		if (RemoveOfParantChild() == TS_FALSE)
+			return TS_FALSE;
 	}
 
 	//親に子供がいない場合第一子を自分にする
@@ -143,7 +162,15 @@ void TsTransForm::SetParent( __inout TsTransForm* parent )
 	}
 
 	m_parent = parent;
+	return TS_TRUE;
 }
+
+TsBool TsTransForm::AddChild(TsTransForm* pTransform)
+{
+	return pTransform->SetParent(this);
+}
+
+
 
 TsBool	TsTransForm::RemoveOfParantChild()
 {
@@ -173,10 +200,8 @@ TsBool	TsTransForm::RemoveOfParantChild()
 	return TS_TRUE;
 }
 
-TsTransForm* TsTransForm::FindChildByName(const TsString& name)
+TsTransForm* TsTransForm::FindChildByhash(TS_HASH hash)
 {
-	TS_HASH hash = TSUT::StringToHash(name);
-
 	std::function<TsTransForm*(TsTransForm*)> TreeSearch = [&](TsTransForm* p)
 	{
 		if (p->GetHashCode() == hash)
@@ -190,4 +215,11 @@ TsTransForm* TsTransForm::FindChildByName(const TsString& name)
 	};
 
 	return TreeSearch(this);
+}
+
+TsTransForm* TsTransForm::FindChildByName(const TsString& name)
+{
+	TS_HASH hash = TSUT::StringToHash(name);
+
+	return FindChildByhash(hash);
 }
