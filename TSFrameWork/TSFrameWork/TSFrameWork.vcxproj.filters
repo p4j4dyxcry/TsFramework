@@ -395,9 +395,6 @@
     <ClInclude Include="Source\TsGfx\TsDrawQueue.h">
       <Filter>ソース ファイル\TsGfx\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsShaderTechnique.h">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClInclude>
     <ClInclude Include="Source\TsUT\TsAlloc.h">
       <Filter>ソース ファイル\TsUT\Header</Filter>
     </ClInclude>
@@ -427,9 +424,6 @@
     </ClInclude>
     <ClInclude Include="Source\TsGfx\Light\TsLight.h">
       <Filter>ソース ファイル\TsGfx\Source\Light</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\Mesh\TsMeshFactory.h">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsGfx\Material\TsScreeSpaceMaterial.h">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
@@ -478,6 +472,12 @@
     </ClInclude>
     <ClInclude Include="Source\TsMath\TsColor.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Mesh\TsMeshFactory.h">
+      <Filter>ソース ファイル\TsGfx\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\TsShaderTechnique.h">
+      <Filter>ソース ファイル\TsGfx\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

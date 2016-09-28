@@ -14,6 +14,8 @@ public:
 	TsRenderPass* GetRenderPass(TsInt index);
 	TsInt		  GetFlowSize();
 	TsBool		  SetRenderPass(TsRenderPass *, TsInt pass = -1);
+
+	TsBool		  LoadFlowFromXML( TsDevice* pDev , const TsString& file );
 protected:
 	TsVector<TsRenderPass*> m_renderPass;
 };

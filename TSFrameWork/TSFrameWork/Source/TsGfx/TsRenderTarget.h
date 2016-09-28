@@ -6,7 +6,8 @@
 //!	© 2016 Yuki Tsuneyama
 #pragma once
 
-class TsRenderTarget :public TsTexture2D , ITsStaticNameObjectList<TsRenderTarget>
+class TsRenderTarget :public TsTexture2D ,
+									public ITsStaticNameObjectList<TsRenderTarget>
 {
 public:
 	virtual ~TsRenderTarget();

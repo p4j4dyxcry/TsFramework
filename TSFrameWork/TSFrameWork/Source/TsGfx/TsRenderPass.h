@@ -6,7 +6,8 @@
 //!	© 2016 Yuki Tsuneyama
 #pragma once
 
-class TsRenderPass :public TsNameObject
+class TsRenderPass :public TsNameObject ,
+					public ITsStaticNameObjectList<TsRenderPass>
 {
 public:
 	TsRenderPass();
@@ -22,17 +23,17 @@ public:
 	TsBool CullMode( D3D11_CULL_MODE );
 	TsBool SetInputSlot( TsInt index , TsRenderTarget* );
 	TsBool SetOutputSlot( TsInt index, TsRenderTarget * rtv );
+	TsBool SetDepthSlot( TsDepthStencil* pDepth );
 	TsBool SetDrawQueue( TsDrawQueue * queue );
 	TsRenderTarget* GetInputSlot(TsInt index);
 	TsRenderTarget* GetOutputSlot(TsInt index = 0);
-
-	TsBool LoadShaderFromXML(TsDevice*,const TsString& name);
 
 protected:
 	TsDrawQueue*	m_pdrawQueue;
 	TsRenderTarget* m_pInputSlot[TsDeviceContext::MAX_RTs];
 	TsRenderTarget* m_pOutputSlot[TsDeviceContext::MAX_RTs];
-	TsShaderEffect* m_pShader;
+	TsDepthStencil*  m_pDepthStencil;
+	TsShaderEffect*  m_pShader;
 
 	TsBool m_zEnable;
 	TsBool m_zWriteEnable;

@@ -21,6 +21,13 @@ public:
 	{
 		RemoveObject( (T*) this );
 	}
+	//! 名前付きオブジェクトの作成
+	static T* CreateObject( const TsString& name )
+	{
+		typename T* object = TsNew( T );
+		object->SetName( name );
+		return object;
+	}
 
 	//! オブジェクトの名前でリストから取得する
 	static T* Find( TsString name )

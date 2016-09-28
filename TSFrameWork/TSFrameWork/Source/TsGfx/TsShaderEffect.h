@@ -6,7 +6,8 @@
 //!	© 2016 Yuki Tsuneyama
 #pragma once
 
-class TsShaderEffect
+class TsShaderEffect :	public TsNameObject ,
+						public ITsStaticNameObjectList<TsShaderEffect>
 {
 public:
 	//! Constructor
@@ -16,6 +17,8 @@ public:
 						m_hullShader( nullptr ) ,
 						m_domainShader( nullptr ) ,
 						m_computeShader(nullptr){}
+
+	TsBool  LoadPackageFromXml( TsDevice* pDev , const TsString& file );
 
 	TsBool	SetVertexShader( TsVertexShader* );
 	TsBool	SetPixelShader( TsPixelShader* );
@@ -30,7 +33,7 @@ public:
 	TsGeometryShader*	GetGeometryShader()const{ return m_geometoryShader; }
 	TsHullShader*		GetHullShader()const{ return m_hullShader; }
 	TsDomainShader*		GetDomainShader()const{ return m_domainShader; }
-	TsComputeShader*	GetComputeShader()const{ return m_computeShader; }
+	TsComputeShader*	GetComputeShader()const{ return m_computeShader; }	
 protected:
 	TsVertexShader *	m_vertexShader;
 	TsPixelShader *		m_pixelShader;
