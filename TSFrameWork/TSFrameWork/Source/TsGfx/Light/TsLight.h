@@ -33,3 +33,14 @@ public:
 		return TsVector3::up * m_pTransform->ToWorldMatrix();
 	}
 };
+
+class TsPointLight : public TsLight
+{
+public:
+	LIGHT_TYPE GetLightType()override
+	{
+		return LIGHT_POINT;
+	}
+protected:
+	TsF32 m_rage;
+};
