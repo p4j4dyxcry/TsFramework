@@ -85,7 +85,7 @@
     <ClCompile Include="Source\TsMath\TsVector3.cpp" />
     <ClCompile Include="Source\TsMath\TsVector4.cpp" />
     <ClCompile Include="Source\TsOS\TsWindowsUtility.cpp" />
-    <ClCompile Include="Source\TsUT\IHasTransform.cpp" />
+    <ClCompile Include="Source\TsUT\Intarface\IHasTransform.cpp" />
     <ClCompile Include="Source\TsUT\TsAlloc.cpp" />
     <ClCompile Include="Source\TsUT\TsBinaryFile.cpp" />
     <ClCompile Include="Source\TsUT\TsColladaLoader.cpp" />
@@ -127,8 +127,8 @@
     <ClInclude Include="Source\TsMath\TsTransForm.h" />
     <ClInclude Include="Source\TsMath\TsVector.h" />
     <ClInclude Include="Source\TsOS\TsWindowsUtility.h" />
-    <ClInclude Include="Source\TsUT\ITsHasTransform.h" />
-    <ClInclude Include="Source\TsUT\ITsStaticNameObjectList.h" />
+    <ClInclude Include="Source\TsUT\Intarface\ITsHasTransform.h" />
+    <ClInclude Include="Source\TsUT\Intarface\ITsStaticNameObjectList.h" />
     <ClInclude Include="Source\TsUT\TsAlloc.h" />
     <ClInclude Include="Source\TSUT\TsArrayType.h" />
     <ClInclude Include="Source\TsUT\TsBinaryFile.h" />
