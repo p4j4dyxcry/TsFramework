@@ -76,6 +76,7 @@
     <ClCompile Include="Source\TsGfx\TsTransformCBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\TsVertexBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\TsViewport.cpp" />
+    <ClCompile Include="Source\TsMath\TsColor.cpp" />
     <ClCompile Include="Source\TsMath\TsLisPSM.cpp" />
     <ClCompile Include="Source\TsMath\TsMathUTility.cpp" />
     <ClCompile Include="Source\TsMath\TsMatrix.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="Source\TsGfx\TsVertex.h" />
     <ClInclude Include="Source\TsGfx\TsVertexBuffer.h" />
     <ClInclude Include="Source\TsGfx\TsViewport.h" />
+    <ClInclude Include="Source\TsMath\TsColor.h" />
     <ClInclude Include="Source\TsMath\TsLisPSM.h" />
     <ClInclude Include="Source\TsMath\TsMath.h" />
     <ClInclude Include="Source\TsMath\TsMathUTility.h" />
