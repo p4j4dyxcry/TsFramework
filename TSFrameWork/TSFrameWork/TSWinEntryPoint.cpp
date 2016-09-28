@@ -1,3 +1,10 @@
+﻿//=======================================================
+//
+//! 開発テスト用のエントリポイント
+//
+//　© Yuki Tsuneyama
+//
+//=======================================================
 #include "TsAfx.h"
 
 int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lpszArgs , TsInt nWinMode )
