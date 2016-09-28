@@ -258,6 +258,9 @@
     <ClCompile Include="Source\TsUT\Intarface\IHasTransform.cpp">
       <Filter>ソース ファイル\TsUT\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsMath\TsColor.cpp">
+      <Filter>ソース ファイル\TsMath\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -472,6 +475,9 @@
     </ClInclude>
     <ClInclude Include="Source\TsUT\Intarface\ITsStaticNameObjectList.h">
       <Filter>ソース ファイル\TsUT\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsMath\TsColor.h">
+      <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
