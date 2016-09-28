@@ -8,12 +8,14 @@
 
 namespace TSUT
 {
+	//! ファイルパスを解析するUtility
 	class TsFilePathAnalyzer
 	{
 	public:
+		//! コンストラクタ
 		TsFilePathAnalyzer( TsString filepass );
 
-		//ファイルパスを解析する
+		//! ファイルパスを解析する
 		TsBool Analize( TsString str );
 
 		//! ファイル名を取得する
@@ -34,12 +36,12 @@ namespace TSUT
 		//! フルディレクトリを取得する
 		TsString GetFullDirectory();
 	protected:
-		TsString m_filePath;
-		TsString m_fullPath;
-		TsString m_extension;
-		TsString m_fileName;
-		TsString m_localDirectory;
-		TsString m_fullDirectory;
+		TsString m_filePath;		//ローカルのファイルパス
+		TsString m_fullPath;		//フルパス
+		TsString m_extension;		//ファイルの拡張子
+		TsString m_fileName;		//ディレクトリを含まないファイルの名前
+		TsString m_localDirectory;	//ファイルを含まないディレクトリ構成
+		TsString m_fullDirectory;	//ファイルを含まないフルパスのディレクトリ構成
 	};
 
 	class TsFileDirectory
@@ -48,7 +50,7 @@ namespace TSUT
 		//! Constructor
 		TsFileDirectory( TsString directory );
 
-		//! サブフォルダを検索対象に含める？
+		//! サブフォルダを検索対象に含めるかどうかの設定
 		// TRUE		含める
 		// FALSE	含めない
 		void SetSearchSubFolderFlag( TsBool searchSubFolder );
@@ -68,7 +70,7 @@ namespace TSUT
 	};
 
 
-	//ファイルパスからファイル名だけを取得
+	//! ファイルパスからファイル名だけを取得
 	inline TsString PassToFileName( TsString str )
 	{
 		auto index = str.rfind( "/" );
@@ -83,30 +85,32 @@ namespace TSUT
 	}
 	namespace Resource
 	{
+		//! リソースファイルが格納されているパスを取得
 		inline TsString GetResourceDirectory()
 		{
 			return "Resource/";
 		}
 
-		// バイナリシェーダが格納されているパスを取得
+		//! バイナリシェーダが格納されているパスを取得
 		inline TsString GetCSODirectory()
 		{
 			return "Resource/Shader/";
 		}
 
-		// シェーダパスが格納されているパスを取得
+		//! シェーダパスが格納されているパスを取得
 		inline TsString GetShaderPassDirectory()
 		{
 			return "Resource/ShaderPass/";
 		}
 
 
-		// シェーダパスが格納されているパスを取得
+		//! シェーダフローが格納されているパスを取得
 		inline TsString GetShaderFlowDirectory()
 		{
 			return "Resource/ShaderFlow/";
 		}
 
+		//! シェーダリソースが格納されているパスを取得
 		inline TsString GetShaderResourceDirectory()
 		{
 			return "Resource/ShaderResource/";

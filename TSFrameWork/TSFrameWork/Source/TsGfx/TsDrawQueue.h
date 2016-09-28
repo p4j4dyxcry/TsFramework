@@ -9,11 +9,19 @@
 class TsDrawQueue
 {
 public:
+	//! constructor
 	TsDrawQueue();
+
+	//! destructor
 	virtual ~TsDrawQueue();
 
+	//! Queueにgeometryを追加する
 	TsBool Add( TsDrawObject* );
+
+	//! Find
 	TsDrawObject* Find( TsString name );
+
+	//! Remove
 	TsBool Remove( TsDrawObject* );
 
 	TsBool Begin( TsDeviceContext * pDc ,

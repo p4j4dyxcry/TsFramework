@@ -19,11 +19,12 @@
 *.idb
 *.pch
 *.db
-
+*.ilk
 
 #Directory
 #Debug/
 #Release/
+bin/
 
 #Resource
 *.xml
@@ -35,4 +36,5 @@
 *.gif
 *.jpg
 *.jpeg
+
 
