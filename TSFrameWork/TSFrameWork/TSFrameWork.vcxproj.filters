@@ -85,6 +85,9 @@
     <Filter Include="ソース ファイル\TsUT\MeshLoader">
       <UniqueIdentifier>{b3389a10-fe74-467a-a7f0-2d25e7d44826}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\TsUT\Interface">
+      <UniqueIdentifier>{e0912c52-7116-4bd5-9432-6cc2f5706d11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TSWinEntryPoint.cpp">
@@ -252,8 +255,8 @@
     <ClCompile Include="TsAfx.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsUT\IHasTransform.cpp">
-      <Filter>ソース ファイル\TsUT\Source</Filter>
+    <ClCompile Include="Source\TsUT\Intarface\IHasTransform.cpp">
+      <Filter>ソース ファイル\TsUT\Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -348,9 +351,6 @@
       <Filter>ソース ファイル\TsCore</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsUT\TsNameObject.h">
-      <Filter>ソース ファイル\TsUT\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsUT\ITsStaticNameObjectList.h">
       <Filter>ソース ファイル\TsUT\Header</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsGfx\TsShaderInl.cpp">
@@ -467,8 +467,11 @@
     <ClInclude Include="TsAfx.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TsUT\ITsHasTransform.h">
-      <Filter>ソース ファイル\TsUT\Header</Filter>
+    <ClInclude Include="Source\TsUT\Intarface\ITsHasTransform.h">
+      <Filter>ソース ファイル\TsUT\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\Intarface\ITsStaticNameObjectList.h">
+      <Filter>ソース ファイル\TsUT\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
