@@ -1,4 +1,4 @@
-#include "TsGfx.h"
+ï»¿#include "TsGfx.h"
 
 //error macro
 #define RTV_CREATE_ERR_TO_RETURN	\
@@ -39,29 +39,27 @@ TsBool TsRenderTarget::Create( const TsDevice& dev ,
 	// Step 1 Create Texture
 	{
 		TS_TEX2D_DESC texDesc( width , height , format );
-
+		texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
 		HRESULT hr = pDev->CreateTexture2D( &texDesc , nullptr , &m_tex2d );
 		RTV_CREATE_ERR_TO_RETURN;
 	}
 	
 	// Step 2 Create Render Target View
 	{
-		TS_RTV_DESC desc( format );
-
-		HRESULT hr = pDev->CreateRenderTargetView( m_tex2d , &desc , &m_rtv );
+		HRESULT hr = pDev->CreateRenderTargetView( m_tex2d , nullptr , &m_rtv );
 		RTV_CREATE_ERR_TO_RETURN;
 	}
 
 	// Step 3 Create Shader Resource View
 	{
-		TS_SRV_DESC desc( format );
-
-		HRESULT hr = pDev->CreateShaderResourceView( m_tex2d , &desc , &m_srv );
+		HRESULT hr = pDev->CreateShaderResourceView( m_tex2d , nullptr , &m_srv );
 		RTV_CREATE_ERR_TO_RETURN;
 	}
 
+	m_rtvSize = TsInt2( width , height );
+
 	// Step 4 Create Sample State 
-	// *RenderTarget ‚²‚Æ‚ÉƒTƒ“ƒvƒ‰‚ðŽ‚Â•K—v‚Í‚È‚¢B
+	// *RenderTarget ã”ã¨ã«ã‚µãƒ³ãƒ—ãƒ©ã‚’æŒã¤å¿…è¦ã¯ãªã„ã€‚
 
 	return TS_TRUE;
 }
@@ -71,21 +69,27 @@ TsRenderTarget* TsRenderTarget::CrateScreenRTV( const TsDevice& dev )
 	ID3D11Device * pDev = dev.GetDevD3D();
 	IDXGISwapChain * pSC = dev.GetSC();
 
-	// Swap Chain ‚©‚ç@ƒoƒbƒNƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	// Swap Chain ã‹ã‚‰ã€€ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	ID3D11Texture2D* pBackBuffer = NULL;
 	ID3D11RenderTargetView* pD3Drtv;
 	HRESULT hr = pSC->GetBuffer( 0 , __uuidof( ID3D11Texture2D ) , ( LPVOID* )&pBackBuffer );
 	RTV_CREATE_ERR_TO_RETURN;
 
-	// ƒoƒbƒNƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽw’è‚µ‚ÄRTV‚ðì¬
+	// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’æŒ‡å®šã—ã¦RTVã‚’ä½œæˆ
 	hr = pDev->CreateRenderTargetView( pBackBuffer , NULL , &pD3Drtv );
-	TsSafeRelease( pBackBuffer );
+	D3D11_TEXTURE2D_DESC desc;
+	pBackBuffer->GetDesc( &desc );
 
-	RTV_CREATE_ERR_TO_RETURN;
 	TsRenderTarget* rtv = new TsRenderTarget();
 	rtv->SetName( "ScreenRenderTargetView" );
 	rtv->m_rtv = pD3Drtv;
-	//AddObject( rtv );
+	rtv->m_rtvSize.x = desc.Width;
+	rtv->m_rtvSize.y = desc.Height;
+
+	TsSafeRelease( pBackBuffer );
+	RTV_CREATE_ERR_TO_RETURN;
+
+	AddObject( rtv );
 
 	return rtv;
 }
@@ -98,12 +102,13 @@ TsRenderTarget* TsRenderTarget::CreateRTV( TsString name ,
 {
 	TsRenderTarget * rtv = TsNew( TsRenderTarget );
 	TsBool succed = rtv->Create( dev , width , height , format );
-	
+	rtv->SetName( name );
+
 	if( !succed )
 	{
 		TsSafeDelete( rtv );
 		return nullptr;
 	}
-	//AddObject( rtv );
+	AddObject( rtv );
 	return rtv;
 }

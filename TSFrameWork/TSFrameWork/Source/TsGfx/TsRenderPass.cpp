@@ -1,5 +1,7 @@
 #include "TsGfx.h"
 
+TS_INSTANTIATE_NAME_OBJ_LIST( TsRenderPass );
+
 TsRenderPass::TsRenderPass():
 m_cullMode(D3D11_CULL_BACK),
 m_pShader(nullptr),
@@ -22,6 +24,9 @@ TsBool TsRenderPass::Begin( TsDeviceContext* pDc )
 	//! set render target
 	for( int i = 0; i < TsDeviceContext::MAX_RTs; ++i )
 		pDc->SetRT( i , m_pOutputSlot[i] );
+
+	//! set depth 
+	pDc->SetDepthStencil( m_pDepthStencil );
 
 	//! set shader
 	pDc->SetShader( m_pShader );
@@ -97,39 +102,8 @@ TsBool TsRenderPass::SetDrawQueue( TsDrawQueue * queue )
 	return TS_TRUE;
 } 
 
-TsBool TsRenderPass::LoadShaderFromXML(TsDevice* pDev,const TsString& name)
+TsBool TsRenderPass::SetDepthSlot( TsDepthStencil* depth )
 {
-	TsXML xmlShaderPass;
-	xmlShaderPass.LoadXML(TSUT::Resource::GetShaderPassDirectory() + name);
-
-	TsString passName = xmlShaderPass.FindFirst("name")->GetAttribute("name")->GetStringValue();
-	SetName(passName);
-
-	TsString ShaderDir = TSUT::Resource::GetCSODirectory();
-
-	m_pShader = TsNew(TsShaderEffect);
-
-	TsString ShaderName;
-	TsXMLElement* xmlElement = xmlShaderPass.FindFirst("Vertex");
-	
-	if (xmlElement != nullptr)
-	{
-		ShaderName = xmlElement->GetAttribute("Shader")->GetStringValue() + ".cso";
-		TsVertexShader* pVS = TsNew(TsVertexShader);
-		pVS->LoadFromCSO(pDev->GetDevD3D(), (ShaderDir + ShaderName).c_str());
-
-		m_pShader->SetVertexShader(pVS);
-	}
-
-	xmlElement = xmlShaderPass.FindFirst("Pixel");
-
-	if (xmlElement != nullptr)
-	{
-		ShaderName = xmlElement->GetAttribute("Shader")->GetStringValue() + ".cso";
-		TsPixelShader* pPS = TsNew(TsPixelShader);
-		pPS->LoadFromCSO(pDev->GetDevD3D(), (ShaderDir + ShaderName).c_str());
-
-		m_pShader->SetPixelShader(pPS);
-	}
+	m_pDepthStencil = depth;
 	return TS_TRUE;
 }

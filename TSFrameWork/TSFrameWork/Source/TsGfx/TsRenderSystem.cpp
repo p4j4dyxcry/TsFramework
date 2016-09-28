@@ -56,14 +56,14 @@ TsBool TsRenderSystem::LoadShaderResourceFromXML(TsDevice* pDev, const TsString&
 	TsXML xml;
 	xml.LoadXML(TSUT::Resource::GetShaderResourceDirectory() + name);
 
-	auto elm = xml.GetRootNode();
+	auto elm = xml.GetRootNode()->GetFirstChild();
 
-	for (; elm != nullptr;elm=elm->Next())
+	while (elm != nullptr)
 	{
 		if (elm->GetName() == "Texture")
 		{
 			TsTexture * pTex = TsNew(TsTexture2D);
-			TsString name = elm->GetAttribute("name")->GetStringValue();
+			TsString name = elm->GetAttribute("Name")->GetStringValue();
 			TsString path = elm->GetAttribute("Path")->GetStringValue();
 			auto srv = TsDirectXTex::LoadFromFile(pDev->GetDevD3D(), path.c_str());
 			pTex->SetName(name);
@@ -73,16 +73,18 @@ TsBool TsRenderSystem::LoadShaderResourceFromXML(TsDevice* pDev, const TsString&
 		}
 		if (elm->GetName() == "RenderTarget")
 		{
-			TsString name = elm->GetAttribute("name")->GetStringValue();
-			TsString path = elm->GetAttribute("Path")->GetStringValue();
+			TsString name = elm->GetAttribute("Name")->GetStringValue();
 			TsString format = elm->GetAttribute("Format")->GetStringValue();
 			TsInt2   size = elm->GetAttribute("Size")->GetInt2Value();
-			auto srv = TsDirectXTex::LoadFromFile(pDev->GetDevD3D(), path.c_str());
 
+			if( size.x < 0 )
+				size = pDev->GetDC()->GetScreenRTV()->GetRTVSize();
 			auto rtv = TsRenderTarget::CreateRTV(name, *pDev, size.x, size.y,TSShaderUT::ComvertTextureFormat(format));
 
 			m_rtvList.push_back(rtv);
 		}
+		elm = elm->Next();
+		
 	}
 	return TS_TRUE;
 }
