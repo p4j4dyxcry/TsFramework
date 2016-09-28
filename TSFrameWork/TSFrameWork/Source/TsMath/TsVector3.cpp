@@ -34,6 +34,16 @@ TsVector3  TsVector3::operator/ ( FLOAT Float )const
 	return TsVector3( x / Float , y / Float , z / Float );
 }
 
+TsVector3 TsVector3::operator/ (const XMFLOAT3& v)const
+{	
+	return TsVector3( x/v.x, y/v.y, z/v.z);
+}
+
+TsVector3 TsVector3::operator* (const XMFLOAT3& v)const
+{
+	return TsVector3(x * v.x, y * v.y, z * v.z);
+}
+
 TsVector3& TsVector3::operator+= ( const XMFLOAT3& Float3 )
 {
 	return *this = *this + Float3;
@@ -49,6 +59,14 @@ TsVector3& TsVector3::operator*= ( FLOAT Float )
 TsVector3& TsVector3::operator/= ( FLOAT Float )
 {
 	return *this = *this / Float;
+}
+TsVector3& TsVector3::operator*= (const XMFLOAT3& v)
+{
+	return *this = *this * v;
+}
+TsVector3& TsVector3::operator/= (const XMFLOAT3& v)
+{
+	return *this = *this / v;
 }
 
 TsVector3  TsVector3::operator*( const TsMatrix& mat )const
@@ -136,3 +154,4 @@ TsF32 TsVector3::CrossingAngle( TsVector3 v0 , TsVector3 v1 )
 
 	return acos(c);
 }
+
