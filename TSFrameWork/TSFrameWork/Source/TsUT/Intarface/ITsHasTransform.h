@@ -59,5 +59,5 @@ public:
 	TsBool				SetLocalScale(const TsVector3&);
 
 protected:
-	TsTransForm* m_pTransform;　//Transform
+	TsTransForm* m_pTransform;	//Transform
 };
