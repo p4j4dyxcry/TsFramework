@@ -91,29 +91,35 @@ namespace TSUT
 			return "Resource/";
 		}
 
+		//! RenderSystemが格納されているパスを取得
+		inline TsString GetRenderSystemDirectory()
+		{
+			return GetResourceDirectory() + "RenderSystem/";
+		}
+
 		//! バイナリシェーダが格納されているパスを取得
 		inline TsString GetCSODirectory()
 		{
-			return "Resource/Shader/";
+			return GetResourceDirectory()+"Shader/";
 		}
 
 		//! シェーダパスが格納されているパスを取得
 		inline TsString GetShaderPassDirectory()
 		{
-			return "Resource/ShaderPass/";
+			return GetResourceDirectory()+"ShaderPass/";
 		}
 
 
 		//! シェーダフローが格納されているパスを取得
 		inline TsString GetShaderFlowDirectory()
 		{
-			return "Resource/ShaderFlow/";
+			return GetResourceDirectory() +"ShaderFlow/";
 		}
 
 		//! シェーダリソースが格納されているパスを取得
 		inline TsString GetShaderResourceDirectory()
 		{
-			return "Resource/ShaderResource/";
+			return GetResourceDirectory()+"ShaderResource/";
 		}
 	}
 

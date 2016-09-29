@@ -17,7 +17,7 @@ public:
 
 	//Depth Stencil Viewの作成
 	static TsDepthStencil* CreateDSV( TsString name,
-									  const ITsDevice& dev ,
+									  const TsDevice& dev ,
 									  TsInt width ,
 									  TsInt height ,
 									  DXGI_FORMAT format = DXGI_FORMAT_D24_UNORM_S8_UINT );
@@ -30,7 +30,7 @@ public:
 private:
 
 	//作成
-	TsBool Create( const ITsDevice& dev ,
+	TsBool Create( const TsDevice& dev ,
 				   TsInt width ,
 				   TsInt height ,
 				   DXGI_FORMAT format);

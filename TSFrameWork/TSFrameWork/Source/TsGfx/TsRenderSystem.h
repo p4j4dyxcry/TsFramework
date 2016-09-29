@@ -38,15 +38,15 @@ public:
 	TsBool SetShaderFlow(TsRenderFlow* pFlow, TARGET_FLOW = TARGET_FLOW::DEFAULT_RENDERER);
 
 	TsTexture* FindTextureResource(const TsString & name);
-	TsBool LoadShaderResourceFromXML(TsDevice* pDev, const TsString&);
-
+	TsBool LoadShaderResourceFromXML( TsDevice* pDev , const TsString& );
+	TsBool LoadRenderSystemFromXML( TsDevice* pDev , const TsString& );
 protected:
 
 
 
 	//todo : shadowmap class 
 	TsVector<TsLight*>		m_lights;
-	TsVector<TsTexture*>	m_rtvList;
+	TsVector<TsTexture*>	m_shaderResourceList;
 	TsVector<TsDrawQueue*>	m_drawque;
 
 	FlowAndQue m_PriFlowAndQue;

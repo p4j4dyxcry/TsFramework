@@ -43,12 +43,66 @@ TsBool TsRenderSystem::SetShaderFlow(TsRenderFlow* pFlow, TARGET_FLOW targetFlow
 TsTexture* TsRenderSystem::FindTextureResource(const TsString& name)
 {
 	TS_HASH hash = TSUT::StringToHash(name);
-	for each(auto it in m_rtvList)
+	for each(auto it in m_shaderResourceList)
 	{
 		if (hash == it->GetHashCode())
 			return it;
 	}
 	return nullptr;
+}
+
+TsBool TsRenderSystem::LoadRenderSystemFromXML( TsDevice*pDev , const TsString& name )
+{
+	TsXML xml;
+	xml.LoadXML( TSUT::Resource::GetRenderSystemDirectory() + name );
+
+	auto elm = xml.GetRootNode()->GetFirstChild();
+	while( elm != nullptr )
+	{
+		if( elm->GetName() == "Resource" )
+		{
+			TsString path = elm->GetAttribute( "resource" )->GetStringValue();
+			TSUT::TsFilePathAnalyzer ana( path );
+			if( ana.GetExtension() == ".ts_shaderReource" )
+			{
+				LoadShaderResourceFromXML( pDev , path );
+			}
+		}
+		else if( elm->GetName() == "PriRender" )
+		{
+			TsString path = elm->GetAttribute( "flow" )->GetStringValue();
+			TSUT::TsFilePathAnalyzer ana( path );
+			if( ana.GetExtension() == ".ts_shaderflow" )
+			{
+				TsRenderFlow* flow = TsNew( TsRenderFlow );
+				flow->LoadFlowFromXML( pDev , path );
+				m_PriFlowAndQue.pFlow = flow;
+			}
+		}
+		else if( elm->GetName() == "Render" )
+		{
+			TsString path = elm->GetAttribute( "flow" )->GetStringValue();
+			TSUT::TsFilePathAnalyzer ana( path );
+			if( ana.GetExtension() == ".ts_shaderflow" )
+			{
+				TsRenderFlow* flow = TsNew( TsRenderFlow );
+				flow->LoadFlowFromXML( pDev , path );
+				m_PriFlowAndQue.pFlow = flow;
+			}
+		}
+		else if( elm->GetName() == "PostRender" )
+		{
+			TsString path = elm->GetAttribute( "flow" )->GetStringValue();
+			TSUT::TsFilePathAnalyzer ana( path );
+			if( ana.GetExtension() == ".ts_shaderflow" )
+			{
+				TsRenderFlow* flow = TsNew( TsRenderFlow );
+				flow->LoadFlowFromXML( pDev , path );
+				m_PostFlowAndQue.pFlow = flow;
+			}
+		}
+	}
+	return TS_TRUE;
 }
 
 TsBool TsRenderSystem::LoadShaderResourceFromXML(TsDevice* pDev, const TsString& name)
@@ -69,7 +123,7 @@ TsBool TsRenderSystem::LoadShaderResourceFromXML(TsDevice* pDev, const TsString&
 			pTex->SetName(name);
 			pTex->SetSRV(srv);
 
-			m_rtvList.push_back(pTex);
+			m_shaderResourceList.push_back(pTex);
 		}
 		if (elm->GetName() == "RenderTarget")
 		{
@@ -81,7 +135,20 @@ TsBool TsRenderSystem::LoadShaderResourceFromXML(TsDevice* pDev, const TsString&
 				size = pDev->GetDC()->GetScreenRTV()->GetRTVSize();
 			auto rtv = TsRenderTarget::CreateRTV(name, *pDev, size.x, size.y,TSShaderUT::ComvertTextureFormat(format));
 
-			m_rtvList.push_back(rtv);
+			m_shaderResourceList.push_back(rtv);
+		}
+
+		if( elm->GetName() == "Depth" )
+		{
+			TsString name = elm->GetAttribute( "Name" )->GetStringValue();
+			TsString format = elm->GetAttribute( "Format" )->GetStringValue();
+			TsInt2   size = elm->GetAttribute( "Size" )->GetInt2Value();
+
+			if( size.x < 0 )
+				size = pDev->GetDC()->GetScreenRTV()->GetRTVSize();
+			auto dsv = TsDepthStencil::CreateDSV( name , *pDev , size.x , size.y , TSShaderUT::ComvertTextureFormat( format ) );
+
+			m_shaderResourceList.push_back( dsv );
 		}
 		elm = elm->Next();
 		
