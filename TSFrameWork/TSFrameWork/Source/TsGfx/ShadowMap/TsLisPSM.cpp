@@ -1,4 +1,6 @@
-#include "TsMath.h"
+#include "../../../TsAfx.h"
+#include "TsLisPSM.h"
+
 
 TsComputeLisPSM::PointList::PointList()
 {
