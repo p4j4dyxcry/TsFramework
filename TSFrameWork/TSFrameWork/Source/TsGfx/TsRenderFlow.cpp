@@ -68,6 +68,11 @@ TsBool	TsRenderFlow::LoadFlowFromXML( TsDevice* pDev, const TsString& file )
 			
 				TsString shaderName = pass->GetAttribute( "Shader" )->GetStringValue();
 				TsShaderEffect* pShaderEffect = TsShaderEffect::Find( shaderName );
+				if( pShaderEffect == nullptr )
+				{
+					pShaderEffect = TsNew( TsShaderEffect );
+					pShaderEffect->LoadPackageFromXml( pDev, shaderName + ".ts_shaderPackage" );
+				}
 				renderPass->SetShader( pShaderEffect );
 				TsXMLElement* inputSlot = pass->FindChild("Input")->GetFirstChild();
 				for( TsInt index = 0; inputSlot != nullptr;  inputSlot = inputSlot->Next() )
