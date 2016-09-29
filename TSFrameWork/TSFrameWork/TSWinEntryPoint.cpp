@@ -18,29 +18,13 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 	TsResourceManager mgr;
 	//mgr.LoadShaders( pDev );
 
-	//shader to rendering pass
-	TsRenderPass pass;
-
-	//pass.LoadShaderFromXML(pDev,"LightPrePass.ts_pass");
-
-	pass.SetInputSlot(0, 0);
-	//setrender target
-	pass.SetOutputSlot(0, pDev->GetDC()->GetScreenRTV());
-
-	TsDrawQueue queue;
-	TsRenderFlow flow;
-
-	flow.LoadFlowFromXML( pDev,"flow.ts_shaderflow" );
-	flow.SetRenderPass(&pass);
-
-
 	TsRenderSystem rs;
-	rs.LoadShaderResourceFromXML(pDev, "shaderResouce.ts_shaderReource");
-	rs.SetDrawQue(&queue);
-	rs.SetShaderFlow(&flow);
+	rs.LoadRenderSystemFromXML( pDev , "RenderSystem.ts_rs" );
 	// ! Screen Space Test
 
 	//load mesh
+	TsDrawQueue queue;
+
 	TsMeshFactory factory;
 	factory.LoadFromFile(pDev, "test.mqo");
 
@@ -48,8 +32,8 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 	{
 		queue.Add(factory.CreateGeometryObject(i, pDev));
 	}
+	rs.SetDrawQue( &queue );
 
-	pass.SetDrawQueue( &queue );
 	TsCamera* pCamera = pDev->GetDC()->GetMainCamera();
 
 	pCamera->CreateCBuffer(pDev);

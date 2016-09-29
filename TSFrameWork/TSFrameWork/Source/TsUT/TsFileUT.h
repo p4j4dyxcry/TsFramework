@@ -104,9 +104,9 @@ namespace TSUT
 		}
 
 		//! シェーダパスが格納されているパスを取得
-		inline TsString GetShaderPassDirectory()
+		inline TsString GetShaderPackageDirectory()
 		{
-			return GetResourceDirectory()+"ShaderPass/";
+			return GetResourceDirectory()+"ShaderPackage/";
 		}
 
 

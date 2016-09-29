@@ -87,7 +87,7 @@ TsBool TsRenderSystem::LoadRenderSystemFromXML( TsDevice*pDev , const TsString& 
 			{
 				TsRenderFlow* flow = TsNew( TsRenderFlow );
 				flow->LoadFlowFromXML( pDev , path );
-				m_PriFlowAndQue.pFlow = flow;
+				m_FlowAndQue.pFlow = flow;
 			}
 		}
 		else if( elm->GetName() == "PostRender" )
@@ -101,6 +101,7 @@ TsBool TsRenderSystem::LoadRenderSystemFromXML( TsDevice*pDev , const TsString& 
 				m_PostFlowAndQue.pFlow = flow;
 			}
 		}
+		elm = elm->Next();
 	}
 	return TS_TRUE;
 }
