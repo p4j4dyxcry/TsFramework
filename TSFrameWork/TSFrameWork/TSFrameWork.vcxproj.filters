@@ -88,6 +88,9 @@
     <Filter Include="ソース ファイル\TsUT\Interface">
       <UniqueIdentifier>{e0912c52-7116-4bd5-9432-6cc2f5706d11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\TsGfx\Source\ShadowMap">
+      <UniqueIdentifier>{86f60c9d-ebb5-4c92-9fa2-cb173569463d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TSWinEntryPoint.cpp">
@@ -222,9 +225,6 @@
     <ClCompile Include="Source\TsGfx\TsRenderSystem.cpp">
       <Filter>ソース ファイル\TsGfx</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsMath\TsLisPSM.cpp">
-      <Filter>ソース ファイル\TsMath\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsCore\TsApplicationBase.cpp">
       <Filter>ソース ファイル\TsCore</Filter>
     </ClCompile>
@@ -260,6 +260,12 @@
     </ClCompile>
     <ClCompile Include="Source\TsMath\TsColor.cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\ShadowMap\TsLisPSM.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\ShadowMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\ShadowMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -395,6 +401,9 @@
     <ClInclude Include="Source\TsGfx\TsDrawQueue.h">
       <Filter>ソース ファイル\TsGfx\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TsGfx\TsShaderTechnique.h">
+      <Filter>ソース ファイル\TsGfx\Source</Filter>
+    </ClInclude>
     <ClInclude Include="Source\TsUT\TsAlloc.h">
       <Filter>ソース ファイル\TsUT\Header</Filter>
     </ClInclude>
@@ -425,14 +434,14 @@
     <ClInclude Include="Source\TsGfx\Light\TsLight.h">
       <Filter>ソース ファイル\TsGfx\Source\Light</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TsGfx\Mesh\TsMeshFactory.h">
+      <Filter>ソース ファイル\TsGfx\Source</Filter>
+    </ClInclude>
     <ClInclude Include="Source\TsGfx\Material\TsScreeSpaceMaterial.h">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsGfx\TsRenderSystem.h">
       <Filter>ソース ファイル\TsGfx</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsMath\TsLisPSM.h">
-      <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsGfx\Material\TsDefaultMaterial.h">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
@@ -473,11 +482,11 @@
     <ClInclude Include="Source\TsMath\TsColor.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TsGfx\Mesh\TsMeshFactory.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
+    <ClInclude Include="Source\TsGfx\ShadowMap\TsLisPSM.h">
+      <Filter>ソース ファイル\TsGfx\Source\ShadowMap</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsShaderTechnique.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
+    <ClInclude Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.h">
+      <Filter>ソース ファイル\TsGfx\Source\ShadowMap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

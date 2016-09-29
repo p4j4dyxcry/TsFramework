@@ -21,6 +21,8 @@ protected:
 	TsF32   m_intensity;
 };
 
+
+
 class TsDirectioalLight :public TsLight
 {
 public:
@@ -32,6 +34,8 @@ public:
 	{
 		return TsVector3::up * m_pTransform->ToWorldMatrix();
 	}
+protected:
+
 };
 
 class TsPointLight : public TsLight
@@ -43,4 +47,15 @@ public:
 	}
 protected:
 	TsF32 m_rage;
+};
+
+class TsSpotLight : public TsLight
+{
+	LIGHT_TYPE GetLightType()override
+	{
+		return LIGHT_SPOT;
+	}
+protected:
+	TsF32 m_range;
+	TsF32 m_angle;
 };

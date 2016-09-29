@@ -56,7 +56,7 @@ TsBool	TsRenderFlow::LoadFlowFromXML( TsDevice* pDev, const TsString& file )
 	TsXML xml;
 
 	xml.LoadXML( TSUT::Resource::GetShaderFlowDirectory() + file );
-
+	auto root = xml.GetRootNode();
 	auto pass = xml.GetRootNode()->GetFirstChild();
 
 	while( pass != nullptr )
