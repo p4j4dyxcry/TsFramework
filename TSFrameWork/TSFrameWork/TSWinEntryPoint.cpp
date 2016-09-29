@@ -9,14 +9,10 @@
 int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lpszArgs , TsInt nWinMode )
 {
 	TSUT::TsLoggerInit();
-	TsHDRTextureAnalizer hdr;
-	hdr.LoadHDR( "galileo_probe.hdr" );
 
 	TsApplicationBase api;
 	api.Initialize(hInstance, nWinMode);
 	TsDevice* pDev = api.GetDevice();
-	TsResourceManager mgr;
-	//mgr.LoadShaders( pDev );
 
 	TsRenderSystem rs;
 	rs.LoadRenderSystemFromXML( pDev , "RenderSystem.ts_rs" );
