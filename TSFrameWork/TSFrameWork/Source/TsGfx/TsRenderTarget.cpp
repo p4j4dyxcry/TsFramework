@@ -49,7 +49,6 @@ TsBool TsRenderTarget::Create( const TsDevice& dev ,
 		HRESULT hr = pDev->CreateRenderTargetView( m_tex2d , nullptr , &m_rtv );
 		RTV_CREATE_ERR_TO_RETURN;
 	}
-
 	// Step 3 Create Shader Resource View
 	{
 		HRESULT hr = pDev->CreateShaderResourceView( m_tex2d , nullptr , &m_srv );
