@@ -18,7 +18,7 @@ TsBool TsDrawQueue::Add( TsDrawObject* obj )
 
 	return TS_TRUE;
 }
-TsDrawObject* TsDrawQueue::Find( TsString name )
+TsDrawObject* TsDrawQueue::FindGeometory( TsString name )
 {
 	TS_HASH hash = TSUT::StringToHash( name );
 	for( auto it : m_drawObjList )
