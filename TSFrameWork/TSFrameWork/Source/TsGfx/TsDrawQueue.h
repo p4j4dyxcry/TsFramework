@@ -19,7 +19,7 @@ public:
 	TsBool Add( TsDrawObject* );
 
 	//! Find
-	TsDrawObject* Find( TsString name );
+	TsDrawObject* FindGeometory( TsString name );
 
 	//! Remove
 	TsBool Remove( TsDrawObject* );
