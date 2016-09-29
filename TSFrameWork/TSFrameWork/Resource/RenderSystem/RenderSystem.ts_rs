@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RenderSystem>
+  <Resource resource ="shaderResouce.ts_shaderReource"/>
+  <PriRender flow=""/>
+  <Render flow="flow.ts_shaderflow"/>
+  <PostRender flow=""/>
+</RenderSystem>
