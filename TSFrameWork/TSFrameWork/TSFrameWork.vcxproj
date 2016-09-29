@@ -20,6 +20,8 @@
     <ClCompile Include="Source\TsGfx\Material\TsMaterial.cpp" />
     <ClCompile Include="Source\TsGfx\Material\TsScreeSpaceMaterial.cpp" />
     <ClCompile Include="Source\TsGfx\Mesh\TsMeshFactory.cpp" />
+    <ClCompile Include="Source\TsGfx\ShadowMap\TsLisPSM.cpp" />
+    <ClCompile Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.cpp" />
     <ClCompile Include="Source\TsGfx\TsCamera.cpp" />
     <ClCompile Include="Source\TsGfx\TsCBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\TsDepthStencil.cpp" />
@@ -38,6 +40,8 @@
     <ClInclude Include="Source\TsGfx\Material\TsMaterial.h" />
     <ClInclude Include="Source\TsGfx\Material\TsScreeSpaceMaterial.h" />
     <ClInclude Include="Source\TsGfx\Mesh\TsMeshFactory.h" />
+    <ClInclude Include="Source\TsGfx\ShadowMap\TsLisPSM.h" />
+    <ClInclude Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.h" />
     <ClInclude Include="Source\TsGfx\TsBuffer.h" />
     <ClInclude Include="Source\TsGfx\TsCamera.h" />
     <ClInclude Include="Source\TsGfx\TsCBuffer.h" />
@@ -77,7 +81,6 @@
     <ClCompile Include="Source\TsGfx\TsVertexBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\TsViewport.cpp" />
     <ClCompile Include="Source\TsMath\TsColor.cpp" />
-    <ClCompile Include="Source\TsMath\TsLisPSM.cpp" />
     <ClCompile Include="Source\TsMath\TsMathUTility.cpp" />
     <ClCompile Include="Source\TsMath\TsMatrix.cpp" />
     <ClCompile Include="Source\TsMath\TsQuaternion.cpp" />
@@ -121,7 +124,6 @@
     <ClInclude Include="Source\TsGfx\TsVertexBuffer.h" />
     <ClInclude Include="Source\TsGfx\TsViewport.h" />
     <ClInclude Include="Source\TsMath\TsColor.h" />
-    <ClInclude Include="Source\TsMath\TsLisPSM.h" />
     <ClInclude Include="Source\TsMath\TsMath.h" />
     <ClInclude Include="Source\TsMath\TsMathUTility.h" />
     <ClInclude Include="Source\TsMath\TsMatrix.h" />

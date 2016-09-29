@@ -28,6 +28,7 @@
 #include "TsViewport.h"
 
 #include "Light\TsLight.h"
+#include "ShadowMap\TsShadowMapRenderer.h"
 
 #include "TsCamera.h"
 #include "TsVertex.h"
