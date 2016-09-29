@@ -12,7 +12,7 @@ if( FAILED( hr ) )\
 TS_INSTANTIATE_NAME_OBJ_LIST(TsDepthStencil)
 
 //! Depth Stencil ÇÃçÏê¨
-TsBool TsDepthStencil::Create( const ITsDevice& dev ,
+TsBool TsDepthStencil::Create( const TsDevice& dev ,
 							  TsInt width ,
 							  TsInt height ,
 							  DXGI_FORMAT format /*= DXGI_FORMAT_D24_UNORM_S8_UINT */)
@@ -48,7 +48,7 @@ TsBool TsDepthStencil::Create( const ITsDevice& dev ,
 
 // Depth Stencil ViewÇÃ çÏê¨
 TsDepthStencil* TsDepthStencil::CreateDSV(	TsString name,
-											const ITsDevice& dev ,
+											const TsDevice& dev ,
 											TsInt width ,
 											TsInt height ,
 											DXGI_FORMAT format /*= DXGI_FORMAT_D24_UNORM_S8_UINT */)
