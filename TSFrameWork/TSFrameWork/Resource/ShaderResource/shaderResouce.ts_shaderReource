@@ -10,8 +10,13 @@
     Name  ="Normal"
     Type  ="Texture2D"
     Format="UNORM_R8G8B8A8"
-    Size ="-1 -1">
-        
+    Size ="-1 -1">            
   </RenderTarget>
+
+  <Depth 
+    Name ="MainDepth"
+    Format ="UNORM_D24_UINT_S8"
+    Size="-1 -1">
+  </Depth>
   
 </root>

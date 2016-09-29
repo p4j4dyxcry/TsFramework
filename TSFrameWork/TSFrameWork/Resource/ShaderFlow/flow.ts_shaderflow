@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FLow>
+  <Pass Name ="pass0"
+        Shader ="LightPrePass">
+    <Input>
+      <Slot/>
+    </Input>
+    <Output>
+      <Slot Slot="Normal"/>
+      <Depth Slot="Main"/>
+    </Output>
+  </Pass>
+</FLow>
