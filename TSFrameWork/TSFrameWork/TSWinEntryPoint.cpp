@@ -21,6 +21,9 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 	//load mesh
 	TsDrawQueue queue;
 
+	TsFbxContext fbx;
+
+
 	TsMeshFactory factory;
 	factory.LoadFromFile(pDev, "test.mqo");
 

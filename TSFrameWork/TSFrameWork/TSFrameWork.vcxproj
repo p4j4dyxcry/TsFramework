@@ -90,6 +90,7 @@
     <ClCompile Include="Source\TsMath\TsVector4.cpp" />
     <ClCompile Include="Source\TsOS\TsWindowsUtility.cpp" />
     <ClCompile Include="Source\TsUT\Intarface\IHasTransform.cpp" />
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxManager.cpp" />
     <ClCompile Include="Source\TsUT\TsAlloc.cpp" />
     <ClCompile Include="Source\TsUT\TsBinaryFile.cpp" />
     <ClCompile Include="Source\TsUT\TsColladaLoader.cpp" />
@@ -104,6 +105,7 @@
     <ClCompile Include="TsAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsAfx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TSWinEntryPoint.cpp" />
   </ItemGroup>
@@ -133,6 +135,8 @@
     <ClInclude Include="Source\TsOS\TsWindowsUtility.h" />
     <ClInclude Include="Source\TsUT\Intarface\ITsHasTransform.h" />
     <ClInclude Include="Source\TsUT\Intarface\ITsStaticNameObjectList.h" />
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxHeader.h" />
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxManager.h" />
     <ClInclude Include="Source\TsUT\TsAlloc.h" />
     <ClInclude Include="Source\TSUT\TsArrayType.h" />
     <ClInclude Include="Source\TsUT\TsBinaryFile.h" />
@@ -250,7 +254,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>Extern\FBX SDK\2015.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>Extern\FBX SDK\2015.1\lib\vs2013\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>Extern\FBX SDK\2015.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>Extern\FBX SDK\2015.1\lib\vs2013\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -277,6 +288,9 @@ xcopy /y /r "$(TargetDir)*.exe" "$(ProjectDir)..\bin"</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>TsAfx.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>TsAfx.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

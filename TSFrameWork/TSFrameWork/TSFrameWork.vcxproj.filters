@@ -91,6 +91,9 @@
     <Filter Include="ソース ファイル\TsGfx\Source\ShadowMap">
       <UniqueIdentifier>{86f60c9d-ebb5-4c92-9fa2-cb173569463d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\TsUT\MeshLoader\Fbx">
+      <UniqueIdentifier>{d1f5883b-f8cf-4658-9459-209f28aaed0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TSWinEntryPoint.cpp">
@@ -266,6 +269,9 @@
     </ClCompile>
     <ClCompile Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.cpp">
       <Filter>ソース ファイル\TsGfx\Source\ShadowMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxManager.cpp">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -487,6 +493,12 @@
     </ClInclude>
     <ClInclude Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.h">
       <Filter>ソース ファイル\TsGfx\Source\ShadowMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxHeader.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxManager.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
