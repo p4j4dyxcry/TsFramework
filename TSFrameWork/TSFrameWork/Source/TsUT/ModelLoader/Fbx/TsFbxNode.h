@@ -23,20 +23,40 @@ struct TS_FBX_Attribute
 	FbxNurbsCurve*			pNurbsCurve;
 };
 
-class TsFbxNode : TsFbxObject
+class TsFbxNode : public TsFbxObject
+				, public TsNameObject
 {
+public:
 	TsFbxNode( TsFbxContext* pContext );
 	virtual ~TsFbxNode();
 	TsBool AnalizeFbxNode( FbxNode* pFbxNode );
+	FbxNode* GetFbxNode()const;
+
+	FbxSkeleton*	AsAttributeFbxSkelton()const;
+	FbxMesh*		AsAttributeFbxMesh()const;
+	FbxLight*		AsAttributeFbxLight()const;
+	FbxCamera*		AsAttributeFbxCamera()const;
+	FbxShape*		AsAttributeShape()const;
 
 	TsBool IsSkeleton()const;
 	TsBool IsMesh()const;
 	TsBool IsShape()const;
 	TsBool IsLight()const;
 	TsBool IsCamera()const;
+
+	TsBool SetChild(TsFbxNode* pNode);
+	TsBool SetParent( TsFbxNode* pNode );
+
+	TsInt GetChildCount(TsBool isSubSearch = TS_FALSE)const;
+	TsFbxNode* GetParent()const;
+	TsFbxNode* GetFirstChild()const;
+	TsFbxNode* GetSubling()const;
 private:
-	TsString m_name;
 	TS_FBX_Attribute m_attribute;
 	TsFbxNodeAttributeType m_attributeType;
 	FbxNode*  m_fbxNode;
+	TsFbxNode* m_parent;
+	TsFbxNode* m_firstChild;
+	TsFbxNode* m_subling;
+	TsTransForm* m_pTransform;
 };

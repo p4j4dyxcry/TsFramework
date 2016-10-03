@@ -15,7 +15,19 @@ void FbxSafeRelease( FbxType* pFbx )
 		pFbx->Destroy();
 	pFbx = nullptr;
 }
+static TsMatrix FbxMatrixToTsMatrix( const FbxMatrix& mtx )
+{
+	TsMatrix m;
+
+	for( int i = 0; i < 16; ++i )
+		m.m[0][i] = static_cast<float>( mtx[0][i] );
+
+	return m;
+}
+
 
 #include "TsFbxManager.h"
 #include "TsFbxNode.h"
+#include "TsFbxMaterial.h"
 #include "TsFbxScene.h"
+

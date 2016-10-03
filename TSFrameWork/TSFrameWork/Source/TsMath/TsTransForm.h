@@ -16,7 +16,7 @@
 // 概要:行列から位置、回転、拡縮を切り離し、親子関係を管理
 //		できるようにしたクラス
 //!========================================================
-class TsTransForm : TsNameObject
+class TsTransForm : public TsNameObject
 {
 public:
 	//! 規定のコンストラクタ

@@ -12,6 +12,8 @@ namespace TSUT
 	class TsFilePathAnalyzer
 	{
 	public:
+		TsFilePathAnalyzer(){};
+
 		//! コンストラクタ
 		TsFilePathAnalyzer( TsString filepass );
 

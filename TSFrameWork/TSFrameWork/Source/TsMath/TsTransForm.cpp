@@ -152,8 +152,7 @@ TsBool TsTransForm::SetParent(__inout TsTransForm* parent)
 	//e‚É‚·‚Å‚Éq‹Ÿ‚ª‚¢‚éê‡‚ÍŒZ’í‚Ì––”ö‚É©•ª‚ğ’Ç‰Á‚·‚é
 	else
 	{
-
-		TsTransForm ** subling = &( m_parent->m_firstChild->m_subling );
+		TsTransForm ** subling = &( parent->m_firstChild->m_subling );
 		while( *subling != nullptr )
 		{
 			subling = &( ( *subling )->m_subling );
