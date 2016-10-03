@@ -90,7 +90,7 @@
     <ClCompile Include="Source\TsMath\TsVector4.cpp" />
     <ClCompile Include="Source\TsOS\TsWindowsUtility.cpp" />
     <ClCompile Include="Source\TsUT\Intarface\IHasTransform.cpp" />
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxManager.cpp" />
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxContext.cpp" />
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxMaterial.cpp" />
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxNode.cpp" />
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxScene.cpp" />
@@ -139,7 +139,7 @@
     <ClInclude Include="Source\TsUT\Intarface\ITsHasTransform.h" />
     <ClInclude Include="Source\TsUT\Intarface\ITsStaticNameObjectList.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxHeader.h" />
-    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxManager.h" />
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxContext.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxMaterial.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxNode.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxScene.h" />

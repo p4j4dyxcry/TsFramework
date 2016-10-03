@@ -270,9 +270,6 @@
     <ClCompile Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.cpp">
       <Filter>ソース ファイル\TsGfx\Source\ShadowMap</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxManager.cpp">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxNode.cpp">
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
     </ClCompile>
@@ -280,6 +277,9 @@
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
     </ClCompile>
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxMaterial.cpp">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxContext.cpp">
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
     </ClCompile>
   </ItemGroup>
@@ -506,9 +506,6 @@
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxHeader.h">
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxManager.h">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClInclude>
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxNode.h">
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
     </ClInclude>
@@ -516,6 +513,9 @@
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxMaterial.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxContext.h">
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
     </ClInclude>
   </ItemGroup>

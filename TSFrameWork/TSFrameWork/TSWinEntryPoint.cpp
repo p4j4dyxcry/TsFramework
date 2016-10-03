@@ -22,7 +22,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 	TsDrawQueue queue;
 
 	TsFbxContext fbx;
-	fbx.LoadFBX( "Idol.fbx" );
+	fbx.LoadFBX( "Idol3.fbx" );
 
 
 	TsMeshFactory factory;

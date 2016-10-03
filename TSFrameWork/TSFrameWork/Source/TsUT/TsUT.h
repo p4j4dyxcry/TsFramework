@@ -34,6 +34,5 @@
 #include "TsColladaLoader.h"
 
 #include "ModelLoader\Fbx\TsFbxHeader.h"
-#include "ModelLoader\Fbx\TsFbxManager.h"
 
 #include "TsHDRTextureAnalizer.h"

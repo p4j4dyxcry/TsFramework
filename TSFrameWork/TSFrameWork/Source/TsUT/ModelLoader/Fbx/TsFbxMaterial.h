@@ -32,12 +32,16 @@ public:
 private:
 	TsBool AnalizeTextureName(const FbxProperty & pFbxProperty ,
 							   TextureType );
+	TsBool AnalizeCustomMaterial( FbxSurfaceMaterial* pFbxMaterial , const FbxImplementation* pFbxImplementation );
+	TsBool AnalizeDefaultMaterial( FbxSurfaceMaterial* pFbxMaterial );
 
 	TSUT::TsFilePathAnalyzer m_texturename[TextureType::TextureTypeNum][MAX_LAYER];
 	TsInt	 m_layersCount[TextureType::TextureTypeNum];
-	TsFloat4 m_albedo;
-	TsFloat4 m_specular;
-	TsFloat4 m_ambient;
+	TsFloat4 m_diffuse;
+	TsFloat3 m_specular;
+	TsFloat3 m_ambient;
+	TsFloat3 m_emissive;
 	TsF32	 m_specularPower;
-	TsF32	 m_Shininess;
+	TsF32	 m_shininess;
+	TsF32	 m_reflectivity;
 };

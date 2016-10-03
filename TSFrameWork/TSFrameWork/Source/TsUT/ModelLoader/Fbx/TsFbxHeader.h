@@ -26,7 +26,7 @@ static TsMatrix FbxMatrixToTsMatrix( const FbxMatrix& mtx )
 }
 
 
-#include "TsFbxManager.h"
+#include "TsFbxContext.h"
 #include "TsFbxNode.h"
 #include "TsFbxMaterial.h"
 #include "TsFbxScene.h"
