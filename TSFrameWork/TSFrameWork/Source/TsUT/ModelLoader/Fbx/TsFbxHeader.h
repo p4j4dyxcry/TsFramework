@@ -6,6 +6,8 @@
 #pragma comment(lib,"release/libfbxsdk-md.lib")
 #endif
 
+#define TsFbxNodeAttributeType FbxNodeAttribute::EType
+
 template<typename FbxType>
 void FbxSafeRelease( FbxType* pFbx )
 {
@@ -13,3 +15,7 @@ void FbxSafeRelease( FbxType* pFbx )
 		pFbx->Destroy();
 	pFbx = nullptr;
 }
+
+#include "TsFbxManager.h"
+#include "TsFbxNode.h"
+#include "TsFbxScene.h"

@@ -273,6 +273,12 @@
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxManager.cpp">
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxNode.cpp">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxScene.cpp">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -498,6 +504,12 @@
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxManager.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxNode.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxScene.h">
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
     </ClInclude>
   </ItemGroup>
