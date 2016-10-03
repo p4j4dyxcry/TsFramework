@@ -29,7 +29,7 @@ TsBool TsFbxMaterial::AnalizeForFbxMaterial( FbxSurfaceMaterial* pFbxMaterial )
 	//refrection
 	pPropery = pFbxMaterial->FindProperty( FbxSurfaceMaterial::sReflection );
 	AnalizeTextureName( pPropery , TextureType::Ref );
-
+	
 	//shininess
 	pPropery = pFbxMaterial->FindProperty( FbxSurfaceMaterial::sShininess );
 	AnalizeTextureName( pPropery , TextureType::Shininess );
