@@ -38,3 +38,17 @@ bin/
 *.jpeg
 
 
+TSFrameWork/TSFrameWork/Extern/FBX SDK/2015.1/lib/vs2013/x64/debug/libfbxsdk.dll
+TSFrameWork/TSFrameWork/Extern/FBX SDK/2015.1/lib/vs2013/x64/debug/libfbxsdk.lib
+TSFrameWork/TSFrameWork/Extern/FBX SDK/2015.1/lib/vs2013/x64/debug/libfbxsdk-md.lib
+TSFrameWork/TSFrameWork/Extern/FBX SDK/2015.1/lib/vs2013/x64/debug/libfbxsdk-mt.lib
+TSFrameWork/TSFrameWork/Extern/FBX SDK/2015.1/lib/vs2013/x64/release/libfbxsdk.dll
+TSFrameWork/TSFrameWork/Extern/FBX SDK/2015.1/lib/vs2013/x64/release/libfbxsdk.lib
+TSFrameWork/TSFrameWork/Extern/FBX SDK/2015.1/lib/vs2013/x64/release/libfbxsdk-md.lib
+TSFrameWork/TSFrameWork/Extern/FBX SDK/2015.1/lib/vs2013/x64/release/libfbxsdk-mt.lib
+TSFrameWork/TSFrameWork/Extern/FBX SDK/2015.1/lib/vs2013/x86/debug/libfbxsdk.dll
+TSFrameWork/TSFrameWork/Extern/FBX SDK/2015.1/lib/vs2013/x86/debug/libfbxsdk-md.lib
+TSFrameWork/TSFrameWork/Extern/FBX SDK/2015.1/lib/vs2013/x86/release/libfbxsdk.dll
+TSFrameWork/TSFrameWork/Extern/FBX SDK/2015.1/lib/vs2013/x86/release/libfbxsdk.lib
+TSFrameWork/TSFrameWork/Extern/FBX SDK/2015.1/lib/vs2013/x86/release/libfbxsdk-md.lib
+TSFrameWork/TSFrameWork/Extern/FBX SDK/2015.1/lib/vs2013/x86/release/libfbxsdk-mt.lib
