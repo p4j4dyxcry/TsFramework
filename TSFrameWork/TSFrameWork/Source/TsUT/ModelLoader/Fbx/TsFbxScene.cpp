@@ -38,6 +38,8 @@ TsBool TsFbxScene::BindFbxScene( FbxScene * pFbxScene )
 	ComputeNodeTree( m_pRootNode );
 	ComputeBoneIndex();
 
+	ParseMesh();
+
 	return TS_TRUE;
 }
 
@@ -87,6 +89,7 @@ TsBool TsFbxScene::ComputeBoneIndex()
 		{
 			TsFbxBone* pBone = (TsFbxBone*)m_pNodeList[i];
 			pBone->SetBoneIndex( boneIndex++ );
+			pBone->ComputeBindPose();
 		}
 	}
 	return TS_TRUE;
@@ -101,4 +104,17 @@ TsFbxNode* TsFbxScene::FindNodeByName(const TsString& name)const
 			return it;
 	}
 	return nullptr;
+}
+
+TsBool TsFbxScene::ParseMesh()
+{
+	for (TsUint i = 0; i < m_pNodeList.size(); ++i)
+	{
+		if (m_pNodeList[i]->IsMesh())
+		{
+			TsFbxMesh* pMesh = (TsFbxMesh*)m_pNodeList[i];
+			pMesh->Perse();
+		}
+	}
+	return TS_TRUE;
 }

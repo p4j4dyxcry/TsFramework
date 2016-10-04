@@ -161,7 +161,6 @@ TsFbxNode* TsFbxNode::Create( TsFbxContext * pFbxContext,
 		return pTsFbxNode;
 	}
 	auto attributeType = attr->GetAttributeType();
-	
 	switch (attributeType)
 	{
 	case TsFbxNodeAttributeType::eSkeleton:

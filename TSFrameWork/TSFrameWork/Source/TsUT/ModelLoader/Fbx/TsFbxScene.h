@@ -13,6 +13,7 @@ public:
 private:
 	TsBool ComputeNodeTree( TsFbxNode* pTsNode);
 	TsBool ComputeBoneIndex();
+	TsBool ParseMesh();
 	TsString	m_name;
 	FbxScene*	m_pFbxScene;
 

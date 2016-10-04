@@ -6,7 +6,7 @@ TsFbxMesh::TsFbxMesh(TsFbxContext* pFbxContext, TsFbxScene* pFbxScene) : TsFbxNo
 	m_faceList.reserve(65535);
 	m_vertexList.reserve(65535);
 
-
+	m_uvLayerCount = 0;
 	m_vertexBufferFormat = DefaultVertexFormat;
 }
 
@@ -37,7 +37,7 @@ TsBool TsFbxMesh::Perse()
 	//==============================================================
 	TsVector<TsFloat3> posList;
 	{
-		TsInt positionCount = pFbxMesh->GetDeformerCount();
+		TsInt positionCount = pFbxMesh->GetControlPointsCount();
 		FbxVector4* fbxPosList = pFbxMesh->GetControlPoints();
 		posList.resize(positionCount);
 		for (TsInt i = 0; i < positionCount; ++i)
@@ -164,17 +164,20 @@ TsBool TsFbxMesh::Perse()
 	//==============================================================
 	TsVector<TsFloat2> uvList[TS_FBX_MAX_UV];
 	FbxGeometryElementUV* pFBXUVLayers[TS_FBX_MAX_UV];
+
 	{
-		TsInt iNumUVLayers = pFbxMesh->GetElementUVCount();
-		if (iNumUVLayers>TS_FBX_MAX_UV)
-			iNumUVLayers = TS_FBX_MAX_UV; 
+		TsInt m_uvLayerCount = pFbxMesh->GetElementUVCount();
+		if (m_uvLayerCount > TS_FBX_MAX_UV)
+		{
+			m_uvLayerCount = TS_FBX_MAX_UV;
+		}
 
 		for (TsInt i = 0; i<TS_FBX_MAX_UV; i++)
 		{
 			pFBXUVLayers[i] = pFbxMesh->GetElementUV(i);
 		}
 
-		for (TsInt i = 0; i<iNumUVLayers; i++)
+		for (TsInt i = 0; i<m_uvLayerCount; i++)
 		{
 			FbxGeometryElementUV* pFBXUVs = pFBXUVLayers[i];
 
@@ -213,8 +216,6 @@ TsBool TsFbxMesh::Perse()
 		} 
 	}
 
-	
-
 	//--------------------------------------------------------------------------
 	// 面に法線インデックスをバインドする
 	//--------------------------------------------------------------------------
@@ -252,7 +253,7 @@ TsBool TsFbxMesh::Perse()
 	//--------------------------------------------------------------------------
 	if (pFBXVertexColors != NULL)
 	{
-		for (TsInt i = 0; i < TS_FBX_MAX_UV; ++i)
+		for (TsInt i = 0; i < m_uvLayerCount; ++i)
 			MappingByFace(pFBXUVLayers[i], 12 + i * 3);
 	}
 
@@ -267,6 +268,36 @@ TsBool TsFbxMesh::Perse()
 		FbxSkin* pFbxSkin = (FbxSkin*)pFbxMesh->GetDeformer(0, FbxDeformer::eSkin);
 		PerseSkin(pFbxSkin, (TsInt)posList.size(), boneIndexList, boneWeightList);
 	} 
+
+	//--------------------------------------------------------------------------
+	// 頂点フォーマットの作成
+	//--------------------------------------------------------------------------
+	m_vertexList.reserve(m_faceList.size() * 3);
+
+	for (TsUint i = 0; i < m_faceList.size(); ++i)
+	{
+		for (TsUint j = 0; j < 3; ++j)
+		{
+			TsFbxVertex vertex;
+			if (!posList.empty())
+				vertex.pos = posList[m_faceList[i].posIndex[j]];
+			if (!normalList.empty())
+				vertex.normal = normalList[m_faceList[i].normalIndex[j]];
+			if (!tangentList.empty())
+				vertex.tangent = tangentList[m_faceList[i].tangentIndex[j]];
+			if (!binormalList.empty())
+				vertex.binormal = binormalList[m_faceList[i].binormalIndex[j]];
+			if (!vertexColorList.empty())
+				vertex.color = vertexColorList[m_faceList[i].colorIndex[j]];
+			for (TsInt k = 0; k < m_uvLayerCount; ++k)
+				vertex.uv[k] = uvList[m_faceList[i].UVIndex[j][k]][k];
+			if (!boneWeightList.empty())
+				vertex.boneWeight = boneWeightList[m_faceList[i].posIndex[j]];
+			if (!boneIndexList.empty())
+				vertex.boneIndex  = boneIndexList[m_faceList[i].posIndex[j]];
+			m_vertexList.push_back(vertex);
+		}
+	}
 
 	return TS_TRUE;
 }

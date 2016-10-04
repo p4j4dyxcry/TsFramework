@@ -47,7 +47,7 @@ public:
 	{
 		x = ( Type )v.x;
 		y = ( Type )v.y;
-		return *this:
+		return *this;
 	}
 	template<typename T>
 	inline TsArrayType2<Type> operator+ ( const T& n )
