@@ -27,7 +27,7 @@ TsBool TsFbxScene::BindFbxScene( FbxScene * pFbxScene )
 
 	for( TsInt i = 0; i < m_materialCount; ++i )
 	{
-		TsFbxMaterial material( m_pFbxContext );
+		TsFbxMaterial material( m_pFbxContext ,this );
 		material.AnalizeForFbxMaterial( m_pFbxScene->GetMaterial( i ) );
 		m_materialList.push_back( material );
 	}

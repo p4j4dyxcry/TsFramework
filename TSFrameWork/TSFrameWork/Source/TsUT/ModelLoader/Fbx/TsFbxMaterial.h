@@ -15,7 +15,7 @@ public:
 		TextureTypeNum
 	};
 
-	TsFbxMaterial( TsFbxContext* pFbxContext );
+	TsFbxMaterial( TsFbxContext* pFbxContext ,TsFbxScene* pFbxScene );
 	TsBool AnalizeForFbxMaterial( FbxSurfaceMaterial* pFbxMaterial );
 	TSUT::TsFilePathAnalyzer	GetAlbedoTextureName(TsInt layer=0)const;
 	TSUT::TsFilePathAnalyzer	GetSpecularTextureName( TsInt layer = 0 )const;

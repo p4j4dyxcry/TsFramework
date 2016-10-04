@@ -1,8 +1,8 @@
 #include "../../TsUT.h"
 #include "TsFbxHeader.h"
 
-TsFbxMaterial::TsFbxMaterial( TsFbxContext* pFbxContext )
-	: TsFbxObject( pFbxContext )
+TsFbxMaterial::TsFbxMaterial(TsFbxContext* pFbxContext, TsFbxScene* pFbxScene)
+: TsFbxObject(pFbxContext, pFbxScene)
 {
 	m_specularPower =
 	m_shininess		= 
