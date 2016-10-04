@@ -91,9 +91,12 @@
     <ClCompile Include="Source\TsOS\TsWindowsUtility.cpp" />
     <ClCompile Include="Source\TsUT\Intarface\IHasTransform.cpp" />
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxContext.cpp" />
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxLoader.cpp" />
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxMaterial.cpp" />
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxMesh.cpp" />
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxNode.cpp" />
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxScene.cpp" />
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBone.cpp" />
     <ClCompile Include="Source\TsUT\TsAlloc.cpp" />
     <ClCompile Include="Source\TsUT\TsBinaryFile.cpp" />
     <ClCompile Include="Source\TsUT\TsColladaLoader.cpp" />
@@ -140,9 +143,12 @@
     <ClInclude Include="Source\TsUT\Intarface\ITsStaticNameObjectList.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxHeader.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxContext.h" />
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxLoader.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxMaterial.h" />
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxMesh.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxNode.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxScene.h" />
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxBone.h" />
     <ClInclude Include="Source\TsUT\TsAlloc.h" />
     <ClInclude Include="Source\TSUT\TsArrayType.h" />
     <ClInclude Include="Source\TsUT\TsBinaryFile.h" />

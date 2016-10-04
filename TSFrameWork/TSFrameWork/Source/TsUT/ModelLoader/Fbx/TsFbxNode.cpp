@@ -74,22 +74,36 @@ FbxNode* TsFbxNode::GetFbxNode()const
 
 FbxSkeleton*	TsFbxNode::AsAttributeFbxSkelton()const
 {
+	if (m_fbxNode == nullptr)
+		return nullptr;
 	return m_fbxNode->GetSkeleton();
 }
 FbxMesh*		TsFbxNode::AsAttributeFbxMesh()const
 {
+	if (m_fbxNode == nullptr)
+		return nullptr;
+
 	return m_fbxNode->GetMesh();
 }
 FbxLight*		TsFbxNode::AsAttributeFbxLight()const
 {
+	if (m_fbxNode == nullptr)
+		return nullptr;
+
 	return m_fbxNode->GetLight();
 }
 FbxCamera*		TsFbxNode::AsAttributeFbxCamera()const
 {
+	if (m_fbxNode == nullptr)
+		return nullptr;
+
 	return m_fbxNode->GetCamera();
 }
 FbxShape*		TsFbxNode::AsAttributeShape()const
 {
+	if (m_fbxNode == nullptr)
+		return nullptr;
+
 	return m_attribute.pShape;
 }
 

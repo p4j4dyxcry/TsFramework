@@ -16,8 +16,8 @@ struct TsMqoMaterial
 struct TsMqoVertex
 {
 	TsFloat3 pos;
-	TsFloat2 uv;
 	TsFloat3 normal;
+	TsFloat2 uv;
 };
 
 // mqo face

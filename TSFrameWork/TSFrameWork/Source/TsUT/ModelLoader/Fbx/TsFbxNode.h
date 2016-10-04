@@ -23,6 +23,7 @@ struct TS_FBX_Attribute
 	FbxNurbsCurve*			pNurbsCurve;
 };
 
+
 class TsFbxNode : public TsFbxObject
 				, public TsNameObject
 {
@@ -51,7 +52,7 @@ public:
 	TsFbxNode* GetParent()const;
 	TsFbxNode* GetFirstChild()const;
 	TsFbxNode* GetSubling()const;
-private:
+protected:
 	TS_FBX_Attribute m_attribute;
 	TsFbxNodeAttributeType m_attributeType;
 	FbxNode*  m_fbxNode;

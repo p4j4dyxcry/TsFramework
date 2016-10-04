@@ -28,6 +28,8 @@ static TsMatrix FbxMatrixToTsMatrix( const FbxMatrix& mtx )
 
 #include "TsFbxContext.h"
 #include "TsFbxNode.h"
+#include "TsFbxBone.h"
+#include "TsFbxMesh.h"
 #include "TsFbxMaterial.h"
-#include "TsFbxScene.h"
 
+#include "TsFbxScene.h"

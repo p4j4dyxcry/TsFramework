@@ -42,15 +42,15 @@ cbuffer light : register(b1)
 struct VS_DEFAULT_INPUT
 {
 	float3 pos		: SV_POSITION;
-	float2 uv		: TEXCOORD0;
 	float3 normal	: NORMAL;
+	float2 uv		: TEXCOORD0;
 };
 
 struct VS_SKIN_INPT
 {
 	float3 pos		: SV_POSITION;
-	float2 uv		: TEXCOORD0;
 	float3 normal	: NORMAL;
+	float2 uv		: TEXCOORD0;
 	float4 weight	: WEIGHT;
 	uint4  boneIdx  : TEXCOORD1;
 };
