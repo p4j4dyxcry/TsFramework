@@ -197,16 +197,15 @@ TsBool TsFbxMesh::Perse()
 	//==============================================================
 	// éOäpñ ÇÃê∂ê¨
 	//==============================================================
-	TsVector<TsFbxFace> faceList;
 	{
-		faceList.resize(pFbxMesh->GetPolygonCount());
-		memset(&faceList[0], 0, (sizeof(TsFbxFace)*faceList.size()));
+		m_faceList.resize(pFbxMesh->GetPolygonCount());
+		memset(&m_faceList[0], 0, (sizeof(TsFbxFace)*m_faceList.size()));
 
-		for (TsUint i = 0; i<faceList.size(); i++)
+		for (TsUint i = 0; i<m_faceList.size(); i++)
 		{
 			TsInt iPolySize = pFbxMesh->GetPolygonSize(i);
 
-			TsFbxFace &face = faceList[i];
+			TsFbxFace &face = m_faceList[i];
 			for (TsInt j = 0; j<iPolySize; j++)
 			{
 				face.posIndex[j] = pFbxMesh->GetPolygonVertex(i, j );
