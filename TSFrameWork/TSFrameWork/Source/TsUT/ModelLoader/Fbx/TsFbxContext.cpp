@@ -47,11 +47,19 @@ TsBool TsFbxContext::LoadFBX( const TsChar * filename )
 
 	TsFbxScene* pScene = TsNew( TsFbxScene( this ) );
 	pScene->BindFbxScene( pFbxScene );
-
+	m_pFbxScenes.push_back( pScene );
 	return TS_TRUE;
 }
 
 FbxManager* TsFbxContext::GetFbxManager()const
 {
 	return m_pFbxManager;
+}
+
+TsFbxScene* TsFbxContext::GetSceneByIndex( TsInt index )
+{
+	if( m_pFbxScenes.size() > ( unsigned )index )
+		return m_pFbxScenes[index];
+	else
+		return nullptr;
 }

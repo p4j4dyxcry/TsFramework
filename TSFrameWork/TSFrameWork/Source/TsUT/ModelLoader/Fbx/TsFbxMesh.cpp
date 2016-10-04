@@ -47,6 +47,7 @@ TsBool TsFbxMesh::Perse()
 			posList[i][2] = static_cast<TsF32>(fbxPosList[i][2]);
 			if (fbxPosList[i][3] != 0.0f && fbxPosList[i][3] != 1.0f)
 				posList[i] /= (TsF32)fbxPosList[i][3];
+			posList[i] /= 100.0f;
 		}
 	}
 
@@ -406,7 +407,7 @@ size_t TsFbxMesh::GetVertexStride()const
 		stride += 2;
 	if (m_vertexBufferFormat & VertexFormat::UV5)
 		stride += 2;
-	return stride;
+	return stride * sizeof(TsF32);
 }
 
 
@@ -636,4 +637,9 @@ TsBool TsFbxMesh::PerseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
 	} // End for
 
 	return TS_TRUE;
+}
+
+TsInt  TsFbxMesh::GetVertexCount()const
+{
+	return (TsInt)m_vertexList.size();
 }

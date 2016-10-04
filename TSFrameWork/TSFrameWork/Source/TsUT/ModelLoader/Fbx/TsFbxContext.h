@@ -10,6 +10,7 @@ public:
 
 	FbxManager* GetFbxManager()const;
 	TsBool LoadFBX( const TsChar * );
+	TsFbxScene* GetSceneByIndex( TsInt index );
 	TsFbxScene* GetSceneByFileName( const TsString& name );
 private:
 	TsFbxScene* CreateScene( const TsString& filename );

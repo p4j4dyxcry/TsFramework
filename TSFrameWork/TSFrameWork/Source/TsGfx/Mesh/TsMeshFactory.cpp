@@ -38,6 +38,33 @@ TsBool TsMeshFactory::LoadFromFile( TsDevice* pDev, TsString filename )
 
 		return TS_TRUE;
 	}
+
+	if( filename.rfind( ".fbx" ) != TsString::npos )
+	{
+		TsFbxLoader loader;
+		if( loader.LoadFromFile( filename ) == TS_FALSE )
+			return TS_FALSE;
+
+		for( TsInt i = 0; i < loader.GetMeshNum(); ++i )
+		{
+			TsVertexBuffer* buffer = pDev->CreateVertexBuffer(
+				loader.GetVertexBuffer( i ) ,
+				loader.GetVertexSize( i ) ,
+				loader.GetVertexStride() );
+
+			TsMesh * mesh = TsNew( TsMesh );
+			mesh->m_vertexBuffer = buffer;
+
+			TsMaterial* material = TsNew( TsMaterial );
+			//material->m_textureName = loader.GetTexturePass( i );
+			//material->LoadTextureFromFile( pDev );
+
+			m_pMaterial.push_back( material );
+			m_pMeshList.push_back( mesh );
+		}
+
+		return TS_TRUE;
+	}
 	return TS_FALSE;
 }
 

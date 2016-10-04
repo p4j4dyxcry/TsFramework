@@ -267,12 +267,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>Extern\FBX SDK\2015.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>Extern\FBX SDK\2015.1\lib\vs2013\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>Extern\FBX SDK\2016.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>Extern\FBX SDK\2016.0\lib\vs2013\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>Extern\FBX SDK\2015.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>Extern\FBX SDK\2015.1\lib\vs2013\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>Extern\FBX SDK\2016.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>Extern\FBX SDK\2016.0\lib\vs2013\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

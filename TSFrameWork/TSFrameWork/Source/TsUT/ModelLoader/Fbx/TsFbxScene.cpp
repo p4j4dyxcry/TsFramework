@@ -118,3 +118,28 @@ TsBool TsFbxScene::ParseMesh()
 	}
 	return TS_TRUE;
 }
+
+TsInt   TsFbxScene::GetMeshNum()const
+{
+	TsInt count = 0;
+	for( TsUint i = 0; i < m_pNodeList.size(); ++i )
+	{
+		if( m_pNodeList[i]->IsMesh() )
+		{
+			++count;
+		}
+	}
+	return count;
+}
+TsVector<TsFbxMesh*> TsFbxScene::GetMeshList()const
+{
+	TsVector<TsFbxMesh*> result;
+	for( TsUint i = 0; i < m_pNodeList.size(); ++i )
+	{
+		if( m_pNodeList[i]->IsMesh() )
+		{
+			result.push_back( (TsFbxMesh*)m_pNodeList[i] );
+		}
+	}
+	return result;
+}

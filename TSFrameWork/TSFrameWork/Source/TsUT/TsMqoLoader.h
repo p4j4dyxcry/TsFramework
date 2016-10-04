@@ -47,7 +47,7 @@ class TsMqoLoader : public TsMeshLoader
 public :
 	TsMqoLoader();
 	virtual ~TsMqoLoader();
-	TsBool LoadFromFile( TsString filename )override;
+	TsBool LoadFromFile(const TsString& filename )override;
 	TsBool LoadFromMemory( void * memory , size_t sz )override;
 	virtual TsInt  GetMeshNum() override;
 	virtual TsInt  GetVertexSize( TsInt index ) override;

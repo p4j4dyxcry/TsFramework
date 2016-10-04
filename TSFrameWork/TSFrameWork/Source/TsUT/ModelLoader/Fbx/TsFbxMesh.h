@@ -84,6 +84,7 @@ public:
 
 	void*  CreateVertexBuffer()const;
 	size_t GetVertexStride()const;
+	TsInt  GetVertexCount()const;
 	virtual ~TsFbxMesh(){};
 
 	TsBool Perse();

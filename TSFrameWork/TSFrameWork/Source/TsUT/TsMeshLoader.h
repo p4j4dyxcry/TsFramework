@@ -13,7 +13,7 @@ public:
 	virtual ~TsMeshLoader(){};
 
 	//! Load From File
-	virtual TsBool LoadFromFile( TsString filename ) = 0;
+	virtual TsBool LoadFromFile(const TsString& filename ) = 0;
 
 	//! Load From Memory
 	virtual TsBool LoadFromMemory( void* memory ,size_t sz) = 0;

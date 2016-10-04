@@ -8,6 +8,8 @@ public:
 	TsBool MeshToTriangulate()const;
 	FbxNode* GetFbxRootNode()const;
 	TsBool	BindFbxScene( FbxScene* pFbxScene );
+	TsInt   GetMeshNum()const;
+	TsVector<TsFbxMesh*> GetMeshList()const;
 
 	TsFbxNode* FindNodeByName(const TsString& name)const;
 private:

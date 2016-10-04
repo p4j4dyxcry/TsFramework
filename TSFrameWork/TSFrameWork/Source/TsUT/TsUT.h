@@ -33,6 +33,6 @@
 #include "TsMqoLoader.h"
 #include "TsColladaLoader.h"
 
-#include "ModelLoader\Fbx\TsFbxHeader.h"
+#include "ModelLoader\Fbx\TsFbxLoader.h"
 
 #include "TsHDRTextureAnalizer.h"
