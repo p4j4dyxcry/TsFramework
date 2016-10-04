@@ -8,7 +8,6 @@ m_transformCBuffer(nullptr){}
 	
 TsGeometryObject::~TsGeometryObject()
 {
-	TsSafeDelete( m_transform );
 	TsSafeDelete( m_transformCBuffer );
 }
 
@@ -19,11 +18,9 @@ TsBool TsGeometryObject::CreateGeometryObject( TsDevice* pDev ,
 	SetMesh( pMesh );
 	SetMaterial( pMaterial );
 
-	m_transform = TsNew( TsTransForm );
 	m_transformCBuffer = TsNew( TsTransformCBuffer );
-
 	m_transformCBuffer->CreateTransformCBuffer( pDev );
-	m_transformCBuffer->SetTransform( m_transform );
+	
 	return TS_TRUE;
 }
 
@@ -113,5 +110,12 @@ TsBool TsGeometryObject::SetMaterial( TsMaterial* pMaterial )
 TsBool TsGeometryObject::SetMesh( TsMesh* pMesh)
 {
 	m_mesh = pMesh;
+	return TS_TRUE;
+}
+
+TsBool TsGeometryObject::SetTransform( TsTransForm* pTransform )
+{
+	m_transform = pTransform;
+	m_transformCBuffer->SetTransform( pTransform );
 	return TS_TRUE;
 }

@@ -25,6 +25,8 @@ public:
 
 	//! Get Vertex Stride
 	virtual size_t GetVertexStride() override;
+
+	TsTransForm*   GetTransform(TsInt index)const;
 private:
 	TsFbxContext* m_pFbxContext;
 };

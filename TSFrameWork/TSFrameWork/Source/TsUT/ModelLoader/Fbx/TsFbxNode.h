@@ -48,6 +48,8 @@ public:
 	TsBool SetChild(TsFbxNode* pNode);
 	TsBool SetParent( TsFbxNode* pNode );
 
+	TsTransForm* GetTransform()const;
+
 	TsInt GetChildCount(TsBool isSubSearch = TS_FALSE)const;
 	TsFbxNode* GetParent()const;
 	TsFbxNode* GetFirstChild()const;

@@ -34,6 +34,7 @@ TsBool TsMeshFactory::LoadFromFile( TsDevice* pDev, TsString filename )
 
 			m_pMaterial.push_back( material );
 			m_pMeshList.push_back( mesh );
+			m_pTransform.push_back( nullptr );
 		}
 
 		return TS_TRUE;
@@ -61,6 +62,7 @@ TsBool TsMeshFactory::LoadFromFile( TsDevice* pDev, TsString filename )
 
 			m_pMaterial.push_back( material );
 			m_pMeshList.push_back( mesh );
+			m_pTransform.push_back( loader.GetTransform( i ) );
 		}
 
 		return TS_TRUE;
@@ -91,6 +93,6 @@ TsGeometryObject* TsMeshFactory::CreateGeometryObject( TsInt index , TsDevice* p
 	TsGeometryObject * obj = TsNew( TsGeometryObject );
 
 	obj->CreateGeometryObject( pDev , m_pMeshList[index] , m_pMaterial[index] );
-
+	obj->SetTransform( m_pTransform[index] );
 	return obj;
 }

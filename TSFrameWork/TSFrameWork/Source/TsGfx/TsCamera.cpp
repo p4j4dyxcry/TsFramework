@@ -109,3 +109,30 @@ TsMatrix TsCamera::GetProjMatrix()const
 		m_far );
 	return proj;
 }
+
+TsBool TsCamera::SetEyePosition( TsVector3 eye )
+{
+	m_eye = eye;
+	return TS_TRUE;
+}
+TsBool TsCamera::SetUpVector( TsVector3 up )
+{
+	m_up= up;
+	return TS_TRUE;
+}
+TsBool TsCamera::SetLookAtVector( TsVector3 at )
+{
+	m_at = at;
+	return TS_TRUE;
+}
+TsBool TsCamera::SetFov( TsF32 fov )
+{
+	m_fov = fov;
+	return TS_TRUE;
+}
+TsBool TsCamera::SetNearAndFar( TsF32 _near , TsF32 _far )
+{
+	m_near = _near;
+	m_far = _far;
+	return TS_TRUE;
+}

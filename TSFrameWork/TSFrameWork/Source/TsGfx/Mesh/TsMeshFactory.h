@@ -22,4 +22,5 @@ public:
 protected:
 	TsVector<TsMesh*>		m_pMeshList;
 	TsVector<TsMaterial*>	m_pMaterial;
+	TsVector<TsTransForm*>	m_pTransform;
 };

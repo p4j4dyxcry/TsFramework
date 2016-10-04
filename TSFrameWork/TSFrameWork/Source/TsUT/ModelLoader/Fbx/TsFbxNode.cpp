@@ -184,3 +184,8 @@ TsFbxNode* TsFbxNode::Create( TsFbxContext * pFbxContext,
 	pTsFbxNode->AnalizeFbxNode(pFbxNode);
 	return pTsFbxNode;
 }
+
+TsTransForm* TsFbxNode::GetTransform()const
+{
+	return m_pTransform;
+}

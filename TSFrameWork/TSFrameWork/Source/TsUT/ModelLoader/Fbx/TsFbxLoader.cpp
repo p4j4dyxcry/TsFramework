@@ -51,3 +51,9 @@ size_t TsFbxLoader::GetVertexStride()
 	auto meshList = m_pFbxContext->GetSceneByIndex( 0 )->GetMeshList();
 	return meshList[0]->GetVertexStride();
 }
+
+TsTransForm* TsFbxLoader::GetTransform( TsInt index )const
+{
+	auto meshList = m_pFbxContext->GetSceneByIndex( 0 )->GetMeshList();
+	return meshList[index]->GetTransform();
+}

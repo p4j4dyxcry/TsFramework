@@ -47,7 +47,6 @@ TsBool TsFbxMesh::Perse()
 			posList[i][2] = static_cast<TsF32>(fbxPosList[i][2]);
 			if (fbxPosList[i][3] != 0.0f && fbxPosList[i][3] != 1.0f)
 				posList[i] /= (TsF32)fbxPosList[i][3];
-			posList[i] /= 100.0f;
 		}
 	}
 

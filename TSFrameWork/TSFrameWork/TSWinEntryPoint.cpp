@@ -21,12 +21,8 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 	//load mesh
 	TsDrawQueue queue;
 
-	TsFbxContext fbx;
-	fbx.LoadFBX( "Idol3.fbx" );
-
-
 	TsMeshFactory factory;
-	factory.LoadFromFile(pDev, "test.mqo");
+	factory.LoadFromFile(pDev, "Idol.fbx");
 
 	for( int i = 0; i < factory.GetPrimtiveNum(); ++i )
 	{
@@ -35,9 +31,9 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 	rs.SetDrawQue( &queue );
 
 	TsCamera* pCamera = pDev->GetDC()->GetMainCamera();
-
+	pCamera->SetEyePosition( TsVector3( 0 , 50 , 100 ) );
+	pCamera->SetLookAtVector( TsVector3( 0 , 50 , 0 ) );
 	pCamera->CreateCBuffer(pDev);
-
 	MSG msg;
 	while( true )
 	{
@@ -49,7 +45,6 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 			DispatchMessage(&msg);
 		}
 		else {
-
 			//render 
 			pDev->GetDC()->Clear();
 			pCamera->UpdateForCBuffer(pDev);

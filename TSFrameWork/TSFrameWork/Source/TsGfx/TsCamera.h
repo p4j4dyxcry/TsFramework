@@ -22,6 +22,12 @@ public:
 	TsBool	 CreateCBuffer( TsDevice* );
 	TsBool	 UpdateForCBuffer( TsDevice* );
 	const TsCBuffer* GetCBuffer()const;
+
+	TsBool SetEyePosition( TsVector3 eye );
+	TsBool SetUpVector( TsVector3 up );
+	TsBool SetLookAtVector( TsVector3 at );
+	TsBool SetFov( TsF32 fov );
+	TsBool SetNearAndFar( TsF32 _near , TsF32 _far );
 public:
 	struct ViewCBuffer
 	{
