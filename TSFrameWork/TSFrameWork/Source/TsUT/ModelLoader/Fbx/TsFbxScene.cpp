@@ -1,8 +1,8 @@
 #include"../../TsUT.h"
 #include "TsFbxHeader.h"
 
-TsFbxScene::TsFbxScene(TsFbxContext * pContext) 
-	:TsFbxObject(pContext),
+TsFbxScene::TsFbxScene(TsFbxContext * pContext,TsFbxScene* pFbxScene /* nullptr */) 
+	:TsFbxObject(pContext,this),
 	 m_pFbxScene(nullptr),
 	 m_pRootNode(nullptr)
 {
@@ -32,11 +32,11 @@ TsBool TsFbxScene::BindFbxScene( FbxScene * pFbxScene )
 		m_materialList.push_back( material );
 	}
 
-	m_pRootNode = TsNew( TsFbxNode( m_pFbxContext ) );
-	m_pRootNode->AnalizeFbxNode( GetFbxRootNode() );
+	m_pRootNode = TsFbxNode::Create(m_pFbxContext, this, GetFbxRootNode());
+	m_pNodeList.push_back(m_pRootNode);
+
 	ComputeNodeTree( m_pRootNode );
-
-
+	ComputeBoneIndex();
 
 	return TS_TRUE;
 }
@@ -47,9 +47,9 @@ TsBool TsFbxScene::ComputeNodeTree( TsFbxNode* pTsNode)
 	for( TsInt i = 0; i < fbxNode->GetChildCount(); ++i )
 	{
 		auto child = fbxNode->GetChild( i );
-		TsFbxNode* pTsChildNode = TsNew( TsFbxNode( m_pFbxContext ) );
-		pTsChildNode->AnalizeFbxNode( child );
+		TsFbxNode* pTsChildNode = TsFbxNode::Create(m_pFbxContext, this, child );
 		pTsChildNode->SetParent( pTsNode );
+		m_pNodeList.push_back(pTsChildNode);
 		ComputeNodeTree( pTsChildNode );
 	}
 	return TS_TRUE;
@@ -76,4 +76,29 @@ FbxNode* TsFbxScene::GetFbxRootNode()const
 	if( m_pFbxScene == nullptr )
 		return nullptr;
 	return m_pFbxScene->GetRootNode();
+}
+
+TsBool TsFbxScene::ComputeBoneIndex()
+{
+	TsInt boneIndex = 0;
+	for (TsUint i = 0; i < m_pNodeList.size(); ++i)
+	{
+		if (m_pNodeList[i]->IsSkeleton())
+		{
+			TsFbxBone* pBone = (TsFbxBone*)m_pNodeList[i];
+			pBone->SetBoneIndex( boneIndex++ );
+		}
+	}
+	return TS_TRUE;
+}
+TsFbxNode* TsFbxScene::FindNodeByName(const TsString& name)const
+{
+	TS_HASH hash = TSUT::StringToHash(name);
+
+	for (auto it : m_pNodeList)
+	{
+		if (it->GetHashCode() == hash)
+			return it;
+	}
+	return nullptr;
 }

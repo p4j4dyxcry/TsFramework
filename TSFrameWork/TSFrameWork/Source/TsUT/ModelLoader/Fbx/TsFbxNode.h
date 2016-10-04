@@ -28,7 +28,7 @@ class TsFbxNode : public TsFbxObject
 				, public TsNameObject
 {
 public:
-	TsFbxNode( TsFbxContext* pContext );
+	TsFbxNode( TsFbxContext* pContext , TsFbxScene* pFbxScene );
 	virtual ~TsFbxNode();
 	TsBool AnalizeFbxNode( FbxNode* pFbxNode );
 	FbxNode* GetFbxNode()const;
@@ -52,6 +52,9 @@ public:
 	TsFbxNode* GetParent()const;
 	TsFbxNode* GetFirstChild()const;
 	TsFbxNode* GetSubling()const;
+	static TsFbxNode* Create( TsFbxContext * pFbxContext,
+							  TsFbxScene*    pFbxScene,
+							   FbxNode*      pFbxNode);
 protected:
 	TS_FBX_Attribute m_attribute;
 	TsFbxNodeAttributeType m_attributeType;

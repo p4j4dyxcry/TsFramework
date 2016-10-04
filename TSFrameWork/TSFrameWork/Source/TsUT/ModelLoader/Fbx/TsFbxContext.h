@@ -22,11 +22,13 @@ private:
 class TsFbxObject
 {
 public:
-	TsFbxObject( TsFbxContext* pFbxContext )
+	TsFbxObject( TsFbxContext* pFbxContext , TsFbxScene* pFbxScene)
 	{
 		m_pFbxContext = pFbxContext;
+		m_pFbxScene = pFbxScene;
 	}
 	virtual ~TsFbxObject(){};
 protected:
 	TsFbxContext* m_pFbxContext;
+	TsFbxScene *  m_pFbxScene;
 };

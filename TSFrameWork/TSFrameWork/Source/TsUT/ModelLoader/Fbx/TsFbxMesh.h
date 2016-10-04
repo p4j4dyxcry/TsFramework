@@ -54,7 +54,7 @@ struct TsFbxFace
 class TsFbxMesh : public TsFbxNode
 {
 public:
-	TsFbxMesh(TsFbxContext* pFbxContext);
+	TsFbxMesh(TsFbxContext* pFbxContext, TsFbxScene* pFbxScene);
 
 	enum VertexFormat
 	{
@@ -91,6 +91,10 @@ public:
 protected:
 	template<typename T>
 	TsBool MappingByFace(T* p, TsInt startIndex);
+
+	TsBool PerseSkin( FbxSkin* pFbxSkin , TsInt vertexCount,
+					  TsVector<TsInt4>&		boneIndexList,
+					  TsVector<TsFloat4>&	boneWeightList);
 
 	TsVector<TsFbxFace>		m_faceList;
 	TsVector<TsFbxVertex>	m_vertexList;

@@ -1,8 +1,8 @@
 #include"../../TsUT.h"
 #include "TsFbxHeader.h"
 
-TsFbxNode::TsFbxNode( TsFbxContext* pFbxContext )
-	:TsFbxObject( pFbxContext ),
+TsFbxNode::TsFbxNode( TsFbxContext* pFbxContext , TsFbxScene* pFbxScene)
+:TsFbxObject(pFbxContext, pFbxScene),
 	m_fbxNode(nullptr),
 	m_parent(nullptr),
 	m_firstChild(nullptr),
@@ -147,3 +147,41 @@ TsFbxNode* TsFbxNode::GetSubling()const
 	return m_subling;
 }
 
+TsFbxNode* TsFbxNode::Create( TsFbxContext * pFbxContext,
+							  TsFbxScene   * pFbxScene,
+							  FbxNode	   * pFbxNode)
+{
+	TsFbxNode* pTsFbxNode;
+
+	auto attr = pFbxNode->GetNodeAttribute();
+	if (attr == nullptr)
+	{
+		pTsFbxNode = TsNew(TsFbxNode(pFbxContext, pFbxScene));
+		pTsFbxNode->AnalizeFbxNode(pFbxNode);
+		return pTsFbxNode;
+	}
+	auto attributeType = attr->GetAttributeType();
+	
+	switch (attributeType)
+	{
+	case TsFbxNodeAttributeType::eSkeleton:
+		pTsFbxNode = TsNew(TsFbxBone(pFbxContext, pFbxScene));
+		break;
+	case TsFbxNodeAttributeType::eLight:
+		pTsFbxNode = TsNew(TsFbxNode(pFbxContext, pFbxScene));
+		break;
+	case TsFbxNodeAttributeType::eCamera:
+		pTsFbxNode = TsNew(TsFbxNode(pFbxContext, pFbxScene));
+		break;
+	case TsFbxNodeAttributeType::eShape:
+		pTsFbxNode = TsNew(TsFbxNode(pFbxContext, pFbxScene));
+		break;
+	case TsFbxNodeAttributeType::eMesh:
+		pTsFbxNode = TsNew(TsFbxMesh(pFbxContext, pFbxScene));
+		break;
+	default:
+		pTsFbxNode = TsNew(TsFbxNode(pFbxContext, pFbxScene));
+	}
+	pTsFbxNode->AnalizeFbxNode(pFbxNode);
+	return pTsFbxNode;
+}

@@ -1,7 +1,7 @@
 #include "../../TsUT.h"
 #include "TsFbxHeader.h"
 
-TsFbxMesh::TsFbxMesh(TsFbxContext* pFbxContext) : TsFbxNode(pFbxContext)
+TsFbxMesh::TsFbxMesh(TsFbxContext* pFbxContext, TsFbxScene* pFbxScene) : TsFbxNode(pFbxContext,pFbxScene)
 {
 	m_faceList.reserve(65535);
 	m_vertexList.reserve(65535);
@@ -437,3 +437,160 @@ TsBool TsFbxMesh::MappingByFace( T* geometory,
 	}
 	return TS_TRUE;
 };
+
+TsBool TsFbxMesh::PerseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
+							TsVector<TsInt4>&		boneIndexList,
+							TsVector<TsFloat4>&		boneWeightList)
+{
+	if (vertexCount <= 0)
+		return TS_FALSE;
+
+	boneIndexList.resize(vertexCount);
+	boneWeightList.resize(vertexCount);
+
+	TsInt i;
+	for (i = 0; i<vertexCount; i++)
+	{
+		boneIndexList[i].x = -1;
+		boneIndexList[i].y = -1;
+		boneIndexList[i].z = -1;
+		boneIndexList[i].w = -1;
+
+		boneWeightList[i].x = -1.0f;
+		boneWeightList[i].y = -1.0f;
+		boneWeightList[i].z = -1.0f;
+		boneWeightList[i].w = -1.0f;
+	} // End for
+
+	// Parse bones
+	TsInt numClusters = (TsInt)pFbxSkin->GetClusterCount();
+
+	TsVector<FbxNode*> nodes;
+	nodes.resize((size_t)numClusters);
+
+	for (i = 0; i<numClusters; i++)
+	{
+		FbxCluster* pCluster = pFbxSkin->GetCluster(i);
+
+		FbxNode *pNode = pCluster->GetLink();
+
+		nodes[i] = pNode;
+	} // End for
+
+	for (i = 0; i<numClusters; i++)
+	{
+		FbxNode *pFbxNode = nodes[i];
+
+		{
+			TsInt clusterIndex = i;
+
+			// Compute bone index from FbxNode
+			TsInt boneIndex = 0;
+
+			TsFbxBone* pBone = (TsFbxBone*)m_pFbxScene->FindNodeByName(pFbxNode->GetName());
+
+			if (pBone != NULL)
+			{
+				boneIndex = pBone->GetBoneIndex();
+			} // End if
+
+			if (boneIndex <0)
+			{
+				// Bone is not found???
+				boneIndex = 0;
+			} 
+
+			FbxCluster *pCluster = pFbxSkin->GetCluster(clusterIndex);
+
+			TsInt numPointsInfluencing = pCluster->GetControlPointIndicesCount();
+
+			TsInt *pIndices = pCluster->GetControlPointIndices();
+			TsF64 *pWeights = pCluster->GetControlPointWeights();
+
+			TsInt   idx;
+			TsF32 weight;
+
+			TsInt j;
+			for (j = 0; j<numPointsInfluencing; j++)
+			{
+				idx = pIndices[j];
+				weight = (TsF32)pWeights[j];
+
+				if (weight <= 0.0f)
+					continue;
+
+				// データが不正な場合があるので、その場合は、処理を飛ばす。
+				if (idx >= vertexCount)
+				{
+					continue;
+				}
+
+				// Insert index and weight
+				if (boneIndexList[idx].x<0)
+				{
+					boneIndexList[idx].x = (TsByte)boneIndex;
+					boneWeightList[idx].x = weight;
+				} 
+				else if (boneIndexList[idx].y<0)
+				{
+					boneIndexList[idx].y = (TsByte)boneIndex;
+					boneWeightList[idx].y = weight;
+				} 
+				else if (boneIndexList[idx].z<0)
+				{
+					boneIndexList[idx].z = (TsByte)boneIndex;
+					boneWeightList[idx].z = weight;
+				} 
+				else if (boneIndexList[idx].w<0)
+				{
+					boneIndexList[idx].w = (TsByte)boneIndex;
+					boneWeightList[idx].w = weight;
+				} 
+				else
+				{
+					// We find the smallest weight and replace it
+					TsF32 minWeight = boneWeightList[idx][0];
+					TsInt channelIdxToReplace = 0;
+					TsInt k;
+					for (k = 1; k<4; k++)
+					{
+						if (boneWeightList[idx][k]<minWeight)
+						{
+							minWeight = boneWeightList[idx][k];
+							channelIdxToReplace = k;
+						} 
+					} 
+
+					if (minWeight<weight)
+					{
+						boneIndexList[idx][channelIdxToReplace] = (TsByte)boneIndex;
+						boneWeightList[idx][channelIdxToReplace] = weight;
+					} 
+				} 
+			} 
+		}
+	} 
+
+	// Now make sure we don' t have any weights in negative values
+	for (i = 0; i<vertexCount; i++)
+	{
+		boneWeightList[i].x = max(0.0f, boneWeightList[i].x);
+		boneWeightList[i].y = max(0.0f, boneWeightList[i].y);
+		boneWeightList[i].z = max(0.0f, boneWeightList[i].z);
+		boneWeightList[i].w = max(0.0f, boneWeightList[i].w);
+
+		TsF32 totalWeight = boneWeightList[i].x +
+			boneWeightList[i].y +
+			boneWeightList[i].z +
+			boneWeightList[i].w;
+		if (totalWeight>0.0f)
+		{
+			boneWeightList[i].x /= totalWeight;
+			boneWeightList[i].y /= totalWeight;
+			boneWeightList[i].z /= totalWeight;
+			boneWeightList[i].w /= totalWeight;
+		} // End if
+	} // End for
+
+	return TS_TRUE;
+}
