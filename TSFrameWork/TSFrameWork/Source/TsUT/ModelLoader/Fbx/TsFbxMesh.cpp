@@ -256,6 +256,18 @@ TsBool TsFbxMesh::Perse()
 			MappingByFace(pFBXUVLayers[i], 12 + i * 3);
 	}
 
+	//--------------------------------------------------------------------------
+	// ÉXÉLÉìèÓïÒÇì«Ç›çûÇﬁ
+	//--------------------------------------------------------------------------
+	TsVector<TsInt4>   boneIndexList;
+	TsVector<TsFloat4> boneWeightList;
+	TsInt skinCount = pFbxMesh->GetDeformerCount(FbxDeformer::eSkin);
+	if (skinCount>0)
+	{
+		FbxSkin* pFbxSkin = (FbxSkin*)pFbxMesh->GetDeformer(0, FbxDeformer::eSkin);
+		PerseSkin(pFbxSkin, (TsInt)posList.size(), boneIndexList, boneWeightList);
+	} 
+
 	return TS_TRUE;
 }
 

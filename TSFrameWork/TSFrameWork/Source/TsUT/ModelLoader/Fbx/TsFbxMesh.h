@@ -98,7 +98,6 @@ protected:
 
 	TsVector<TsFbxFace>		m_faceList;
 	TsVector<TsFbxVertex>	m_vertexList;
-
 	VertexFormat m_vertexBufferFormat;
 };
 
