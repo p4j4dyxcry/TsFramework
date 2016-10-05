@@ -22,5 +22,5 @@ float4 main( float4 pos		: SV_POSITION,
 
 	//rimlight
 	float rim = pow(1-dot(eye, normal), 4.5f);
-	return rim;
+	return float4(normal,1);
 }
