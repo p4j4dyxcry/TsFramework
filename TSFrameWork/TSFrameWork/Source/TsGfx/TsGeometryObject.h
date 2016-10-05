@@ -29,6 +29,8 @@ public:
 	TsBool SetMaterial( TsMaterial* pMaterial );
 	TsBool SetTransform( TsTransForm * pTransform );
 	TsBool SetMesh( TsMesh* );
+
+	TsTransForm* GetTransform()const;
 private:
 	TsTransForm*		m_transform;
 	TsMesh*				m_mesh;

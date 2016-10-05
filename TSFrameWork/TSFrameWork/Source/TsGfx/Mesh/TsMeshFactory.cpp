@@ -40,7 +40,8 @@ TsBool TsMeshFactory::LoadFromFile( TsDevice* pDev, TsString filename )
 		return TS_TRUE;
 	}
 
-	if( filename.rfind( ".fbx" ) != TsString::npos )
+	if( filename.rfind( ".fbx" ) != TsString::npos || 
+		filename.rfind( ".FBX" ) != TsString::npos)
 	{
 		TsFbxLoader loader;
 		if( loader.LoadFromFile( filename ) == TS_FALSE )
@@ -53,13 +54,17 @@ TsBool TsMeshFactory::LoadFromFile( TsDevice* pDev, TsString filename )
 				loader.GetVertexSize( i ) ,
 				loader.GetVertexStride() );
 
+			TsIndexBuffer* indexBuffer = pDev->CreateIndexBuffer(
+										loader.GetIndexBuffer(i),
+										loader.GetIndexBufferSize(i));
+
 			TsMesh * mesh = TsNew( TsMesh );
 			mesh->m_vertexBuffer = buffer;
-
+			mesh->m_indexBuffer = indexBuffer;
 			TsMaterial* material = TsNew( TsMaterial );
 			//material->m_textureName = loader.GetTexturePass( i );
 			//material->LoadTextureFromFile( pDev );
-
+			TsInt id = mesh->GetIndexNum();
 			m_pMaterial.push_back( material );
 			m_pMeshList.push_back( mesh );
 			m_pTransform.push_back( loader.GetTransform( i ) );

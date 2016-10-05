@@ -29,6 +29,13 @@ public:
 
 	//! Get Vertex Stride
 	virtual size_t GetVertexStride() = 0;
+
+	//! GetIndex Buffer Size
+	virtual size_t GetIndexBufferSize(TsInt index){ return 0; };
+
+	//! GetIndex Buffer
+	virtual void* GetIndexBuffer(TsInt index){ return nullptr; };
+
 protected:
 
 private:

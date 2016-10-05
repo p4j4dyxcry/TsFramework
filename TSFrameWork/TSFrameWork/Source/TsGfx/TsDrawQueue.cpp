@@ -18,7 +18,7 @@ TsBool TsDrawQueue::Add( TsDrawObject* obj )
 
 	return TS_TRUE;
 }
-TsDrawObject* TsDrawQueue::FindGeometory( TsString name )
+TsDrawObject* TsDrawQueue::FindGeometoryByName( TsString name )
 {
 	TS_HASH hash = TSUT::StringToHash( name );
 	for( auto it : m_drawObjList )
@@ -26,6 +26,14 @@ TsDrawObject* TsDrawQueue::FindGeometory( TsString name )
 			return it;
 	TsDebugLog( "Find Fail\n" );
 	return nullptr;
+}
+
+TsDrawObject* TsDrawQueue::FindGeometoryByIndex(TsInt index)
+{
+	if (m_drawObjList.size() > (unsigned)index)
+		return m_drawObjList[index];
+	else
+		return nullptr;
 }
 TsBool TsDrawQueue::Remove( TsDrawObject * obj )
 {

@@ -95,7 +95,10 @@ TsBool TsGeometryObject::Draw( TsDeviceContext* context )
 	{
 		//todo debug
 		context->SetTopology( D3D_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		context->Draw( m_mesh->GetVertexNum() );
+		if (m_mesh->GetIndexNum() == 0)
+			context->Draw(m_mesh->GetVertexNum());
+		else
+			context->DrawIndex(m_mesh->GetIndexNum());
 	}
 	else
 		return TS_FALSE;
@@ -118,4 +121,9 @@ TsBool TsGeometryObject::SetTransform( TsTransForm* pTransform )
 	m_transform = pTransform;
 	m_transformCBuffer->SetTransform( pTransform );
 	return TS_TRUE;
+}
+
+TsTransForm* TsGeometryObject::GetTransform()const
+{
+	return m_transform;
 }

@@ -35,6 +35,11 @@ TsInt TsMesh::GetVertexNum()
 	return sz;
 }
 
+TsInt TsMesh::GetIndexNum()
+{
+	return m_indexBuffer->GetBufferSize() / sizeof(TsInt) ;
+}
+
 TsVertexBuffer* TsMesh::GetVertexBuffer()const
 {
 	return m_vertexBuffer;

@@ -382,10 +382,9 @@ TsBool TsDeviceContext::SetVertexBuffer( TsVertexBuffer* vb )
 }
 
 //! SetIndexBuffer
-TsBool TsDeviceContext::SetIndexBuffer( TsIndexBuffer* )
+TsBool TsDeviceContext::SetIndexBuffer( TsIndexBuffer* pBuffer)
 {
-	//todo
-
+	m_pDeviceContext->IASetIndexBuffer(pBuffer->GetBuffer(), DXGI_FORMAT_R32_UINT, 0);
 	return TS_TRUE;
 }
 

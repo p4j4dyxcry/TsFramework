@@ -94,6 +94,7 @@ public:
 	TsBool DrawIndex( TsInt index , TsInt startSlot = 0 , TsInt indexLocation = 0 )
 	{
 		m_pDeviceContext->DrawIndexed( index , startSlot , indexLocation );
+		return TS_TRUE;
 	}
 	void ResetDrawCallCount()
 	{

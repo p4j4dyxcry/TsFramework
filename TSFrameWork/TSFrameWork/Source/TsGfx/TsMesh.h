@@ -2,7 +2,7 @@
 
 class TsMeshFactory;
 
-class TsMesh
+class TsMesh :public TsNameObject
 {
 	friend class TsMeshFactory;
 
@@ -12,6 +12,7 @@ public:
 	TsBool CreateVertexBuffer( TsDevice * ,void * memory , size_t sz);
 	TsBool CreateIndexBuffer( TsDevice * , void * memory , size_t sz );
 	TsInt  GetVertexNum( );
+	TsInt  GetIndexNum();
 	TsVertexBuffer* GetVertexBuffer(  )const;
 	TsIndexBuffer* GetIndexBuffer(  )const;
 protected:
