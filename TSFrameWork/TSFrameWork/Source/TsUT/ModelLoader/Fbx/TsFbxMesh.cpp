@@ -278,12 +278,13 @@ TsBool TsFbxMesh::Perse()
 		printf("%s\n", GetName().c_str());
 		for (int i = 0; i < channelCount; ++i)
 		{
-			auto shape = pBlendShape->GetBlendShapeChannel(i);
-			auto shape2 = shape->GetTargetShape(0);
-			TsInt data = shape2->GetNodeCount();
-//			auto node = shape2->get
-			auto name = shape2->GetName();
-			printf(" ->%s\n ", name);
+			FbxBlendShapeChannel* shapeCH = pBlendShape->GetBlendShapeChannel(i);
+			TsInt shapeCount = shapeCH->GetTargetShapeCount();
+			for (TsInt j = 0; j < shapeCount; ++j)
+			{
+				FbxShape * pShape =shapeCH->GetTargetShape(j);
+				pShape->GetControlPoints();
+			}
 		}
 	}
 
