@@ -36,6 +36,11 @@ public:
 	TsMatrix Transposed()const;
 	TsMatrix Inversed();
 
+	TsVector3 TransformCoord(const TsVector3&);
+	TsVector3 TransformVector(const TsVector3&);
+	TsVector3 TransformPoint(const TsVector3&);
+
+	TsVector4 TransformVector(const TsVector4&);
 
 	static TsMatrix CreateTranslate( FLOAT x, FLOAT y , FLOAT z );
 	static TsMatrix CreateTranslate( const TsVector3& translate );
