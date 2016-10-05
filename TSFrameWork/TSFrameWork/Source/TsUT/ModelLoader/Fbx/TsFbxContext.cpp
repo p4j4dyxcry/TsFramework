@@ -26,6 +26,7 @@ TsBool TsFbxContext::Initialize()
 	if( m_pFbxImporter == nullptr )
 		return TS_FALSE;
 	m_fbxTimeLocation = FbxTime::eFrames60;
+
 	return TS_TRUE;
 }
 
@@ -45,6 +46,15 @@ TsBool TsFbxContext::LoadFBX( const TsChar * filename )
 
 	m_pFbxImporter->Initialize( filename );
 	FbxScene* pFbxScene = FbxScene::Create( m_pFbxManager , filename );
+
+	if (pFbxScene)
+	{
+//		FbxGlobalSettings& globalSetting = pFbxScene->GetGlobalSettings();
+
+//		globalSetting.SetOriginalUpAxis(FbxAxisSystem::DirectX);
+//		globalSetting.SetSystemUnit(FbxSystemUnit::m);
+	}
+
 	TsBool bIsImp = m_pFbxImporter->Import( pFbxScene );
 
 	if( bIsImp == TS_FALSE )

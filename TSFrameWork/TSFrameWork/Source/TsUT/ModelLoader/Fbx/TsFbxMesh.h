@@ -12,6 +12,21 @@ struct TsFbxVertex
 	TsFloat3 binormal;
 	TsColor  color;
 	TsFloat2 uv[TS_FBX_MAX_UV];		//uv x 8 layer
+
+	TsBool operator == (const TsFbxVertex& v)
+	{
+		return
+			pos == v.pos &&
+			normal == v.normal&&
+			tangent == v.tangent &&
+			binormal == v.binormal&&
+			uv[0] == v.uv[0] &&
+			uv[1] == v.uv[1] &&
+			uv[2] == v.uv[2] &&
+			uv[3] == v.uv[3] &&
+			uv[4] == v.uv[4] &&
+			uv[5] == v.uv[5] ;
+	}
 };
 
 struct TsFbxDefaultVertex
@@ -85,6 +100,9 @@ public:
 	void*  CreateVertexBuffer()const;
 	size_t GetVertexStride()const;
 	TsInt  GetVertexCount()const;
+
+	void*	CreateIndexBuffer()const;
+	size_t	GetIndexBufferSize()const;
 	virtual ~TsFbxMesh(){};
 
 	TsBool Perse();

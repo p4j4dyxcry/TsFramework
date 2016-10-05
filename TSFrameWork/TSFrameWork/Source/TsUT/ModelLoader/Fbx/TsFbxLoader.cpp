@@ -52,8 +52,23 @@ size_t TsFbxLoader::GetVertexStride()
 	return meshList[0]->GetVertexStride();
 }
 
+//! GetIndexBuffer
+void*  TsFbxLoader::GetIndexBuffer(TsInt index)
+{
+	auto meshList = m_pFbxContext->GetSceneByIndex(0)->GetMeshList();
+	return meshList[index]->CreateIndexBuffer();
+}
+
+//! GetIndexBufferSize
+size_t TsFbxLoader::GetIndexBufferSize( TsInt index )
+{
+	auto meshList = m_pFbxContext->GetSceneByIndex(0)->GetMeshList();
+	return meshList[index]->GetIndexBufferSize();
+}
+
 TsTransForm* TsFbxLoader::GetTransform( TsInt index )const
 {
 	auto meshList = m_pFbxContext->GetSceneByIndex( 0 )->GetMeshList();
 	return meshList[index]->GetTransform();
 }
+

@@ -18,16 +18,33 @@ TsFbxNode::~TsFbxNode()
 TsBool TsFbxNode::AnalizeFbxNode( FbxNode* pFbxNode)
 {
 	m_fbxNode = pFbxNode;
-
 	m_pTransform = TsNew( TsTransForm );
 	*m_pTransform = FbxMatrixToTsMatrix( m_fbxNode->EvaluateLocalTransform() );
-
 	SetName( pFbxNode->GetName() );
 	m_pTransform->SetName( GetName() );
+
+	const FbxVector4 lT = pFbxNode->GetGeometricTranslation(FbxNode::eSourcePivot);
+	const FbxVector4 lR = pFbxNode->GetGeometricRotation(FbxNode::eSourcePivot);
+	const FbxVector4 lS = pFbxNode->GetGeometricScaling(FbxNode::eSourcePivot);
+	FbxMatrix geometryMatrix = FbxMatrix(lT, lR, lS);
+
+	m_geometricTransform = FbxMatrixToTsMatrix(geometryMatrix);
 
 	auto attr = pFbxNode->GetNodeAttribute();
 	if( attr == nullptr )
 		return TS_FALSE;
+	if (!m_fbxNode->GetVisibility())
+	{
+		return TS_FALSE;
+	}
+
+	if (!m_fbxNode->Show.Get() )
+	{
+		return TS_FALSE;
+	}
+
+
+
 	m_attributeType = attr->GetAttributeType();
 
 	switch( m_attributeType )

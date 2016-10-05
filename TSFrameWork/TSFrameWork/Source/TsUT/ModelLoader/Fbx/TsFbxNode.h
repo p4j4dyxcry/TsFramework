@@ -65,4 +65,5 @@ protected:
 	TsFbxNode* m_firstChild;
 	TsFbxNode* m_subling;
 	TsTransForm* m_pTransform;
+	TsTransForm m_geometricTransform;
 };

@@ -45,8 +45,9 @@ TsBool TsFbxMesh::Perse()
 			posList[i][0] = static_cast<TsF32>(fbxPosList[i][0]);
 			posList[i][1] = static_cast<TsF32>(fbxPosList[i][1]);
 			posList[i][2] = static_cast<TsF32>(fbxPosList[i][2]);
-			if (fbxPosList[i][3] != 0.0f && fbxPosList[i][3] != 1.0f)
-				posList[i] /= (TsF32)fbxPosList[i][3];
+			
+			TsVector3 v = TsVector3(posList[i].x, posList[i].y, posList[i].z);
+			posList[i] = m_geometricTransform.ToWorldMatrix().TransformPoint(v);
 		}
 	}
 
@@ -269,11 +270,27 @@ TsBool TsFbxMesh::Perse()
 		PerseSkin(pFbxSkin, (TsInt)posList.size(), boneIndexList, boneWeightList);
 	} 
 
+	TsInt shapeCount = pFbxMesh->GetDeformerCount(FbxDeformer::eBlendShape);
+	if (shapeCount > 0)
+	{
+		FbxBlendShape* pBlendShape = (FbxBlendShape*)pFbxMesh->GetDeformer(0, FbxDeformer::eBlendShape);
+		TsInt channelCount = pBlendShape->GetBlendShapeChannelCount();
+		printf("%s\n", GetName().c_str());
+		for (int i = 0; i < channelCount; ++i)
+		{
+			auto shape = pBlendShape->GetBlendShapeChannel(i);
+			auto shape2 = shape->GetTargetShape(0);
+			TsInt data = shape2->GetNodeCount();
+//			auto node = shape2->get
+			auto name = shape2->GetName();
+			printf(" ->%s\n ", name);
+		}
+	}
+
 	//--------------------------------------------------------------------------
 	// 頂点フォーマットの作成
 	//--------------------------------------------------------------------------
 	m_vertexList.reserve(m_faceList.size() * 3);
-
 	for (TsUint i = 0; i < m_faceList.size(); ++i)
 	{
 		for (TsUint j = 0; j < 3; ++j)
@@ -294,8 +311,24 @@ TsBool TsFbxMesh::Perse()
 			if (!boneWeightList.empty())
 				vertex.boneWeight = boneWeightList[m_faceList[i].posIndex[j]];
 			if (!boneIndexList.empty())
-				vertex.boneIndex  = boneIndexList[m_faceList[i].posIndex[j]];
-			m_vertexList.push_back(vertex);
+				vertex.boneIndex = boneIndexList[m_faceList[i].posIndex[j]];
+			
+
+			// 重複しているか？
+			// modelMesh.vertexListは、最初空でだんだん登録されていく（重複していない頂点情報として）
+			auto it = std::find(m_vertexList.begin(), m_vertexList.end(), vertex);
+			if (it == m_vertexList.end())
+			{
+				// 重複していない
+				m_faceList[i].finalIndex[j] = m_vertexList.size();	// 頂点インデックスを格納
+				m_vertexList.push_back(vertex);					// 頂点情報を格納
+			}
+			else
+			{
+				// 重複している
+				auto index = std::distance(m_vertexList.begin(), it);	// 先頭から現イテレータ（重複頂点した先頭データを指し示している）までのインデックス番号を取得
+				m_faceList[i].finalIndex[j] = index;							// インデックス番号（重複頂点した先頭データを指し示している）をインデックスリストにセット
+			}
 		}
 	}
 
@@ -641,4 +674,20 @@ TsBool TsFbxMesh::PerseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
 TsInt  TsFbxMesh::GetVertexCount()const
 {
 	return (TsInt)m_vertexList.size();
+}
+
+void*  TsFbxMesh::CreateIndexBuffer()const
+{
+	TsUint * pBuffer = TsNew(TsUint[m_faceList.size() * 3]);
+
+	for (TsInt i = 0; i < m_faceList.size(); ++i)
+	for (TsInt j = 0; j < 3; ++j)
+		pBuffer[i * 3 + j] = m_faceList[i].finalIndex[j];
+
+	return pBuffer;
+}
+
+size_t  TsFbxMesh::GetIndexBufferSize()const
+{
+	return m_faceList.size() * 3 * sizeof(TsInt);
 }
