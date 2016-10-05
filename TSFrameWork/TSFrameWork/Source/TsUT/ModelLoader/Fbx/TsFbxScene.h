@@ -12,6 +12,7 @@ public:
 	TsVector<TsFbxMesh*> GetMeshList()const;
 
 	TsFbxNode* FindNodeByName(const TsString& name)const;
+	TsVector<TsFbxBone*> GetBoneList();
 private:
 	TsBool ComputeNodeTree( TsFbxNode* pTsNode);
 	TsBool ComputeBoneIndex();

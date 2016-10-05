@@ -97,6 +97,7 @@
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxNode.cpp" />
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxScene.cpp" />
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBone.cpp" />
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxSkinAnimation.cpp" />
     <ClCompile Include="Source\TsUT\TsAlloc.cpp" />
     <ClCompile Include="Source\TsUT\TsBinaryFile.cpp" />
     <ClCompile Include="Source\TsUT\TsColladaLoader.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxNode.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxScene.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxBone.h" />
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxSkinAnimation.h" />
     <ClInclude Include="Source\TsUT\TsAlloc.h" />
     <ClInclude Include="Source\TSUT\TsArrayType.h" />
     <ClInclude Include="Source\TsUT\TsBinaryFile.h" />

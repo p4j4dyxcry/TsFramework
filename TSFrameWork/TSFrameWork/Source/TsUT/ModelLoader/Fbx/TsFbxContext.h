@@ -12,11 +12,13 @@ public:
 	TsBool LoadFBX( const TsChar * );
 	TsFbxScene* GetSceneByIndex( TsInt index );
 	TsFbxScene* GetSceneByFileName( const TsString& name );
+	FbxTime::EMode GetTimeLocale();
 private:
 	TsFbxScene* CreateScene( const TsString& filename );
 
 	FbxManager*				m_pFbxManager;
 	FbxImporter*			m_pFbxImporter;
+	FbxTime::EMode m_fbxTimeLocation;
 	TsVector<TsFbxScene*>   m_pFbxScenes;
 };
 

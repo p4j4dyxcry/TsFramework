@@ -143,3 +143,16 @@ TsVector<TsFbxMesh*> TsFbxScene::GetMeshList()const
 	}
 	return result;
 }
+
+TsVector<TsFbxBone*> TsFbxScene::GetBoneList()
+{
+	TsVector<TsFbxBone*> result;
+	for( TsUint i = 0; i < m_pNodeList.size(); ++i )
+	{
+		if( m_pNodeList[i]->IsSkeleton() )
+		{
+			result.push_back( ( TsFbxBone* )m_pNodeList[i] );
+		}
+	}
+	return result;
+}

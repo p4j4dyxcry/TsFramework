@@ -33,3 +33,4 @@ static TsMatrix FbxMatrixToTsMatrix( const FbxMatrix& mtx )
 #include "TsFbxMaterial.h"
 
 #include "TsFbxScene.h"
+#include "TsFbxSkinAnimation.h"

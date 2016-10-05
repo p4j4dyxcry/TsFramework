@@ -25,8 +25,13 @@ TsBool TsFbxContext::Initialize()
 	m_pFbxImporter = FbxImporter::Create( m_pFbxManager , "imp" );
 	if( m_pFbxImporter == nullptr )
 		return TS_FALSE;
-
+	m_fbxTimeLocation = FbxTime::eFrames60;
 	return TS_TRUE;
+}
+
+FbxTime::EMode TsFbxContext::GetTimeLocale()
+{
+	return m_fbxTimeLocation;
 }
 
 TsBool TsFbxContext::LoadFBX( const TsChar * filename )
