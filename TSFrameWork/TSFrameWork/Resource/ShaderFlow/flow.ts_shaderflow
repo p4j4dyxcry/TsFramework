@@ -2,7 +2,7 @@
 
 <FLow>
   <Pass Name ="pass0"
-        Shader ="LightPrePass">
+        Shader ="Lambert">
     <Input>
       <Slot/>
     </Input>
