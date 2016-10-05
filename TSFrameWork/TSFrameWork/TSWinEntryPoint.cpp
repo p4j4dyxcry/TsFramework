@@ -22,7 +22,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 	TsDrawQueue queue;
 
 	TsMeshFactory factory;
-	factory.LoadFromFile(pDev, "Idol.fbx");
+	factory.LoadFromFile(pDev, "Face.fbx");
 
 	for( int i = 0; i < factory.GetPrimtiveNum(); ++i )
 	{
@@ -31,9 +31,11 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 	rs.SetDrawQue( &queue );
 
 	TsCamera* pCamera = pDev->GetDC()->GetMainCamera();
-	pCamera->SetEyePosition( TsVector3( 0 , 50 , 100 ) );
-	pCamera->SetLookAtVector( TsVector3( 0 , 50 , 0 ) );
+
+	pCamera->SetEyePosition(TsVector3(0,30,400.0f));
+	pCamera->SetLookAtVector( TsVector3(0,30,0));
 	pCamera->CreateCBuffer(pDev);
+	pCamera->SetNearAndFar(10, 1000);
 	MSG msg;
 	while( true )
 	{
