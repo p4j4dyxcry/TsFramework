@@ -123,6 +123,16 @@ public:
 		return *this;
 	}
 
+	TsBool operator ==(const TsArrayType2<Type>& b)
+	{
+		return x == b.x && y == b.y ;
+	}
+
+	TsBool operator !=(const TsArrayType2<Type>& b)
+	{
+		return !(*this == b);
+	}
+
 	inline Type	 Sum()
 	{
 		return x + y;
@@ -296,12 +306,12 @@ public:
 		return a.x * b.x + a.y * b.y + a.z * b.z;
 	}
 
-	TsBool operator ==( TsArrayType3<Type>& b )
+	TsBool operator ==(const TsArrayType3<Type>& b )
 	{
 		return x == b.x && y == b.y && z == b.z ;
 	}
 
-	TsBool operator !=(TsArrayType3<Type>& b)
+	TsBool operator !=(const TsArrayType3<Type>& b)
 	{
 		return !(*this == b);
 	}
@@ -468,7 +478,7 @@ public:
 	{
 		return x + y + z + w;
 	}
-	TsBool operator == ( TsArrayType4<Type>& b )
+	TsBool operator == (const TsArrayType4<Type>& b )
 	{
 		return x == b.x && y == b.y && z == b.z && w == b.w;
 	}
