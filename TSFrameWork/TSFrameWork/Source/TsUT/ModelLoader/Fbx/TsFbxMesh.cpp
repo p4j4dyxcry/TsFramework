@@ -270,12 +270,14 @@ TsBool TsFbxMesh::Perse()
 		PerseSkin(pFbxSkin, (TsInt)posList.size(), boneIndexList, boneWeightList);
 	} 
 
+	//--------------------------------------------------------------------------
+	// ブレンドシェイプを読み込む
+	//--------------------------------------------------------------------------
 	TsInt shapeCount = pFbxMesh->GetDeformerCount(FbxDeformer::eBlendShape);
 	if (shapeCount > 0)
 	{
 		FbxBlendShape* pBlendShape = (FbxBlendShape*)pFbxMesh->GetDeformer(0, FbxDeformer::eBlendShape);
 		TsInt channelCount = pBlendShape->GetBlendShapeChannelCount();
-		printf("%s\n", GetName().c_str());
 		for (int i = 0; i < channelCount; ++i)
 		{
 			FbxBlendShapeChannel* shapeCH = pBlendShape->GetBlendShapeChannel(i);
@@ -283,7 +285,12 @@ TsBool TsFbxMesh::Perse()
 			for (TsInt j = 0; j < shapeCount; ++j)
 			{
 				FbxShape * pShape =shapeCH->GetTargetShape(j);
-				pShape->GetControlPoints();
+
+				TsInt  shapeIndexCount = pShape->GetControlPointIndicesCount();
+				TsInt* shapeIndexPtr   = pShape->GetControlPointIndices();
+
+				TsInt  positionNum = pShape->GetControlPointsCount();
+				FbxVector4* fbxPositionList = pShape->GetControlPoints();
 			}
 		}
 	}
