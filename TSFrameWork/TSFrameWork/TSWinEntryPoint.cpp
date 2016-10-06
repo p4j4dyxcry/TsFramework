@@ -10,6 +10,11 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 {
 	TSUT::TsLoggerInit();
 
+	TsTransForm t = TsMatrix::CreateScale(1, 1, .3f) * 
+		TsMatrix::CreateRotate(
+		TsQuaternion::AngleAxis(TsVector3(0, 1, 0), 30))
+		;
+
 	TsApplicationBase api;
 	api.Initialize(hInstance, nWinMode);
 	TsDevice* pDev = api.GetDevice();
@@ -32,7 +37,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 
 	TsCamera* pCamera = pDev->GetDC()->GetMainCamera();
 
-	pCamera->SetEyePosition(TsVector3(0,30,400.0f));
+	pCamera->SetEyePosition(TsVector3(0,30,200.0f));
 	pCamera->SetLookAtVector( TsVector3(0,30,0));
 	pCamera->CreateCBuffer(pDev);
 	pCamera->SetNearAndFar(10, 1000);

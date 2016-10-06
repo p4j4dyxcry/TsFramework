@@ -47,15 +47,18 @@ TsBool TsFbxContext::LoadFBX( const TsChar * filename )
 	m_pFbxImporter->Initialize( filename );
 	FbxScene* pFbxScene = FbxScene::Create( m_pFbxManager , filename );
 
+	TsBool bIsImp = m_pFbxImporter->Import( pFbxScene );
 	if (pFbxScene)
 	{
-//		FbxGlobalSettings& globalSetting = pFbxScene->GetGlobalSettings();
+		FbxGlobalSettings& globalSetting = pFbxScene->GetGlobalSettings();
 
-//		globalSetting.SetOriginalUpAxis(FbxAxisSystem::DirectX);
-//		globalSetting.SetSystemUnit(FbxSystemUnit::m);
+		auto axis = globalSetting.GetAxisSystem();
+
+		//globalSetting.SetAxisSystem(FbxAxisSystem::DirectX);
+		FbxAxisSystem system(FbxAxisSystem::eMayaYUp);
+		system.ConvertScene(pFbxScene);
+		//		globalSetting.SetSystemUnit(FbxSystemUnit::m);
 	}
-
-	TsBool bIsImp = m_pFbxImporter->Import( pFbxScene );
 
 	if( bIsImp == TS_FALSE )
 		return TS_FALSE;

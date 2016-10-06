@@ -32,6 +32,7 @@ TsBool TsFbxMesh::Perse()
 	if (pFbxMesh == nullptr)
 		return TS_FALSE;
 
+	TsVector3 scale = m_geometricTransform.GetWorldScale();
 	//==============================================================
 	//! 位置情報の読み込み
 	//==============================================================
@@ -284,13 +285,8 @@ TsBool TsFbxMesh::Perse()
 			TsInt shapeCount = shapeCH->GetTargetShapeCount();
 			for (TsInt j = 0; j < shapeCount; ++j)
 			{
-				FbxShape * pShape =shapeCH->GetTargetShape(j);
-
-				TsInt  shapeIndexCount = pShape->GetControlPointIndicesCount();
-				TsInt* shapeIndexPtr   = pShape->GetControlPointIndices();
-
-				TsInt  positionNum = pShape->GetControlPointsCount();
-				FbxVector4* fbxPositionList = pShape->GetControlPoints();
+				TsFbxShape shape(shapeCH->GetTargetShape(j));
+				m_shapeList.push_back(shape);
 			}
 		}
 	}
@@ -299,15 +295,44 @@ TsBool TsFbxMesh::Perse()
 	// 頂点フォーマットの作成
 	//--------------------------------------------------------------------------
 	m_vertexList.reserve(m_faceList.size() * 3);
+
+	if (m_shapeList.size() > 0)
+	{
+		for (TsUint k = 0; k < m_shapeList[0].GetShapes().size(); ++k)
+		{
+			TsInt shapeIndex = m_shapeList[0].GetShapes()[k].index;
+
+
+			TsDebugLog("old %03d = %03.2f %03.2f,%03.2f \n", shapeIndex,
+				posList[shapeIndex].x,
+				posList[shapeIndex].y,
+				posList[shapeIndex].z);
+			TsDebugLog("new %03d = %03.2f %03.2f,%03.2f \n", shapeIndex,
+				m_shapeList[1].GetShapes()[k].pos.x,
+				m_shapeList[1].GetShapes()[k].pos.y,
+				m_shapeList[1].GetShapes()[k].pos.z);
+			posList[shapeIndex] = m_shapeList[0].GetShapes()[k].pos;
+
+
+		}
+	}
+
 	for (TsUint i = 0; i < m_faceList.size(); ++i)
 	{
 		for (TsUint j = 0; j < 3; ++j)
 		{
 			TsFbxVertex vertex;
 			if (!posList.empty())
-				vertex.pos = posList[m_faceList[i].posIndex[j]];
+			{
+				TsInt vtxIndex = m_faceList[i].posIndex[j];
+				vertex.pos = posList[vtxIndex];
+				vertex.pos.x *= -1;
+			}
 			if (!normalList.empty())
+			{
 				vertex.normal = normalList[m_faceList[i].normalIndex[j]];
+				vertex.normal.x *= -1;
+			}
 			if (!tangentList.empty())
 				vertex.tangent = tangentList[m_faceList[i].tangentIndex[j]];
 			if (!binormalList.empty())
@@ -325,17 +350,21 @@ TsBool TsFbxMesh::Perse()
 			// 重複しているか？
 			// modelMesh.vertexListは、最初空でだんだん登録されていく（重複していない頂点情報として）
 			auto it = std::find(m_vertexList.begin(), m_vertexList.end(), vertex);
+			TsInt inversIndex = 2 - j;
+
 			if (it == m_vertexList.end())
-			{
+			{				
 				// 重複していない
-				m_faceList[i].finalIndex[j] = m_vertexList.size();	// 頂点インデックスを格納
+				m_faceList[i].finalIndex[inversIndex] = m_vertexList.size();	// 頂点インデックスを格納
+				m_indexList.push_back(m_faceList[i].finalIndex[inversIndex]);
 				m_vertexList.push_back(vertex);					// 頂点情報を格納
 			}
 			else
 			{
 				// 重複している
 				auto index = std::distance(m_vertexList.begin(), it);	// 先頭から現イテレータ（重複頂点した先頭データを指し示している）までのインデックス番号を取得
-				m_faceList[i].finalIndex[j] = index;							// インデックス番号（重複頂点した先頭データを指し示している）をインデックスリストにセット
+				m_faceList[i].finalIndex[inversIndex] = index;							// インデックス番号（重複頂点した先頭データを指し示している）をインデックスリストにセット
+				m_indexList.push_back(index);
 			}
 		}
 	}
@@ -688,14 +717,14 @@ void*  TsFbxMesh::CreateIndexBuffer()const
 {
 	TsUint * pBuffer = TsNew(TsUint[m_faceList.size() * 3]);
 
-	for (TsInt i = 0; i < m_faceList.size(); ++i)
-	for (TsInt j = 0; j < 3; ++j)
-		pBuffer[i * 3 + j] = m_faceList[i].finalIndex[j];
+	for (TsUint i = 0; i < m_faceList.size(); ++i)
+	for (TsUint j = 0; j < 3; ++j)
+		pBuffer[i*3+j] = m_faceList[i].finalIndex[j];
 
 	return pBuffer;
 }
 
 size_t  TsFbxMesh::GetIndexBufferSize()const
 {
-	return m_faceList.size() * 3 * sizeof(TsInt);
+	return m_faceList.size() * sizeof(TsInt) * 3;
 }

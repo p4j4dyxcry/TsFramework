@@ -19,13 +19,20 @@ TsBool TsFbxNode::AnalizeFbxNode( FbxNode* pFbxNode)
 {
 	m_fbxNode = pFbxNode;
 	m_pTransform = TsNew( TsTransForm );
-	*m_pTransform = FbxMatrixToTsMatrix( m_fbxNode->EvaluateLocalTransform() );
+	FbxAMatrix localMatrix = m_fbxNode->EvaluateLocalTransform();
+
+	*m_pTransform = FbxMatrixToTsMatrix(localMatrix);
+
+	m_pTransform->m_localRotate.x *= -1;
+	m_pTransform->m_localRotate.w *= -1;
+	m_pTransform->m_localPosition.x *= -1;
 	SetName( pFbxNode->GetName() );
 	m_pTransform->SetName( GetName() );
 
 	const FbxVector4 lT = pFbxNode->GetGeometricTranslation(FbxNode::eSourcePivot);
 	const FbxVector4 lR = pFbxNode->GetGeometricRotation(FbxNode::eSourcePivot);
 	const FbxVector4 lS = pFbxNode->GetGeometricScaling(FbxNode::eSourcePivot);
+
 	FbxMatrix geometryMatrix = FbxMatrix(lT, lR, lS);
 
 	m_geometricTransform = FbxMatrixToTsMatrix(geometryMatrix);
@@ -37,13 +44,16 @@ TsBool TsFbxNode::AnalizeFbxNode( FbxNode* pFbxNode)
 	{
 		return TS_FALSE;
 	}
-
 	if (!m_fbxNode->Show.Get() )
 	{
 		return TS_FALSE;
 	}
 
 
+	//if (GetName() != "Box003")
+	{
+	//	return TS_FALSE;
+	}
 
 	m_attributeType = attr->GetAttributeType();
 
@@ -177,6 +187,7 @@ TsFbxNode* TsFbxNode::Create( TsFbxContext * pFbxContext,
 		pTsFbxNode->AnalizeFbxNode(pFbxNode);
 		return pTsFbxNode;
 	}
+
 	auto attributeType = attr->GetAttributeType();
 	switch (attributeType)
 	{

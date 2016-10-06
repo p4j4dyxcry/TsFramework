@@ -65,34 +65,6 @@ struct TsFbxFace
 	};
 };
 
-//! BlendShape
-
-class TsFbxShape : public TsNameObject
-{
-public:
-	TsFbxShape( FbxShape* pShape)
-	{
-		SetName( pShape->GetName() );
-
-		TsInt  shapeIndexCount = pShape->GetControlPointIndicesCount();
-		TsInt* shapeIndexPtr = pShape->GetControlPointIndices();
-
-		TsInt  positionNum = pShape->GetControlPointsCount();
-		FbxVector4* fbxPositionList = pShape->GetControlPoints();
-	}
-	struct Shape
-	{
-		TsInt		index;
-		TsVector3	pos;
-	};
-	TsVector<Shape> GetShapes()const
-	{
-		return m_shape;
-	}
-protected:
-	TsVector<Shape>	m_shape;
-}
-
 
 class TsFbxMesh : public TsFbxNode
 {
@@ -145,7 +117,9 @@ protected:
 
 	TsVector<TsFbxFace>		m_faceList;
 	TsVector<TsFbxVertex>	m_vertexList;
+	TsVector<TsInt>			m_indexList;
 	VertexFormat m_vertexBufferFormat;
+	TsVector<TsFbxShape>	m_shapeList;
 	TsInt m_uvLayerCount;
 };
 
