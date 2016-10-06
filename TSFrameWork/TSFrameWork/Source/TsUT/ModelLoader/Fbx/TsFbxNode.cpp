@@ -40,19 +40,16 @@ TsBool TsFbxNode::AnalizeFbxNode( FbxNode* pFbxNode)
 	auto attr = pFbxNode->GetNodeAttribute();
 	if( attr == nullptr )
 		return TS_FALSE;
+
+	//Mayaでノードが非表示の場合はロードしない
 	if (!m_fbxNode->GetVisibility())
 	{
 		return TS_FALSE;
 	}
+	//Mayaでattributeが非表示の場合はロードしない
 	if (!m_fbxNode->Show.Get() )
 	{
 		return TS_FALSE;
-	}
-
-
-	//if (GetName() != "Box003")
-	{
-	//	return TS_FALSE;
 	}
 
 	m_attributeType = attr->GetAttributeType();

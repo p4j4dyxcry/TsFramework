@@ -40,11 +40,6 @@ TsBool TsFbxShape::ParseBlendShape(FbxMesh  * pFbxMesh,
 		}
 	}
 
-
-
-
-
-
 }
 
 TsVector<TsFbxShape::Shape> TsFbxShape::GetShapes()const
