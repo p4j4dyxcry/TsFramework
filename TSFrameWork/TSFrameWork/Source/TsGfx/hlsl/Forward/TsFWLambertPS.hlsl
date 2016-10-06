@@ -6,7 +6,7 @@ float4 main( float4 pos		: SV_POSITION,
 			 float4 worldPos : TEXCOORD2) : SV_TARGET
 {
 	float3 dir = float3( 1 , -1 , -1 );
-	dir = -normalize( dir );
+	dir = normalize( dir );
 
 	//rambert
 	float d = max(dot(normal, dir), 0.1f);

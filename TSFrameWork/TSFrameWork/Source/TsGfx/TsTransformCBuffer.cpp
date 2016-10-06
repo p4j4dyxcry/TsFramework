@@ -8,14 +8,15 @@ TsBool TsTransformCBuffer::UpdateCBuffer( TsDeviceContext * pContext )
 {
 	if( m_pTransform )
 	{
-		TsMatrix mtxView = pContext->GetMainCamera()->GetViewMatrix();
-		TsMatrix mtxProj = pContext->GetMainCamera()->GetProjMatrix();
-		TsMatrix mtxVP	 = pContext->GetMainCamera()->GetViewProjMatrix();
-
-		m_matrixCBuffer.m_MtxWorld		= m_pTransform->ToWorldMatrix().Transposed();
-		m_matrixCBuffer.m_MtxInvWorld	= m_pTransform->ToWorldMatrix().Inversed().Transposed();
-
-		pContext->ChangeCBuffer( this , &m_matrixCBuffer , sizeof( m_matrixCBuffer ) );
+		TsMatrix&& mtxWorld = m_pTransform->ToWorldMatrix();
+		if (m_matrixCash != mtxWorld)
+		{
+			m_matrixCBuffer.m_MtxWorld = mtxWorld.Transposed();
+			m_matrixCBuffer.m_MtxInvWorld = mtxWorld.Inversed().Transposed();
+//			m_matrixCBuffer.m_MtxWorld = TsMatrix::identity;
+			pContext->ChangeCBuffer(this, &m_matrixCBuffer, sizeof(m_matrixCBuffer));
+			m_matrixCash = mtxWorld;
+		}		
 	}
 	else
 	{

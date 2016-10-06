@@ -79,8 +79,11 @@ TsBool TsCamera::Create( TsVector3 eye ,
 	m_eye = eye;
 	m_up = up;
 	m_at = at;
-	
-	//todo 
+
+	m_aspect = aspect;
+	m_fov = fov;
+	m_near = _near;
+	m_far = _far;
 
 	return TS_TRUE;
 }

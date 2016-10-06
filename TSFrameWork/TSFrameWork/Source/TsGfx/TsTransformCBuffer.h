@@ -16,5 +16,6 @@ protected:
 	};
 
 	TsTransForm* m_pTransform;
+	TsMatrix	 m_matrixCash;
 	MatrixCBuffer m_matrixCBuffer;
 };

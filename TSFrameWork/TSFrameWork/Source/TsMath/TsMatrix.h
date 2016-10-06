@@ -42,6 +42,9 @@ public:
 
 	TsVector4 TransformVector(const TsVector4&);
 
+	TsBool operator == (const TsMatrix&);
+	TsBool operator != (const TsMatrix&);
+
 	static TsMatrix CreateTranslate( FLOAT x, FLOAT y , FLOAT z );
 	static TsMatrix CreateTranslate( const TsVector3& translate );
 	static TsMatrix CreateRotate( const TsQuaternion& q );
