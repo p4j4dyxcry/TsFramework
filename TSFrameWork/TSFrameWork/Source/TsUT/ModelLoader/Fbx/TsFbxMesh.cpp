@@ -285,7 +285,10 @@ TsBool TsFbxMesh::Perse()
 			TsInt shapeCount = shapeCH->GetTargetShapeCount();
 			for (TsInt j = 0; j < shapeCount; ++j)
 			{
-				TsFbxShape shape(shapeCH->GetTargetShape(j));
+				TsFbxShape shape( m_pFbxContext,m_pFbxScene );
+				FbxAnimLayer * pAnmLayer = m_pFbxScene->GetFbxScene(0)->GetCurrentAnimationStack()->GetMember<FbxAnimLayer>(0);
+
+				shape.ParseBlendShape(pFbxMesh, pAnmLayer);
 				m_shapeList.push_back(shape);
 			}
 		}

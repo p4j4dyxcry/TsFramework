@@ -1,7 +1,9 @@
 #include "../../TsUT.h"
 #include "TsFbxHeader.h"
 
-TsFbxShape::TsFbxShape(FbxShape* pShape , )
+TsFbxShape::TsFbxShape( TsFbxContext* pFbxContext ,
+						TsFbxScene * pFbxScene)
+						:TsFbxObject( pFbxContext,pFbxScene )
 {
 
 
@@ -10,10 +12,8 @@ TsFbxShape::TsFbxShape(FbxShape* pShape , )
 TsBool TsFbxShape::ParseBlendShape(FbxMesh  * pFbxMesh,
 						FbxAnimLayer * pAnimLayer)
 {
-	SetName(pShape->GetName());
-
-
 	FbxBlendShape* pBlendShape = (FbxBlendShape*)pFbxMesh->GetDeformer(0, FbxDeformer::eBlendShape);
+
 	TsInt channelCount = pBlendShape->GetBlendShapeChannelCount();
 	for (TsInt shapeIdx = 0; shapeIdx < channelCount; ++shapeIdx)
 	{
@@ -21,6 +21,7 @@ TsBool TsFbxShape::ParseBlendShape(FbxMesh  * pFbxMesh,
 		TsInt shapeCount = shapeCH->GetTargetShapeCount();
 		for (TsInt chIdx = 0; chIdx < shapeCount; ++chIdx)
 		{
+			FbxShape* pShape = shapeCH->GetTargetShape(chIdx);
 			TsInt  shapeIndexCount = pShape->GetControlPointIndicesCount();
 			TsInt* shapeIndexPtr = pShape->GetControlPointIndices();
 			TsInt  fbxPosCount = pShape->GetControlPointsCount();
@@ -33,12 +34,22 @@ TsBool TsFbxShape::ParseBlendShape(FbxMesh  * pFbxMesh,
 				m_shape[i].pos.x = (float)fbxPositionList[shapeIndexPtr[i]][0];
 				m_shape[i].pos.y = (float)fbxPositionList[shapeIndexPtr[i]][1];
 				m_shape[i].pos.z = (float)fbxPositionList[shapeIndexPtr[i]][2];
-
-				FbxAnimCurve* lFCurve = pFbxMesh->GetShapeChannel(shapeIdx, chIdx, pAnimLayer);
 			}
+
+			FbxAnimCurve* pAnimCurve = pFbxMesh->GetShapeChannel(shapeIdx, chIdx, pAnimLayer);
+			TsInt keyCount = pAnimCurve->KeyGetCount();
+			for (TsInt i = 0; i < keyCount; ++i)
+			{
+				FbxAnimCurveKey key = pAnimCurve->KeyGet(i).GetTime();
+				FbxTime time = key.GetTime();
+				TsInt t = time.GetFrameCount(m_pFbxContext->GetTimeLocale());
+			}
+
 
 		}
 	}
+
+	return TS_TRUE;
 
 }
 

@@ -13,6 +13,12 @@ public:
 
 	TsFbxNode* FindNodeByName(const TsString& name)const;
 	TsVector<TsFbxBone*> GetBoneList();
+
+	FbxScene* GetFbxScene(TsInt index)const
+	{
+		return m_pFbxScene;
+	}
+
 private:
 	TsBool ComputeNodeTree( TsFbxNode* pTsNode);
 	TsBool ComputeBoneIndex();

@@ -1,7 +1,8 @@
 #pragma once
 //! BlendShape
 
-class TsFbxShape : public TsNameObject
+class TsFbxShape :  public TsFbxObject,
+					public TsNameObject
 {
 public:
 	struct Shape
@@ -10,7 +11,7 @@ public:
 		TsFloat3	pos;
 	};
 	
-	TsFbxShape(FbxShape* pShape);
+	TsFbxShape( TsFbxContext * , TsFbxScene * );
 
 	TsBool ParseBlendShape( FbxMesh  * ,
 							FbxAnimLayer * );
