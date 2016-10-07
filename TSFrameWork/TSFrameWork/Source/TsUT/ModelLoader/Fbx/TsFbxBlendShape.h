@@ -29,10 +29,9 @@ public:
 	};
 
 	TsFbxShape( TsFbxContext * , TsFbxScene * );
-
 	TsBool ParseBlendShape( FbxMesh  * ,
 							FbxAnimLayer * );
-
+	TsVector<BlendShapeKey> GetBlendShapeKeys( TsInt index )const;
 	TsVector<Shape> GetShapes()const;
 	
 
