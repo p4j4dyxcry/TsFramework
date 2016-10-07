@@ -14,6 +14,11 @@ TsBool TsFbxShape::ParseBlendShape(FbxMesh  * pFbxMesh,
 {
 	TsInt deformerCount = pFbxMesh->GetDeformerCount();
 	
+	//todo 現在は１つのブレンドシェイプにしか対応しない。
+	//　　　むしろ複数のブレンドシェイプのイメージがつかない
+	if( deformerCount > 0 )
+		deformerCount = 1;
+
 	for( TsInt deformerIdx = 0; deformerIdx < deformerCount; ++deformerIdx )
 	{
 		FbxBlendShape* pBlendShape = ( FbxBlendShape* )pFbxMesh->GetDeformer( deformerIdx , FbxDeformer::eBlendShape );
