@@ -1,9 +1,9 @@
 ﻿//!*******************************************************
-//!	TsGfx.h
+//! TsGfx.h
 //!
-//!	Use Directx11 gfx Api lappers.
+//! Use Directx11 gfx Api lappers.
 //!
-//!	© 2016 Yuki Tsuneyama
+//! © 2016 Yuki Tsuneyama
 #pragma once
 
 #include "../TsUT/TsUT.h"

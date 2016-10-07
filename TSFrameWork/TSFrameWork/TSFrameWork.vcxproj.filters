@@ -198,9 +198,6 @@
     <ClCompile Include="Source\TsUT\TsAlloc.cpp">
       <Filter>ソース ファイル\TsUT\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsMesh.cpp">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsGfx\Material\TsMaterial.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
     </ClCompile>
@@ -296,6 +293,9 @@
     </ClCompile>
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBlendShape.cpp">
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\TsMesh.cpp">
+      <Filter>ソース ファイル\TsGfx\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

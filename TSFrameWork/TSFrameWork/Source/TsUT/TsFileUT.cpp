@@ -7,144 +7,144 @@ using namespace TSUT;
 
 TsFilePathAnalyzer::TsFilePathAnalyzer( TsString filepath )
 {
-	Analize( filepath );
+    Analize( filepath );
 }
 
-TsBool 	TsFilePathAnalyzer::Analize( TsString filepath )
+TsBool TsFilePathAnalyzer::Analize( TsString filepath )
 {
-	m_filePath = filepath;
-	m_extension = FileToExtension( m_filePath );
-	m_fullPath = LocalToFullPath( m_filePath );
-	m_fileName = PassToFileName( m_filePath );
-	m_localDirectory = FileToLocalDirectory( m_filePath );
-	m_fullDirectory = LocalToFullPath( m_localDirectory );
+    m_filePath = filepath;
+    m_extension = FileToExtension( m_filePath );
+    m_fullPath = LocalToFullPath( m_filePath );
+    m_fileName = PassToFileName( m_filePath );
+    m_localDirectory = FileToLocalDirectory( m_filePath );
+    m_fullDirectory = LocalToFullPath( m_localDirectory );
 
-	return TS_TRUE;
+    return TS_TRUE;
 }
 
-TsString 	TsFilePathAnalyzer::GetFilePath()
+TsString TsFilePathAnalyzer::GetFilePath()
 {
-	return m_filePath;
+    return m_filePath;
 }
-TsString 	TsFilePathAnalyzer::GetFullPath()
+TsString TsFilePathAnalyzer::GetFullPath()
 {
-	return m_fullPath;
+    return m_fullPath;
 }
-TsString 	TsFilePathAnalyzer::GetExtension()
+TsString TsFilePathAnalyzer::GetExtension()
 {
-	return m_extension;
+    return m_extension;
 }
-TsString 	TsFilePathAnalyzer::GetFileName()
+TsString TsFilePathAnalyzer::GetFileName()
 {
-	return m_fileName;
+    return m_fileName;
 }
 
 TsString TsFilePathAnalyzer::GetLocalDirectory()
 {
-	return m_localDirectory;
+    return m_localDirectory;
 }
 
 TsString TsFilePathAnalyzer::GetFullDirectory()
 {
-	return m_fullDirectory;
+    return m_fullDirectory;
 }
 
 TsFileDirectory::TsFileDirectory( TsString directory ):
 m_searchSubFolder(TS_TRUE)
 {
-	if( directory.empty() )
-		return;
-	m_directory = directory;
-	if( m_directory[m_directory.size() - 1] != '/' &&
-		m_directory[m_directory.size() - 1] != '\\' )
-		m_directory += '/';
+    if( directory.empty() )
+        return;
+    m_directory = directory;
+    if( m_directory[m_directory.size() - 1] != '/' &&
+        m_directory[m_directory.size() - 1] != '\\' )
+        m_directory += '/';
 }
 
 void TsFileDirectory::SetSearchSubFolderFlag( TsBool searchSubFolder )
 {
-	m_searchSubFolder = searchSubFolder;
+    m_searchSubFolder = searchSubFolder;
 }
 TsBool TsFileDirectory::AddExtension( TsString& extencion )
 {
-	m_extensions.push_back( extencion );
-	return TS_TRUE;
+    m_extensions.push_back( extencion );
+    return TS_TRUE;
 }
 TsBool TsFileDirectory::RemoveExtension( TsString& extencion )
 {
-	m_extensions.remove( extencion );
-	return TS_TRUE;
+    m_extensions.remove( extencion );
+    return TS_TRUE;
 }
 TsList<TsString> TsFileDirectory::GetFileList()
 {
-	TsList<TsString> fileList;
-	WIN32_FIND_DATA tFindFileData;
-	// 最初に一致するファイルを取得
-	HANDLE hFile = ::FindFirstFile( (m_directory + "*").c_str() , &tFindFileData );
+    TsList<TsString> fileList;
+    WIN32_FIND_DATA tFindFileData;
+    // 最初に一致するファイルを取得
+    HANDLE hFile = ::FindFirstFile( (m_directory + "*").c_str() , &tFindFileData );
 
-	if( INVALID_HANDLE_VALUE == hFile ) {
-		return fileList;
-	}
-	do {
+    if( INVALID_HANDLE_VALUE == hFile ) {
+        return fileList;
+    }
+    do {
 
-		TsString filename = tFindFileData.cFileName;
+        TsString filename = tFindFileData.cFileName;
 
-		//! 自身を参照すると無限ループになるので回避
-		if( filename == "." || filename== ".." )
-			continue;
+        //! 自身を参照すると無限ループになるので回避
+        if( filename == "." || filename== ".." )
+            continue;
 
-		// フォルダかどうかを判定
-		if( tFindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ) 
-		{
-			//サブフォルダの検索
-			if( m_searchSubFolder == TS_FALSE)
-				continue;
+        // フォルダかどうかを判定
+        if( tFindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ) 
+        {
+            //サブフォルダの検索
+            if( m_searchSubFolder == TS_FALSE)
+                continue;
 
-			TsFileDirectory subfolder( m_directory + filename  );
-			subfolder.SetSearchSubFolderFlag( TS_TRUE );
-			for each ( auto var in m_extensions )
-				subfolder.AddExtension( var );
+            TsFileDirectory subfolder( m_directory + filename  );
+            subfolder.SetSearchSubFolderFlag( TS_TRUE );
+            for each ( auto var in m_extensions )
+                subfolder.AddExtension( var );
 
-			TsList<TsString>&& subFolderFiles = subfolder.GetFileList();
-			for each ( auto var in subFolderFiles )
-				fileList.push_back( var );
-		}
-		else 
-		{
-			TsString extention = TSUT::FileToExtension( filename );
+            TsList<TsString>&& subFolderFiles = subfolder.GetFileList();
+            for each ( auto var in subFolderFiles )
+                fileList.push_back( var );
+        }
+        else 
+        {
+            TsString extention = TSUT::FileToExtension( filename );
 
-			// 拡張子が設定されていない場合は全てのファイルを格納
-			if( m_extensions.empty() )
-				fileList.push_back( m_directory + filename );
-			else
-			{
-				//拡張子が設定されている場合は指定の拡張子のファイルならリストに追加
-				for each ( auto var in m_extensions )
-					if( var == extention )
-					{
-						fileList.push_back( m_directory + filename );
-						break;
-					}
-			}
-		}
+            // 拡張子が設定されていない場合は全てのファイルを格納
+            if( m_extensions.empty() )
+                fileList.push_back( m_directory + filename );
+            else
+            {
+                //拡張子が設定されている場合は指定の拡張子のファイルならリストに追加
+                for each ( auto var in m_extensions )
+                    if( var == extention )
+                    {
+                        fileList.push_back( m_directory + filename );
+                        break;
+                    }
+            }
+        }
 
-		// 次に一致するファイルの検索
-	} while( ::FindNextFile( hFile , &tFindFileData ) );
+        // 次に一致するファイルの検索
+    } while( ::FindNextFile( hFile , &tFindFileData ) );
 
-	// 検索ハンドルを閉じる
-	::FindClose( hFile );
-	return fileList;
+    // 検索ハンドルを閉じる
+    ::FindClose( hFile );
+    return fileList;
 }
 
 TsString TSUT::LocalToFullPath( TsString localPath )
 {
-	char szFullPath[MAX_PATH] = { '\0' };
-	char *szFilePart;
+    char szFullPath[MAX_PATH] = { '\0' };
+    char *szFilePart;
 
-	GetFullPathName(
-		localPath.c_str() , /* ファイル名を相対パスで指定 */
-		sizeof( szFullPath ) / sizeof( szFullPath[0] ) ,
-		szFullPath ,
-		&szFilePart );
+    GetFullPathName(
+        localPath.c_str() , /* ファイル名を相対パスで指定 */
+        sizeof( szFullPath ) / sizeof( szFullPath[0] ) ,
+        szFullPath ,
+        &szFilePart );
 
-	return szFullPath;
+    return szFullPath;
 }

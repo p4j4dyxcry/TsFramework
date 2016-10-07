@@ -14,128 +14,128 @@ m_pCBufferMemory(nullptr)
 
 TsCamera::~TsCamera()
 {
-	TsSafeDelete(m_pCameraBuffer);
+    TsSafeDelete(m_pCameraBuffer);
 }
 
 TsBool TsCamera::UpdateForCBuffer(TsDevice* pDevice)
 {
-	if (m_pCBufferMemory == nullptr)
-		return TS_FALSE;
+    if (m_pCBufferMemory == nullptr)
+        return TS_FALSE;
 
-	m_pCBufferMemory->m_worldCameraPos = m_eye;
-	m_pCBufferMemory->m_near = m_near;
-	m_pCBufferMemory->m_far = m_far;
-	m_pCBufferMemory->m_fov = m_fov;
+    m_pCBufferMemory->m_worldCameraPos = m_eye;
+    m_pCBufferMemory->m_near = m_near;
+    m_pCBufferMemory->m_far = m_far;
+    m_pCBufferMemory->m_fov = m_fov;
 
-	m_pCBufferMemory->m_viewMatrix = GetViewMatrix().Transposed();
-	m_pCBufferMemory->m_invViewMatrix = GetViewMatrix().Inversed().Transposed();
+    m_pCBufferMemory->m_viewMatrix = GetViewMatrix().Transposed();
+    m_pCBufferMemory->m_invViewMatrix = GetViewMatrix().Inversed().Transposed();
 
-	m_pCBufferMemory->m_projMatrix = GetProjMatrix().Transposed();
-	m_pCBufferMemory->m_invProjMatrix = GetProjMatrix().Inversed().Transposed();
+    m_pCBufferMemory->m_projMatrix = GetProjMatrix().Transposed();
+    m_pCBufferMemory->m_invProjMatrix = GetProjMatrix().Inversed().Transposed();
 
-	m_pCBufferMemory->m_viewProjMatrix = GetViewProjMatrix().Transposed();
+    m_pCBufferMemory->m_viewProjMatrix = GetViewProjMatrix().Transposed();
 
-	m_pCBufferMemory->m_dumy = 0;
+    m_pCBufferMemory->m_dumy = 0;
 
-	//call map & unmap
-	if (m_pCameraBuffer)
-		pDevice->GetDC()->ChangeCBuffer(m_pCameraBuffer, m_pCBufferMemory, sizeof(ViewCBuffer));
+    //call map & unmap
+    if (m_pCameraBuffer)
+        pDevice->GetDC()->ChangeCBuffer(m_pCameraBuffer, m_pCBufferMemory, sizeof(ViewCBuffer));
 
-	return TS_TRUE;
+    return TS_TRUE;
 }
 
 const TsCBuffer* TsCamera::GetCBuffer()const
 {
-	return m_pCameraBuffer;
+    return m_pCameraBuffer;
 }
 
 TsBool TsCamera::CreateCBuffer(TsDevice* pDevice)
 {
-	TsSafeDelete(m_pCBufferMemory);
-	TsSafeDelete(m_pCameraBuffer);
+    TsSafeDelete(m_pCBufferMemory);
+    TsSafeDelete(m_pCameraBuffer);
 
-	m_pCBufferMemory = TsNew(ViewCBuffer);
+    m_pCBufferMemory = TsNew(ViewCBuffer);
 
-	UpdateForCBuffer(pDevice);
+    UpdateForCBuffer(pDevice);
 
-	m_pCameraBuffer = pDevice->CreateCBuffer(m_pCBufferMemory, sizeof(ViewCBuffer));
-	if (m_pCameraBuffer == nullptr)
-		return TS_FALSE;
-	m_pCameraBuffer->SetRegisterIndex(MainCameraCbufferRegisterIndex);
-	m_pCameraBuffer->BindShaderType(TS_SHADER_TYPE::VP_SHADER);
+    m_pCameraBuffer = pDevice->CreateCBuffer(m_pCBufferMemory, sizeof(ViewCBuffer));
+    if (m_pCameraBuffer == nullptr)
+        return TS_FALSE;
+    m_pCameraBuffer->SetRegisterIndex(MainCameraCbufferRegisterIndex);
+    m_pCameraBuffer->BindShaderType(TS_SHADER_TYPE::VP_SHADER);
 
-	return TS_TRUE;
+    return TS_TRUE;
 }
 
 TsBool TsCamera::Create( TsVector3 eye ,
-						 TsVector3 up ,
-						 TsVector3 at ,
-						 TsF32	 aspect ,
-						 TsF32	 fov ,
-						 TsF32	 _near ,
-						 TsF32	 _far )
+                         TsVector3 up ,
+                         TsVector3 at ,
+                         TsF32	 aspect ,
+                         TsF32	 fov ,
+                         TsF32	 _near ,
+                         TsF32	 _far )
 {
 
-	m_eye = eye;
-	m_up = up;
-	m_at = at;
+    m_eye = eye;
+    m_up = up;
+    m_at = at;
 
-	m_aspect = aspect;
-	m_fov = fov;
-	m_near = _near;
-	m_far = _far;
+    m_aspect = aspect;
+    m_fov = fov;
+    m_near = _near;
+    m_far = _far;
 
-	return TS_TRUE;
+    return TS_TRUE;
 }
 
 
 TsMatrix TsCamera::GetViewMatrix()const
 {
-	Matrix view =
-		XMMatrixLookAtLH( 
-		m_eye.ToXMVECTOR() ,
-		m_at.ToXMVECTOR() ,
-		m_up.ToXMVECTOR() );
-	return view;
+    Matrix view =
+        XMMatrixLookAtLH( 
+        m_eye.ToXMVECTOR() ,
+        m_at.ToXMVECTOR() ,
+        m_up.ToXMVECTOR() );
+    return view;
 }
 TsMatrix TsCamera::GetViewProjMatrix()
 {
-	return GetViewMatrix() * GetProjMatrix();
+    return GetViewMatrix() * GetProjMatrix();
 }
 TsMatrix TsCamera::GetProjMatrix()const
 {
-	Matrix proj =
-		XMMatrixPerspectiveFovLH(
-		TsRadian( m_fov ) ,
-		m_aspect ,
-		m_near ,
-		m_far );
-	return proj;
+    Matrix proj =
+        XMMatrixPerspectiveFovLH(
+        TsRadian( m_fov ) ,
+        m_aspect ,
+        m_near ,
+        m_far );
+    return proj;
 }
 
 TsBool TsCamera::SetEyePosition( TsVector3 eye )
 {
-	m_eye = eye;
-	return TS_TRUE;
+    m_eye = eye;
+    return TS_TRUE;
 }
 TsBool TsCamera::SetUpVector( TsVector3 up )
 {
-	m_up= up;
-	return TS_TRUE;
+    m_up= up;
+    return TS_TRUE;
 }
 TsBool TsCamera::SetLookAtVector( TsVector3 at )
 {
-	m_at = at;
-	return TS_TRUE;
+    m_at = at;
+    return TS_TRUE;
 }
 TsBool TsCamera::SetFov( TsF32 fov )
 {
-	m_fov = fov;
-	return TS_TRUE;
+    m_fov = fov;
+    return TS_TRUE;
 }
 TsBool TsCamera::SetNearAndFar( TsF32 _near , TsF32 _far )
 {
-	m_near = _near;
-	m_far = _far;
-	return TS_TRUE;
+    m_near = _near;
+    m_far = _far;
+    return TS_TRUE;
 }

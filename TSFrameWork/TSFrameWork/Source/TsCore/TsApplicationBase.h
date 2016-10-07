@@ -3,11 +3,11 @@
 class TsApplicationBase
 {
 public:
-	TsApplicationBase();
+    TsApplicationBase();
 
-	TsBool Initialize( HINSTANCE hInstance , TsInt nWinMode );
-	TsBool Run();
-	TsDevice* GetDevice();
+    TsBool Initialize( HINSTANCE hInstance , TsInt nWinMode );
+    TsBool Run();
+    TsDevice* GetDevice();
 protected:
-	TsDevice*			m_pGfxDevice;
+    TsDevice* m_pGfxDevice;
 };

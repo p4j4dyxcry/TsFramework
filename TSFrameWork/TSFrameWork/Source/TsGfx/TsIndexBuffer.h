@@ -1,9 +1,9 @@
 ﻿//!*******************************************************
-//!	TsIndexBuffer.h
+//! TsIndexBuffer.h
 //!
-//!	Index Buffer .
+//! Index Buffer .
 //!
-//!	© 2016 Yuki Tsuneyama
+//! © 2016 Yuki Tsuneyama
 #pragma once
 
 class TsIndexBuffer : public TsBuffer

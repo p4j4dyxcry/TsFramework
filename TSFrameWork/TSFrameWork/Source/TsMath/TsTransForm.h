@@ -1,10 +1,9 @@
-//!*******************************************************
-//!	TsTransForm.h
+ï»¿//!*******************************************************
+//! TsTransForm.h
 //!
-//!	ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€ƒNƒ‰ƒX‚ğ’è‹`
+//! ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã‚¯ãƒ©ã‚¹ã‚’å®šç¾©
 //!
-//!	’˜ìŒ 	2016 Yuki Tsuneyama
-//!	ì¬“ú	16.01.13
+//! Â© 2016 Yuki Tsuneyama
 #pragma once
 
 #include "../../\Extern/xna/Xna.h"
@@ -13,88 +12,88 @@
 #include "TsMatrix.h"
 
 //!========================================================
-// ŠT—v:s—ñ‚©‚çˆÊ’uA‰ñ“]AŠgk‚ğØ‚è—£‚µAeqŠÖŒW‚ğŠÇ—
-//		‚Å‚«‚é‚æ‚¤‚É‚µ‚½ƒNƒ‰ƒX
+// æ¦‚è¦:è¡Œåˆ—ã‹ã‚‰ä½ç½®ã€å›è»¢ã€æ‹¡ç¸®ã‚’åˆ‡ã‚Šé›¢ã—ã€è¦ªå­é–¢ä¿‚ã‚’ç®¡ç†
+//  ã§ãã‚‹ã‚ˆã†ã«ã—ãŸã‚¯ãƒ©ã‚¹
 //!========================================================
 class TsTransForm : public TsNameObject
 {
 public:
-	//! ‹K’è‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	TsTransForm() :m_parent( nullptr ),
-				  m_localScale(1,1,1){};
+    //! è¦å®šã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+    TsTransForm() :m_parent( nullptr ),
+                  m_localScale(1,1,1){};
 
-	//! ‰Šú‰»‚³‚ê‚½‹K’è‚ÌTransform‚ğì¬
-	//  translate	ˆÊ’u
-	//  quaternion	‰ñ“]¬•ª
-	//	scale		Šgk(ƒfƒtƒHƒ‹ƒg‚Í1,1,1)
-	TsTransForm( const TsVector3& translate ,
-				const TsQuaternion quaternion ,
-				const TsVector3 scale = TsVector3::one )
-				:m_parent( nullptr ) ,				
-				 m_localPosition( translate ) ,
-				 m_localRotate( quaternion ) ,
-				 m_localScale( scale ){};
+    //! åˆæœŸåŒ–ã•ã‚ŒãŸè¦å®šã®Transformã‚’ä½œæˆ
+    //  translate	ä½ç½®
+    //  quaternion	å›è»¢æˆåˆ†
+    //	scale		æ‹¡ç¸®(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯1,1,1)
+    TsTransForm( const TsVector3& translate ,
+                const TsQuaternion quaternion ,
+                const TsVector3 scale = TsVector3::one )
+                :m_parent( nullptr ) ,				
+                 m_localPosition( translate ) ,
+                 m_localRotate( quaternion ) ,
+                 m_localScale( scale ){};
 
-	//!ƒfƒXƒgƒ‰ƒNƒ^
-	virtual ~TsTransForm();
+    //!ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+    virtual ~TsTransForm();
 
-	//! ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	TsTransForm( const TsMatrix& m );
+    //! ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+    TsTransForm( const TsMatrix& m );
 
-	//! Transform‚ğWorldSpaceMatrix‚Åæ“¾‚·‚é
-	TsMatrix	ToWorldMatrix();
+    //! Transformã‚’WorldSpaceMatrixã§å–å¾—ã™ã‚‹
+    TsMatrix ToWorldMatrix();
 
-	//! Transform‚ğLocalSpaceMatrix‚Åæ“¾‚·‚é
-	TsMatrix	ToLocalMatrix();
+    //! Transformã‚’LocalSpaceMatrixã§å–å¾—ã™ã‚‹
+    TsMatrix ToLocalMatrix();
 
-	//! ƒ[ƒ‹ƒhÀ•Wã‚ÌˆÊ’u‚ğj‚·‚é
-	TsVector3	GetWorldPos();
+    //! ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ä¸Šã®ä½ç½®ã‚’ç¥ã™ã‚‹
+    TsVector3 GetWorldPos();
 
-	TsQuaternion GetWorldRotate();
+    TsQuaternion GetWorldRotate();
 
-	//! ƒ[ƒ‹ƒh‹óŠÔ‚Å‚ÌƒXƒP[ƒ‹‚ğæ“¾‚·‚é
-	TsVector3	GetWorldScale();
+    //! ãƒ¯ãƒ¼ãƒ«ãƒ‰ç©ºé–“ã§ã®ã‚¹ã‚±ãƒ¼ãƒ«ã‚’å–å¾—ã™ã‚‹
+    TsVector3 GetWorldScale();
 
-	//! e‚ÌTransform‚ğæ“¾‚·‚é
-	//	e‚ª‚¢‚È‚¢ê‡‚ÍNULL‚ª•Ô‚é
-	TsTransForm* GetParent()const;
+    //! è¦ªã®Transformã‚’å–å¾—ã™ã‚‹
+    //	è¦ªãŒã„ãªã„å ´åˆã¯NULLãŒè¿”ã‚‹
+    TsTransForm* GetParent()const;
 
-	//! e‚ğİ’è‚·‚éB‚±‚Ìƒƒ\ƒbƒh‚Åİ’è‚³‚ê‚½Transform‚Í
-	//	ŠÖ˜A‚·‚éeqŠÖŒW‚Ì‘Sî•ñ‚ğ‘‚«Š·‚¦‚é‚±‚Æ‚ª‚ ‚éB
-	TsBool SetParent(__inout TsTransForm* transform);
+    //! è¦ªã‚’è¨­å®šã™ã‚‹ã€‚ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã§è¨­å®šã•ã‚ŒãŸTransformã¯
+    //	é–¢é€£ã™ã‚‹è¦ªå­é–¢ä¿‚ã®å…¨æƒ…å ±ã‚’æ›¸ãæ›ãˆã‚‹ã“ã¨ãŒã‚ã‚‹ã€‚
+    TsBool SetParent(__inout TsTransForm* transform);
 
-	//! qƒm[ƒh‚ğ’Ç‰Á‚·‚éB‚±‚Ìƒƒ\ƒbƒh‚Åİ’è‚³‚ê‚½Transform‚Í
-	//	ŠÖ˜A‚·‚éeqŠÖŒW‚Ì‘Sî•ñ‚ğ‘‚«Š·‚¦‚é‚±‚Æ‚ª‚ ‚éB
-	TsBool AddChild( TsTransForm* transform );
+    //! å­ãƒãƒ¼ãƒ‰ã‚’è¿½åŠ ã™ã‚‹ã€‚ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã§è¨­å®šã•ã‚ŒãŸTransformã¯
+    //	é–¢é€£ã™ã‚‹è¦ªå­é–¢ä¿‚ã®å…¨æƒ…å ±ã‚’æ›¸ãæ›ãˆã‚‹ã“ã¨ãŒã‚ã‚‹ã€‚
+    TsBool AddChild( TsTransForm* transform );
 
-	//! qƒm[ƒh‚ğ–¼‘O‚Å’Tõ‚µˆê’v‚·‚éTransform‚ğæ“¾‚·‚é
-	//@ˆê’v‚·‚éTransform‚ª‘¶İ‚µ‚È‚¢ê‡NULL‚ª•Ô‚é
-	TsTransForm* FindChildByName(const TsString&);
+    //! å­ãƒãƒ¼ãƒ‰ã‚’åå‰ã§æ¢ç´¢ã—ä¸€è‡´ã™ã‚‹Transformã‚’å–å¾—ã™ã‚‹
+    //ã€€ä¸€è‡´ã™ã‚‹TransformãŒå­˜åœ¨ã—ãªã„å ´åˆNULLãŒè¿”ã‚‹
+    TsTransForm* FindChildByName(const TsString&);
 
-	//! qƒm[ƒh‚ğƒnƒbƒVƒ…‚Å’Tõ‚µˆê’v‚·‚éTransform‚ğæ“¾‚·‚é
-	//@ˆê’v‚·‚éTransform‚ª‘¶İ‚µ‚È‚¢ê‡NULL‚ª•Ô‚é
-	TsTransForm* FindChildByhash(TS_HASH);
+    //! å­ãƒãƒ¼ãƒ‰ã‚’ãƒãƒƒã‚·ãƒ¥ã§æ¢ç´¢ã—ä¸€è‡´ã™ã‚‹Transformã‚’å–å¾—ã™ã‚‹
+    //ã€€ä¸€è‡´ã™ã‚‹TransformãŒå­˜åœ¨ã—ãªã„å ´åˆNULLãŒè¿”ã‚‹
+    TsTransForm* FindChildByhash(TS_HASH);
 
-	//! LocalMatrix‚©‚çTransform‚É•ÏŠ·‚·‚éB
-	TsTransForm& operator = (const TsMatrix& m);
+    //! LocalMatrixã‹ã‚‰Transformã«å¤‰æ›ã™ã‚‹ã€‚
+    TsTransForm& operator = (const TsMatrix& m);
 
-	//! LocalMatrix‚ÆæZ‚µ‚½Œ‹‰Ê‚ğæ“¾‚·‚é
-	TsTransForm  operator * (const TsMatrix& m);
+    //! LocalMatrixã¨ä¹—ç®—ã—ãŸçµæœã‚’å–å¾—ã™ã‚‹
+    TsTransForm  operator * (const TsMatrix& m);
 
-	//! LocalMatrix‚ÆæZ‚·‚é
-	TsTransForm& operator *= (const TsMatrix& m);
+    //! LocalMatrixã¨ä¹—ç®—ã™ã‚‹
+    TsTransForm& operator *= (const TsMatrix& m);
 
 public:
-	TsVector3		m_localPosition;				//! ƒ[ƒJƒ‹ˆÊ’u
-	TsQuaternion	m_localRotate;					//! ƒ[ƒJƒ‹‰ñ“]
-	TsVector3		m_localScale;					//! ƒ[ƒJƒ‹ƒXƒP[ƒ‹
+    TsVector3           m_localPosition;                //! ãƒ­ãƒ¼ã‚«ãƒ«ä½ç½®
+    TsQuaternion        m_localRotate;                  //! ãƒ­ãƒ¼ã‚«ãƒ«å›è»¢
+    TsVector3           m_localScale;                   //! ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ã‚±ãƒ¼ãƒ«
 protected:
-	TsTransForm*		m_parent		= nullptr;	//! e‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	TsTransForm*		m_firstChild	= nullptr;	//! ‘æˆêq‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	TsTransForm*		m_subling		= nullptr;	//! ŒZ’í‚Ö‚Ìƒ|ƒCƒ“ƒ^
+    TsTransForm*        m_parent        = nullptr;      //! è¦ªã¸ã®ãƒã‚¤ãƒ³ã‚¿
+    TsTransForm*        m_firstChild    = nullptr;      //! ç¬¬ä¸€å­ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+    TsTransForm*        m_subling       = nullptr;      //! å…„å¼Ÿã¸ã®ãƒã‚¤ãƒ³ã‚¿
 private:
 
-	//! eqŠÖŒW‚ğ‰ğœ‚·‚é
-	//	‚±‚Ìƒƒ\ƒbƒh‚ÍŠÖ˜A‚·‚éeqŠÖŒW‚Ì‘Sî•ñ‚ğ‘‚«Š·‚¦‚é‚±‚Æ‚ª‚ ‚éB
-	TsBool	RemoveOfParantChild( );
+    //! è¦ªå­é–¢ä¿‚ã‚’è§£é™¤ã™ã‚‹
+    // ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯é–¢é€£ã™ã‚‹è¦ªå­é–¢ä¿‚ã®å…¨æƒ…å ±ã‚’æ›¸ãæ›ãˆã‚‹ã“ã¨ãŒã‚ã‚‹ã€‚
+    TsBool RemoveOfParantChild( );
 };

@@ -1,17 +1,17 @@
 ﻿#pragma once
 class TsFbxSkinAnimation : public TsFbxObject
-						 , public TsNameObject
+                         , public TsNameObject
 {
 public: 
-	TsFbxSkinAnimation( TsFbxContext* pFbxContext,
-						TsFbxScene*   pFbxScene);
-	virtual ~TsFbxSkinAnimation();
+    TsFbxSkinAnimation( TsFbxContext* pFbxContext,
+                        TsFbxScene*   pFbxScene);
+    virtual ~TsFbxSkinAnimation();
 
 protected:
-	TsInt m_startFrame;
-	TsInt m_endFrame;
-	TsFbxBone * m_pRootBone;
-	TsVector<TsMap<TS_HASH , TsMatrix>> m_boneFrameLibrary;
+    TsInt m_startFrame;
+    TsInt m_endFrame;
+    TsFbxBone * m_pRootBone;
+    TsVector<TsMap<TS_HASH , TsMatrix>> m_boneFrameLibrary;
 };
 /*
 

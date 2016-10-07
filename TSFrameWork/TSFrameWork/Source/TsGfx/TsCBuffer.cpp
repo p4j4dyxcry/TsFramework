@@ -2,7 +2,7 @@
 
 //! Constructor
 TsCBuffer::TsCBuffer()
-	:m_bindShaderType(TS_SHADER_TYPE::UNKNOWN_SHADER)
+    :m_bindShaderType(TS_SHADER_TYPE::UNKNOWN_SHADER)
 {
 
 }

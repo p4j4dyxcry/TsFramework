@@ -1,13 +1,13 @@
 ﻿//!*******************************************************
-//!	TsDirectXTex.h
+//! TsDirectXTex.h
 //!
-//!	Create Texture From File.
+//! Create Texture From File.
 //!
-//!	© 2016 Yuki Tsuneyama
+//! © 2016 Yuki Tsuneyama
 #pragma once
 
 class TsDirectXTex
 {
 public:
-	static ID3D11ShaderResourceView * LoadFromFile( ID3D11Device * pDev ,const TsChar* fileName );
+    static ID3D11ShaderResourceView * LoadFromFile( ID3D11Device * pDev ,const TsChar* fileName );
 };

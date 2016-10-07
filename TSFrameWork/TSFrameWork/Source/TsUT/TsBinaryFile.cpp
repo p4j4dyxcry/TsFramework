@@ -9,127 +9,127 @@ m_size( 0 )
 
 TsBinary::TsBinary( const TsBinary& bin )
 {
-	*this = bin;
+    *this = bin;
 }
 
 TsBinary::TsBinary( TsString filename )
 {
-	Load( filename );
+    Load( filename );
 }
 
 TsBinary::~TsBinary()
 {
-	TsSafeDelete( m_bin );
-	m_size = 0;
+    TsSafeDelete( m_bin );
+    m_size = 0;
 }
 
 TsBool TsBinary::Load( TsString fileName )
 {
-	UnLoad();
+    UnLoad();
 
-	std::ifstream ifs( fileName , std::ifstream::in | std::ifstream::binary );
+    std::ifstream ifs( fileName , std::ifstream::in | std::ifstream::binary );
 
-	if( ifs.fail() )
-	{
-		TsDebugLog( "Load Fail \n\t %s\n" , fileName.c_str() );
-		return TS_FALSE;
-	}
-	TsInt begin = static_cast<TsInt>( ifs.tellg() );
-	ifs.seekg( 0 , ifs.end );
+    if( ifs.fail() )
+    {
+        TsDebugLog( "Load Fail \n\t %s\n" , fileName.c_str() );
+        return TS_FALSE;
+    }
+    TsInt begin = static_cast<TsInt>( ifs.tellg() );
+    ifs.seekg( 0 , ifs.end );
 
-	TsInt end = static_cast<TsInt>( ifs.tellg() );
-	m_size = (end - begin);
-	ifs.clear();
-	ifs.seekg( 0 , ifs.beg );
-	m_bin = TsNew(TsByte[m_size]);
-	//m_bin[m_size - 1] = '\0';  
-	ifs.read( (TsS8*)m_bin , m_size);
+    TsInt end = static_cast<TsInt>( ifs.tellg() );
+    m_size = (end - begin);
+    ifs.clear();
+    ifs.seekg( 0 , ifs.beg );
+    m_bin = TsNew(TsByte[m_size]);
+    //m_bin[m_size - 1] = '\0';  
+    ifs.read( (TsS8*)m_bin , m_size);
 
-	return TS_TRUE;
+    return TS_TRUE;
 }
 
 void TsBinary::UnLoad()
 {
-	TsSafeDelete( m_bin );
+    TsSafeDelete( m_bin );
 }
 TsByte* TsBinary::GetBinary()const
 {
-	return m_bin;
+    return m_bin;
 }
 TsInt	TsBinary::GetSize()const
 {
-	return m_size;
+    return m_size;
 }
 
 TsBinary TsBinary::operator=( const TsBinary& bin )
 {
-	m_size = bin.GetSize();
-	if( m_size > 0 )
-	{
-		m_bin = TsNew( TsByte[m_size] );
-		memcpy_s( &m_bin , m_size , bin.GetBinary() , m_size );
-	}
-	else
-		m_bin = nullptr;
+    m_size = bin.GetSize();
+    if( m_size > 0 )
+    {
+        m_bin = TsNew( TsByte[m_size] );
+        memcpy_s( &m_bin , m_size , bin.GetBinary() , m_size );
+    }
+    else
+        m_bin = nullptr;
 
-	return *this;
+    return *this;
 }
 
 //Seek
 TsByte*	TsBinary::SeekString(	const TsChar* target,
-								TsInt startIndex ,		/*= 0 */
-								__out TsInt* outIndex	/*= nullptr */)
+                                TsInt startIndex ,		/*= 0 */
+                                __out TsInt* outIndex	/*= nullptr */)
 {
-	if (startIndex > m_size)
-		return nullptr;
+    if (startIndex > m_size)
+        return nullptr;
 
-	TsInt index = startIndex;
+    TsInt index = startIndex;
 
-	auto Cmp = [&]()
-	{
-		TsInt i = index;
-		TsInt j = 0;
-		while (target[j] != '\0' &&
-				m_bin[i] != '\0')
-		{
-			if (target[j] != m_bin[i])
-				return TS_FALSE;
-			j++;
-			i++;
-		}
+    auto Cmp = [&]()
+    {
+        TsInt i = index;
+        TsInt j = 0;
+        while (target[j] != '\0' &&
+                m_bin[i] != '\0')
+        {
+            if (target[j] != m_bin[i])
+                return TS_FALSE;
+            j++;
+            i++;
+        }
 
-		return TS_TRUE;
-	};
+        return TS_TRUE;
+    };
 
-	while ( m_bin[index] != '\0')
-	{
-		if ( Cmp() )
-		{
-			if ( outIndex )
-				*outIndex = index;
-			return &m_bin[index];
-		}
+    while ( m_bin[index] != '\0')
+    {
+        if ( Cmp() )
+        {
+            if ( outIndex )
+                *outIndex = index;
+            return &m_bin[index];
+        }
 
-		++index;
-	}
-	return nullptr;
+        ++index;
+    }
+    return nullptr;
 }
 
 TsByte* TsBinary::SeekNumber(	TsInt startIndex ,		/*= 0 */
-								__out TsInt* outIndex	/*= nullptr */	 )
+                                __out TsInt* outIndex	/*= nullptr */	 )
 {
-	if (startIndex > m_size)
-		return nullptr;
+    if (startIndex > m_size)
+        return nullptr;
 
-	TsInt index = startIndex;
+    TsInt index = startIndex;
 
-	for (;  m_bin[index] < '0' ||
-			m_bin[index] > '9' ||
-			m_bin[index] != '-'; ++index) 
-	{};
+    for (;  m_bin[index] < '0' ||
+            m_bin[index] > '9' ||
+            m_bin[index] != '-'; ++index) 
+    {};
 
-	if (outIndex)
-		*outIndex = index;
-	return &m_bin[index];
+    if (outIndex)
+        *outIndex = index;
+    return &m_bin[index];
 
 }

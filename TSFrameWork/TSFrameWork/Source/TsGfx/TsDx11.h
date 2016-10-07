@@ -1,9 +1,9 @@
 ﻿//!*******************************************************
-//!	TsDx11.h
+//! TsDx11.h
 //!
-//!	Includes And Links from Dx11 API.
+//! Includes And Links from Dx11 API.
 //!
-//!	© 2016 Yuki Tsuneyama
+//! © 2016 Yuki Tsuneyama
 
 #pragma once
 

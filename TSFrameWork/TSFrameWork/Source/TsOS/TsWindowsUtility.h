@@ -1,9 +1,9 @@
 ﻿//!*******************************************************
-//!	TsWindowsUtility.h
+//! TsWindowsUtility.h
 //!
-//!	WindowsAPI Utility
+//! WindowsAPI Utility
 //!
-//!	© 2016 Yuki Tsuneyama
+//! © 2016 Yuki Tsuneyama
 
 #pragma once
 
@@ -11,9 +11,9 @@
 #include "../TSUT/TsUT.h"
 
 //! メインウィンドウを生成する
-//  hIns		アプリケーションを起動した際のインスタンスデータ
-//	cmd			アプリケーションを起動した際のコマンドラインデータ
-//　windowSz	アプリケーションウィンドウのサイズ(指定しない場合はデフォルト)
+//  hIns        アプリケーションを起動した際のインスタンスデータ
+//  cmd         アプリケーションを起動した際のコマンドラインデータ
+//　windowSz    アプリケーションウィンドウのサイズ(指定しない場合はデフォルト)
 TsBool TsWINCreateMainWindow( HINSTANCE hIns , TsInt cmd ,TsInt2 windowSz = TsInt2() );
 
 //! MainWindowHandleの取得
