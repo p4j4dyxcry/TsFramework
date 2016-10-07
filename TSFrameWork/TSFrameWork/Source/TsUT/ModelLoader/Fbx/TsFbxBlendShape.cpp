@@ -23,10 +23,13 @@ TsBool TsFbxShape::ParseBlendShape(FbxMesh  * pFbxMesh,
 	{
 		FbxBlendShape* pBlendShape = ( FbxBlendShape* )pFbxMesh->GetDeformer( deformerIdx , FbxDeformer::eBlendShape );
 		TsInt channelCount = pBlendShape->GetBlendShapeChannelCount();
+		m_blendShapeLayers.resize( channelCount );
 		for( TsInt chIdx = 0; chIdx < channelCount; ++chIdx )
 		{
 			FbxBlendShapeChannel* shapeCH = pBlendShape->GetBlendShapeChannel( chIdx );
 			TsInt shapeCount = shapeCH->GetTargetShapeCount();
+
+			FBX_SHAPE shape;
 
 			//変形後の頂点差分を取得
 			{
@@ -38,27 +41,29 @@ TsBool TsFbxShape::ParseBlendShape(FbxMesh  * pFbxMesh,
 					TsInt  fbxPosCount = pShape->GetControlPointsCount();
 					FbxVector4* fbxPositionList = pShape->GetControlPoints();
 
-					m_shape.resize( shapeIndexCount );
 					for( TsInt i = 0; i < shapeIndexCount; ++i )
 					{
-						m_shape[i].index = shapeIndexPtr[i];
-						m_shape[i].pos.x = ( float )fbxPositionList[shapeIndexPtr[i]][0];
-						m_shape[i].pos.y = ( float )fbxPositionList[shapeIndexPtr[i]][1];
-						m_shape[i].pos.z = ( float )fbxPositionList[shapeIndexPtr[i]][2];
+						FBXShapeVertex shapeVtx;
+						shapeVtx.index = shapeIndexPtr[i];
+						shapeVtx.pos.x = ( float )fbxPositionList[shapeIndexPtr[i]][0];
+						shapeVtx.pos.y = ( float )fbxPositionList[shapeIndexPtr[i]][1];
+						shapeVtx.pos.z = ( float )fbxPositionList[shapeIndexPtr[i]][2];
+						shape.push_back( shapeVtx );
 					}
 				}
+				m_blendShapeLayers[chIdx].m_shape.push_back( shape );
 			}
 
 			//変形アニメーションの取得
 			{
 				FbxAnimCurve* pAnimCurve = pFbxMesh->GetShapeChannel( deformerIdx , chIdx , pAnimLayer );
-				TsVector<BlendShapeKey> keys;
+				
 				if( pAnimCurve )
 				{
 					TsF64 * fullWeight = shapeCH->GetTargetShapeFullWeights();
 					for( TsInt i = 0; i < pAnimCurve->KeyGetCount(); ++i )
 					{
-						BlendShapeKey key;
+						FBXBlendShapeKey key;
 						key.weight = pAnimCurve->KeyGetValue( i ) ;
 						key.time = (TsF32)pAnimCurve->KeyGetTime( i ).GetSecondDouble();
 
@@ -77,29 +82,26 @@ TsBool TsFbxShape::ParseBlendShape(FbxMesh  * pFbxMesh,
 							{							
 								//todo 対応したデータ構造をみてから考える。
 
-								//key.beginIndex = shapeIdx;
-								//key.endIndex = shapeIdx + 1;
+								key.beginIndex = shapeIdx;
+								key.endIndex = shapeIdx + 1;
 								break;
 							}
 						}
-						keys.push_back( key );
+						m_blendShapeLayers[chIdx].m_keys.push_back( key );
 					}
 				}
-				m_blendShapeLayers.push_back( keys );
 			}
 		}
 	}
-
 	return TS_TRUE;
-
 }
 
-TsVector<TsFbxShape::Shape> TsFbxShape::GetShapes()const
+TsVector<FBX_SHAPE> TsFbxShape::GetShapes( TsInt index )const
 {
-	return m_shape;
+	return m_blendShapeLayers[index].GetShapeList();
 }
 
-TsVector<TsFbxShape::BlendShapeKey> TsFbxShape::GetBlendShapeKeys( TsInt idx )const
+TsVector<TsFbxShape::BlendShapeLayer> TsFbxShape::GetBlendShapeKeys( )const
 {
-	return m_blendShapeLayers[idx];
+	return m_blendShapeLayers;
 }

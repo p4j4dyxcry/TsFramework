@@ -293,27 +293,6 @@ TsBool TsFbxMesh::ParseFbxMesh()
 	//--------------------------------------------------------------------------
 	m_vertexList.reserve(m_faceList.size() * 3);
 
-	if (m_shapeList.size() > 0)
-	{
-		for (TsUint k = 0; k < m_shapeList[0].GetShapes().size(); ++k)
-		{
-			TsInt shapeIndex = m_shapeList[0].GetShapes()[k].index;
-
-
-			TsDebugLog("old %03d = %03.2f %03.2f,%03.2f \n", shapeIndex,
-				posList[shapeIndex].x,
-				posList[shapeIndex].y,
-				posList[shapeIndex].z);
-			TsDebugLog("new %03d = %03.2f %03.2f,%03.2f \n", shapeIndex,
-				m_shapeList[0].GetShapes()[k].pos.x,
-				m_shapeList[0].GetShapes()[k].pos.y,
-				m_shapeList[0].GetShapes()[k].pos.z);
-			posList[shapeIndex] = m_shapeList[0].GetShapes()[k].pos;
-
-
-		}
-	}
-
 	for (TsUint i = 0; i < m_faceList.size(); ++i)
 	{
 		for (TsUint j = 0; j < 3; ++j)
