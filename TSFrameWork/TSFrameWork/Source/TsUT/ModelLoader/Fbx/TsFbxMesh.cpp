@@ -277,20 +277,16 @@ TsBool TsFbxMesh::Perse()
 	TsInt shapeCount = pFbxMesh->GetDeformerCount(FbxDeformer::eBlendShape);
 	if (shapeCount > 0)
 	{
-		FbxBlendShape* pBlendShape = (FbxBlendShape*)pFbxMesh->GetDeformer(0, FbxDeformer::eBlendShape);
-		TsInt channelCount = pBlendShape->GetBlendShapeChannelCount();
-		for (int i = 0; i < channelCount; ++i)
-		{
-			FbxBlendShapeChannel* shapeCH = pBlendShape->GetBlendShapeChannel(i);
-			TsInt shapeCount = shapeCH->GetTargetShapeCount();
-			for (TsInt j = 0; j < shapeCount; ++j)
-			{
-				TsFbxShape shape( m_pFbxContext,m_pFbxScene );
-				FbxAnimLayer * pAnmLayer = m_pFbxScene->GetFbxScene(0)->GetCurrentAnimationStack()->GetMember<FbxAnimLayer>(0);
 
-				shape.ParseBlendShape(pFbxMesh, pAnmLayer);
-				m_shapeList.push_back(shape);
-			}
+		TsFbxShape shape( m_pFbxContext , m_pFbxScene );
+		FbxAnimStack * stack = m_pFbxScene->GetFbxScene( 0 )->GetCurrentAnimationStack();
+		TsInt layerCount = stack->GetMemberCount<FbxAnimLayer>();
+		for( TsInt l = 0; l < layerCount; ++l )
+		{
+			FbxAnimLayer * pAnmLayer = m_pFbxScene->GetFbxScene( 0 )->GetCurrentAnimationStack()->GetMember<FbxAnimLayer>( l );
+			shape.SetName( GetName() );
+			shape.ParseBlendShape( pFbxMesh , pAnmLayer );
+			m_shapeList.push_back( shape );
 		}
 	}
 
@@ -311,9 +307,9 @@ TsBool TsFbxMesh::Perse()
 				posList[shapeIndex].y,
 				posList[shapeIndex].z);
 			TsDebugLog("new %03d = %03.2f %03.2f,%03.2f \n", shapeIndex,
-				m_shapeList[1].GetShapes()[k].pos.x,
-				m_shapeList[1].GetShapes()[k].pos.y,
-				m_shapeList[1].GetShapes()[k].pos.z);
+				m_shapeList[0].GetShapes()[k].pos.x,
+				m_shapeList[0].GetShapes()[k].pos.y,
+				m_shapeList[0].GetShapes()[k].pos.z);
 			posList[shapeIndex] = m_shapeList[0].GetShapes()[k].pos;
 
 
