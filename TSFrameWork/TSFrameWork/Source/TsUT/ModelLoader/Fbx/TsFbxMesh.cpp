@@ -284,7 +284,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
 			FbxAnimLayer * pAnmLayer = m_pFbxScene->GetFbxScene( 0 )->GetCurrentAnimationStack()->GetMember<FbxAnimLayer>( l );
 			shape.SetName( GetName() );
 			shape.ParseBlendShape( pFbxMesh , pAnmLayer );
-			m_shapeList.push_back( shape );
+			m_BlendShapeChannelList.push_back( shape );
 		}
 	}
 
@@ -333,16 +333,25 @@ TsBool TsFbxMesh::ParseFbxMesh()
 				// 重複していない
 				m_faceList[i].finalIndex[inversIndex] = m_vertexList.size();	// 頂点インデックスを格納
 				m_indexList.push_back(m_faceList[i].finalIndex[inversIndex]);
-				m_vertexList.push_back(vertex);					// 頂点情報を格納
+				m_vertexList.push_back(vertex);									// 頂点情報を格納
 			}
 			else
 			{
 				// 重複している
 				auto index = std::distance(m_vertexList.begin(), it);	// 先頭から現イテレータ（重複頂点した先頭データを指し示している）までのインデックス番号を取得
-				m_faceList[i].finalIndex[inversIndex] = index;							// インデックス番号（重複頂点した先頭データを指し示している）をインデックスリストにセット
+				m_faceList[i].finalIndex[inversIndex] = index;			// インデックス番号（重複頂点した先頭データを指し示している）をインデックスリストにセット
 				m_indexList.push_back(index);
 			}
 		}
+	}
+
+	//--------------------------------------------------------------------------
+	// ブレンドシェイプのインデックス修正
+	//--------------------------------------------------------------------------
+	for( TsInt blendShapeIdx = 0; blendShapeIdx < m_BlendShapeChannelList.size(); ++blendShapeIdx )
+	{
+		TsInt layerCount = m_BlendShapeChannelList[blendShapeIdx].GetShapeLayerCount();
+		m_BlendShapeChannelList[blendShapeIdx].ConvertFinalIndex( m_faceList );
 	}
 
 	return TS_TRUE;

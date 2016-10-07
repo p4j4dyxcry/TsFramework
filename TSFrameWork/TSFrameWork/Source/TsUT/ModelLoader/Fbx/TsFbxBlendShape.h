@@ -1,22 +1,5 @@
 #pragma once
 //! BlendShape
-
-struct FBXShapeVertex
-{
-	TsInt		index;
-	TsFloat3	pos;
-};
-
-struct FBXBlendShapeKey
-{
-	TsF32		time;
-	TsF32		weight;
-	TsInt		beginIndex;
-	TsInt		endIndex;
-};
-
-#define FBX_SHAPE TsVector<FBXShapeVertex>
-
 class TsFbxShape :  public TsFbxObject,
 					public TsNameObject
 {
@@ -25,7 +8,7 @@ public:
 	{
 		friend class TsFbxShape;
 	public:
-		FBXBlendShapeKey& GetKey( TsInt index )
+		TsFbxBlendShapeKey& GetKey( TsInt index )
 		{
 			return m_keys[index];
 		}
@@ -33,24 +16,30 @@ public:
 		{
 			return m_keys.size();
 		}
-		FBX_SHAPE& GetShape( TsInt index )
+		TsFbxShapeArray& GetShape( TsInt index )
 		{
 			return m_shape[index];
 		}
-		TsVector<FBX_SHAPE> GetShapeList()const
+		TsVector<TsFbxShapeArray> GetShapeList()const
 		{
 			return m_shape;
 		}
 	protected:
-		TsVector<FBXBlendShapeKey> m_keys;
-		TsVector<FBX_SHAPE>	m_shape;
+		TsVector<TsFbxBlendShapeKey> m_keys;
+		TsVector<TsFbxShapeArray>	m_shape;
 	};
 
 	TsFbxShape( TsFbxContext * , TsFbxScene * );
 	TsBool ParseBlendShape( FbxMesh  * ,
 							FbxAnimLayer * );
 	TsVector<TsFbxShape::BlendShapeLayer> GetBlendShapeKeys( )const;
-	TsVector<FBX_SHAPE> GetShapes( TsInt index )const;
+	TsVector<TsFbxShapeArray> GetShapeLayer( TsInt index )const;
+	TsInt GetShapeLayerCount()const
+	{
+		return m_blendShapeLayers.size();
+	}
+
+	TsBool ConvertFinalIndex( const TsVector<TsFbxFace>& );
 
 protected:
 	TsVector<BlendShapeLayer> m_blendShapeLayers;

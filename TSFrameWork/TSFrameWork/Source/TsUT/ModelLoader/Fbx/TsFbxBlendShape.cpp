@@ -29,7 +29,7 @@ TsBool TsFbxShape::ParseBlendShape(FbxMesh  * pFbxMesh,
 			FbxBlendShapeChannel* shapeCH = pBlendShape->GetBlendShapeChannel( chIdx );
 			TsInt shapeCount = shapeCH->GetTargetShapeCount();
 
-			FBX_SHAPE shape;
+			TsFbxShapeArray shape;
 
 			//変形後の頂点差分を取得
 			{
@@ -43,7 +43,7 @@ TsBool TsFbxShape::ParseBlendShape(FbxMesh  * pFbxMesh,
 
 					for( TsInt i = 0; i < shapeIndexCount; ++i )
 					{
-						FBXShapeVertex shapeVtx;
+						TsFbxShapeVertex shapeVtx;
 						shapeVtx.index = shapeIndexPtr[i];
 						shapeVtx.pos.x = ( float )fbxPositionList[shapeIndexPtr[i]][0];
 						shapeVtx.pos.y = ( float )fbxPositionList[shapeIndexPtr[i]][1];
@@ -63,7 +63,7 @@ TsBool TsFbxShape::ParseBlendShape(FbxMesh  * pFbxMesh,
 					TsF64 * fullWeight = shapeCH->GetTargetShapeFullWeights();
 					for( TsInt i = 0; i < pAnimCurve->KeyGetCount(); ++i )
 					{
-						FBXBlendShapeKey key;
+						TsFbxBlendShapeKey key;
 						key.weight = pAnimCurve->KeyGetValue( i ) ;
 						key.time = (TsF32)pAnimCurve->KeyGetTime( i ).GetSecondDouble();
 
@@ -96,7 +96,7 @@ TsBool TsFbxShape::ParseBlendShape(FbxMesh  * pFbxMesh,
 	return TS_TRUE;
 }
 
-TsVector<FBX_SHAPE> TsFbxShape::GetShapes( TsInt index )const
+TsVector<TsFbxShapeArray> TsFbxShape::GetShapeLayer( TsInt index )const
 {
 	return m_blendShapeLayers[index].GetShapeList();
 }
@@ -104,4 +104,19 @@ TsVector<FBX_SHAPE> TsFbxShape::GetShapes( TsInt index )const
 TsVector<TsFbxShape::BlendShapeLayer> TsFbxShape::GetBlendShapeKeys( )const
 {
 	return m_blendShapeLayers;
+}
+
+//! Blend Shapeの頂点情報を最終インデックスに対応させる。
+TsBool TsFbxShape::ConvertFinalIndex( const TsVector<TsFbxFace>& faceList)
+{
+	//todo 要最適化
+	for( TsUint i = 0; i < faceList.size(); ++i )
+	for( TsUint j = 0; j < m_blendShapeLayers.size(); ++j )
+	for( TsUint k = 0; k < m_blendShapeLayers[j].m_shape.size(); ++k )
+	for( TsUint l = 0; l < m_blendShapeLayers[j].m_shape[k].size(); ++l )
+	for( TsUint m = 0; m < 3; ++m )
+	if( faceList[i].posIndex[m] == m_blendShapeLayers[j].m_shape[k][l].index )
+		m_blendShapeLayers[j].m_shape[k][l].index = faceList[i].finalIndex[m];
+
+	return TS_TRUE;
 }
