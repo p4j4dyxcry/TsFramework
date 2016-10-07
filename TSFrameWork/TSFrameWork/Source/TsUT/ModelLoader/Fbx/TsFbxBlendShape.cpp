@@ -45,7 +45,8 @@ TsBool TsFbxShape::ParseBlendShape(FbxMesh  * pFbxMesh,
 					{
 						TsFbxShapeVertex shapeVtx;
 						shapeVtx.index = shapeIndexPtr[i];
-						shapeVtx.pos.x = ( float )fbxPositionList[shapeIndexPtr[i]][0];
+						//ç∂éËånëŒâû
+						shapeVtx.pos.x = ( float )fbxPositionList[shapeIndexPtr[i]][0] * -1.0f;
 						shapeVtx.pos.y = ( float )fbxPositionList[shapeIndexPtr[i]][1];
 						shapeVtx.pos.z = ( float )fbxPositionList[shapeIndexPtr[i]][2];
 						shape.push_back( shapeVtx );
