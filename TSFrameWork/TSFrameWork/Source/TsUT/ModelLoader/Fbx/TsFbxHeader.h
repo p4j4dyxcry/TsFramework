@@ -88,7 +88,7 @@ struct TsFbxFace
 
 			TsInt finalIndex[3];
 		};
-		TsInt data[32];
+		TsInt data[38];
 	};
 };
 
