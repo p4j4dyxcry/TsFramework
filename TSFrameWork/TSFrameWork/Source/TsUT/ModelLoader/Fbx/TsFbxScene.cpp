@@ -113,7 +113,7 @@ TsBool TsFbxScene::ParseMesh()
 		if (m_pNodeList[i]->IsMesh())
 		{
 			TsFbxMesh* pMesh = (TsFbxMesh*)m_pNodeList[i];
- 			pMesh->Perse();
+ 			pMesh->ParseFbxMesh();
 		}
 	}
 	return TS_TRUE;

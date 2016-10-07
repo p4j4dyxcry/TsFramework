@@ -26,7 +26,7 @@ TsBool TsFbxMesh::RemoveVertexFormat(VertexFormat format)
 	return TS_TRUE;
 }
 
-TsBool TsFbxMesh::Perse()
+TsBool TsFbxMesh::ParseFbxMesh()
 {
 	FbxMesh * pFbxMesh = AsAttributeFbxMesh();
 	if (pFbxMesh == nullptr)
@@ -191,6 +191,7 @@ TsBool TsFbxMesh::Perse()
 
 			for (TsUint j = 0; j<uvList[i].size(); j++)
 			{
+				//todo 座標系問題の対応をするべきかも・・？
 				FbxVector2 uvCoord = pUVCoords[j];
 				uvList[i][j].x = (TsF32)uvCoord[0];
 				uvList[i][j].y = (TsF32)uvCoord[1];
@@ -223,7 +224,7 @@ TsBool TsFbxMesh::Perse()
 	//--------------------------------------------------------------------------
 	if (pFBXNormals != NULL)
 	{
-		MappingByFace( pFBXNormals, 3);
+		MappingToFace( pFBXNormals, 3);
 	} 
 
 	//--------------------------------------------------------------------------
@@ -231,7 +232,7 @@ TsBool TsFbxMesh::Perse()
 	//--------------------------------------------------------------------------
 	if (pFBXTangents != NULL)
 	{
-		MappingByFace(pFBXTangents, 6);
+		MappingToFace(pFBXTangents, 6);
 	}
 
 	//--------------------------------------------------------------------------
@@ -239,7 +240,7 @@ TsBool TsFbxMesh::Perse()
 	//--------------------------------------------------------------------------
 	if (pFBXBinormals != NULL)
 	{
-		MappingByFace(pFBXBinormals, 9);
+		MappingToFace(pFBXBinormals, 9);
 	}
 
 	//--------------------------------------------------------------------------
@@ -247,17 +248,14 @@ TsBool TsFbxMesh::Perse()
 	//--------------------------------------------------------------------------
 	if (pFBXVertexColors != NULL)
 	{
-		MappingByFace(pFBXVertexColors, 12);
+		MappingToFace(pFBXVertexColors, 12);
 	}
 
 	//--------------------------------------------------------------------------
 	// 面にLayeredUVインデックスをバインドする
 	//--------------------------------------------------------------------------
-	if (pFBXVertexColors != NULL)
-	{
-		for (TsInt i = 0; i < m_uvLayerCount; ++i)
-			MappingByFace(pFBXUVLayers[i], 12 + i * 3);
-	}
+	for (TsInt i = 0; i < m_uvLayerCount; ++i)
+		MappingToFace(pFBXUVLayers[i], 12 + i * 3);
 
 	//--------------------------------------------------------------------------
 	// スキン情報を読み込む
@@ -268,7 +266,7 @@ TsBool TsFbxMesh::Perse()
 	if (skinCount>0)
 	{
 		FbxSkin* pFbxSkin = (FbxSkin*)pFbxMesh->GetDeformer(0, FbxDeformer::eSkin);
-		PerseSkin(pFbxSkin, (TsInt)posList.size(), boneIndexList, boneWeightList);
+		ParseSkin(pFbxSkin, (TsInt)posList.size(), boneIndexList, boneWeightList);
 	} 
 
 	//--------------------------------------------------------------------------
@@ -480,7 +478,7 @@ size_t TsFbxMesh::GetVertexStride()const
 
 
 template<typename T> 
-TsBool TsFbxMesh::MappingByFace( T* geometory,
+TsBool TsFbxMesh::MappingToFace( T* geometory,
 								 TsInt startIndex)
 {
 	FbxGeometryElement::EMappingMode mappingMode = geometory->GetMappingMode();
@@ -550,7 +548,7 @@ TsBool TsFbxMesh::MappingByFace( T* geometory,
 	return TS_TRUE;
 };
 
-TsBool TsFbxMesh::PerseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
+TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
 							TsVector<TsInt4>&		boneIndexList,
 							TsVector<TsFloat4>&		boneWeightList)
 {

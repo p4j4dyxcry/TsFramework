@@ -23,6 +23,8 @@ TsFbxSkinAnimation::~TsFbxSkinAnimation()
 			m_pRootBone = it;
 		}
 	}
+	m_pFbxScene->GetFbxScene(0)->GetCurrentAnimationStack();
+
 	//todo loop animation frame count
 	m_boneFrameLibrary.resize( 100 );
 	for( TsInt i = 0; i < 100; ++i )

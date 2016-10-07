@@ -105,13 +105,13 @@ public:
 	size_t	GetIndexBufferSize()const;
 	virtual ~TsFbxMesh(){};
 
-	TsBool Perse();
+	TsBool ParseFbxMesh();
 
 protected:
 	template<typename T>
-	TsBool MappingByFace(T* p, TsInt startIndex);
+	TsBool MappingToFace(T* p, TsInt startIndex);
 
-	TsBool PerseSkin( FbxSkin* pFbxSkin , TsInt vertexCount,
+	TsBool ParseSkin( FbxSkin* pFbxSkin , TsInt vertexCount,
 					  TsVector<TsInt4>&		boneIndexList,
 					  TsVector<TsFloat4>&	boneWeightList);
 
