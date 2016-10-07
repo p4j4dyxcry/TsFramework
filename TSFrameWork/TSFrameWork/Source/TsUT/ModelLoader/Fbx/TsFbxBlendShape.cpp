@@ -50,14 +50,33 @@ TsBool TsFbxShape::ParseBlendShape(FbxMesh  * pFbxMesh,
 				TsVector<BlendShapeKey> keys;
 				if( pAnimCurve )
 				{
-					double * weight = shapeCH->GetTargetShapeFullWeights();
+					TsF64 * fullWeight = shapeCH->GetTargetShapeFullWeights();
 					for( TsInt i = 0; i < pAnimCurve->KeyGetCount(); ++i )
 					{
 						BlendShapeKey key;
-						key.weight = pAnimCurve->KeyGetValue( i ) / (TsF32)weight[0];
+						key.weight = pAnimCurve->KeyGetValue( i ) ;
 						key.time = (TsF32)pAnimCurve->KeyGetTime( i ).GetSecondDouble();
-						key.beginIndex = -1;
-						key.endIndex = chIdx;
+
+						key.beginIndex =
+						key.endIndex = -1;
+						for( TsInt shapeIdx = 0; shapeIdx < shapeCount; ++shapeIdx )
+						{
+							//単純な２つのブレンドシェイプ
+							if( key.weight > 0 && key.weight <= fullWeight[0] )
+							{
+								key.endIndex = chIdx;
+								break;
+							}
+							//３つ以上のブレンドシェイプ対応
+							if( key.weight > fullWeight[shapeIdx] && key.weight < fullWeight[shapeIdx + 1] )
+							{							
+								//todo 対応したデータ構造をみてから考える。
+
+								//key.beginIndex = shapeIdx;
+								//key.endIndex = shapeIdx + 1;
+								break;
+							}
+						}
 						keys.push_back( key );
 					}
 				}
