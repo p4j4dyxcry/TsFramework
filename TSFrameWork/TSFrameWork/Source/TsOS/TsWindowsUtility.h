@@ -13,7 +13,7 @@
 //! メインウィンドウを生成する
 //  hIns        アプリケーションを起動した際のインスタンスデータ
 //  cmd         アプリケーションを起動した際のコマンドラインデータ
-//　windowSz    アプリケーションウィンドウのサイズ(指定しない場合はデフォルト)
+//  windowSz    アプリケーションウィンドウのサイズ(指定しない場合はデフォルト)
 TsBool TsWINCreateMainWindow( HINSTANCE hIns , TsInt cmd ,TsInt2 windowSz = TsInt2() );
 
 //! MainWindowHandleの取得

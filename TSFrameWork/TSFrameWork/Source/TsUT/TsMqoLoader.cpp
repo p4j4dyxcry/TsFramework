@@ -267,10 +267,10 @@ TsVector<TsMqoFace> TsMqoLoader::LoadObject(TsVector<TsFloat3>& position,
                         v0.Normalize();
                         v1.Normalize();
                         face[i].angle = acos( TsFloat3::Dot( v0 , v1 ) );
-    
+
                         //! Compute Area
                         face[i].area = cross.Length() / 2.0f;
-        
+
                         result.push_back( face[i] );
                     }
                 }

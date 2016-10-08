@@ -23,9 +23,9 @@ public:
                   m_localScale(1,1,1){};
 
     //! 初期化された規定のTransformを作成
-    //  translate	位置
-    //  quaternion	回転成分
-    //	scale		拡縮(デフォルトは1,1,1)
+    //  translate  位置
+    //  quaternion 回転成分
+    //	scale      拡縮(デフォルトは1,1,1)
     TsTransForm( const TsVector3& translate ,
                 const TsQuaternion quaternion ,
                 const TsVector3 scale = TsVector3::one )
@@ -55,23 +55,23 @@ public:
     TsVector3 GetWorldScale();
 
     //! 親のTransformを取得する
-    //	親がいない場合はNULLが返る
+    //  親がいない場合はNULLが返る
     TsTransForm* GetParent()const;
 
     //! 親を設定する。このメソッドで設定されたTransformは
-    //	関連する親子関係の全情報を書き換えることがある。
+    //  関連する親子関係の全情報を書き換えることがある。
     TsBool SetParent(__inout TsTransForm* transform);
 
     //! 子ノードを追加する。このメソッドで設定されたTransformは
-    //	関連する親子関係の全情報を書き換えることがある。
+    //  関連する親子関係の全情報を書き換えることがある。
     TsBool AddChild( TsTransForm* transform );
 
     //! 子ノードを名前で探索し一致するTransformを取得する
-    //　一致するTransformが存在しない場合NULLが返る
+    //  一致するTransformが存在しない場合NULLが返る
     TsTransForm* FindChildByName(const TsString&);
 
     //! 子ノードをハッシュで探索し一致するTransformを取得する
-    //　一致するTransformが存在しない場合NULLが返る
+    //  一致するTransformが存在しない場合NULLが返る
     TsTransForm* FindChildByhash(TS_HASH);
 
     //! LocalMatrixからTransformに変換する。
@@ -94,6 +94,6 @@ protected:
 private:
 
     //! 親子関係を解除する
-    // このメソッドは関連する親子関係の全情報を書き換えることがある。
+    //  このメソッドは関連する親子関係の全情報を書き換えることがある。
     TsBool RemoveOfParantChild( );
 };

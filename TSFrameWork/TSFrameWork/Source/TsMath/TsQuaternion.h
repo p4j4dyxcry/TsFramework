@@ -23,7 +23,7 @@ public:
     TsQuaternion( XMFLOAT4 vector4 ) : XMFLOAT4( vector4.x , vector4.y , vector4.z , vector4.w ){};
     TsQuaternion( XMVECTOR vector )	: XMFLOAT4( vector.m128_f32[0] , vector.m128_f32[1] , vector.m128_f32[2] , vector.m128_f32[3] ){};
     XMVECTOR  ToXMVECTOR()const;
-    TsMatrix	  ToMatrix()const;
+    TsMatrix  ToMatrix()const;
 
     TsQuaternion& operator = ( TsMatrix matrix );
     TsQuaternion  operator * ( const TsQuaternion& quaternion )const;

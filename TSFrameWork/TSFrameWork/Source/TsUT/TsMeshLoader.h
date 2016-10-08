@@ -22,10 +22,10 @@ public:
     virtual TsInt  GetMeshNum() = 0;
 
     //! Get Vertex Size by byte
-    virtual TsInt  GetVertexSize( TsInt index ) = 0;
+    virtual TsInt GetVertexSize( TsInt index ) = 0;
 
     //! Get Vertex Buffer by byte
-    virtual void*  GetVertexBuffer(TsInt index )=0;
+    virtual void* GetVertexBuffer(TsInt index )=0;
 
     //! Get Vertex Stride
     virtual size_t GetVertexStride() = 0;

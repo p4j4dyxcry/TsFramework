@@ -13,7 +13,7 @@ namespace
     static  WNDPROC g_windowProc = TSDefaultWindowProc;
     static  TsUint  g_windowStyle = CS_HREDRAW | CS_VREDRAW;
 
-    static TsString	g_windowName ="TsFramework";
+    static TsString g_windowName ="TsFramework";
 }
 
 //==============================================
@@ -50,7 +50,7 @@ TsBool TsWINCreateMainWindow( HINSTANCE hIns , TsInt cmd , TsInt2 sz /* = 0,0 */
         WS_OVERLAPPEDWINDOW ,	
         CW_USEDEFAULT ,
         CW_USEDEFAULT ,
-        sz.x ,			
+        sz.x ,
         sz.y ,
         NULL ,
         NULL ,
@@ -99,10 +99,10 @@ void TsWINSetProc( WNDPROC proc )
 }
 
 //Default windowproc
-LRESULT CALLBACK	TSDefaultWindowProc( HWND hWnd ,
-                                         UINT message , 
-                                         WPARAM wParam , 
-                                         LPARAM lParam )
+LRESULT CALLBACK TSDefaultWindowProc( HWND hWnd ,
+                                      UINT message , 
+                                      WPARAM wParam , 
+                                      LPARAM lParam )
 {
     switch( message )
     {
