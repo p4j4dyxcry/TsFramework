@@ -15,10 +15,10 @@ cbuffer ViewCB : register (b7)
 
     float4 g_worldCameraPos;
 
-    float	g_near;
-    float	g_far;
-    float	g_fov;
-    float	ViewCB_Dumy;
+    float g_near;
+    float g_far;
+    float g_fov;
+    float ViewCB_Dumy;
 }
 
 cbuffer light : register(b1)
