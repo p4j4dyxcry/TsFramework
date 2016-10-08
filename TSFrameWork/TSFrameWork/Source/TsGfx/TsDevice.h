@@ -21,7 +21,7 @@ class ITsDevice
 public:
     //get device contetxt
     virtual TsDeviceContext* GetDC()const = 0;
-    virtual ID3D11Device*	 GetDevD3D()const = 0;
+    virtual ID3D11Device*    GetDevD3D()const = 0;
     virtual IDXGISwapChain*	 GetSC()const = 0;
 private:
 };
@@ -45,27 +45,27 @@ public:
     
     //=============================================
     // ! Get DeviceContext
-    TsDeviceContext* GetDC()const override;
+    TsDeviceContext*    GetDC()const override;
 
     //=============================================
     // ! Get DirectX Device Pointer
-    ID3D11Device*	 GetDevD3D()const override{ return m_device; }
+    ID3D11Device*       GetDevD3D()const override{ return m_device; }
 
     //=============================================
     // ! Get DirectX Swap Chain
-    IDXGISwapChain*	 GetSC()const override{ return m_swapChain; }
+    IDXGISwapChain*	    GetSC()const override{ return m_swapChain; }
 
     //todo
-    TsTexture*			CreateTextureFromFile( TsString name );
-    TsRenderTarget*		CreateRenderTarget( TsString name );
+    TsTexture*          CreateTextureFromFile( TsString name );
+    TsRenderTarget*     CreateRenderTarget( TsString name );
 
     //todo CreateShaders
-    TsVertexShader*		CreateVSFromCSO( TsString filename );
-    TsPixelShader*		CreatePSFromCSO( TsString filename );
-    TsGeometryShader*	CreateGSFromCSO( TsString filename );
-    TsHullShader*		CreateHSFromCSO( TsString filename );
-    TsComputeShader*	CreateCSFromCSO( TsString filename );
-    TsDomainShader*		CreateDSFromCSO( TsString filename );
+    TsVertexShader*     CreateVSFromCSO( TsString filename );
+    TsPixelShader*      CreatePSFromCSO( TsString filename );
+    TsGeometryShader*   CreateGSFromCSO( TsString filename );
+    TsHullShader*       CreateHSFromCSO( TsString filename );
+    TsComputeShader*    CreateCSFromCSO( TsString filename );
+    TsDomainShader*     CreateDSFromCSO( TsString filename );
 
 
     TsCBuffer* CreateCBuffer(__in void * pData ,
@@ -97,10 +97,10 @@ private:
     TsBool CreateAndSetRaster();
 
 private:
-    ID3D11Device*		m_device;
-    IDXGISwapChain*		m_swapChain;
-    D3D_DRIVER_TYPE		m_driverType;
-    D3D_FEATURE_LEVEL	m_featureLevel;
-    TsDeviceContext*	m_deviceContext;
+    ID3D11Device*       m_device;
+    IDXGISwapChain*     m_swapChain;
+    D3D_DRIVER_TYPE     m_driverType;
+    D3D_FEATURE_LEVEL   m_featureLevel;
+    TsDeviceContext*    m_deviceContext;
 };
 
