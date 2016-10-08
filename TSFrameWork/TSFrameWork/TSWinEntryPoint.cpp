@@ -10,11 +10,6 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 {
     TSUT::TsLoggerInit();
 
-    TsTransForm t = TsMatrix::CreateScale(1, 1, .3f) * 
-        TsMatrix::CreateRotate(
-        TsQuaternion::AngleAxis(TsVector3(0, 1, 0), 30))
-        ;
-
     TsApplicationBase api;
     api.Initialize(hInstance, nWinMode);
     TsDevice* pDev = api.GetDevice();
