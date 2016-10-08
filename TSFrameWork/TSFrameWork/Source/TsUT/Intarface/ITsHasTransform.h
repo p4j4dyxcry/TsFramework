@@ -31,23 +31,35 @@ public:
     //! ワールド行列の取得
     TsMatrix GetWorldMatrix()const;
 
+    //! ワールド座標上でのオブジェクトの拡縮を取得
+    TsVector3 GetWorldScale()const;
+
+    //! ワールド座標上での回転を取得
+    TsQuaternion GetWorldRotate()const;
+
     //! Transformへのポインタを取得
     const TsTransForm*	GetTransformPtr()const;
     
     //! 親のインターフェースを設定する
     TsBool SetParent( IHasTransform* );
 
+    //! 親を取得
+    TsTransForm* GetParent()const;
+
+    //! 子を取得
+    TsTransForm* FindChild( const TsString& )const;
+
     //! 子のインターフェースを設定する
     TsBool AddChild( IHasTransform* );
 
     //! ワールド位置を設定する
-    TsBool SetWorldPos(const TsVector3&);
+    TsBool SetWorldPosition(const TsVector3&);
 
     //! ローカル位置を設定する
-    TsBool SetLocalPos(const TsVector3&);
+    TsBool SetLocalPosition(const TsVector3&);
 
     //! 回転軸と角度からローカルの回転を設定する
-    TsBool SetLcaoRotateAxis(const TsVector3&, TsF32 angle);
+    TsBool SetLocalRotateAxis(const TsVector3&, TsF32 angle);
 
     //! クォータニオンからローカルの回転を設定する
     TsBool SetLocalRotate(const TsQuaternion&);

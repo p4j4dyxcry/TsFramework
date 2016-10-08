@@ -34,6 +34,32 @@ TsMatrix IHasTransform::GetWorldMatrix()const
     return m_pTransform->ToWorldMatrix();
 }
 
+//! ワールド座標上でのオブジェクトの拡縮を取得
+TsVector3 IHasTransform::GetWorldScale()const
+{
+    TsVector3 scale = m_pTransform->m_localScale;
+    TsTransForm* pPointer = m_pTransform->GetParent();
+    for( ; pPointer != nullptr;pPointer = pPointer->GetParent() )
+        scale *= pPointer->m_localScale;
+    return scale;
+}
+
+//! ワールド座標上での回転を取得
+TsQuaternion IHasTransform::GetWorldRotate()const
+{
+    TsQuaternion q ;
+    TsTransForm* ptr = m_pTransform;
+    TsStack<TsQuaternion> rotateStack;
+
+    for( ; ptr != nullptr; ptr = ptr->GetParent() )
+        rotateStack.push( ptr->m_localRotate );
+
+    for( ; !rotateStack.empty(); rotateStack.pop() )
+        q *= rotateStack.top();
+
+    return q;
+}
+
 const TsTransForm*	IHasTransform::GetTransformPtr()const
 {
     return m_pTransform;
@@ -50,14 +76,26 @@ TsBool	IHasTransform::AddChild(IHasTransform* child)
     return TS_TRUE;
 }
 
-TsBool IHasTransform::SetWorldPos(const TsVector3& pos)
+//! 親を取得
+TsTransForm* IHasTransform::GetParent()const
+{
+    return m_pTransform->GetParent();
+}
+
+//! 子を取得
+TsTransForm* IHasTransform::FindChild( const TsString& name)const
+{
+    return m_pTransform->FindChildByhash( TSUT::StringToHash( name ) );
+}
+
+TsBool IHasTransform::SetWorldPosition(const TsVector3& pos)
 {
     TsVector3 parentWorldPos = m_pTransform->GetWorldPos() - m_pTransform->m_localPosition;
     m_pTransform->m_localPosition = pos - parentWorldPos;
     return TS_TRUE;
 
 }
-TsBool IHasTransform::SetLocalPos(const TsVector3& pos)
+TsBool IHasTransform::SetLocalPosition(const TsVector3& pos)
 {
     m_pTransform->m_localPosition = pos ;
     return TS_TRUE;
@@ -85,7 +123,7 @@ TsBool IHasTransform::SetLocalScale(const TsVector3& scale)
     return TS_TRUE;
 }
 
-TsBool IHasTransform::SetLcaoRotateAxis(const TsVector3& v, TsF32 angle)
+TsBool IHasTransform::SetLocalRotateAxis(const TsVector3& v, TsF32 angle)
 {
     m_pTransform->m_localRotate = TsQuaternion::AngleAxis(v, angle);
     return TS_TRUE;

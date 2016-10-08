@@ -203,14 +203,25 @@ TsTransForm* TsTransForm::FindChildByhash(TS_HASH hash)
 {
     std::function<TsTransForm*(TsTransForm*)> TreeSearch = [&](TsTransForm* p)
     {
-        if (p->GetHashCode() == hash)
+        TsTransForm* ptr = nullptr;
+        if( p->GetHashCode() == hash )
+        {
             return p;
-        if (p->m_firstChild)
-            return TreeSearch(p->m_firstChild);
-        if (p->m_subling)
-            return TreeSearch(p->m_subling);
+        }
+        if( p->m_firstChild )
+        {
+            ptr = TreeSearch( p->m_firstChild );
+            if( ptr )
+                return ptr;
+        }
+        if( p->m_subling )
+        {
+            ptr = TreeSearch( p->m_subling );
+            if( ptr )
+                return ptr;
+        }
 
-        return (TsTransForm*)nullptr;
+        return ptr;
     };
 
     return TreeSearch(this);
