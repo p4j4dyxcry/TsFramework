@@ -146,7 +146,7 @@ namespace TSUT
 			index = str.rfind( "\\" );
 
 		if( index == TsString::npos )
-			return str;
+			return "";
 
 		return str.substr( 0 , index+1 );
 	}
