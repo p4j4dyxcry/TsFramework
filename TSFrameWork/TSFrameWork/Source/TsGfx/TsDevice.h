@@ -14,6 +14,7 @@ class TsRenderTarget;
 class TsCBuffer;
 class TsIndexBuffer;
 class TsVertexBuffer;
+class TsSamplerState;
 
 // Dx11 Device Intarface
 class ITsDevice
@@ -67,6 +68,7 @@ public:
     TsComputeShader*    CreateCSFromCSO( TsString filename );
     TsDomainShader*     CreateDSFromCSO( TsString filename );
 
+    TsSamplerState* CreateSamplerState( const D3D11_SAMPLER_DESC& desc );
 
     TsCBuffer* CreateCBuffer(__in void * pData ,
                              __in size_t size )const;

@@ -274,6 +274,19 @@ TsIndexBuffer* TsDevice::CreateIndexBuffer( __in void * pData ,
     return pIB;
 }
 
+TsSamplerState* TsDevice::CreateSamplerState( const D3D11_SAMPLER_DESC& desc)
+{
+    ID3D11SamplerState * pSampler;
+    m_device->CreateSamplerState( &desc , &pSampler );
+    if( pSampler )
+    {
+        TsSamplerState * pTsSampler = TsNew( TsSamplerState );
+        pTsSampler->SetD3DSamplerState( pSampler );
+        return pTsSampler;
+    }
+    return nullptr;
+}
+
 TsVertexBuffer* TsDevice::CreateVertexBuffer( __in void * pData ,
                                               __in size_t size , 
                                               size_t stride,
