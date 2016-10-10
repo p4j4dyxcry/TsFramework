@@ -7,30 +7,37 @@ public:
     virtual ~TsFbxScene();
     TsBool MeshToTriangulate()const;
     FbxNode* GetFbxRootNode()const;
-    TsBool	BindFbxScene( FbxScene* pFbxScene );
+    TsBool	LoadFromFile( const TsString& filename );
     TsInt   GetMeshNum()const;
     TsVector<TsFbxMesh*> GetMeshList()const;
     TsVector<TsFbxMaterial> GetMaterialList()const;
     TsFbxNode* FindNodeByName(const TsString& name)const;
     TsVector<TsFbxBone*> GetBoneList();
 
-    FbxScene* GetFbxScene(TsInt index)const
+    FbxScene* GetFbxScene()const
     {
         return m_pFbxScene;
+    }
+
+    FbxImporter* GetFbxImporter()const
+    {
+        return m_pFbxImporter;
     }
 
 private:
     TsBool ComputeNodeTree( TsFbxNode* pTsNode);
     TsBool ComputeBoneIndex();
     TsBool ParseMesh();
-    TsString    m_name;
-    FbxScene*   m_pFbxScene;
+
+    TsString        m_name;
+    FbxScene*       m_pFbxScene;
+    FbxImporter*    m_pFbxImporter;
 
     TsInt       m_meshCount;
     TsInt       m_materialCount;
     TsInt       m_nodeCount;
     TsInt       m_skeletonCount;
-
+    
     TsFbxNode*	m_pRootNode;
     TsVector<TsFbxNode*>    m_pNodeList;
     TsVector<TsFbxMaterial> m_materialList;

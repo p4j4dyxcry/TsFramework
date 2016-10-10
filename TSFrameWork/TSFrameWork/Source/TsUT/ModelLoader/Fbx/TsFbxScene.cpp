@@ -4,6 +4,7 @@
 TsFbxScene::TsFbxScene(TsFbxContext * pContext,TsFbxScene* pFbxScene /* nullptr */) 
     :TsFbxObject(pContext,this),
      m_pFbxScene(nullptr),
+     m_pFbxImporter(nullptr),
      m_pRootNode(nullptr)
 {
     m_materialCount =
@@ -12,11 +13,20 @@ TsFbxScene::TsFbxScene(TsFbxContext * pContext,TsFbxScene* pFbxScene /* nullptr 
     m_skeletonCount = 0;
 }
 
-TsBool TsFbxScene::BindFbxScene( FbxScene * pFbxScene )
+TsBool TsFbxScene::LoadFromFile( const TsString& filename )
 {
-    if( m_pFbxScene )
+    m_pFbxImporter = FbxImporter::Create( m_pFbxContext->GetFbxManager() , filename.c_str() );
+    m_pFbxScene = FbxScene::Create( m_pFbxContext->GetFbxManager(),(filename + "Scene").c_str()) ;
+    m_pFbxImporter->Initialize( filename.c_str() );
+    m_pFbxImporter->Import( m_pFbxScene );
+    if( m_pFbxScene == nullptr )
+    {
         return TS_FALSE;
-    m_pFbxScene = pFbxScene;
+    }
+
+    // convert Fbx Scene -> Maya up
+    FbxAxisSystem system( FbxAxisSystem::eMayaYUp );
+    system.ConvertScene( m_pFbxScene );
 
     MeshToTriangulate();
 

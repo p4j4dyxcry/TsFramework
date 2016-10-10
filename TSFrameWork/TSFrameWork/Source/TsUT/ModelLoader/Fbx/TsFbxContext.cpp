@@ -2,15 +2,13 @@
 #include "TsFbxHeader.h"
 
 TsFbxContext::TsFbxContext()
-    :m_pFbxManager( nullptr ),
-     m_pFbxImporter(nullptr)
+    :m_pFbxManager( nullptr )
 {
 
 }
 
 TsFbxContext::~TsFbxContext()
 {
-    FbxSafeRelease( m_pFbxImporter );
     FbxSafeRelease( m_pFbxManager );
 }
 
@@ -22,9 +20,6 @@ TsBool TsFbxContext::Initialize()
     if( m_pFbxManager == nullptr ) 
         return TS_FALSE;
 
-    m_pFbxImporter = FbxImporter::Create( m_pFbxManager , "imp" );
-    if( m_pFbxImporter == nullptr )
-        return TS_FALSE;
     m_fbxTimeLocation = FbxTime::eFrames60;
 
     return TS_TRUE;
@@ -44,28 +39,8 @@ TsBool TsFbxContext::LoadFBX( const TsChar * filename )
             return TS_FALSE;
     }
 
-    m_pFbxImporter->Initialize( filename );
-    FbxScene* pFbxScene = FbxScene::Create( m_pFbxManager , filename );
-
-    TsBool bIsImp = m_pFbxImporter->Import( pFbxScene );
-    if (pFbxScene)
-    {
-        FbxGlobalSettings& globalSetting = pFbxScene->GetGlobalSettings();
-
-        auto axis = globalSetting.GetAxisSystem();
-
-        //globalSetting.SetAxisSystem(FbxAxisSystem::DirectX);
-        FbxAxisSystem system(FbxAxisSystem::eMayaYUp);
-        system.ConvertScene(pFbxScene);
-//        FbxSystemUnit::m.ConvertScene( pFbxScene );
-        //globalSetting.SetSystemUnit(FbxSystemUnit::m);
-    }
-
-    if( bIsImp == TS_FALSE )
-        return TS_FALSE;
-
     TsFbxScene* pScene = TsNew( TsFbxScene( this ) );
-    pScene->BindFbxScene( pFbxScene );
+    pScene->LoadFromFile( filename );
     m_pFbxScenes.push_back( pScene );
     return TS_TRUE;
 }

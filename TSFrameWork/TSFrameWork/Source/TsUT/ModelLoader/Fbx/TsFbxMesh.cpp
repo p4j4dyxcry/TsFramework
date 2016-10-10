@@ -289,23 +289,26 @@ TsBool TsFbxMesh::ParseFbxMesh()
     //--------------------------------------------------------------------------
     // ブレンドシェイプを読み込む
     //--------------------------------------------------------------------------
-    TsInt shapeCount = pFbxMesh->GetDeformerCount(FbxDeformer::eBlendShape);
-    if (shapeCount > 0)
-    {
-        TsFbxShape shape( m_pFbxContext , m_pFbxScene );
-        FbxAnimStack * stack = m_pFbxScene->GetFbxScene( 0 )->GetCurrentAnimationStack();
-        if( stack )
-        {
-            TsInt layerCount = stack->GetMemberCount<FbxAnimLayer>();
-            for( TsInt l = 0; l < layerCount; ++l )
-            {
-                FbxAnimLayer * pAnmLayer = m_pFbxScene->GetFbxScene( 0 )->GetCurrentAnimationStack()->GetMember<FbxAnimLayer>( l );
-                shape.SetName( GetName() );
-                shape.ParseBlendShape( pFbxMesh , pAnmLayer );
-                m_BlendShapeChannelList.push_back( shape );
-            }
-        }
-    }
+
+    // todo まだ完全に対応できていない
+
+    //TsInt shapeCount = pFbxMesh->GetDeformerCount(FbxDeformer::eBlendShape);
+    //if (shapeCount > 0)
+    //{
+    //    TsFbxShape shape( m_pFbxContext , m_pFbxScene );
+    //    FbxAnimStack * stack = m_pFbxScene->GetFbxScene( 0 )->GetCurrentAnimationStack();
+    //    if( stack )
+    //    {
+    //        TsInt layerCount = stack->GetMemberCount<FbxAnimLayer>();
+    //        for( TsInt l = 0; l < layerCount; ++l )
+    //        {
+    //            FbxAnimLayer * pAnmLayer = m_pFbxScene->GetFbxScene( 0 )->GetCurrentAnimationStack()->GetMember<FbxAnimLayer>( l );
+    //            shape.SetName( GetName() );
+    //            shape.ParseBlendShape( pFbxMesh , pAnmLayer );
+    //            m_BlendShapeChannelList.push_back( shape );
+    //        }
+    //    }
+    //}
 
     //--------------------------------------------------------------------------
     // 頂点フォーマットの作成
@@ -381,11 +384,14 @@ TsBool TsFbxMesh::ParseFbxMesh()
     //--------------------------------------------------------------------------
     // ブレンドシェイプのインデックス修正
     //--------------------------------------------------------------------------
-    for( TsInt blendShapeIdx = 0; blendShapeIdx < m_BlendShapeChannelList.size(); ++blendShapeIdx )
-    {
-        TsInt layerCount = m_BlendShapeChannelList[blendShapeIdx].GetShapeLayerCount();
-        m_BlendShapeChannelList[blendShapeIdx].ConvertFinalIndex( m_faceList );
-    }
+
+    // todo 完全対応後復活予定
+
+    //for( TsInt blendShapeIdx = 0; blendShapeIdx < m_BlendShapeChannelList.size(); ++blendShapeIdx )
+    //{
+    //    TsInt layerCount = m_BlendShapeChannelList[blendShapeIdx].GetShapeLayerCount();
+    //    m_BlendShapeChannelList[blendShapeIdx].ConvertFinalIndex( m_faceList );
+    //}
 
     return TS_TRUE;
 }
