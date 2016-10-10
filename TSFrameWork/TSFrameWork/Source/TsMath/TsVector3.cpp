@@ -80,9 +80,9 @@ TsVector3& TsVector3::operator*=( const TsMatrix& mat )
 
 TsBool TsVector3::operator==( const TsVector3& value )const
 {
-    return	x == value.x &&
-            y == value.y &&
-            z == value.z;
+    return	abs(x - value.x) < 0.00001f  &&
+            abs(y - value.y) < 0.00001f &&
+            abs(z - value.z) < 0.00001f;
 }
 TsBool TsVector3::operator!=( const TsVector3& value )const
 {
