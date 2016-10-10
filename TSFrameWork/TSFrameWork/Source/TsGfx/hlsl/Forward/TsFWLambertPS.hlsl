@@ -3,14 +3,19 @@
 float4 main( float4 pos		: SV_POSITION,
              float2 uv		: TEXCOORD0,
              float3 normal	: TEXCOORD1,
-             float4 worldPos : TEXCOORD2) : SV_TARGET
+             float4 worldPos : TEXCOORD2,
+             Texture2D albedo : register(t0),
+             SamplerState samp: register(s0)) : SV_TARGET
 {
     float3 dir = float3( 1 , -1 , -1 );
     dir = normalize( dir );
+    
+    //albedo 
+    float4 color = albedo.Sample( samp , uv ).rgba;
 
     //rambert
     float d = max(dot(normal, dir), 0.1f);
-
+    d = d* 0.5f + 0.5f;
     //compute CameraVector
     float3 eye = normalize(g_worldCameraPos - worldPos);
 
@@ -22,5 +27,5 @@ float4 main( float4 pos		: SV_POSITION,
 
     //rimlight
     float rim = pow(1-dot(eye, normal), 4.5f);
-    return d + s + rim;
+    return d * color + s + rim;
 }

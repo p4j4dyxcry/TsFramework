@@ -21,6 +21,29 @@ cbuffer ViewCB : register (b7)
     float ViewCB_Dumy;
 }
 
+struct DirectionalLight
+{
+    float4 dir;
+    float3 color;
+    float  intensity;
+};
+
+struct PointLight
+{
+    float4 pos;
+    float  intensity;
+};
+
+struct SpotLight
+{
+    float4 pos;
+    float4 dir;
+    float  length;
+    float  angle;
+    float  intensity;
+};
+
+
 cbuffer light : register(b1)
 {
     float4 g_lightDir = float4(0,1,0,0);
@@ -33,7 +56,7 @@ struct VS_DEFAULT_INPUT
     float2 uv       : TEXCOORD0;
 };
 
-struct VS_SKIN_INPT
+struct VS_SKIN_INPUT
 {
     float3 pos      : SV_POSITION;
     float3 normal   : NORMAL;
