@@ -67,6 +67,34 @@ TsBool TsDeviceContext::SetTexture( TsInt slotIndex,
     return TS_TRUE;
 }
 
+TsBool TsDeviceContext::SetSamplerState( TsSamplerState * pSamler ,
+                                         TsInt registerIndex ,
+                                         TS_SHADER_TYPE ShaderType )
+{
+    if( m_pDeviceContext == nullptr ) return TS_FALSE;
+
+    //! Shader Resource View の取得
+    ID3D11SamplerState* pD3DSampler = nullptr;
+    if( pSamler != nullptr )
+        pD3DSampler = pSamler->GetSamplerState();
+    else
+        return TS_FALSE;
+
+    // テクスチャをgpuに設定
+    switch( ShaderType )
+    {
+        case VERTEX_SHADER:		m_pDeviceContext->VSSetSamplers( registerIndex , 1 , &pD3DSampler ); break;
+        case PIXEL_SHADER:		m_pDeviceContext->PSSetSamplers( registerIndex , 1 , &pD3DSampler ); break;
+        case GEOMETRY_SHADER:	m_pDeviceContext->GSSetSamplers( registerIndex , 1 , &pD3DSampler ); break;
+        case HULL_SHADER:		m_pDeviceContext->HSSetSamplers( registerIndex , 1 , &pD3DSampler ); break;
+        case DOMAIN_SHADER:		m_pDeviceContext->DSSetSamplers( registerIndex , 1 , &pD3DSampler ); break;
+        case COMPUTE_SHADER:	m_pDeviceContext->CSSetSamplers( registerIndex , 1 , &pD3DSampler );	break;
+        default:
+            return TS_FALSE;
+    }
+    return TS_TRUE;
+}
+
 //! Set Shader pipline
 TsBool TsDeviceContext::SetShader( TsShaderEffect* se )
 {

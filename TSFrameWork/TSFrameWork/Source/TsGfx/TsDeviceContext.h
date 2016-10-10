@@ -63,6 +63,10 @@ public:
                        const TsTexture* texture , 
                        TS_SHADER_TYPE type );
 
+    TsBool SetSamplerState( TsSamplerState* pSampler , 
+                            TsInt registerIndex ,
+                            TS_SHADER_TYPE type = TS_SHADER_TYPE::PIXEL_SHADER);
+
     //=============================================
     // ! SetShader
     // シェーダの集合を登録

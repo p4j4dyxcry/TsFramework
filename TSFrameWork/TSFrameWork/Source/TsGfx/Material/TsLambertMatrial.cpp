@@ -1,4 +1,4 @@
-#include "../TsGfx.h"
+#include "../../../TsAfx.h"
 
 TsLambertMatrial::TsLambertMatrial() 
 {
@@ -31,6 +31,7 @@ TsBool TsLambertMatrial::ApplyMaterial( TsDeviceContext* pContext)
 {
     pContext->SetCBuffer( this );
     pContext->SetTexture( 0 , m_pTexture , TS_SHADER_TYPE::PIXEL_SHADER );
+    pContext->SetSamplerState( TsResourceManager::GetSamplerState( "Default" ) , 0 );
     return TS_TRUE;
 }
 

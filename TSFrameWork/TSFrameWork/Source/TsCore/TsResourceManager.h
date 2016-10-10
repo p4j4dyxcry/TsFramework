@@ -1,33 +1,16 @@
 //todo
 
 #pragma once
-class TsResourceManager
+class TsResourceManager 
 {
 public:
-    TsBool LoadShaders( TsDevice* pDev )
-    {
-        TSUT::TsFileDirectory shaderDir( TSUT::Resource::GetCSODirectory() );
-        shaderDir.SetSearchSubFolderFlag( TS_TRUE );
-        shaderDir.AddExtension( TsString(".cso") );
+    static TsBool Initialize( TsDevice * pDev );
 
-        TsList<TsString>&& fileList = shaderDir.GetFileList();
-        TsBinary bin;
-        for each( auto var in fileList )
-        {
-            if( var.find( "VS" ) )
-            {
-                auto vs = TsNew( TsVertexShader );
-                vs->LoadFromCSO( pDev->GetDevD3D() , var.c_str() );
-            }
+    static TsSamplerState* GetSamplerState( const TsString& );
 
-            if( var.find( "PS" ) )
-            {
-                auto ps = TsNew( TsPixelShader );
-                ps->LoadFromCSO( pDev->GetDevD3D() , var.c_str() );
-            }
-        }
-        return TS_TRUE;
-    }
 private:
+    static TsBool InitializeSampler( TsDevice* pDev );
 
+    static TsDevice* m_pDevice;
+    static TsMap<TS_HASH , TsSamplerState*> m_SamplerLibrary;
 };

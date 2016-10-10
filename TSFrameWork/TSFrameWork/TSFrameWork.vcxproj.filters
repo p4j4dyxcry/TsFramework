@@ -297,6 +297,9 @@
     <ClCompile Include="Source\TsGfx\TsMesh.cpp">
       <Filter>ソース ファイル\TsGfx\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsGfx\TsSamplerState.cpp">
+      <Filter>ソース ファイル\TsGfx\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -547,6 +550,9 @@
     </ClInclude>
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxBlendShape.h">
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\TsSamplerState.h">
+      <Filter>ソース ファイル\TsGfx\Source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

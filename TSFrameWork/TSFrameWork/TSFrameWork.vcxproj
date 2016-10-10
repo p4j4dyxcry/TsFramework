@@ -56,6 +56,7 @@
     <ClInclude Include="Source\TsGfx\TsRenderPass.h" />
     <ClInclude Include="Source\TsGfx\TsRenderSystem.h" />
     <ClInclude Include="Source\TsGfx\TsRenderTarget.h" />
+    <ClInclude Include="Source\TsGfx\TsSamplerState.h" />
     <ClInclude Include="Source\TsGfx\TsScreenObject.h" />
     <ClInclude Include="Source\TsGfx\TsShaderInl.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -72,6 +73,7 @@
     <ClCompile Include="Source\TsGfx\TsRenderPass.cpp" />
     <ClCompile Include="Source\TsGfx\TsRenderSystem.cpp" />
     <ClCompile Include="Source\TsGfx\TsRenderTarget.cpp" />
+    <ClCompile Include="Source\TsGfx\TsSamplerState.cpp" />
     <ClCompile Include="Source\TsGfx\TsScreenObject.cpp" />
     <ClCompile Include="Source\TsGfx\TsShader.cpp" />
     <ClCompile Include="Source\TsGfx\TsShaderEffect.cpp" />
