@@ -30,6 +30,8 @@ public:
 
     virtual void* GetIndexBuffer(TsInt index)override;
 
+    TsString      GetAlbedoTexturePass( TsInt index );
+
     TsTransForm*   GetTransform(TsInt index)const;
 private:
     TsFbxContext* m_pFbxContext;

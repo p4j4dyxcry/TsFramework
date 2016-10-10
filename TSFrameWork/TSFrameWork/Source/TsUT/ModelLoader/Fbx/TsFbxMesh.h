@@ -40,7 +40,7 @@ public:
     virtual ~TsFbxMesh(){};
 
     TsBool ParseFbxMesh();
-
+    TsInt  GetMaterialIndex()const;
 protected:
     template<typename T>
     TsBool MappingToFace(T* p, TsInt startIndex);
@@ -55,5 +55,6 @@ protected:
     VertexFormat m_vertexBufferFormat;
     TsVector<TsFbxShape>	m_BlendShapeChannelList;
     TsInt m_uvLayerCount;
+    TsInt m_materialIndex;
 };
 

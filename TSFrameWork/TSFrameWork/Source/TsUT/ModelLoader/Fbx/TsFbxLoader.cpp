@@ -71,3 +71,12 @@ TsTransForm* TsFbxLoader::GetTransform( TsInt index )const
     auto meshList = m_pFbxContext->GetSceneByIndex( 0 )->GetMeshList();
     return meshList[index]->GetTransform();
 }
+
+//! GetIndexBuffer
+TsString  TsFbxLoader::GetAlbedoTexturePass( TsInt index )
+{
+    auto&& meshList = m_pFbxContext->GetSceneByIndex( 0 )->GetMeshList();
+    TsInt materialIndex = meshList[index]->GetMaterialIndex();
+    TsFbxMaterial material = m_pFbxContext->GetSceneByIndex( 0 )->GetMaterialList()[materialIndex];
+    return material.GetAlbedoTextureName().GetFileName();
+}

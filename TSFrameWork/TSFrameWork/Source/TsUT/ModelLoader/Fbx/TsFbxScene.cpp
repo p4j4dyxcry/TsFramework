@@ -144,6 +144,11 @@ TsVector<TsFbxMesh*> TsFbxScene::GetMeshList()const
     return result;
 }
 
+TsVector<TsFbxMaterial> TsFbxScene::GetMaterialList()const
+{
+    return m_materialList;
+}
+
 TsVector<TsFbxBone*> TsFbxScene::GetBoneList()
 {
     TsVector<TsFbxBone*> result;

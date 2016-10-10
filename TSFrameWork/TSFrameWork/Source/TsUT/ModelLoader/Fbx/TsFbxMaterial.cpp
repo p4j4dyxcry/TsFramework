@@ -12,6 +12,7 @@ TsFbxMaterial::TsFbxMaterial(TsFbxContext* pFbxContext, TsFbxScene* pFbxScene)
 //! FbxMaterial を解析する
 TsBool TsFbxMaterial::AnalizeForFbxMaterial( FbxSurfaceMaterial* pFbxMaterial )
 {
+    SetName( pFbxMaterial->GetName() );
     // ! ==step1 マテリアルがシェーダによって定義されているかを調べる。
 
     TsString lImplemenationType = "";
@@ -57,7 +58,7 @@ TsBool TsFbxMaterial::AnalizeCustomMaterial( FbxSurfaceMaterial* pFbxMaterial ,
         const FbxBindingTableEntry& lEntry = lTable->GetEntry( i );
         const char* lEntrySrcType = lEntry.GetEntryType( TS_TRUE );
 
-        FbxString lTest = lEntry.GetSource();
+        FbxString pEntrySource = lEntry.GetSource();
 
         if( strcmp( FbxPropertyEntryView::sEntryType , lEntrySrcType ) == 0 )
         {
@@ -78,7 +79,20 @@ TsBool TsFbxMaterial::AnalizeCustomMaterial( FbxSurfaceMaterial* pFbxMaterial ,
                 for( int j = 0; j < pPropery.GetSrcObjectCount<FbxFileTexture>(); ++j )
                 {
                     FbxFileTexture *pTex = pPropery.GetSrcObject<FbxFileTexture>( j );
-                    m_texturename[TextureType::Albedo][j].Analize( pTex->GetFileName() );
+                    TextureType texType = TextureType::Albedo;
+
+                    if( pEntrySource == "Maya|DiffuseTexture" )
+                        texType = TextureType::Albedo;
+                    else if( pEntrySource == "Maya|NormalTexture" )
+                        texType = TextureType::Normal;
+                    else if( pEntrySource == "Maya|SpecularTexture" )
+                        texType = TextureType::Spc;
+                    else if( pEntrySource == "Maya|FalloffTexture" )
+                        texType = TextureType::Shininess;
+                    else if( pEntrySource == "Maya|ReflectionMapTexture" )
+                        texType = TextureType::Ref;
+
+                    m_texturename[texType][j].Analize( pTex->GetFileName() );
                 }
             }
         }

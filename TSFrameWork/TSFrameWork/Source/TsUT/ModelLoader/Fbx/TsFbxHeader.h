@@ -84,7 +84,7 @@ struct TsFbxFace
             TsInt tangentIndex[3];
             TsInt binormalIndex[3];
             TsInt colorIndex[3];
-            TsInt UVIndex[3][TS_FBX_MAX_UV];
+            TsInt UVIndex[TS_FBX_MAX_UV][3];
 
             TsInt finalIndex[3];
         };

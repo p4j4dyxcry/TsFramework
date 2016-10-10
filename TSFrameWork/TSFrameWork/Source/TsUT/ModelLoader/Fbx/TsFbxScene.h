@@ -10,7 +10,7 @@ public:
     TsBool	BindFbxScene( FbxScene* pFbxScene );
     TsInt   GetMeshNum()const;
     TsVector<TsFbxMesh*> GetMeshList()const;
-
+    TsVector<TsFbxMaterial> GetMaterialList()const;
     TsFbxNode* FindNodeByName(const TsString& name)const;
     TsVector<TsFbxBone*> GetBoneList();
 

@@ -168,13 +168,13 @@ TsBool TsFbxMesh::ParseFbxMesh()
     FbxGeometryElementUV* pFBXUVLayers[TS_FBX_MAX_UV];
 
     {
-        TsInt m_uvLayerCount = pFbxMesh->GetElementUVCount();
+        m_uvLayerCount = pFbxMesh->GetElementUVCount(); 
         if (m_uvLayerCount > TS_FBX_MAX_UV)
         {
             m_uvLayerCount = TS_FBX_MAX_UV;
         }
 
-        for (TsInt i = 0; i<TS_FBX_MAX_UV; i++)
+        for( TsInt i = 0; i<m_uvLayerCount; i++ )
         {
             pFBXUVLayers[i] = pFbxMesh->GetElementUV(i);
         }
@@ -192,11 +192,31 @@ TsBool TsFbxMesh::ParseFbxMesh()
             for (TsUint j = 0; j<uvList[i].size(); j++)
             {
                 //todo 座標系問題の対応をするべきかも・・？
+                //note 対応しようとしたらモデルによって変わる・・・
                 FbxVector2 uvCoord = pUVCoords[j];
                 uvList[i][j].x = (TsF32)uvCoord[0];
                 uvList[i][j].y = (TsF32)uvCoord[1];
+                uvList[i][j].y = ( TsF32 )uvCoord[1];
             } 
             vArray.Release(&pUVCoords, pUVCoords);
+        }
+    }
+
+    //==============================================================
+    // マテリアルへの参照を算出
+    //==============================================================
+    {
+        FbxSurfaceMaterial* pMaterial = m_fbxNode->GetMaterial(0);
+        TsVector<TsFbxMaterial> && materialList = m_pFbxScene->GetMaterialList();
+        m_materialIndex = 0;
+        TS_HASH hash = TSUT::StringToHash( pMaterial->GetName() );
+        for( TsInt i = 0; i < materialList.size(); ++i )
+        {
+            if( materialList[i].GetHashCode() == hash )
+            {
+                m_materialIndex = i;
+                break;
+            }
         }
     }
 
@@ -255,7 +275,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
     // 面にLayeredUVインデックスをバインドする
     //--------------------------------------------------------------------------
     for (TsInt i = 0; i < m_uvLayerCount; ++i)
-        MappingToFace(pFBXUVLayers[i], 12 + i * 3);
+        MappingToFace(pFBXUVLayers[i], 15 + i * 3);
 
     //--------------------------------------------------------------------------
     // スキン情報を読み込む
@@ -275,16 +295,18 @@ TsBool TsFbxMesh::ParseFbxMesh()
     TsInt shapeCount = pFbxMesh->GetDeformerCount(FbxDeformer::eBlendShape);
     if (shapeCount > 0)
     {
-
         TsFbxShape shape( m_pFbxContext , m_pFbxScene );
         FbxAnimStack * stack = m_pFbxScene->GetFbxScene( 0 )->GetCurrentAnimationStack();
-        TsInt layerCount = stack->GetMemberCount<FbxAnimLayer>();
-        for( TsInt l = 0; l < layerCount; ++l )
+        if( stack )
         {
-            FbxAnimLayer * pAnmLayer = m_pFbxScene->GetFbxScene( 0 )->GetCurrentAnimationStack()->GetMember<FbxAnimLayer>( l );
-            shape.SetName( GetName() );
-            shape.ParseBlendShape( pFbxMesh , pAnmLayer );
-            m_BlendShapeChannelList.push_back( shape );
+            TsInt layerCount = stack->GetMemberCount<FbxAnimLayer>();
+            for( TsInt l = 0; l < layerCount; ++l )
+            {
+                FbxAnimLayer * pAnmLayer = m_pFbxScene->GetFbxScene( 0 )->GetCurrentAnimationStack()->GetMember<FbxAnimLayer>( l );
+                shape.SetName( GetName() );
+                shape.ParseBlendShape( pFbxMesh , pAnmLayer );
+                m_BlendShapeChannelList.push_back( shape );
+            }
         }
     }
 
@@ -292,7 +314,15 @@ TsBool TsFbxMesh::ParseFbxMesh()
     // 頂点フォーマットの作成
     //--------------------------------------------------------------------------
     m_vertexList.reserve(m_faceList.size() * 3);
-
+    (void)( *this );
+    if( GetName() == "Leg" )
+    {
+        ( void )this;
+        int j = 0;
+    }
+    TsVector<TsFloat2> DebugUV;
+    DebugUV.reserve( 54444 );
+    printf( "Mesh Name = %s\n" , GetName().c_str() );
     for (TsUint i = 0; i < m_faceList.size(); ++i)
     {
         for (TsUint j = 0; j < 3; ++j)
@@ -315,8 +345,12 @@ TsBool TsFbxMesh::ParseFbxMesh()
                 vertex.binormal = binormalList[m_faceList[i].binormalIndex[j]];
             if (!vertexColorList.empty())
                 vertex.color = vertexColorList[m_faceList[i].colorIndex[j]];
-            for (TsInt k = 0; k < m_uvLayerCount; ++k)
-                vertex.uv[k] = uvList[m_faceList[i].UVIndex[j][k]][k];
+            for( TsInt k = 0; k < m_uvLayerCount; ++k )
+            {
+                TsVector<TsFloat2> list = uvList[k];
+                TsInt index = m_faceList[i].UVIndex[k][j];
+                vertex.uv[k] = list[index];
+            }
             if (!boneWeightList.empty())
                 vertex.boneWeight = boneWeightList[m_faceList[i].posIndex[j]];
             if (!boneIndexList.empty())
@@ -334,6 +368,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
                 m_faceList[i].finalIndex[inversIndex] = m_vertexList.size();	// 頂点インデックスを格納
                 m_indexList.push_back(m_faceList[i].finalIndex[inversIndex]);
                 m_vertexList.push_back(vertex);									// 頂点情報を格納
+                DebugUV.push_back( vertex.uv[0] );
             }
             else
             {
@@ -712,4 +747,9 @@ void*  TsFbxMesh::CreateIndexBuffer()const
 size_t  TsFbxMesh::GetIndexBufferSize()const
 {
     return m_faceList.size() * sizeof(TsInt) * 3;
+}
+
+TsInt TsFbxMesh::GetMaterialIndex()const
+{
+    return m_materialIndex;
 }

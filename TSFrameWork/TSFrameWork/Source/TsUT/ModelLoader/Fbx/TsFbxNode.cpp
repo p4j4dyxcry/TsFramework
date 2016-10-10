@@ -25,6 +25,7 @@ TsBool TsFbxNode::AnalizeFbxNode( FbxNode* pFbxNode)
 
     m_pTransform->m_localRotate.x *= -1;
     m_pTransform->m_localRotate.w *= -1;
+
     m_pTransform->m_localPosition.x *= -1;
     SetName( pFbxNode->GetName() );
     m_pTransform->SetName( GetName() );
