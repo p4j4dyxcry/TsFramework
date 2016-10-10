@@ -98,23 +98,16 @@ TsMatrix TsTransForm::ToLocalTRSMatrix()
 //! [メソッド] ワールド行列を取得する
 TsMatrix TsTransForm::ToWorldMatrix()
 {
-    TsMatrix result;
+    TsMatrix result = ToLocalMatrix();
     TsTransForm* temp = this;
-
-    TsStack<TsTransForm*> matStack;
-    //親を辿ってローカル行列をスタックに格納する
-    do 
+    
+    //親を辿る
+    while( temp->m_parent != nullptr )
     {
-        matStack.push( temp );
+        result *= temp->m_parent->ToLocalMatrix();
         temp = temp->m_parent;
-    } while( temp != nullptr );
+    } 
 
-    //スタックからローカル行列を取り出しワールド行列を計算する
-    while( matStack.empty() == false )
-    {
-        result *= matStack.top()->ToLocalMatrix();
-        matStack.pop();
-    }
 
     return result;
 }
