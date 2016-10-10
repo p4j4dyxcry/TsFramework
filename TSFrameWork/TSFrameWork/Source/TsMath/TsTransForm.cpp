@@ -87,6 +87,13 @@ TsMatrix TsTransForm::ToLocalMatrix()
     return TsMatrix( m_localPosition , m_localRotate ,m_localScale);
 }
 
+TsMatrix TsTransForm::ToLocalTRSMatrix()
+{
+    return  TsMatrix::CreateTranslate(m_localPosition) *
+            TsMatrix::CreateRotate( m_localRotate)*
+            TsMatrix::CreateScale( m_localScale);
+}
+
 //!*******************************************************
 //! [メソッド] ワールド行列を取得する
 TsMatrix TsTransForm::ToWorldMatrix()
@@ -94,19 +101,18 @@ TsMatrix TsTransForm::ToWorldMatrix()
     TsMatrix result;
     TsTransForm* temp = this;
 
-    TsStack<TsMatrix> matStack;
-
+    TsStack<TsTransForm*> matStack;
     //親を辿ってローカル行列をスタックに格納する
     do 
     {
-        matStack.push( temp->ToLocalMatrix() );
+        matStack.push( temp );
         temp = temp->m_parent;
     } while( temp != nullptr );
 
     //スタックからローカル行列を取り出しワールド行列を計算する
     while( matStack.empty() == false )
     {
-        result *= matStack.top();
+        result *= matStack.top()->ToLocalMatrix();
         matStack.pop();
     }
 
@@ -116,6 +122,16 @@ TsMatrix TsTransForm::ToWorldMatrix()
 TsTransForm* TsTransForm::GetParent()const
 {
     return m_parent;
+}
+
+TsTransForm* TsTransForm::GetFirstChild()const
+{
+    return m_firstChild;
+}
+
+TsTransForm* TsTransForm::GetSubling()const
+{
+    return m_subling;
 }
 
 TsVector3 TsTransForm::GetWorldPos()
@@ -225,6 +241,34 @@ TsTransForm* TsTransForm::FindChildByhash(TS_HASH hash)
     };
 
     return TreeSearch(this);
+}
+
+TsTransForm* TsTransForm::FindChildByClassName( const TsString& name )
+{
+    std::function<TsTransForm*( TsTransForm* )> TreeSearch = [&]( TsTransForm* p )
+    {
+        TsTransForm* ptr = nullptr;
+        if( p->GetClassTypeName() == name )
+        {
+            return p;
+        }
+        if( p->m_firstChild )
+        {
+            ptr = TreeSearch( p->m_firstChild );
+            if( ptr )
+                return ptr;
+        }
+        if( p->m_subling )
+        {
+            ptr = TreeSearch( p->m_subling );
+            if( ptr )
+                return ptr;
+        }
+
+        return ptr;
+    };
+
+    return TreeSearch( this );
 }
 
 TsTransForm* TsTransForm::FindChildByName(const TsString& name)
