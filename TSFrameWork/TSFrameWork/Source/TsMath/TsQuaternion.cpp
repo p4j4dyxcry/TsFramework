@@ -24,6 +24,12 @@ TsQuaternion& TsQuaternion::operator *=( const TsQuaternion& quaternion )
     return *this = *this * quaternion;
 }
 
+TsQuaternion TsQuaternion::Euler( const TsVector3& Euler )
+{
+  return XMQuaternionRotationRollPitchYaw( TsRadian( Euler.x ) ,
+                                           TsRadian( Euler.y ) ,
+                                           TsRadian( Euler.z ) );
+}
 
 TsQuaternion TsQuaternion::AngleAxis( TsVector3 axis , FLOAT angle )
 {

@@ -46,6 +46,8 @@ public:
     //! TransformをLocalSpaceMatrixで取得する
     TsMatrix ToLocalMatrix();
 
+    TsMatrix ToLocalTRSMatrix();
+
     //! ワールド座標上の位置を祝する
     TsVector3 GetWorldPos();
 
@@ -57,6 +59,9 @@ public:
     //! 親のTransformを取得する
     //  親がいない場合はNULLが返る
     TsTransForm* GetParent()const;
+
+    TsTransForm * GetFirstChild()const;
+    TsTransForm*  GetSubling()const;
 
     //! 親を設定する。このメソッドで設定されたTransformは
     //  関連する親子関係の全情報を書き換えることがある。
@@ -74,6 +79,8 @@ public:
     //  一致するTransformが存在しない場合NULLが返る
     TsTransForm* FindChildByhash(TS_HASH);
 
+    TsTransForm* FindChildByClassName( const TsString& name );
+
     //! LocalMatrixからTransformに変換する。
     TsTransForm& operator = (const TsMatrix& m);
 
@@ -83,6 +90,12 @@ public:
     //! LocalMatrixと乗算する
     TsTransForm& operator *= (const TsMatrix& m);
 
+    //! クラス名を取得する
+    virtual TsString GetClassTypeName()const
+    {
+        return "TsTransForm";
+    }
+
 public:
     TsVector3           m_localPosition;                //! ローカル位置
     TsQuaternion        m_localRotate;                  //! ローカル回転
@@ -91,7 +104,7 @@ protected:
     TsTransForm*        m_parent        = nullptr;      //! 親へのポインタ
     TsTransForm*        m_firstChild    = nullptr;      //! 第一子へのポインタ
     TsTransForm*        m_subling       = nullptr;      //! 兄弟へのポインタ
-private:
+protected:
 
     //! 親子関係を解除する
     //  このメソッドは関連する親子関係の全情報を書き換えることがある。
