@@ -7,7 +7,7 @@ TsFbxMesh::TsFbxMesh(TsFbxContext* pFbxContext, TsFbxScene* pFbxScene) : TsFbxNo
     m_vertexList.reserve(65535);
 
     m_uvLayerCount = 0;
-    m_vertexBufferFormat = DefaultVertexFormat;
+    m_vertexBufferFormat = DefaultSkinVertexFormat;
 }
 
 TsBool TsFbxMesh::SetVertexFormat(VertexFormat format)
@@ -31,7 +31,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
     FbxMesh * pFbxMesh = AsAttributeFbxMesh();
     if (pFbxMesh == nullptr)
         return TS_FALSE;
-
+//    *m_pTransform = m_pTransform->GetParent()->ToWorldMatrix().Inversed();
     TsVector3 scale = m_geometricTransform.GetWorldScale();
     //==============================================================
     //! 位置情報の読み込み
@@ -191,12 +191,10 @@ TsBool TsFbxMesh::ParseFbxMesh()
 
             for (TsUint j = 0; j<uvList[i].size(); j++)
             {
-                //todo 座標系問題の対応をするべきかも・・？
-                //note 対応しようとしたらモデルによって変わる・・・
+                // UV - Y座標 を　右手から左手系へ
                 FbxVector2 uvCoord = pUVCoords[j];
                 uvList[i][j].x = (TsF32)uvCoord[0];
-                uvList[i][j].y = (TsF32)uvCoord[1];
-                uvList[i][j].y = ( TsF32 )uvCoord[1];
+                uvList[i][j].y = 1.0f- ( TsF32 )uvCoord[1];
             } 
             vArray.Release(&pUVCoords, pUVCoords);
         }
@@ -349,7 +347,8 @@ TsBool TsFbxMesh::ParseFbxMesh()
             {
                 TsVector<TsFloat2> list = uvList[k];
                 TsInt index = m_faceList[i].UVIndex[k][j];
-                vertex.uv[k] = list[index];
+                if( index > 0 )
+                    vertex.uv[k] = list[index];
             }
             if (!boneWeightList.empty())
                 vertex.boneWeight = boneWeightList[m_faceList[i].posIndex[j]];
@@ -584,15 +583,15 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
     TsInt i;
     for (i = 0; i<vertexCount; i++)
     {
-        boneIndexList[i].x = -1;
-        boneIndexList[i].y = -1;
-        boneIndexList[i].z = -1;
-        boneIndexList[i].w = -1;
+        boneIndexList[i].x = 0;
+        boneIndexList[i].y = 0;
+        boneIndexList[i].z = 0;
+        boneIndexList[i].w = 0;
 
-        boneWeightList[i].x = -1.0f;
-        boneWeightList[i].y = -1.0f;
-        boneWeightList[i].z = -1.0f;
-        boneWeightList[i].w = -1.0f;
+        boneWeightList[i].x = 0;
+        boneWeightList[i].y = 0;
+        boneWeightList[i].z = 0;
+        boneWeightList[i].w = 0;
     } // End for
 
     // Parse bones
@@ -606,9 +605,31 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
         FbxCluster* pCluster = pFbxSkin->GetCluster(i);
 
         FbxNode *pNode = pCluster->GetLink();
+        FbxNode *p = pNode;
 
         nodes[i] = pNode;
     } // End for
+
+    if( numClusters > 0 )
+    {
+        FbxCluster* pCluster = pFbxSkin->GetCluster( 0 );
+
+        FbxNode *pNode = pCluster->GetLink();
+        while( pNode )
+        {
+            if( pNode->GetParent() == nullptr )
+                break;
+            
+            if( pNode->GetParent()->GetNodeAttribute() &&
+                pNode->GetParent()->GetNodeAttribute()->Is<FbxSkeleton>() )
+            {
+                pNode = pNode->GetParent();
+            }
+            else
+                break;
+        }
+        m_pRootBone = m_pFbxScene->FindNodeByName( pNode->GetName() );
+    }
 
     for (i = 0; i<numClusters; i++)
     {

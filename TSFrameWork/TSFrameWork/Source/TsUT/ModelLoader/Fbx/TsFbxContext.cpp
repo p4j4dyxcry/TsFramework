@@ -57,6 +57,7 @@ TsBool TsFbxContext::LoadFBX( const TsChar * filename )
         //globalSetting.SetAxisSystem(FbxAxisSystem::DirectX);
         FbxAxisSystem system(FbxAxisSystem::eMayaYUp);
         system.ConvertScene(pFbxScene);
+//        FbxSystemUnit::m.ConvertScene( pFbxScene );
         //globalSetting.SetSystemUnit(FbxSystemUnit::m);
     }
 

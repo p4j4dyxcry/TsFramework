@@ -56,5 +56,7 @@ protected:
     TsVector<TsFbxShape>	m_BlendShapeChannelList;
     TsInt m_uvLayerCount;
     TsInt m_materialIndex;
+
+    TsFbxNode* m_pRootBone; //ルートボーン
 };
 
