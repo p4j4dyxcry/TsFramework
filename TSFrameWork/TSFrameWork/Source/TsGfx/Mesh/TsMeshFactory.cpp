@@ -64,7 +64,8 @@ TsBool TsMeshFactory::LoadFromFile( TsDevice* pDev, TsString filename )
             TsLambertMatrial* material = TsNew( TsLambertMatrial );
 
             TSUT::TsFilePathAnalyzer ana = filename;
-            material->m_textureName = ana.GetLocalDirectory() + loader.GetAlbedoTexturePass(i);
+            material->m_textureName = ana.GetLocalDirectory() + loader.GetAlbedoTexturePass( i );
+
             material->LoadTextureFromFile( pDev );
             TsInt id = mesh->GetIndexNum();
             m_pMaterial.push_back( material );
@@ -100,6 +101,8 @@ TsGeometryObject* TsMeshFactory::CreateGeometryObject( TsInt index , TsDevice* p
     TsGeometryObject * obj = TsNew( TsGeometryObject );
 
     obj->CreateGeometryObject( pDev , m_pMeshList[index] , m_pMaterial[index] );
+    m_pMeshList[index]->SetName( m_pTransform[index]->GetName() );
+    obj->SetName( m_pTransform[index]->GetName() );
     obj->SetTransform( m_pTransform[index] );
     return obj;
 }
