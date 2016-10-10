@@ -13,7 +13,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsApplicationBase api;
     api.Initialize(hInstance, nWinMode);
     TsDevice* pDev = api.GetDevice();
-
+    TsResourceManager::Initialize( pDev );
     TsRenderSystem rs;
     rs.LoadRenderSystemFromXML( pDev , "RenderSystem.ts_rs" );
     // ! Screen Space Test
@@ -22,7 +22,9 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsDrawQueue queue;
 
     TsMeshFactory factory;
-    factory.LoadFromFile(pDev, "Face.fbx");
+ //   factory.LoadFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx");
+    factory.LoadFromFile( pDev , "Idol.fbx" );
+
 
     for( int i = 0; i < factory.GetPrimtiveNum(); ++i )
     {
