@@ -7,10 +7,10 @@ public:
     enum TextureType
     {
         Albedo ,
-        Spc ,
+        Specular ,
         Amb ,
         Normal ,
-        Ref ,
+        Reflection ,
         Shininess ,
         TextureTypeNum
     };

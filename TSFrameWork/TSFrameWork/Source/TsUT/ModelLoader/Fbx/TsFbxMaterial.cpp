@@ -86,11 +86,11 @@ TsBool TsFbxMaterial::AnalizeCustomMaterial( FbxSurfaceMaterial* pFbxMaterial ,
                     else if( pEntrySource == "Maya|NormalTexture" )
                         texType = TextureType::Normal;
                     else if( pEntrySource == "Maya|SpecularTexture" )
-                        texType = TextureType::Spc;
+                        texType = TextureType::Specular;
                     else if( pEntrySource == "Maya|FalloffTexture" )
                         texType = TextureType::Shininess;
                     else if( pEntrySource == "Maya|ReflectionMapTexture" )
-                        texType = TextureType::Ref;
+                        texType = TextureType::Reflection;
 
                     m_texturename[texType][j].Analize( pTex->GetFileName() );
                 }
@@ -112,7 +112,7 @@ TsBool TsFbxMaterial::AnalizeDefaultMaterial( FbxSurfaceMaterial* pFbxMaterial )
 
     // spc
     pPropery = pFbxMaterial->FindProperty( FbxSurfaceMaterial::sSpecular );
-    AnalizeTextureName( pPropery , TextureType::Spc );
+    AnalizeTextureName( pPropery , TextureType::Specular );
 
     // amb
     pPropery = pFbxMaterial->FindProperty( FbxSurfaceMaterial::sAmbient );
@@ -124,7 +124,7 @@ TsBool TsFbxMaterial::AnalizeDefaultMaterial( FbxSurfaceMaterial* pFbxMaterial )
 
     //refrection
     pPropery = pFbxMaterial->FindProperty( FbxSurfaceMaterial::sReflection );
-    AnalizeTextureName( pPropery , TextureType::Ref );
+    AnalizeTextureName( pPropery , TextureType::Reflection );
 
     //shininess
     pPropery = pFbxMaterial->FindProperty( FbxSurfaceMaterial::sShininess );
@@ -215,7 +215,7 @@ TSUT::TsFilePathAnalyzer TsFbxMaterial::GetAlbedoTextureName( TsInt layer )const
 }
 TSUT::TsFilePathAnalyzer TsFbxMaterial::GetSpecularTextureName( TsInt layer)const
 {
-    return GetTextureName( TextureType::Spc , layer );
+    return GetTextureName( TextureType::Specular , layer );
 }
 TSUT::TsFilePathAnalyzer TsFbxMaterial::GetAmbientTextureName( TsInt layer )const
 {
@@ -227,7 +227,7 @@ TSUT::TsFilePathAnalyzer TsFbxMaterial::GetNormalTextureName( TsInt layer )const
 }
 TSUT::TsFilePathAnalyzer TsFbxMaterial::GetReflectionTextureName( TsInt layer  )const
 {
-    return GetTextureName( TextureType::Ref , layer );
+    return GetTextureName( TextureType::Reflection , layer );
 }
 TSUT::TsFilePathAnalyzer TsFbxMaterial::GetShininessTextureName( TsInt layer )const
 {
