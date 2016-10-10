@@ -12,13 +12,14 @@
 //! degree -> radian
 inline TsF32 TsRadian( TsF32 degree )
 {
-    return degree *	180 / TS_PI;;
+    return degree * TS_PI / 180.0f;;
+
 }
 
 //! radian -> degree
 inline TsF32 TsDegree( TsF32 radian )
 {
-    return radian * TS_PI / 180.0f ;;
+    return radian * 180 / TS_PI;;
 }
 
 //! 値を min ~ max　に設定

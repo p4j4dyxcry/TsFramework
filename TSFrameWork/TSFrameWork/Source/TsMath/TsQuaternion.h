@@ -29,6 +29,7 @@ public:
     TsQuaternion  operator * ( const TsQuaternion& quaternion )const;
     TsQuaternion& operator *=( const TsQuaternion& quaternion );
 
+    static TsQuaternion Euler( const TsVector3& Euler );
     static TsQuaternion AngleAxis( TsVector3 axis , FLOAT angle );
     static const TsQuaternion identity;
 protected:
