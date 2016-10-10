@@ -5,6 +5,11 @@ cbuffer matrixs : register (b0)
     float4x4 g_MtxInvWorld;
 }
 
+cbuffer BoneMatrixs : register ( b1 )
+{
+    float4x4 g_BoneMatrix[512];
+}
+
 cbuffer ViewCB : register (b7)
 {
     float4x4 g_MtxView;
@@ -60,9 +65,9 @@ struct VS_SKIN_INPUT
 {
     float3 pos      : SV_POSITION;
     float3 normal   : NORMAL;
-    float2 uv       : TEXCOORD0;
     float4 weight   : WEIGHT;
     uint4  boneIdx  : TEXCOORD1;
+    float2 uv       : TEXCOORD0;
 };
 
 // Foward / Defferd / ScreenSpace
