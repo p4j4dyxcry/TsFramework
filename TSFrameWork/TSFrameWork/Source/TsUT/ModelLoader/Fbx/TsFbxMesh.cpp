@@ -207,7 +207,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
         TsVector<TsFbxMaterial> && materialList = m_pFbxScene->GetMaterialList();
         m_materialIndex = 0;
         TS_HASH hash = TSUT::StringToHash( pMaterial->GetName() );
-        for( TsInt i = 0; i < materialList.size(); ++i )
+        for( TsUint i = 0; i < materialList.size(); ++i )
         {
             if( materialList[i].GetHashCode() == hash )
             {
