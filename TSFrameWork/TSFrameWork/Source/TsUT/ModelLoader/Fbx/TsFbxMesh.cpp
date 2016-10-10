@@ -30,8 +30,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
 {
     FbxMesh * pFbxMesh = AsAttributeFbxMesh();
     if (pFbxMesh == nullptr)
-        return TS_FALSE;
-//    *m_pTransform = m_pTransform->GetParent()->ToWorldMatrix().Inversed();
+   // *m_pTransform = m_pTransform->GetParent()->ToWorldMatrix().Inversed();
     TsVector3 scale = m_geometricTransform.GetWorldScale();
     //==============================================================
     //! ˆÊ’uî•ñ‚Ì“Ç‚İ‚İ
