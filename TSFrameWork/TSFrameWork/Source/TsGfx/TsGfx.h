@@ -22,6 +22,7 @@
 #include "TsIndexBuffer.h"
 #include "TsCBuffer.h"
 #include "TsTransformCBuffer.h"
+#include "TsBoneCBuffer.h"
 #include "TsSamplerState.h"
 #include "TsTexture.h"
 #include "TsRenderTarget.h"
