@@ -300,6 +300,12 @@
     <ClCompile Include="Source\TsGfx\TsSamplerState.cpp">
       <Filter>ソース ファイル\TsGfx\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsMath\TsBoneTransForm.cpp">
+      <Filter>ソース ファイル\TsMath\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\TsBoneCBuffer.cpp">
+      <Filter>ソース ファイル\TsGfx\Header</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -553,6 +559,12 @@
     </ClInclude>
     <ClInclude Include="Source\TsGfx\TsSamplerState.h">
       <Filter>ソース ファイル\TsGfx\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsMath\TsBoneTransForm.h">
+      <Filter>ソース ファイル\TsMath\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\TsBoneCBuffer.h">
+      <Filter>ソース ファイル\TsGfx\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
