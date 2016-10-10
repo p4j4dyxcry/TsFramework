@@ -37,7 +37,9 @@ TsBool TsFbxScene::BindFbxScene( FbxScene * pFbxScene )
 
     ComputeNodeTree( m_pRootNode );
 
+
     ComputeBoneIndex();
+
 
     ParseMesh();
 

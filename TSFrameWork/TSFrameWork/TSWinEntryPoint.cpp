@@ -22,8 +22,8 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsDrawQueue queue;
 
     TsMeshFactory factory;
-     factory.LoadFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx");
-     //factory.LoadFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
+     //factory.LoadFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx");
+     factory.LoadFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
      //factory.LoadFromFile( pDev , "Idol.fbx" );
 
 
@@ -40,14 +40,15 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     pCamera->CreateCBuffer(pDev);
     pCamera->SetNearAndFar(1, 2000);
 
+    // test of animation
     TsBoneCBuffer boneCBuffer;
     boneCBuffer.CreateBoneCBuffer( pDev );
     TsGeometryObject* pGeo = dynamic_cast< TsGeometryObject*>(queue.FindGeometoryByIndex( 0 ));
     TsBoneTransForm* pBoneRoot = 
         (TsBoneTransForm*) pGeo->GetTransform()->FindChildByClassName( "TsBoneTransForm" );
-    auto pTest = TsNew( TsTransForm );
-    boneCBuffer.SetWorldTransform( pTest );
     boneCBuffer.SetRootBoneTransform( pBoneRoot );
+
+
     MSG msg;
     while( true )
     {

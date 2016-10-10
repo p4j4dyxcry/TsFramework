@@ -18,8 +18,8 @@ TsFbxNode::~TsFbxNode()
 TsBool TsFbxNode::AnalizeFbxNode( FbxNode* pFbxNode)
 {
     auto attr = pFbxNode->GetNodeAttribute();
-
     m_fbxNode = pFbxNode;
+
     if( attr && attr->GetAttributeType() == TsFbxNodeAttributeType::eSkeleton )
     {
         m_pTransform = TsNew( TsBoneTransForm );
@@ -29,7 +29,7 @@ TsBool TsFbxNode::AnalizeFbxNode( FbxNode* pFbxNode)
         m_pTransform = TsNew( TsTransForm );
     }
 
-    FbxAMatrix localMatrix = m_fbxNode->EvaluateLocalTransform();
+    FbxMatrix localMatrix = pFbxNode->EvaluateLocalTransform();
 
     *m_pTransform = FbxMatrixToTsMatrix(localMatrix);
 
@@ -39,7 +39,6 @@ TsBool TsFbxNode::AnalizeFbxNode( FbxNode* pFbxNode)
     m_pTransform->m_localRotate.w *= -1;
     SetName( pFbxNode->GetName() );
     m_pTransform->SetName( GetName() );
-
     const FbxVector4 lT = pFbxNode->GetGeometricTranslation(FbxNode::eSourcePivot);
     const FbxVector4 lR = pFbxNode->GetGeometricRotation(FbxNode::eSourcePivot);
     const FbxVector4 lS = pFbxNode->GetGeometricScaling(FbxNode::eSourcePivot);
