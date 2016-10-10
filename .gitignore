@@ -71,3 +71,4 @@ TSFrameWork/TSFrameWork/Extern/FBX SDK/2016.0/lib/vs2013/x64/release/libfbxsdk.l
 TSFrameWork/TSFrameWork/Extern/FBX SDK/2016.0/lib/vs2013/x64/release/libfbxsdk-md.lib
 TSFrameWork/TSFrameWork/Extern/FBX SDK/2016.0/lib/vs2013/x64/release/libfbxsdk-mt.lib
 
+*.cg
