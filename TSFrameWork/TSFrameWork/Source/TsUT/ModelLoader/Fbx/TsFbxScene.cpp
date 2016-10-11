@@ -15,44 +15,96 @@ TsFbxScene::TsFbxScene(TsFbxContext * pContext,TsFbxScene* pFbxScene /* nullptr 
 
 TsBool TsFbxScene::LoadFromFile( const TsString& filename )
 {
-    m_pFbxImporter = FbxImporter::Create( m_pFbxContext->GetFbxManager() , filename.c_str() );
-    m_pFbxScene = FbxScene::Create( m_pFbxContext->GetFbxManager(),(filename + "Scene").c_str()) ;
-    m_pFbxImporter->Initialize( filename.c_str() );
-    m_pFbxImporter->Import( m_pFbxScene );
-    if( m_pFbxScene == nullptr )
-    {
-        return TS_FALSE;
-    }
+    // FbxからScene 情報の読み込み
+    ImportScene(filename);
 
-    // convert Fbx Scene -> Maya up
-    FbxAxisSystem system( FbxAxisSystem::eMayaYUp );
-    system.ConvertScene( m_pFbxScene );
+    // FbxのSceneを読みやすいようにコンバート
+    ConvertScene();
 
-    MeshToTriangulate();
-
+    // データサイズの取得
     m_materialCount = m_pFbxScene->GetMaterialCount();
     m_meshCount = m_pFbxScene->GetMemberCount<FbxMesh>();
     m_nodeCount = m_pFbxScene->GetNodeCount();
     m_skeletonCount = m_pFbxScene->GetMemberCount<FbxSkeleton>();
 
-    for( TsInt i = 0; i < m_materialCount; ++i )
+    // マテリアル一覧を取得
+    ParseMaterial();
+
+    // ノード構造を解析
+    ParseNodeTree();
+
+    // ボーンノードに対してIDを割り当てる
+    ComputeBoneIndex();
+
+    // メッシュノードの詳細データを解析
+    ParseMesh();
+
+    // バインドポーズ(初期姿勢行列)の解析
+    ParseBindPose();
+
+    return TS_TRUE;
+}
+
+TsBool TsFbxScene::ConvertScene()
+{
+    // convert Fbx Scene -> Maya up
+    FbxAxisSystem system(FbxAxisSystem::eMayaYUp);
+    system.ConvertScene(m_pFbxScene);
+
+    // conver mesh to triangle
+    MeshToTriangulate();
+
+    //todo length unit convertも入れる？
+
+    return TS_TRUE;
+}
+
+TsBool TsFbxScene::ImportScene(const TsString& filename)
+{
+    m_pFbxImporter = FbxImporter::Create(m_pFbxContext->GetFbxManager(), filename.c_str());
+    m_pFbxScene = FbxScene::Create(m_pFbxContext->GetFbxManager(), (filename + "Scene").c_str());
+    m_pFbxImporter->Initialize(filename.c_str());
+    m_pFbxImporter->Import(m_pFbxScene);
+    if (m_pFbxScene == nullptr)
     {
-        TsFbxMaterial material( m_pFbxContext ,this );
-        material.AnalizeForFbxMaterial( m_pFbxScene->GetMaterial( i ) );
-        m_materialList.push_back( material );
+        return TS_FALSE;
     }
 
+
+    return TS_TRUE;
+}
+
+TsBool TsFbxScene::ParseNodeTree()
+{
     m_pRootNode = TsFbxNode::Create(m_pFbxContext, this, GetFbxRootNode());
     m_pNodeList.push_back(m_pRootNode);
 
-    ComputeNodeTree( m_pRootNode );
+    ComputeNodeTree(m_pRootNode);
 
+    return TS_TRUE;
+}
 
-    ComputeBoneIndex();
+TsBool TsFbxScene::ParseMaterial()
+{
+    for (TsInt i = 0; i < m_materialCount; ++i)
+    {
+        TsFbxMaterial material(m_pFbxContext, this);
+        material.AnalizeForFbxMaterial(m_pFbxScene->GetMaterial(i));
+        m_materialList.push_back(material);
+    }
+    return TS_TRUE;
+}
 
+TsBool TsFbxScene::ParseBindPose()
+{
+    m_pFbxBindPoseHolder = TsNew(TsFbxBindPoseHolder(m_pFbxContext, this));
+    m_pFbxBindPoseHolder->ParseBindPose(this);
 
-    ParseMesh();
-
+    for each(auto it in m_pNodeList)
+    {
+        if (it->IsSkeleton())
+            ((TsFbxBone*)it)->ComputeBindPose();
+    }
     return TS_TRUE;
 }
 
@@ -102,7 +154,6 @@ TsBool TsFbxScene::ComputeBoneIndex()
         {
             TsFbxBone* pBone = (TsFbxBone*)m_pNodeList[i];
             pBone->SetBoneIndex( boneIndex++ );
-            pBone->ComputeBindPose();
         }
     }
     return TS_TRUE;

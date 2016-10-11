@@ -619,7 +619,7 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
     {
         FbxCluster* pCluster = pFbxSkin->GetCluster( 0 );
 
-        FbxNode *pNode = pCluster->GetLink();
+        FbxNode *pNode = pCluster->GetLink();        
         while( pNode )
         {
             if( pNode->GetParent() == nullptr )
@@ -647,7 +647,6 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
             TsInt boneIndex = 0;
 
             TsFbxBone* pBone = (TsFbxBone*)m_pFbxScene->FindNodeByName(pFbxNode->GetName());
-
             if (pBone != NULL)
             {
                 boneIndex = pBone->GetBoneIndex();
@@ -660,6 +659,8 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
             } 
 
             FbxCluster *pCluster = pFbxSkin->GetCluster(clusterIndex);
+            if (pBone)
+                pBone->AddCluster(pCluster);
 
             TsInt numPointsInfluencing = pCluster->GetControlPointIndicesCount();
 

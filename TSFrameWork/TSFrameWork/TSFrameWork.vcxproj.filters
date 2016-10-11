@@ -306,6 +306,9 @@
     <ClCompile Include="Source\TsGfx\TsBoneCBuffer.cpp">
       <Filter>ソース ファイル\TsGfx\Header</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBindPoseHolder.cpp">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -565,6 +568,12 @@
     </ClInclude>
     <ClInclude Include="Source\TsGfx\TsBoneCBuffer.h">
       <Filter>ソース ファイル\TsGfx\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxBindPoseHolder.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxType.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

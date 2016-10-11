@@ -23,11 +23,20 @@ public:
     {
         return m_pFbxImporter;
     }
+    TsMatrix* GetFirstBindPoseMatrix(TsString& name)
+    {
+        return m_pFbxBindPoseHolder->GetFirstBindPoseMatrix(name);
+    }
 
 private:
+    TsBool ImportScene(const TsString& filename);
+    TsBool ConvertScene();
     TsBool ComputeNodeTree( TsFbxNode* pTsNode);
     TsBool ComputeBoneIndex();
+    TsBool ParseBindPose();
+    TsBool ParseNodeTree();
     TsBool ParseMesh();
+    TsBool ParseMaterial();
 
     TsString        m_name;
     FbxScene*       m_pFbxScene;
@@ -41,5 +50,6 @@ private:
     TsFbxNode*	m_pRootNode;
     TsVector<TsFbxNode*>    m_pNodeList;
     TsVector<TsFbxMaterial> m_materialList;
+    TsFbxBindPoseHolder *   m_pFbxBindPoseHolder;
 private:
 };

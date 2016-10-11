@@ -95,6 +95,7 @@
     <ClCompile Include="Source\TsMath\TsVector4.cpp" />
     <ClCompile Include="Source\TsOS\TsWindowsUtility.cpp" />
     <ClCompile Include="Source\TsUT\Intarface\IHasTransform.cpp" />
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBindPoseHolder.cpp" />
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBlendShape.cpp" />
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxContext.cpp" />
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxLoader.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="Source\TsOS\TsWindowsUtility.h" />
     <ClInclude Include="Source\TsUT\Intarface\ITsHasTransform.h" />
     <ClInclude Include="Source\TsUT\Intarface\ITsStaticNameObjectList.h" />
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxBindPoseHolder.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxBlendShape.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxHeader.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxContext.h" />
@@ -159,6 +161,7 @@
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxScene.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxBone.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxSkinAnimation.h" />
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxType.h" />
     <ClInclude Include="Source\TsUT\TsAlloc.h" />
     <ClInclude Include="Source\TSUT\TsArrayType.h" />
     <ClInclude Include="Source\TsUT\TsBinaryFile.h" />

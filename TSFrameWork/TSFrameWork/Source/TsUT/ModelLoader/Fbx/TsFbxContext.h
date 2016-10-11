@@ -1,6 +1,5 @@
 #pragma once
 
-class TsFbxScene;
 class TsFbxContext
 {
 public:
