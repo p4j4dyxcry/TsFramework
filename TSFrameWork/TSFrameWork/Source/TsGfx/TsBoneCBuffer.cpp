@@ -4,12 +4,18 @@ TsBoneCBuffer::TsBoneCBuffer() :m_pRootBone(nullptr)
 }
 TsBool TsBoneCBuffer::UpdateCBuffer( TsDeviceContext * pContext )
 {
+    if (m_pRootBone == nullptr)
+        return TS_FALSE;
+
     UpdateBones( m_pRootBone );
     pContext->ChangeCBuffer( this , &m_boneCBuffer , sizeof( m_boneCBuffer ) );
     return TS_TRUE;
 }
 TsBool TsBoneCBuffer::ApplyCBuffer( TsDeviceContext * pContext )
 {
+    if (m_pRootBone == nullptr)
+        return TS_FALSE;
+
     pContext->SetCBuffer( this );
     return TS_TRUE;
 }
