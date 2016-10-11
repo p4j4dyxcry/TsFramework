@@ -309,6 +309,9 @@
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBindPoseHolder.cpp">
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsGfx\TsSkinGeometryObject.cpp">
+      <Filter>ソース ファイル\TsGfx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -574,6 +577,9 @@
     </ClInclude>
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxType.h">
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\TsSkinGeometryObject.h">
+      <Filter>ソース ファイル\TsGfx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -25,7 +25,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
      //factory.LoadFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx");
      //factory.LoadFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
      //factory.LoadFromFile( pDev , "Idol.fbx" );
-     factory.LoadFromFile( pDev , "miku.fbx" );
+     factory.LoadFromFile( pDev , "SD_unitychan_generic.fbx" );
 
 
     for( int i = 0; i < factory.GetPrimtiveNum(); ++i )
@@ -36,8 +36,8 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 
     TsCamera* pCamera = pDev->GetDC()->GetMainCamera();
 
-    pCamera->SetEyePosition(TsVector3(0,0,500));
-    pCamera->SetLookAtVector( TsVector3(0,0,0));
+    pCamera->SetEyePosition(TsVector3(0,20,500));
+    pCamera->SetLookAtVector( TsVector3(0,20,0));
     pCamera->CreateCBuffer(pDev);
     pCamera->SetNearAndFar(1, 2000);
 
@@ -46,7 +46,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     boneCBuffer.CreateBoneCBuffer( pDev );
     TsGeometryObject* pGeo = dynamic_cast< TsGeometryObject*>(queue.FindGeometoryByIndex( 0 ));
     TsBoneTransForm* pBoneRoot = 
-        (TsBoneTransForm*) pGeo->GetTransform()->FindChildByClassName( "TsBoneTransForm" );
+        (TsBoneTransForm*) pGeo->GetTransform()->GetRootTransform()->FindChildByClassName( "TsBoneTransForm" );
     boneCBuffer.SetRootBoneTransform( pBoneRoot );
 
 

@@ -11,9 +11,9 @@ class TsGeometryObject : virtual public TsDrawObject
 public:
     TsGeometryObject();
     virtual ~TsGeometryObject();
-    TsBool CreateGeometryObject( TsDevice* pDev ,
-                                 TsMesh * pMesh ,
-                                 TsMaterial* pMaterial );
+    virtual TsBool CreateGeometryObject( TsDevice* pDev ,
+                                         TsMesh * pMesh ,
+                                         TsMaterial* pMaterial );
 
     virtual TsBool UpdateTransform( TsDeviceContext* context )override;
     virtual TsBool UpdateMaterial( TsDeviceContext* context )override;

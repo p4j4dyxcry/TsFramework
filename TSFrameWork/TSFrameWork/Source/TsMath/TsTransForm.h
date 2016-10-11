@@ -90,6 +90,14 @@ public:
     //! LocalMatrixと乗算する
     TsTransForm& operator *= (const TsMatrix& m);
 
+    //! RootTransformを取得する
+    TsTransForm* GetRootTransform()
+    {
+        TsTransForm * p = this;
+        while (p->m_parent) p = p->m_parent;
+        return p;
+    };
+
     //! クラス名を取得する
     virtual TsString GetClassTypeName()const
     {

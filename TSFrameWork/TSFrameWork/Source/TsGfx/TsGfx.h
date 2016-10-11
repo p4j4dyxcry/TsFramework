@@ -42,6 +42,7 @@
 #include "Mesh\TsMeshFactory.h"
 #include "TsDrawObject.h"
 #include "TsGeometryObject.h"
+#include "TsSkinGeometryObject.h"
 #include "TsScreenObject.h"
 #include "TsShaderEffect.h"
 #include "TsShaderTechnique.h"

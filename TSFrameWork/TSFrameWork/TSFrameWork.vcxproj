@@ -81,6 +81,7 @@
     <ClCompile Include="Source\TsGfx\TsShaderEffect.cpp" />
     <ClCompile Include="Source\TsGfx\TsShaderResource.cpp" />
     <ClCompile Include="Source\TsGfx\TsShaderTechnique.cpp" />
+    <ClCompile Include="Source\TsGfx\TsSkinGeometryObject.cpp" />
     <ClCompile Include="Source\TsGfx\TsTransformCBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\TsVertexBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\TsViewport.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="Source\TsGfx\TsShaderResource.h" />
     <ClInclude Include="Source\TsGfx\TsShaderTechnique.h" />
     <ClInclude Include="Source\TsGfx\TsShaderUT.h" />
+    <ClInclude Include="Source\TsGfx\TsSkinGeometryObject.h" />
     <ClInclude Include="Source\TsGfx\TsTexture.h" />
     <ClInclude Include="Source\TsGfx\TsTransformCBuffer.h" />
     <ClInclude Include="Source\TsGfx\TsVertex.h" />
