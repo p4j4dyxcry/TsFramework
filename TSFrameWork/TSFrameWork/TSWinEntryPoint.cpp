@@ -23,8 +23,9 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 
     TsMeshFactory factory;
      //factory.LoadFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx");
-     factory.LoadFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
+     //factory.LoadFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
      //factory.LoadFromFile( pDev , "Idol.fbx" );
+     factory.LoadFromFile( pDev , "miku.fbx" );
 
 
     for( int i = 0; i < factory.GetPrimtiveNum(); ++i )
@@ -35,8 +36,8 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 
     TsCamera* pCamera = pDev->GetDC()->GetMainCamera();
 
-    pCamera->SetEyePosition(TsVector3(0,70,200));
-    pCamera->SetLookAtVector( TsVector3(0,70,0));
+    pCamera->SetEyePosition(TsVector3(0,0,500));
+    pCamera->SetLookAtVector( TsVector3(0,0,0));
     pCamera->CreateCBuffer(pDev);
     pCamera->SetNearAndFar(1, 2000);
 
