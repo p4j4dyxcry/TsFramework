@@ -20,14 +20,7 @@ TsBool TsFbxNode::AnalizeFbxNode( FbxNode* pFbxNode)
     auto attr = pFbxNode->GetNodeAttribute();
     m_fbxNode = pFbxNode;
 
-    if( attr && attr->GetAttributeType() == TsFbxNodeAttributeType::eSkeleton )
-    {
-        m_pTransform = TsNew( TsBoneTransForm );
-    }
-    else
-    {
-        m_pTransform = TsNew( TsTransForm );
-    }
+    m_pTransform = TsNew( TsTransForm );
 
     FbxMatrix localMatrix = pFbxNode->EvaluateLocalTransform();
 

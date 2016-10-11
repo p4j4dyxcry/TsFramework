@@ -1,28 +1,33 @@
 #include "TsGfx.h"
-TsBoneCBuffer::TsBoneCBuffer() :m_pRootBone(nullptr)
+TsBoneCBuffer::TsBoneCBuffer() :m_pSkeleton(nullptr)
 {
 }
 TsBool TsBoneCBuffer::UpdateCBuffer( TsDeviceContext * pContext )
 {
-    if (m_pRootBone == nullptr)
+    if( m_pSkeleton == nullptr )
         return TS_FALSE;
 
-    UpdateBones( m_pRootBone );
+    m_pSkeleton->UpdateSkeleton();
+
+    TsVector<TsBone*>& boneList = m_pSkeleton->GetBoneList();
+    for each( auto pBone in boneList )
+        m_boneCBuffer.bone[pBone->GetBoneID()] = pBone->GetBoneMatrix().Transposed();
+
     pContext->ChangeCBuffer( this , &m_boneCBuffer , sizeof( m_boneCBuffer ) );
     return TS_TRUE;
 }
 TsBool TsBoneCBuffer::ApplyCBuffer( TsDeviceContext * pContext )
 {
-    if (m_pRootBone == nullptr)
+    if (m_pSkeleton == nullptr)
         return TS_FALSE;
 
     pContext->SetCBuffer( this );
     return TS_TRUE;
 }
-TsBool TsBoneCBuffer::SetRootBoneTransform( TsBoneTransForm* pTransform )
+TsBool TsBoneCBuffer::SetSkeleton( TsSkeleton* pSkeleton )
 {
-    m_pRootBone = pTransform;
-    m_worldTransform = m_pRootBone;
+    m_pSkeleton = pSkeleton;
+//    m_worldTransform = m_pRootBone;
     return TS_TRUE;
 }
 
@@ -46,24 +51,4 @@ TsBool TsBoneCBuffer::CreateBoneCBuffer( TsDevice * pDev )
     BindShaderType( TS_SHADER_TYPE::VERTEX_SHADER );
 
     return TS_TRUE;
-}
-
-void TsBoneCBuffer::UpdateBones( TsBoneTransForm* pBone)
-{
-    TsMatrix world = m_worldTransform->ToWorldMatrix();
-    TsMatrix bone = pBone->ToBoneMatrix( world );
-    m_boneCBuffer.bone[pBone->GetID()] = bone;
-    m_boneCBuffer.bone[pBone->GetID()].Transpose();
-
-    if( pBone->GetFirstChild() &&
-        pBone->GetFirstChild()->GetClassTypeName() == "TsBoneTransForm" )
-    {
-        UpdateBones( ((TsBoneTransForm*)pBone->GetFirstChild()) );
-    }
-
-    if( pBone->GetSubling() &&
-        pBone->GetSubling()->GetClassTypeName() == "TsBoneTransForm" )
-    {
-        UpdateBones( ( ( TsBoneTransForm* )pBone->GetSubling() ) );
-    }
 }

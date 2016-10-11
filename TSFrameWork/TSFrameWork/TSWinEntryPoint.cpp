@@ -45,10 +45,6 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsBoneCBuffer boneCBuffer;
     boneCBuffer.CreateBoneCBuffer( pDev );
     TsGeometryObject* pGeo = dynamic_cast< TsGeometryObject*>(queue.FindGeometoryByIndex( 0 ));
-    TsBoneTransForm* pBoneRoot = 
-        (TsBoneTransForm*) pGeo->GetTransform()->GetRootTransform()->FindChildByClassName( "TsBoneTransForm" );
-    boneCBuffer.SetRootBoneTransform( pBoneRoot );
-
 
     MSG msg;
     while( true )

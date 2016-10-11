@@ -47,8 +47,8 @@ TsBool TsFbxBone::ComputeBindPose()
     transform.m_localRotate.x *= -1;
     transform.m_localRotate.w *= -1;
     m_bindPoseMatrixList[0] = transform.ToLocalMatrix();
-    ((TsBoneTransForm*)(m_pTransform))->SetBasePoseInv(m_bindPoseMatrixList[0]);
-    ((TsBoneTransForm*)(m_pTransform))->SetID(m_boneIndex);
+    //((TsBoneTransForm*)(m_pTransform))->SetBasePoseInv(m_bindPoseMatrixList[0]);
+    //((TsBoneTransForm*)(m_pTransform))->SetID(m_boneIndex);
 
     return TS_TRUE;
 }

@@ -300,9 +300,6 @@
     <ClCompile Include="Source\TsGfx\TsSamplerState.cpp">
       <Filter>ソース ファイル\TsGfx\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsMath\TsBoneTransForm.cpp">
-      <Filter>ソース ファイル\TsMath\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsGfx\TsBoneCBuffer.cpp">
       <Filter>ソース ファイル\TsGfx\Header</Filter>
     </ClCompile>
@@ -311,6 +308,12 @@
     </ClCompile>
     <ClCompile Include="Source\TsGfx\TsSkinGeometryObject.cpp">
       <Filter>ソース ファイル\TsGfx</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsMath\TsSkeleton.cpp">
+      <Filter>ソース ファイル\TsMath\Header</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsMath\TsBone.cpp">
+      <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -566,9 +569,6 @@
     <ClInclude Include="Source\TsGfx\TsSamplerState.h">
       <Filter>ソース ファイル\TsGfx\Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TsMath\TsBoneTransForm.h">
-      <Filter>ソース ファイル\TsMath\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Source\TsGfx\TsBoneCBuffer.h">
       <Filter>ソース ファイル\TsGfx\Header</Filter>
     </ClInclude>
@@ -580,6 +580,12 @@
     </ClInclude>
     <ClInclude Include="Source\TsGfx\TsSkinGeometryObject.h">
       <Filter>ソース ファイル\TsGfx</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsMath\TsSkeleton.h">
+      <Filter>ソース ファイル\TsMath\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsMath\TsBone.h">
+      <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

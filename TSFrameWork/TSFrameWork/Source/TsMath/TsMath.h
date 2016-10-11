@@ -5,5 +5,6 @@
 #include "TsMatrix.h"
 #include "TsQuaternion.h"
 #include "TsTransForm.h"
-#include "TsBoneTransForm.h"
+#include "TsBone.h"
+#include "TsSkeleton.h"
 #include "TsMathUTility.h"

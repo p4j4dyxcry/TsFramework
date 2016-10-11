@@ -18,7 +18,8 @@ public:
     virtual TsBool UpdateTransform( TsDeviceContext* context )override;
     virtual TsBool ApplyTransForm( TsDeviceContext * context )override;
 
-    TsBool SetRootBone(TsBoneTransForm* pRootBone);
+    TsBool SetSkeleton(TsSkeleton* pSkeleton);
 private:
     TsBoneCBuffer*     m_boneCBuffer;
+    TsSkeleton*        m_pSkeleton;
 };
