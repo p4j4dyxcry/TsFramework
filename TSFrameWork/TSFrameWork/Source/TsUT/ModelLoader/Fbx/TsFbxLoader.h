@@ -33,6 +33,10 @@ public:
     TsString      GetAlbedoTexturePass( TsInt index );
 
     TsTransForm*   GetTransform(TsInt index)const;
+
+    TsBool IsSkinMesh( TsInt index );
+
+    TsSkeleton* GetSkeleton()const;
 private:
     TsFbxContext* m_pFbxContext;
 };

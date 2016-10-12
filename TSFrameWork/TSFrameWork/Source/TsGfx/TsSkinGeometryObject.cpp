@@ -36,7 +36,7 @@ TsBool TsSkinGeometryObject::UpdateTransform( TsDeviceContext* context )
 
 TsBool TsSkinGeometryObject::ApplyTransForm( TsDeviceContext * context )
 {
-    TsGeometryObject::UpdateTransform(context);
+    TsGeometryObject::ApplyTransForm(context);
     if (m_boneCBuffer)
         m_boneCBuffer->ApplyCBuffer(context);
     else

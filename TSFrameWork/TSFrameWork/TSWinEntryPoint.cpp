@@ -22,15 +22,15 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsDrawQueue queue;
 
     TsMeshFactory factory;
-     //factory.LoadFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx");
-     factory.LoadFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
-     //factory.LoadFromFile( pDev , "Idol.fbx" );
+      //factory.LoadFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx");
+     //factory.LoadFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
+     factory.LoadFromFile( pDev , "Idol.fbx" );
      //factory.LoadFromFile( pDev , "SD_unitychan_generic.fbx" );
 
 
     for( int i = 0; i < factory.GetPrimtiveNum(); ++i )
     {
-        queue.Add(factory.CreateGeometryObject(i, pDev));
+        queue.Add(factory.GetGeometryObject(i));
     }
     rs.SetDrawQue( &queue );
 

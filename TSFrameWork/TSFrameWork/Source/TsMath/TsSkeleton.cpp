@@ -23,7 +23,7 @@ TsBool TsSkeleton::AddBone( TsTransForm* pTransform ,
     m_boneList.push_back( pBone );
     return TS_TRUE;
 }
-TsBool TsSkeleton::SetRootBone( TsTransForm* pTransform ,
+TsBool TsSkeleton::AddRootBone( TsTransForm* pTransform ,
                                 TsInt boneID ,
                                 const TsMatrix& bindPoseMatrix )
 {
@@ -46,6 +46,21 @@ TsBool TsSkeleton::SetRootBone( TsTransForm* pTransform ,
         p->m_RootBone = m_rootBone;
         
     return TS_TRUE;
+}
+
+TsBool TsSkeleton::SetRootBoneByID( TsInt id )
+{
+    for( TsInt i = 0; i < m_boneList.size(); ++i )
+    {
+        if( id == m_boneList[i]->GetBoneID() )
+        {
+            m_rootBone = m_boneList[i];
+            for( auto it : m_boneList )
+                it->m_RootBone = m_rootBone;
+            return TS_TRUE;
+        }
+    }
+    return TS_FALSE;
 }
 
 TsBool TsSkeleton::UpdateSkeleton()

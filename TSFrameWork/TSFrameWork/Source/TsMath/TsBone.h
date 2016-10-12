@@ -10,9 +10,10 @@ public:
     TsTransForm* GetTransform();
     const TsMatrix& GetBoneMatrix()const;
     TsBool ComputeBoneMatrix();
-
+    TsBool SetTransform( TsTransForm* pTransform );
     TsBool SetBindPoseMatrix( const TsMatrix& bindPoseMatrix );
     TsBool SetBoneID( TsInt id );
+
 protected:
     TsBone*       m_RootBone;
     TsTransForm * m_pTransform;

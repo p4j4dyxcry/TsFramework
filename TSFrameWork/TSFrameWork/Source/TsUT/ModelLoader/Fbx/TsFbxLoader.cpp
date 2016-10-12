@@ -80,3 +80,14 @@ TsString  TsFbxLoader::GetAlbedoTexturePass( TsInt index )
     TsFbxMaterial material = m_pFbxContext->GetSceneByIndex( 0 )->GetMaterialList()[materialIndex];
     return material.GetAlbedoTextureName().GetFileName();
 }
+
+TsBool TsFbxLoader::IsSkinMesh( TsInt index )
+{
+    auto&& meshList = m_pFbxContext->GetSceneByIndex( 0 )->GetMeshList();
+    return meshList[index]->IsSkinMesh();
+}
+
+TsSkeleton* TsFbxLoader::GetSkeleton()const
+{
+    return m_pFbxContext->GetSceneByIndex( 0 )->CreateSkeleton();
+}

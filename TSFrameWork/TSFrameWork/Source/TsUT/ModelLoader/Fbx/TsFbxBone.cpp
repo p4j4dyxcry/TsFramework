@@ -14,12 +14,6 @@ TsBool TsFbxBone::SetBoneIndex(TsInt index)
     return TS_TRUE;
 }
 
-TsBool TsFbxBone::AddCluster(FbxCluster* pFbxCluster)
-{
-    m_pClusterList.push_back(pFbxCluster);
-
-    return TS_TRUE;
-}
 
 TsInt TsFbxBone::GetBoneIndex()const
 {
@@ -28,20 +22,12 @@ TsInt TsFbxBone::GetBoneIndex()const
 
 TsBool TsFbxBone::ComputeBindPose()
 {
-
     TsMatrix* pBindPoseMatrix = m_pFbxScene->GetFirstBindPoseMatrix(GetName());
     m_bindPoseMatrixList.resize(1);
    
     TsTransForm transform;
-    if (pBindPoseMatrix != nullptr)
-    {
-        transform = pBindPoseMatrix->Inversed();
-    }
-    else
-    {
-        FbxMatrix baseposeMatrix = m_fbxNode->EvaluateGlobalTransform();
-        transform = FbxMatrixToTsMatrix(baseposeMatrix).Inverse();
-    }
+    FbxMatrix baseposeMatrix = m_fbxNode->EvaluateGlobalTransform();
+    transform = FbxMatrixToTsMatrix( baseposeMatrix );
 
     transform.m_localPosition.x *= -1;
     transform.m_localRotate.x *= -1;

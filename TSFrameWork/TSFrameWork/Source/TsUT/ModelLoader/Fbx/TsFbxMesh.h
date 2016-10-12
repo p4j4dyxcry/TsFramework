@@ -41,6 +41,10 @@ public:
 
     TsBool ParseFbxMesh();
     TsInt  GetMaterialIndex()const;
+    TsBool IsSkinMesh()const
+    {
+        return m_fbxNode->GetMesh()->GetDeformerCount( FbxDeformer::eSkin ) > 0;
+    }
 protected:
     template<typename T>
     TsBool MappingToFace(T* p, TsInt startIndex);

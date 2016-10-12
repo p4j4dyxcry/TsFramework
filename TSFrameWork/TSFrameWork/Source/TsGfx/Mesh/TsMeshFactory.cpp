@@ -2,8 +2,7 @@
 
 TsMeshFactory::TsMeshFactory()
 {
-    m_pMaterial.reserve( 32 );
-    m_pMeshList.reserve( 32 );
+
 }
 TsMeshFactory::~TsMeshFactory()
 {
@@ -32,9 +31,9 @@ TsBool TsMeshFactory::LoadFromFile( TsDevice* pDev, TsString filename )
             material->m_textureName = loader.GetTexturePass( i );
             material->LoadTextureFromFile( pDev );
 
-            m_pMaterial.push_back( material );
-            m_pMeshList.push_back( mesh );
-            m_pTransform.push_back( nullptr );
+            TsGeometryObject *  obj = TsNew( TsGeometryObject );
+            obj->CreateGeometryObject( pDev , mesh , material );
+            m_pObjects.push_back( obj );
         }
 
         return TS_TRUE;
@@ -68,9 +67,27 @@ TsBool TsMeshFactory::LoadFromFile( TsDevice* pDev, TsString filename )
 
             material->LoadTextureFromFile( pDev );
             TsInt id = mesh->GetIndexNum();
-            m_pMaterial.push_back( material );
-            m_pMeshList.push_back( mesh );
-            m_pTransform.push_back( loader.GetTransform( i ) );
+            TsGeometryObject * obj = nullptr;
+            if( loader.IsSkinMesh( i ) )
+            {
+                TsSkinGeometryObject * skin =
+                    TsNew( TsSkinGeometryObject );
+                skin->CreateGeometryObject( pDev , mesh , material );
+                skin->SetSkeleton( loader.GetSkeleton() );
+                obj = skin;
+                
+            }
+            else
+            {
+                obj = TsNew( TsGeometryObject );
+                obj->CreateGeometryObject( pDev , mesh , material );
+            }
+  
+            TsTransForm* pTransform = loader.GetTransform(i);
+            
+            obj->SetName( pTransform->GetName() );
+            obj->SetTransform( pTransform );
+            m_pObjects.push_back( obj );
         }
 
         return TS_TRUE;
@@ -78,31 +95,12 @@ TsBool TsMeshFactory::LoadFromFile( TsDevice* pDev, TsString filename )
     return TS_FALSE;
 }
 
-TsMaterial* TsMeshFactory::GetMaterial( TsInt index )
-{
-    return m_pMaterial[index];
-}
-TsMesh* TsMeshFactory::GetMesh( TsInt index )
-{
-    return m_pMeshList[index];
-}
-
-TsMesh* TsMeshFactory::GetMeshArray()
-{
-    return nullptr;
-}
 TsMaterial* TsMeshFactory::GetMaterialArray()
 {
     return nullptr;
 }
 
-TsGeometryObject* TsMeshFactory::CreateGeometryObject( TsInt index , TsDevice* pDev )
+TsGeometryObject* TsMeshFactory::GetGeometryObject( TsInt index  )
 {
-    TsGeometryObject * obj = TsNew( TsGeometryObject );
-
-    obj->CreateGeometryObject( pDev , m_pMeshList[index] , m_pMaterial[index] );
-    m_pMeshList[index]->SetName( m_pTransform[index]->GetName() );
-    obj->SetName( m_pTransform[index]->GetName() );
-    obj->SetTransform( m_pTransform[index] );
-    return obj;
+    return m_pObjects[index];
 }

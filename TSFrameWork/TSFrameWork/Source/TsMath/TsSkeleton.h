@@ -8,9 +8,10 @@ public:
     TsBool AddBone( TsTransForm* pTransform ,
                     TsInt boneID ,
                     const TsMatrix& bindPoseMatrix );
-    TsBool SetRootBone( TsTransForm* pTransform ,
+    TsBool AddRootBone( TsTransForm* pTransform ,
                         TsInt boneID ,
                         const TsMatrix& bindPoseMatrix);
+    TsBool SetRootBoneByID(TsInt id);
 
     TsBool UpdateSkeleton();
     TsVector<TsBone*>& GetBoneList();

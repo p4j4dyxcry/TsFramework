@@ -10,17 +10,11 @@ public:
 
     TsBool LoadFromFile( TsDevice* pDev, TsString filename );
 
-    TsMaterial* GetMaterial( TsInt index );
-    TsMesh* GetMesh( TsInt index );
-
-    TsMesh* GetMeshArray();
     TsMaterial* GetMaterialArray();
 
-    TsGeometryObject* CreateGeometryObject( TsInt index ,TsDevice* pDev);
+    TsGeometryObject* GetGeometryObject( TsInt index);
 
-    TsInt GetPrimtiveNum(){ return m_pMeshList.size(); };
+    TsInt GetPrimtiveNum(){ return m_pObjects.size(); };
 protected:
-    TsVector<TsMesh*>       m_pMeshList;
-    TsVector<TsMaterial*>   m_pMaterial;
-    TsVector<TsTransForm*>  m_pTransform;
+    TsVector<TsGeometryObject*> m_pObjects;
 };

@@ -95,13 +95,13 @@ TsBool TsFbxScene::ParseMaterial()
     return TS_TRUE;
 }
 
-TsBool TsFbxScene::ParseSkeleton()
-{
-    //auto&& meshList = GetMeshList();
-    //for each( auto it in m_m )
-
-    return TS_TRUE;
-}
+//TsBool TsFbxScene::ParseSkeleton()
+//{
+//    //auto&& meshList = GetMeshList();
+//    //for each( auto it in m_m )
+//
+//    return TS_TRUE;
+//}
 
 TsBool TsFbxScene::ParseBindPose()
 {
@@ -232,4 +232,22 @@ TsVector<TsFbxBone*> TsFbxScene::GetBoneList()
         }
     }
     return result;
+}
+
+TsSkeleton* TsFbxScene::CreateSkeleton()
+{
+    if( m_pSkeletonCash )
+        return m_pSkeletonCash;
+    TsSkeleton* pSkeleton = TsNew( TsSkeleton) ;
+    auto&& it = GetBoneList();
+
+    for each( auto p in it )
+    {
+        pSkeleton->AddBone(
+            p->GetTransform() ,
+            p->GetBoneIndex() ,
+            p->GetBindPoseMatrix() );
+    };
+    pSkeleton->SetRootBoneByID( 0 );
+    return m_pSkeletonCash = pSkeleton;
 }

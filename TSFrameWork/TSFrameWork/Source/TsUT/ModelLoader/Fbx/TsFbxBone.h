@@ -7,9 +7,11 @@ public:
     TsInt GetBoneIndex()const;
     TsBool SetBoneIndex( TsInt index );
     TsBool ComputeBindPose();
-    TsBool AddCluster(FbxCluster* pFbxCluster);
+    TsMatrix GetBindPoseMatrix()
+    {
+        return m_bindPoseMatrixList[0];
+    }
 protected:
     TsInt m_boneIndex;
     TsVector<TsMatrix> m_bindPoseMatrixList;
-    TsVector<FbxCluster*> m_pClusterList;
 };

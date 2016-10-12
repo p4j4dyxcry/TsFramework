@@ -659,8 +659,6 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
             } 
 
             FbxCluster *pCluster = pFbxSkin->GetCluster(clusterIndex);
-            if (pBone)
-                pBone->AddCluster(pCluster);
 
             TsInt numPointsInfluencing = pCluster->GetControlPointIndicesCount();
 

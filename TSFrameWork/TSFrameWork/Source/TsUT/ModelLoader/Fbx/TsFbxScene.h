@@ -27,7 +27,7 @@ public:
     {
         return m_pFbxBindPoseHolder->GetFirstBindPoseMatrix(name);
     }
-
+    TsSkeleton* CreateSkeleton();
 private:
     TsBool ImportScene(const TsString& filename);
     TsBool ConvertScene();
@@ -52,4 +52,5 @@ private:
     TsVector<TsFbxMaterial> m_materialList;
     TsFbxBindPoseHolder *   m_pFbxBindPoseHolder;
 private:
+    TsSkeleton* m_pSkeletonCash = nullptr;
 };
