@@ -47,4 +47,5 @@ TsBool TsSkinGeometryObject::ApplyTransForm( TsDeviceContext * context )
 TsBool TsSkinGeometryObject::SetSkeleton(TsSkeleton* TsSkeleton)
 {
     m_boneCBuffer->SetSkeleton( TsSkeleton );
+    return TS_TRUE;
 }

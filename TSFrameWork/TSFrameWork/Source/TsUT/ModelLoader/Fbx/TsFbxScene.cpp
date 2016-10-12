@@ -95,6 +95,14 @@ TsBool TsFbxScene::ParseMaterial()
     return TS_TRUE;
 }
 
+TsBool TsFbxScene::ParseSkeleton()
+{
+    //auto&& meshList = GetMeshList();
+    //for each( auto it in m_m )
+
+    return TS_TRUE;
+}
+
 TsBool TsFbxScene::ParseBindPose()
 {
     m_pFbxBindPoseHolder = TsNew(TsFbxBindPoseHolder(m_pFbxContext, this));

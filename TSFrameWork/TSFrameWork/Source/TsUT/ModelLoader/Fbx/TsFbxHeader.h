@@ -10,6 +10,7 @@
 #include "TsFbxContext.h"
 #include "TsFbxNode.h"
 #include "TsFbxBindPoseHolder.h"
+#include "TsFbxSkeleton.h"
 #include "TsFbxBone.h"
 #include "TsFbxBlendShape.h"
 #include "TsFbxMesh.h"
