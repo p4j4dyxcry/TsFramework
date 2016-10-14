@@ -14,6 +14,7 @@ TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev,
                                         TsString name)
 {
    TsMeshObject* pMesh = TsNew(TsMeshObject);
+   pMesh->SetName(name);
     if( filename.rfind( ".mqo" ) != TsString::npos )
     {
         TsMqoLoader loader;

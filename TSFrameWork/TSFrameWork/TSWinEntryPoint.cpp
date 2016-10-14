@@ -28,21 +28,17 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
        factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
 
      TsMeshObject * pMesh = TsResourceManager::Find<TsMeshObject>("Test");
-     queue.Add(pMesh);
+     for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++ i)   
+         queue.Add(pMesh->GetGeometry(i));
 
     rs.SetDrawQue( &queue );
 
     TsCamera* pCamera = pDev->GetDC()->GetMainCamera();
 
-    pCamera->SetEyePosition(TsVector3(0,0,5));
-    pCamera->SetLookAtVector( TsVector3(0,0,0));
+    pCamera->SetEyePosition(TsVector3(0,30,500));
+    pCamera->SetLookAtVector( TsVector3(0,30,0));
     pCamera->CreateCBuffer(pDev);
     pCamera->SetNearAndFar(1, 2000);
-
-    // test of animation
-    TsBoneCBuffer boneCBuffer;
-    boneCBuffer.CreateBoneCBuffer( pDev );
-    TsGeometryObject* pGeo = dynamic_cast< TsGeometryObject*>(queue.FindGeometoryByIndex( 0 ));
 
     MSG msg;
     while( true )
@@ -55,8 +51,6 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
             DispatchMessage(&msg);
         }
         else {
-            boneCBuffer.UpdateCBuffer( pDev->GetDC() );
-            boneCBuffer.ApplyCBuffer( pDev->GetDC() );
             //render 
             pDev->GetDC()->Clear();
             pCamera->UpdateForCBuffer(pDev);
