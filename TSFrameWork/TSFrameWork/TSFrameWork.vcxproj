@@ -11,8 +11,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Extern\DirectXTex\WICTextureLoader.cpp" />
-    <ClCompile Include="Extern\XML\tinyxml2.cpp" />
+    <ClCompile Include="Extern\DirectXTex\WICTextureLoader.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeaderFile>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_TS_DEBUG</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="Extern\XML\tinyxml2.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="Source\TsCore\TsApplicationBase.cpp" />
     <ClCompile Include="Source\TsCore\TsResourceManager.cpp" />
     <ClCompile Include="Source\TsGfx\Light\TsLight.cpp" />
@@ -99,16 +113,42 @@
     <ClCompile Include="Source\TsMath\TsVector4.cpp" />
     <ClCompile Include="Source\TsOS\TsWindowsUtility.cpp" />
     <ClCompile Include="Source\TsUT\Intarface\IHasTransform.cpp" />
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBindPoseHolder.cpp" />
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBlendShape.cpp" />
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxContext.cpp" />
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxLoader.cpp" />
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxMaterial.cpp" />
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxMesh.cpp" />
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxNode.cpp" />
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxScene.cpp" />
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBone.cpp" />
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxSkinAnimation.cpp" />
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsFbxAfx.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBindPoseHolder.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsFbxAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBlendShape.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsFbxAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxContext.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsFbxAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxLoader.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsFbxAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxMaterial.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsFbxAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxMesh.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsFbxAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxNode.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsFbxAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxScene.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsFbxAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBone.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsFbxAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxSkinAnimation.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsFbxAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="Source\TsUT\TsAlloc.cpp" />
     <ClCompile Include="Source\TsUT\TsBinaryFile.cpp" />
     <ClCompile Include="Source\TsUT\TsColladaLoader.cpp" />
@@ -156,6 +196,7 @@
     <ClInclude Include="Source\TsOS\TsWindowsUtility.h" />
     <ClInclude Include="Source\TsUT\Intarface\ITsHasTransform.h" />
     <ClInclude Include="Source\TsUT\Intarface\ITsStaticNameObjectList.h" />
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxAfx.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxBindPoseHolder.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxBlendShape.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxHeader.h" />
