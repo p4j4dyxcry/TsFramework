@@ -1,5 +1,4 @@
-#include "../../TsUT.h"
-#include "TsFbxHeader.h"
+#include "TsFbxAfx.h"
 
 TsFbxContext::TsFbxContext()
     :m_pFbxManager( nullptr )

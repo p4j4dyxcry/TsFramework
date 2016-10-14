@@ -1,5 +1,4 @@
-#include "../../../../TsAfx.h"
-#include "TsFbxHeader.h"
+#include "TsFbxAfx.h"
 
 TsFbxBindPose::TsFbxBindPose(TsFbxContext* pFbxContext,
                              TsFbxScene* pFbxScene,

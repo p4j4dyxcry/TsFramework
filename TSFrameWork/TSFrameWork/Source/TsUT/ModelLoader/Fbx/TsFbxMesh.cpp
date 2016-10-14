@@ -1,5 +1,4 @@
-#include "../../TsUT.h"
-#include "TsFbxHeader.h"
+#include "TsFbxAfx.h"
 
 TsFbxMesh::TsFbxMesh(TsFbxContext* pFbxContext, TsFbxScene* pFbxScene) : TsFbxNode(pFbxContext,pFbxScene)
 {

@@ -1,6 +1,4 @@
-#include"../../TsUT.h"
-#include "TsFbxHeader.h"
-
+#include "TsFbxAfx.h"
 TsFbxScene::TsFbxScene(TsFbxContext * pContext,TsFbxScene* pFbxScene /* nullptr */) 
     :TsFbxObject(pContext,this),
      m_pFbxScene(nullptr),

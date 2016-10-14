@@ -1,5 +1,4 @@
-#include "../../TsUT.h"
-#include "TsFbxHeader.h"
+#include "TsFbxAfx.h"
 
 TsFbxSkinAnimation::TsFbxSkinAnimation( TsFbxContext* pFbxContext ,
                                         TsFbxScene*   pFbxScene )

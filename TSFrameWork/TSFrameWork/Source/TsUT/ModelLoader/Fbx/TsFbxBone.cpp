@@ -1,5 +1,4 @@
-#include "../../TsUT.h"
-#include "TsFbxHeader.h"
+#include "TsFbxAfx.h"
 
 TsFbxBone::TsFbxBone(TsFbxContext * pFbxContext, TsFbxScene * pFbxScene)
 :TsFbxNode( pFbxContext , pFbxScene )

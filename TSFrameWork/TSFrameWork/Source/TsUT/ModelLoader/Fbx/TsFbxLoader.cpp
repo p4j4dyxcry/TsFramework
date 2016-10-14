@@ -1,6 +1,4 @@
-#include "../../TsUT.h"
-#include "TsFbxLoader.h"
-#include "TsFbxHeader.h"
+#include "TsFbxAfx.h"
 
 TsFbxLoader::TsFbxLoader()
 {

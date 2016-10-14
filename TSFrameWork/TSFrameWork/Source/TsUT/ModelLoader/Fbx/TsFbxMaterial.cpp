@@ -1,5 +1,4 @@
-#include "../../TsUT.h"
-#include "TsFbxHeader.h"
+#include "TsFbxAfx.h"
 
 TsFbxMaterial::TsFbxMaterial(TsFbxContext* pFbxContext, TsFbxScene* pFbxScene)
 : TsFbxObject(pFbxContext, pFbxScene)
