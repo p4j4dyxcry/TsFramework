@@ -8,7 +8,7 @@ public:
     TsMeshFactory();
     virtual ~TsMeshFactory();
 
-    TsBool LoadFromFile( TsDevice* pDev, TsString filename );
+    TsBool LoadModelFromFile(TsDevice* pDev, TsString filename);
 
     TsMaterial* GetMaterialArray();
 

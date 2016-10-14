@@ -9,7 +9,7 @@ TsMeshFactory::~TsMeshFactory()
 
 }
 
-TsBool TsMeshFactory::LoadFromFile( TsDevice* pDev, TsString filename )
+TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev, TsString filename)
 {
     if( filename.rfind( ".mqo" ) != TsString::npos )
     {

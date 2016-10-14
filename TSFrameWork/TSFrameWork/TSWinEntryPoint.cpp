@@ -24,7 +24,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsMeshFactory factory;
       //factory.LoadFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx");
      //factory.LoadFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
-     factory.LoadFromFile( pDev , "Idol.fbx" );
+     factory.LoadModelFromFile( pDev , "Idol.fbx" );
      //factory.LoadFromFile( pDev , "SD_unitychan_generic.fbx" );
 
 
