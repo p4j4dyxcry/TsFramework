@@ -1,4 +1,4 @@
-#include "../TsGfx.h"
+#include "../../../TsAfx.h"
 
 TsMeshFactory::TsMeshFactory()
 {
@@ -9,8 +9,11 @@ TsMeshFactory::~TsMeshFactory()
 
 }
 
-TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev, TsString filename)
+TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev, 
+                                        TsString filename,
+                                        TsString name)
 {
+   TsMeshObject* pMesh = TsNew(TsMeshObject);
     if( filename.rfind( ".mqo" ) != TsString::npos )
     {
         TsMqoLoader loader;
@@ -33,9 +36,9 @@ TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev, TsString filename)
 
             TsGeometryObject *  obj = TsNew( TsGeometryObject );
             obj->CreateGeometryObject( pDev , mesh , material );
-            m_pObjects.push_back( obj );
+            pMesh->AddGeometry(obj);
         }
-
+        TsResourceManager::RegisterResource<TsMeshObject>(pMesh, name);
         return TS_TRUE;
     }
 
@@ -87,15 +90,11 @@ TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev, TsString filename)
             
             obj->SetName( pTransform->GetName() );
             obj->SetTransform( pTransform );
-            m_pObjects.push_back( obj );
+            pMesh->AddGeometry(obj);
         }
-
+        TsResourceManager::RegisterResource<TsMeshObject>(pMesh, name);
         return TS_TRUE;
     }
+    TsDelete(pMesh);
     return TS_FALSE;
-}
-
-TsGeometryObject* TsMeshFactory::GetGeometryObject( TsInt index  )
-{
-    return m_pObjects[index];
 }

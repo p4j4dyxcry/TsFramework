@@ -22,22 +22,20 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsDrawQueue queue;
 
     TsMeshFactory factory;
-      //factory.LoadFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx");
-     //factory.LoadFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
-     factory.LoadModelFromFile( pDev , "Idol.fbx" );
-     //factory.LoadFromFile( pDev , "SD_unitychan_generic.fbx" );
+      //factory.LoadModelFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx");
+     //factory.LoadModelFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
+     //factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
+       factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
 
+     TsMeshObject * pMesh = TsResourceManager::Find<TsMeshObject>("Test");
+     queue.Add(pMesh);
 
-    for( int i = 0; i < factory.GetPrimtiveNum(); ++i )
-    {
-        queue.Add(factory.GetGeometryObject(i));
-    }
     rs.SetDrawQue( &queue );
 
     TsCamera* pCamera = pDev->GetDC()->GetMainCamera();
 
-    pCamera->SetEyePosition(TsVector3(0,20,500));
-    pCamera->SetLookAtVector( TsVector3(0,20,0));
+    pCamera->SetEyePosition(TsVector3(0,0,5));
+    pCamera->SetLookAtVector( TsVector3(0,0,0));
     pCamera->CreateCBuffer(pDev);
     pCamera->SetNearAndFar(1, 2000);
 

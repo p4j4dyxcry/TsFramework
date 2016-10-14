@@ -294,9 +294,6 @@
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBlendShape.cpp">
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsMesh.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsGfx\TsSamplerState.cpp">
       <Filter>ソース ファイル\TsGfx\Source</Filter>
     </ClCompile>
@@ -314,6 +311,12 @@
     </ClCompile>
     <ClCompile Include="Source\TsMath\TsBone.cpp">
       <Filter>ソース ファイル\TsMath\Header</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\TsVertexElement.cpp">
+      <Filter>ソース ファイル\TsGfx\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Mesh\TsMeshObject.cpp">
+      <Filter>ソース ファイル\TsGfx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -458,9 +461,6 @@
     <ClInclude Include="Source\TsUT\TsXLoader.h">
       <Filter>ソース ファイル\TsUT\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsMesh.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Source\TsGfx\Material\TsMaterial.h">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
     </ClInclude>
@@ -586,6 +586,12 @@
     </ClInclude>
     <ClInclude Include="Source\TsMath\TsBone.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\TsVertexElement.h">
+      <Filter>ソース ファイル\TsGfx\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Mesh\TsMeshObject.h">
+      <Filter>ソース ファイル\TsGfx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

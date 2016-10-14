@@ -2,6 +2,8 @@
 
 TsDevice* TsResourceManager::m_pDevice = nullptr;
 TsMap<TS_HASH , TsSamplerState*> TsResourceManager::m_SamplerLibrary;
+TsMap<TS_HASH, TsMeshObject*> TsResourceManager::m_pMeshLibrary;
+TsMap<TS_HASH, TsTexture2D*> TsResourceManager::m_FileTextureLibraty;
 
 TsBool TsResourceManager::Initialize( TsDevice* pDev )
 {
@@ -37,8 +39,116 @@ TsBool TsResourceManager::InitializeSampler( TsDevice * pDev )
     return TS_TRUE;
 }
 
-TsSamplerState* TsResourceManager::GetSamplerState( const TsString& name )
+//-------------------------------------------------------------------------------
+//  Find Resource Manager Template
+//-------------------------------------------------------------------------------
+template<class T>
+TsBool TsResourceManaget_Register(TsMap<TS_HASH, T*>& map,
+    T* pObj,
+    const TsString& name)
 {
-    TS_HASH hash = TSUT::StringToHash( name );
-    return m_SamplerLibrary.find( hash )->second;
+    TS_HASH hash = TSUT::StringToHash(name);
+    TsBool hResult = map.find(hash) == map.end();
+    if (hResult == TS_TRUE)
+    {
+        std::pair<TS_HASH, T*> pair;
+        pair.first = hash;
+        pair.second = pObj;
+
+        map.insert(pair);
+    }
+
+    return hResult;
+}
+
+//-------------------------------------------------------------------------------
+//  Register Resource Manager Template
+//-------------------------------------------------------------------------------
+template<class T>
+T* TsResourceManaget_Find(TsMap<TS_HASH, T*>& map,
+                              const TsString& name)
+{
+    TS_HASH hash = TSUT::StringToHash(name);
+
+    auto it = map.find(hash);
+    if (it == map.end())
+        return nullptr;
+
+    return it->second;
+}
+
+//-------------------------------------------------------------------------------
+//  Find No Type
+//-------------------------------------------------------------------------------
+template<typename T>
+T* TsResourceManager::Find( const TsString& name )
+{
+    (void)name;
+    return nullptr;
+}
+
+//-------------------------------------------------------------------------------
+//  Find Sampler
+//-------------------------------------------------------------------------------
+template<>
+TsSamplerState* TsResourceManager::Find(const TsString& name)
+{
+    return TsResourceManaget_Find(m_SamplerLibrary,name);
+}
+
+//-------------------------------------------------------------------------------
+//  Find Mesh
+//-------------------------------------------------------------------------------
+template<>
+TsMeshObject* TsResourceManager::Find(const TsString& name)
+{
+    return TsResourceManaget_Find(m_pMeshLibrary, name);
+}
+
+//-------------------------------------------------------------------------------
+//  Find File Texture
+//-------------------------------------------------------------------------------
+template<>
+TsTexture2D* TsResourceManager::Find(const TsString& name)
+{
+    return TsResourceManaget_Find(m_FileTextureLibraty, name);
+}
+
+//-------------------------------------------------------------------------------
+//  Register No Type
+//-------------------------------------------------------------------------------
+template<typename T>
+TsBool TsResourceManager::RegisterResource(T* pObject, const TsString& name)
+{
+    (void)pObject;
+    (void)name;
+    return TS_FALSE;
+}
+
+//-------------------------------------------------------------------------------
+//  Register Sampler
+//-------------------------------------------------------------------------------
+template<>
+TsBool TsResourceManager::RegisterResource(TsSamplerState* pObject, const TsString& name)
+{
+    return TsResourceManaget_Register(m_SamplerLibrary, pObject, name);
+}
+
+//-------------------------------------------------------------------------------
+//  Register Mesh
+//-------------------------------------------------------------------------------
+template<>
+TsBool TsResourceManager::RegisterResource(TsMeshObject* pObject, const TsString& name)
+{
+    return TsResourceManaget_Register(m_pMeshLibrary, pObject, name);
+}
+
+
+//-------------------------------------------------------------------------------
+//  Register Texture
+//-------------------------------------------------------------------------------
+template<>
+TsBool TsResourceManager::RegisterResource(TsTexture2D* pObject, const TsString& name)
+{
+    return TsResourceManaget_Register(m_FileTextureLibraty,pObject, name);
 }

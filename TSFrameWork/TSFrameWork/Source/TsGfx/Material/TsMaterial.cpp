@@ -1,5 +1,4 @@
-#include "../TsGfx.h"
-#include <locale>
+#include "../../../TsAfx.h"
 TsMaterial::TsMaterial():
 m_pTexture(nullptr),
 m_isUpdate(TS_FALSE)
@@ -30,15 +29,21 @@ TsBool TsMaterial::UpdateMaterial( TsDeviceContext* context )
 
 TsBool TsMaterial::LoadTextureFromFile( TsDevice* pDev )
 {
-    m_pTexture= TsNew( TsTexture2D );
-    m_pTexture->SetName( m_textureName );
-
-    ID3D11ShaderResourceView* pSRV = TsDirectXTex::LoadFromFile( pDev->GetDevD3D() , m_textureName.c_str() );
-    if( pSRV )
-        m_pTexture->SetSRV( pSRV );
+    m_pTexture = TsResourceManager::Find<TsTexture2D>(m_textureName);
+    if (m_pTexture)
+        m_pTexture->SetName(m_textureName);
     else
-        return TS_FALSE;
-
+    {
+        m_pTexture = TsNew(TsTexture2D);
+        m_pTexture->SetName(m_textureName);
+        ID3D11ShaderResourceView* pSRV = TsDirectXTex::LoadFromFile(pDev->GetDevD3D(), m_textureName.c_str());
+        if (pSRV)
+            m_pTexture->SetSRV(pSRV);
+        else
+            return TS_FALSE;
+        TsResourceManager::RegisterResource(m_pTexture, m_textureName);
+        return TS_TRUE;
+    }
     return TS_TRUE;
 }
 

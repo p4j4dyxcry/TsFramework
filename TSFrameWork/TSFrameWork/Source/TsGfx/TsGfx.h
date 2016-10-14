@@ -38,10 +38,12 @@
 #include "Material\TsLambertMaterial.h"
 #include "Material\TsScreeSpaceMaterial.h"
 #include "Material\TsDefaultMaterial.h"
-#include "TsMesh.h"
+#include "TsVertexElement.h"
 #include "Mesh\TsMeshFactory.h"
 #include "TsDrawObject.h"
 #include "TsGeometryObject.h"
+#include "Mesh\TsMeshObject.h"
+
 #include "TsSkinGeometryObject.h"
 #include "TsScreenObject.h"
 #include "TsShaderEffect.h"
