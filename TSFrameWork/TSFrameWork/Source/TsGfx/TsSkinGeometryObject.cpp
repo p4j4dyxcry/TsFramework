@@ -12,7 +12,7 @@ TsSkinGeometryObject::~TsSkinGeometryObject()
 }
 
 TsBool TsSkinGeometryObject::CreateGeometryObject( TsDevice* pDev ,
-                                               TsMesh * pMesh ,
+                                               TsVertexElement * pMesh ,
                                                TsMaterial* pMaterial )
 {
     TsGeometryObject::CreateGeometryObject(pDev, pMesh, pMaterial);

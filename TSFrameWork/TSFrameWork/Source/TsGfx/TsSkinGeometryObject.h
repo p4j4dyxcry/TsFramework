@@ -12,7 +12,7 @@ public:
     TsSkinGeometryObject();
     virtual ~TsSkinGeometryObject();
     TsBool CreateGeometryObject( TsDevice* pDev ,
-                                 TsMesh * pMesh ,
+                                 TsVertexElement * pMesh ,
                                  TsMaterial* pMaterial )override;
 
     virtual TsBool UpdateTransform( TsDeviceContext* context )override;

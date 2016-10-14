@@ -24,7 +24,7 @@ TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev, TsString filename)
                 loader.GetVertexSize( i ) ,
                 loader.GetVertexStride() );
 
-            TsMesh * mesh = TsNew( TsMesh );
+            TsVertexElement * mesh = TsNew( TsVertexElement );
             mesh->m_vertexBuffer = buffer;
 
             TsMaterial* material = TsNew( TsMaterial);
@@ -57,7 +57,7 @@ TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev, TsString filename)
                                         loader.GetIndexBuffer(i),
                                         loader.GetIndexBufferSize(i));
 
-            TsMesh * mesh = TsNew( TsMesh );
+            TsVertexElement * mesh = TsNew( TsVertexElement );
             mesh->m_vertexBuffer = buffer;
             mesh->m_indexBuffer = indexBuffer;
             TsLambertMatrial* material = TsNew( TsLambertMatrial );
@@ -93,11 +93,6 @@ TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev, TsString filename)
         return TS_TRUE;
     }
     return TS_FALSE;
-}
-
-TsMaterial* TsMeshFactory::GetMaterialArray()
-{
-    return nullptr;
 }
 
 TsGeometryObject* TsMeshFactory::GetGeometryObject( TsInt index  )

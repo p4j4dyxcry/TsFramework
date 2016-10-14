@@ -2,13 +2,13 @@
 
 class TsMeshFactory;
 
-class TsMesh :public TsNameObject
+class TsVertexElement :public TsNameObject
 {
 	friend class TsMeshFactory;
 
 public:
-	TsMesh();
-	virtual ~TsMesh();
+	TsVertexElement();
+	virtual ~TsVertexElement();
 	TsBool CreateVertexBuffer( TsDevice * ,void * memory , size_t sz);
 	TsBool CreateIndexBuffer( TsDevice * , void * memory , size_t sz );
 	TsInt  GetVertexNum( );

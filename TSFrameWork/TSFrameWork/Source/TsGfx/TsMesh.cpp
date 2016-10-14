@@ -1,18 +1,18 @@
 #include "TsGfx.h"
 
-TsMesh::TsMesh():
+TsVertexElement::TsVertexElement():
 m_vertexBuffer(nullptr),
 m_indexBuffer(nullptr)
 {}
 
-TsMesh::~TsMesh()
+TsVertexElement::~TsVertexElement()
 {
     TsSafeDelete( m_vertexBuffer );
     TsSafeDelete( m_indexBuffer );
 }
 
 //todo
-TsBool TsMesh::CreateVertexBuffer( TsDevice * pDev, void * memory , size_t sz )
+TsBool TsVertexElement::CreateVertexBuffer( TsDevice * pDev, void * memory , size_t sz )
 {
     ( void )pDev;
     ( void )memory;
@@ -21,7 +21,7 @@ TsBool TsMesh::CreateVertexBuffer( TsDevice * pDev, void * memory , size_t sz )
 }
 
 //todo
-TsBool TsMesh::CreateIndexBuffer( TsDevice * pDev, void * memory , size_t sz )
+TsBool TsVertexElement::CreateIndexBuffer( TsDevice * pDev, void * memory , size_t sz )
 {
     ( void )pDev;
     ( void )memory;
@@ -29,22 +29,22 @@ TsBool TsMesh::CreateIndexBuffer( TsDevice * pDev, void * memory , size_t sz )
     return TS_FALSE;
 }
 
-TsInt TsMesh::GetVertexNum()
+TsInt TsVertexElement::GetVertexNum()
 {
     TsInt sz = m_vertexBuffer->GetBufferSize() / m_vertexBuffer->GetStride();
     return sz;
 }
 
-TsInt TsMesh::GetIndexNum()
+TsInt TsVertexElement::GetIndexNum()
 {
     return m_indexBuffer->GetBufferSize() / sizeof(TsInt) ;
 }
 
-TsVertexBuffer* TsMesh::GetVertexBuffer()const
+TsVertexBuffer* TsVertexElement::GetVertexBuffer()const
 {
     return m_vertexBuffer;
 }
-TsIndexBuffer* TsMesh::GetIndexBuffer()const
+TsIndexBuffer* TsVertexElement::GetIndexBuffer()const
 {
     return m_indexBuffer;
 }

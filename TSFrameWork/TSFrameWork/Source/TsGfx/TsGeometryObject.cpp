@@ -12,7 +12,7 @@ TsGeometryObject::~TsGeometryObject()
 }
 
 TsBool TsGeometryObject::CreateGeometryObject( TsDevice* pDev ,
-                                               TsMesh * pMesh ,
+                                               TsVertexElement * pMesh ,
                                                TsMaterial* pMaterial )
 {
     SetMesh( pMesh );
@@ -110,7 +110,7 @@ TsBool TsGeometryObject::SetMaterial( TsMaterial* pMaterial )
     m_material = pMaterial;
     return TS_TRUE;
 }
-TsBool TsGeometryObject::SetMesh( TsMesh* pMesh)
+TsBool TsGeometryObject::SetMesh( TsVertexElement* pMesh)
 {
     m_mesh = pMesh;
     return TS_TRUE;

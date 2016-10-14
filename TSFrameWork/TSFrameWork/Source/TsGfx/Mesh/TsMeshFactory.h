@@ -10,8 +10,6 @@ public:
 
     TsBool LoadModelFromFile(TsDevice* pDev, TsString filename);
 
-    TsMaterial* GetMaterialArray();
-
     TsGeometryObject* GetGeometryObject( TsInt index);
 
     TsInt GetPrimtiveNum(){ return m_pObjects.size(); };

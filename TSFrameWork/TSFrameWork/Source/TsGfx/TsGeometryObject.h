@@ -12,7 +12,7 @@ public:
     TsGeometryObject();
     virtual ~TsGeometryObject();
     virtual TsBool CreateGeometryObject( TsDevice* pDev ,
-                                         TsMesh * pMesh ,
+                                         TsVertexElement * pMesh ,
                                          TsMaterial* pMaterial );
 
     virtual TsBool UpdateTransform( TsDeviceContext* context )override;
@@ -28,12 +28,12 @@ public:
 
     TsBool SetMaterial( TsMaterial* pMaterial );
     TsBool SetTransform( TsTransForm * pTransform );
-    TsBool SetMesh( TsMesh* );
+    TsBool SetMesh( TsVertexElement* );
 
     TsTransForm* GetTransform()const;
 private:
     TsTransForm*            m_transform;
-    TsMesh*                 m_mesh;
+    TsVertexElement*                 m_mesh;
     TsMaterial*             m_material;
     TsTransformCBuffer*     m_transformCBuffer;
 };
