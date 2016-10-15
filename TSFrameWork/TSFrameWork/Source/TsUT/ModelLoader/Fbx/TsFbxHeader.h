@@ -16,4 +16,4 @@
 #include "TsFbxMaterial.h"
 
 #include "TsFbxScene.h"
-#include "TsFbxSkinAnimation.h"
+#include "TsFbxAnimation.h"

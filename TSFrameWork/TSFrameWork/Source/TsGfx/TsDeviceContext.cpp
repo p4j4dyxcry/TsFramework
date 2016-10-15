@@ -31,7 +31,7 @@ void TsDeviceContext::Clear( TsFloat4& color /* 0x~~~~~~ */ )
             if( m_renderTarget[i] )
                 m_pDeviceContext->ClearRenderTargetView( m_renderTarget[i]->GetRTV() , &color[0] );
         }
-
+        
         //! crear depth stencil view
         if(m_mainDepthStencil )
             m_pDeviceContext->ClearDepthStencilView(m_mainDepthStencil->GetDSV() , D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f , 0 );

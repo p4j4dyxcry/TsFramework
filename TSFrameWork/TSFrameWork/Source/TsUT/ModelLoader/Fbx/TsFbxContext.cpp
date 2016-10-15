@@ -29,7 +29,8 @@ FbxTime::EMode TsFbxContext::GetTimeLocale()
     return m_fbxTimeLocation;
 }
 
-TsBool TsFbxContext::LoadFBX( const TsChar * filename )
+TsBool TsFbxContext::LoadFBX( const TsChar * filename ,
+                              const TsFbxLoadOption & option)
 {
     if( m_pFbxManager == nullptr )
     {

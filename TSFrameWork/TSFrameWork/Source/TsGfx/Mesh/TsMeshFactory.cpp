@@ -9,6 +9,13 @@ TsMeshFactory::~TsMeshFactory()
 
 }
 
+TsTransformBakeAnimation* TsMeshFactory::CreateBakeAnimation( const TsString& filename )
+{
+    TsFbxLoader loader;
+    loader.LoadFromFile( filename );
+    return loader.CreateAnimation(0);
+}
+
 TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev, 
                                         TsString filename,
                                         TsString name)

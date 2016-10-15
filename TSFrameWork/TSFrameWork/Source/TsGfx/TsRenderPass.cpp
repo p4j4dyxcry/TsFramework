@@ -21,12 +21,12 @@ TsRenderPass::~TsRenderPass()
 
 TsBool TsRenderPass::Begin( TsDeviceContext* pDc )
 {
-    //! set render target
-    for( int i = 0; i < TsDeviceContext::MAX_RTs; ++i )
-        pDc->SetRT( i , m_pOutputSlot[i] );
+    ////! set render target
+    //for( int i = 0; i < TsDeviceContext::MAX_RTs; ++i )
+    //    pDc->SetRT( i , m_pOutputSlot[i] );
 
-    //! set depth 
-    pDc->SetDepthStencil( m_pDepthStencil );
+    ////! set depth 
+    //pDc->SetDepthStencil( m_pDepthStencil );
 
     //! set shader
     pDc->SetShader( m_pShader );

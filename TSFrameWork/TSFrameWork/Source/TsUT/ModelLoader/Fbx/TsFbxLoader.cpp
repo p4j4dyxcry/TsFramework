@@ -1,4 +1,5 @@
 #include "TsFbxAfx.h"
+#include "../../../../TsAfx.h"
 
 TsFbxLoader::TsFbxLoader()
 {
@@ -88,4 +89,11 @@ TsBool TsFbxLoader::IsSkinMesh( TsInt index )
 TsSkeleton* TsFbxLoader::GetSkeleton()const
 {
     return m_pFbxContext->GetSceneByIndex( 0 )->CreateSkeleton();
+}
+TsTransformBakeAnimation* TsFbxLoader::CreateAnimation( TsInt no )
+{
+    TsFbxAnimation* pFbxAnim = m_pFbxContext->GetSceneByIndex( 0 )->GetAnimation( no );
+    TsTransformBakeAnimation* pTransAim = TsNew( TsTransformBakeAnimation );
+    pTransAim->SetBakeAnimation( pFbxAnim->GetBoneFrameLibrary() );
+    return pTransAim;
 }

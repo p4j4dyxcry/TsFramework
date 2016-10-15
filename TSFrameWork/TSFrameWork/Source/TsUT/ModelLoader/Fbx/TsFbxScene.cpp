@@ -30,6 +30,11 @@ TsBool TsFbxScene::LoadFromFile( const TsString& filename )
 
     // ノード構造を解析
     ParseNodeTree();
+    if( m_pFbxScene->GetCurrentAnimationStack() )
+    {
+        TsFbxAnimation* pAnim = TsNew( TsFbxAnimation( m_pFbxContext , this ) );
+        m_pAnimationList.push_back( pAnim );
+    }
 
     // ボーンノードに対してIDを割り当てる
     ComputeBoneIndex();
@@ -212,6 +217,11 @@ TsVector<TsFbxMesh*> TsFbxScene::GetMeshList()const
         }
     }
     return result;
+}
+
+TsVector<TsFbxNode*> TsFbxScene::GetNodeList()const
+{
+    return m_pNodeList;
 }
 
 TsVector<TsFbxMaterial> TsFbxScene::GetMaterialList()const

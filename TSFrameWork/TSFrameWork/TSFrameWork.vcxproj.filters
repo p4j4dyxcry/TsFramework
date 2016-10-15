@@ -94,6 +94,12 @@
     <Filter Include="ソース ファイル\TsUT\MeshLoader\Fbx">
       <UniqueIdentifier>{d1f5883b-f8cf-4658-9459-209f28aaed0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\TsUT\MeshLoader\Fbx\header">
+      <UniqueIdentifier>{d55555ed-c169-4fc0-8623-6bbc6a298e18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TsUT\MeshLoader\Fbx\source">
+      <UniqueIdentifier>{2d957d5c-7289-4049-a6fb-56345648818b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TSWinEntryPoint.cpp">
@@ -267,41 +273,11 @@
     <ClCompile Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.cpp">
       <Filter>ソース ファイル\TsGfx\Source\ShadowMap</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxNode.cpp">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxScene.cpp">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxMaterial.cpp">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxContext.cpp">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxLoader.cpp">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBone.cpp">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxMesh.cpp">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxSkinAnimation.cpp">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBlendShape.cpp">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsGfx\TsSamplerState.cpp">
       <Filter>ソース ファイル\TsGfx\Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\TsGfx\TsBoneCBuffer.cpp">
       <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBindPoseHolder.cpp">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
     </ClCompile>
     <ClCompile Include="Source\TsGfx\TsSkinGeometryObject.cpp">
       <Filter>ソース ファイル\TsGfx</Filter>
@@ -319,7 +295,40 @@
       <Filter>ソース ファイル\TsGfx</Filter>
     </ClCompile>
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxAfx.cpp">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBindPoseHolder.cpp">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBlendShape.cpp">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxBone.cpp">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxContext.cpp">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxLoader.cpp">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxMaterial.cpp">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxMesh.cpp">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxNode.cpp">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxScene.cpp">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxAnimation.cpp">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Animation\TsTransformBakeAnimation.cpp">
+      <Filter>ソース ファイル\TsGfx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -539,47 +548,11 @@
     <ClInclude Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.h">
       <Filter>ソース ファイル\TsGfx\Source\ShadowMap</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxHeader.h">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxNode.h">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxScene.h">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxMaterial.h">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxContext.h">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxLoader.h">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxBone.h">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxMesh.h">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxSkinAnimation.h">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxBlendShape.h">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClInclude>
     <ClInclude Include="Source\TsGfx\TsSamplerState.h">
       <Filter>ソース ファイル\TsGfx\Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsGfx\TsBoneCBuffer.h">
       <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxBindPoseHolder.h">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxType.h">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsGfx\TsSkinGeometryObject.h">
       <Filter>ソース ファイル\TsGfx</Filter>
@@ -597,7 +570,46 @@
       <Filter>ソース ファイル\TsGfx</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxAfx.h">
-      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx</Filter>
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxBindPoseHolder.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxBlendShape.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxBone.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxContext.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxHeader.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxLoader.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxMaterial.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxMesh.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxNode.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxScene.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxAnimation.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxType.h">
+      <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Animation\TsTransformBakeAnimation.h">
+      <Filter>ソース ファイル\TsGfx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

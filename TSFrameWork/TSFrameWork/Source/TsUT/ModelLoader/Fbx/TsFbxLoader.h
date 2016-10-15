@@ -1,7 +1,7 @@
 #pragma once
 
 class TsFbxContext;
-
+class TsTransformBakeAnimation;
 class TsFbxLoader : public TsMeshLoader
 {
 public:
@@ -37,6 +37,9 @@ public:
     TsBool IsSkinMesh( TsInt index );
 
     TsSkeleton* GetSkeleton()const;
+
+    // Operation test
+    TsTransformBakeAnimation* CreateAnimation( TsInt no );
 private:
     TsFbxContext* m_pFbxContext;
 };

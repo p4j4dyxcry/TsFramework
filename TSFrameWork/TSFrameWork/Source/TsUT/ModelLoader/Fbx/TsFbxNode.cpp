@@ -37,7 +37,7 @@ TsBool TsFbxNode::AnalizeFbxNode( FbxNode* pFbxNode)
     FbxMatrix geometryMatrix = FbxMatrix(lT, lR, lS);
 
     m_geometricTransform = FbxMatrixToTsMatrix(geometryMatrix);
-
+    printf( "nodename = %s \n" , m_fbxNode->GetName() );
     
     if( attr == nullptr )
         return TS_FALSE;

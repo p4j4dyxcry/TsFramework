@@ -1,12 +1,15 @@
 ﻿#pragma once
-class TsFbxSkinAnimation : public TsFbxObject
+class TsFbxAnimation : public TsFbxObject
                          , public TsNameObject
 {
 public: 
-    TsFbxSkinAnimation( TsFbxContext* pFbxContext,
+    TsFbxAnimation( TsFbxContext* pFbxContext,
                         TsFbxScene*   pFbxScene);
-    virtual ~TsFbxSkinAnimation();
-
+    virtual ~TsFbxAnimation();
+    TsVector<TsMap<TS_HASH , TsMatrix>> GetBoneFrameLibrary()const
+    {
+        return m_boneFrameLibrary;
+    }
 protected:
     TsInt m_startFrame;
     TsInt m_endFrame;

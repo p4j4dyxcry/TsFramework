@@ -1,5 +1,5 @@
 #pragma once
-
+class TsFbxAnimation;
 class TsFbxScene :public TsFbxObject
 {
 public:
@@ -9,11 +9,15 @@ public:
     FbxNode* GetFbxRootNode()const;
     TsBool	LoadFromFile( const TsString& filename );
     TsInt   GetMeshNum()const;
+    TsVector<TsFbxNode*> GetNodeList()const;
     TsVector<TsFbxMesh*> GetMeshList()const;
     TsVector<TsFbxMaterial> GetMaterialList()const;
     TsFbxNode* FindNodeByName(const TsString& name)const;
     TsVector<TsFbxBone*> GetBoneList();
-
+    TsFbxAnimation* GetAnimation( TsInt index )
+    {
+        return m_pAnimationList[index];
+    }
     FbxScene* GetFbxScene()const
     {
         return m_pFbxScene;
@@ -50,6 +54,7 @@ private:
     TsFbxNode*	m_pRootNode;
     TsVector<TsFbxNode*>    m_pNodeList;
     TsVector<TsFbxMaterial> m_materialList;
+    TsVector<TsFbxAnimation*> m_pAnimationList;
     TsFbxBindPoseHolder *   m_pFbxBindPoseHolder;
 private:
     TsSkeleton* m_pSkeletonCash = nullptr;

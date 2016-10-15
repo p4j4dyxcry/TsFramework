@@ -43,7 +43,7 @@
 #include "TsDrawObject.h"
 #include "TsGeometryObject.h"
 #include "Mesh\TsMeshObject.h"
-
+#include "Animation\TsTransformBakeAnimation.h"
 #include "TsSkinGeometryObject.h"
 #include "TsScreenObject.h"
 #include "TsShaderEffect.h"

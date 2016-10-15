@@ -13,7 +13,7 @@ TsBool TsTransformCBuffer::UpdateCBuffer( TsDeviceContext * pContext )
         {
             m_matrixCBuffer.m_MtxWorld = mtxWorld.Transposed();
             m_matrixCBuffer.m_MtxInvWorld = mtxWorld.Inversed().Transposed();
-//          m_matrixCBuffer.m_MtxWorld = TsMatrix::identity;
+
             pContext->ChangeCBuffer(this, &m_matrixCBuffer, sizeof(m_matrixCBuffer));
             m_matrixCash = mtxWorld;
         }		

@@ -29,6 +29,7 @@
     </ClCompile>
     <ClCompile Include="Source\TsCore\TsApplicationBase.cpp" />
     <ClCompile Include="Source\TsCore\TsResourceManager.cpp" />
+    <ClCompile Include="Source\TsGfx\Animation\TsTransformBakeAnimation.cpp" />
     <ClCompile Include="Source\TsGfx\Light\TsLight.cpp" />
     <ClCompile Include="Source\TsGfx\Material\TsLambertMatrial.cpp" />
     <ClCompile Include="Source\TsGfx\Material\TsMaterial.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="Source\TsCore\TsApplicationBase.h" />
     <ClInclude Include="Source\TsCore\TsCore.h" />
     <ClInclude Include="Source\TsCore\TsResourceManager.h" />
+    <ClInclude Include="Source\TsGfx\Animation\TsTransformBakeAnimation.h" />
     <ClInclude Include="Source\TsGfx\Light\TsLight.h" />
     <ClInclude Include="Source\TsGfx\Material\TsDefaultMaterial.h" />
     <ClInclude Include="Source\TsGfx\Material\TsLambertMaterial.h" />
@@ -186,7 +188,7 @@
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsFbxAfx.h</ForcedIncludeFiles>
       <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ShowIncludes>
     </ClCompile>
-    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxSkinAnimation.cpp">
+    <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxAnimation.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsFbxAfx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TsFbxAfx.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TsFbxAfx.h</ForcedIncludeFiles>
@@ -251,7 +253,7 @@
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxNode.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxScene.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxBone.h" />
-    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxSkinAnimation.h" />
+    <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxAnimation.h" />
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxType.h" />
     <ClInclude Include="Source\TsUT\TsAlloc.h" />
     <ClInclude Include="Source\TSUT\TsArrayType.h" />
