@@ -69,6 +69,7 @@
     <ClInclude Include="Source\TsGfx\TsDirectXTex.h" />
     <ClInclude Include="Source\TsGfx\TsDrawQueue.h" />
     <ClInclude Include="Source\TsGfx\TsGeometryObject.h" />
+    <ClInclude Include="Source\TsGfx\TsShaderReflection.h" />
     <ClInclude Include="Source\TsGfx\TsVertexElement.h" />
     <ClInclude Include="Source\TsGfx\TsRenderFlow.h" />
     <ClInclude Include="Source\TsGfx\TsIndexBuffer.h" />
@@ -86,6 +87,7 @@
     <ClCompile Include="Source\TsGfx\TsDrawObject.cpp" />
     <ClCompile Include="Source\TsGfx\TsDrawQueue.cpp" />
     <ClCompile Include="Source\TsGfx\TsGeometryObject.cpp" />
+    <ClCompile Include="Source\TsGfx\TsShaderReflection.cpp" />
     <ClCompile Include="Source\TsGfx\TsVertexElement.cpp" />
     <ClCompile Include="Source\TsGfx\TsRenderFlow.cpp" />
     <ClCompile Include="Source\TsGfx\TsObject.cpp" />

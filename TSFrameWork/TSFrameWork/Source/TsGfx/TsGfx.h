@@ -13,6 +13,7 @@
 
 #include "TsDirectXTex.h"
 #include "TsResourceDesc.h"
+#include "TsShaderReflection.h"
 #include "TsShader.h"
 #include "TsDevice.h"
 #include "TsDeviceContext.h"

@@ -36,6 +36,25 @@ enum TS_SHADER_INDEX
 
 namespace TSShaderUT
 {
+    enum VARIABLE_TYPE
+    {
+        FLOAT,
+        INT,
+        BOOL,
+        MATRIX,
+        UNKNOWN,
+        NUM
+    };
+
+    static const TsChar * VARIABLE_STRING[VARIABLE_TYPE::NUM] =
+    {
+        "Float",
+        "Int",
+        "Bool",
+        "Matrix",
+        "Unknown"
+    };
+
     inline TsString TsComvertShaderType( TS_SHADER_TYPE shaderType )
     {
         switch( shaderType )
@@ -336,5 +355,7 @@ namespace TSShaderUT
         TsDebugLog("未対応のフォーマット\n")
             return DXGI_FORMAT_BC7_UNORM_SRGB;
     }
+
+
 }
 

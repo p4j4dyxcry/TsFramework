@@ -330,6 +330,9 @@
     <ClCompile Include="Source\TsGfx\Animation\TsTransformBakeAnimation.cpp">
       <Filter>ソース ファイル\TsGfx</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsGfx\TsShaderReflection.cpp">
+      <Filter>ソース ファイル\TsGfx\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -610,6 +613,9 @@
     </ClInclude>
     <ClInclude Include="Source\TsGfx\Animation\TsTransformBakeAnimation.h">
       <Filter>ソース ファイル\TsGfx</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\TsShaderReflection.h">
+      <Filter>ソース ファイル\TsGfx\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
