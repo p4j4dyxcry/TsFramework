@@ -28,6 +28,7 @@ TsBool TsFbxMesh::RemoveVertexFormat(VertexFormat format)
 TsBool TsFbxMesh::ParseFbxMesh()
 {
     FbxMesh * pFbxMesh = AsAttributeFbxMesh();
+
     if (pFbxMesh == nullptr)
    // *m_pTransform = m_pTransform->GetParent()->ToWorldMatrix().Inversed();
     TsVector3 scale = m_geometricTransform.GetWorldScale();
@@ -281,6 +282,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
     TsInt skinCount = pFbxMesh->GetDeformerCount(FbxDeformer::eSkin);
     if (skinCount>0)
     {
+        //*m_pTransform = TsMatrix::identity;
         FbxSkin* pFbxSkin = (FbxSkin*)pFbxMesh->GetDeformer(0, FbxDeformer::eSkin);
         ParseSkin(pFbxSkin, (TsInt)posList.size(), boneIndexList, boneWeightList);
     } 
@@ -313,15 +315,9 @@ TsBool TsFbxMesh::ParseFbxMesh()
     // 頂点フォーマットの作成
     //--------------------------------------------------------------------------
     m_vertexList.reserve(m_faceList.size() * 3);
-    (void)( *this );
-    if( GetName() == "Leg" )
-    {
-        ( void )this;
-        int j = 0;
-    }
+
     TsVector<TsFloat2> DebugUV;
     DebugUV.reserve( 54444 );
-    printf( "Mesh Name = %s\n" , GetName().c_str() );
     for (TsUint i = 0; i < m_faceList.size(); ++i)
     {
         for (TsUint j = 0; j < 3; ++j)
@@ -607,33 +603,9 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
     for (i = 0; i<numClusters; i++)
     {
         FbxCluster* pCluster = pFbxSkin->GetCluster(i);
-
         FbxNode *pNode = pCluster->GetLink();
-        FbxNode *p = pNode;
-
         nodes[i] = pNode;
     } // End for
-
-    if( numClusters > 0 )
-    {
-        FbxCluster* pCluster = pFbxSkin->GetCluster( 0 );
-
-        FbxNode *pNode = pCluster->GetLink();        
-        while( pNode )
-        {
-            if( pNode->GetParent() == nullptr )
-                break;
-            
-            if( pNode->GetParent()->GetNodeAttribute() &&
-                pNode->GetParent()->GetNodeAttribute()->Is<FbxSkeleton>() )
-            {
-                pNode = pNode->GetParent();
-            }
-            else
-                break;
-        }
-        m_pRootBone = m_pFbxScene->FindNodeByName( pNode->GetName() );
-    }
 
     for (i = 0; i<numClusters; i++)
     {
@@ -658,6 +630,12 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
             } 
 
             FbxCluster *pCluster = pFbxSkin->GetCluster(clusterIndex);
+            auto m0 = pBone->GetFbxNode()->EvaluateGlobalTransform();
+            FbxAMatrix m1;
+            auto m2 = pBone->GetFbxNode()->EvaluateLocalTransform();
+            FbxAMatrix m3;
+            pCluster->GetTransformLinkMatrix( m1 );
+            pCluster->GetTransformMatrix( m3 );
 
             TsInt numPointsInfluencing = pCluster->GetControlPointIndicesCount();
 

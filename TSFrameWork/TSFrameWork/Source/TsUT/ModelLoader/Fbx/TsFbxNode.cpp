@@ -15,6 +15,8 @@ TsFbxNode::~TsFbxNode()
 
 TsBool TsFbxNode::AnalizeFbxNode( FbxNode* pFbxNode)
 {
+    TsInt count =  pFbxNode->GetNodeAttributeCount();
+
     auto attr = pFbxNode->GetNodeAttribute();
     m_fbxNode = pFbxNode;
 
@@ -28,6 +30,7 @@ TsBool TsFbxNode::AnalizeFbxNode( FbxNode* pFbxNode)
 
     m_pTransform->m_localRotate.x *= -1;
     m_pTransform->m_localRotate.w *= -1;
+
     SetName( pFbxNode->GetName() );
     m_pTransform->SetName( GetName() );
     const FbxVector4 lT = pFbxNode->GetGeometricTranslation(FbxNode::eSourcePivot);
@@ -37,7 +40,7 @@ TsBool TsFbxNode::AnalizeFbxNode( FbxNode* pFbxNode)
     FbxMatrix geometryMatrix = FbxMatrix(lT, lR, lS);
 
     m_geometricTransform = FbxMatrixToTsMatrix(geometryMatrix);
-    printf( "nodename = %s \n" , m_fbxNode->GetName() );
+   
     
     if( attr == nullptr )
         return TS_FALSE;

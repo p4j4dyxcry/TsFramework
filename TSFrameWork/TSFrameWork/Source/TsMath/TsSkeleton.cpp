@@ -1,7 +1,6 @@
 #include"../../TsAfx.h"
 
 TsSkeleton::TsSkeleton()
-    :m_rootBone(nullptr)
 {
     m_boneList.reserve( 512 );
 }
@@ -13,55 +12,18 @@ TsSkeleton::~TsSkeleton()
 
 TsBool TsSkeleton::AddBone( TsTransForm* pTransform ,
                             TsInt boneID ,
-                            const TsMatrix& bindPoseMatrix )
+                            const TsMatrix& bindPoseMatrix ,
+                            TsTransForm* pRootBone )
 {
     TsBone* pBone = TsNew( TsBone );
     pBone->SetBindPoseMatrix( bindPoseMatrix );
     pBone->m_pTransform = pTransform;
     pBone->SetBoneID( boneID );
-    pBone->m_RootBone = m_rootBone;
+    pBone->m_RootBone = pRootBone;
     m_boneList.push_back( pBone );
     return TS_TRUE;
 }
-TsBool TsSkeleton::AddRootBone( TsTransForm* pTransform ,
-                                TsInt boneID ,
-                                const TsMatrix& bindPoseMatrix )
-{
-    if( m_rootBone )
-    {
-        for( auto it = m_boneList.begin(); it != m_boneList.end(); ++it )
-        {
-            if( ( *it )->GetHashCode() == m_rootBone->GetHashCode() )
-            {
-                m_boneList.erase( it );
-                break;
-            }
-        }
-        TsSafeDelete( m_rootBone );
-    }
-    
-    m_rootBone = TsNew( TsBone );
-    m_boneList.push_back( m_rootBone );
-    for each( auto p in m_boneList )
-        p->m_RootBone = m_rootBone;
-        
-    return TS_TRUE;
-}
 
-TsBool TsSkeleton::SetRootBoneByID( TsInt id )
-{
-    for( TsInt i = 0; i < m_boneList.size(); ++i )
-    {
-        if( id == m_boneList[i]->GetBoneID() )
-        {
-            m_rootBone = m_boneList[i];
-            for( auto it : m_boneList )
-                it->m_RootBone = m_rootBone;
-            return TS_TRUE;
-        }
-    }
-    return TS_FALSE;
-}
 
 TsBool TsSkeleton::UpdateSkeleton()
 {

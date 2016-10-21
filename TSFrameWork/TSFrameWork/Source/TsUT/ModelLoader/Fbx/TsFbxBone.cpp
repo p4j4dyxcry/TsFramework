@@ -19,19 +19,50 @@ TsInt TsFbxBone::GetBoneIndex()const
     return m_boneIndex;
 }
 
+TsBool TsFbxBone::SetBindPose( FbxMatrix baseposeMatrix )
+{
+
+    return TS_TRUE;
+}
+
 TsBool TsFbxBone::ComputeBindPose()
 {
-    TsMatrix* pBindPoseMatrix = m_pFbxScene->GetFirstBindPoseMatrix(GetName());
+#if 0
+    TsMatrix* pBindPoseMatrix = m_pFbxScene->GetBindPoseMatrix(GetName());
     m_bindPoseMatrixList.resize(1);
-   
-    TsTransForm transform;
-    FbxMatrix baseposeMatrix = m_fbxNode->EvaluateGlobalTransform();
-    transform = FbxMatrixToTsMatrix( baseposeMatrix );
 
-    transform.m_localPosition.x *= -1;
-    transform.m_localRotate.x *= -1;
-    transform.m_localRotate.w *= -1;
-    m_bindPoseMatrixList[0] = transform.ToLocalMatrix();
+    if( pBindPoseMatrix )
+    {
+        TsTransForm t = *pBindPoseMatrix;
+        t.m_localPosition.x *= -1;
+        t.m_localRotate.x *= -1;
+        t.m_localRotate.w *= -1;
+        m_bindPoseMatrixList[0] = t.ToLocalMatrix();
+        return TS_TRUE;
+    }
+    
+    TsFbxNode * p = this;
+    TsMatrix m = TsMatrix::identity;
+
+    while( p )
+    {
+        if( p->IsSkeleton() )
+            m *= p->GetTransform()->ToLocalMatrix();
+        else
+            break;
+        if( m_parent  )
+            p = p->GetParent();
+        else
+            break;
+    }
+
+    m_bindPoseMatrixList.resize( 1 );
+    m_bindPoseMatrixList[0] = m;
+#else
+    m_bindPoseMatrixList.resize( 1 );
+    m_bindPoseMatrixList[0] = m_pTransform->ToWorldMatrix();
+#endif
+
     //((TsBoneTransForm*)(m_pTransform))->SetBasePoseInv(m_bindPoseMatrixList[0]);
     //((TsBoneTransForm*)(m_pTransform))->SetID(m_boneIndex);
 

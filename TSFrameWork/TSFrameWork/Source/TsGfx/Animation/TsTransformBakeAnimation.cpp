@@ -34,7 +34,7 @@ TsBool TsTransformBakeAnimation::Update()
     if( m_isRun == TS_FALSE )
         return TS_TRUE;
 //    if( GetAsyncKeyState(VK_RIGHT) )
-        m_localFrame+= 1.0f/16.0f;
+        m_localFrame+= 1.0f/30.0f;
 //    if( GetAsyncKeyState( VK_LEFT ) )
 //        m_localFrame--;
     if( m_localFrame < 0 )

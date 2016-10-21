@@ -32,7 +32,7 @@ public:
     TsBool ParseBindPose( TsFbxScene* pFbxScene );
     TsFbxBindPose* GetBindPose(const TsString& name)const;
     TsFbxBindPose* GetBindPose(TS_HASH hash)const;
-    TsMatrix* GetFirstBindPoseMatrix( const TsString& )const;
+    TsMatrix* GetBindPoseMatrix( const TsString& )const;
     TsMatrix* GetFirstBindPoseMatrix(TS_HASH hash)const;
 protected:
     TsMap<TS_HASH, TsFbxBindPose*> m_bindPoseLiblary;

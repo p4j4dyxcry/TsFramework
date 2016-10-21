@@ -7,7 +7,7 @@ float4 main( float4 pos		: SV_POSITION,
              Texture2D albedo : register(t0),
              SamplerState samp: register(s0)) : SV_TARGET
 {
-    float3 dir = float3( 1 , -1 , -1 );
+    float3 dir = float3( 0 , 1 , 1 );
     dir = normalize( dir );
     
     //albedo 
@@ -23,9 +23,14 @@ float4 main( float4 pos		: SV_POSITION,
     float3 VL = normalize(dir + eye);
 
     //fong
-    float s = pow(max(dot(normal,VL),0),12.5f);
+    float s = pow(max(dot(normal,VL),0),80.0f);
 
     //rimlight
-    float rim = pow(1-dot(eye, normal), 4.5f);
-    return d * color + s + rim;
+    float rim = pow(1-dot(eye, normal), 12.5f);
+
+    float4 result = ( d * color + s + rim );
+    result = max( 0 , result );
+    result = min( 1 , result );
+
+    return result;
 }

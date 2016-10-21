@@ -65,7 +65,7 @@ TsFbxBindPose* TsFbxBindPoseHolder::GetBindPose(TS_HASH hash)const
 {
     return m_bindPoseLiblary.find(hash)->second;
 }
-TsMatrix* TsFbxBindPoseHolder::GetFirstBindPoseMatrix(const TsString& name)const
+TsMatrix* TsFbxBindPoseHolder::GetBindPoseMatrix(const TsString& name)const
 {
     TS_HASH hash = TSUT::StringToHash(name);
     return GetFirstBindPoseMatrix(hash);
@@ -74,6 +74,11 @@ TsMatrix* TsFbxBindPoseHolder::GetFirstBindPoseMatrix(TS_HASH hash)const
 {
     if (m_bindPoseLiblary.empty())
         return nullptr;
-
-    return m_bindPoseLiblary.find(m_firstBindPoseHash)->second->GetBindPoseMatrix(hash);
+    for( auto p : m_bindPoseLiblary )
+    {
+        TsMatrix * pResult = p.second->GetBindPoseMatrix( hash );
+        if( pResult )
+            return pResult;
+    }
+    return nullptr;
 }

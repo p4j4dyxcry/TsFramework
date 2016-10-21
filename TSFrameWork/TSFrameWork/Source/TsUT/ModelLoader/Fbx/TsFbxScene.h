@@ -27,9 +27,9 @@ public:
     {
         return m_pFbxImporter;
     }
-    TsMatrix* GetFirstBindPoseMatrix(TsString& name)
+    TsMatrix* GetBindPoseMatrix(TsString& name)
     {
-        return m_pFbxBindPoseHolder->GetFirstBindPoseMatrix(name);
+        return m_pFbxBindPoseHolder->GetBindPoseMatrix(name);
     }
     TsSkeleton* CreateSkeleton();
 private:

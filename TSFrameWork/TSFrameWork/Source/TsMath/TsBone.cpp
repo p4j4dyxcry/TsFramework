@@ -2,17 +2,29 @@
 
 TsBool TsBone::ComputeBoneMatrix()
 {
-    //TS_HASH hash = m_RootBone->GetTransform()->GetHashCode();
-    //TsMatrix matrix = m_pTransform->ToLocalMatrix();
-    //TsTransForm* pTransform = m_pTransform->GetParent();
-    //while( pTransform != nullptr  )
-    //{
-    //    matrix *= pTransform->ToLocalMatrix();
-    //    if( hash == pTransform->GetHashCode() )
-    //        break;
-    //    pTransform = pTransform->GetParent();
-    //}
-    m_boneMatrix = m_invBindPoseMatrix * m_pTransform->ToWorldMatrix();
+#if 0
+    TS_HASH hash = m_RootBone->GetHashCode();
+    TsMatrix boneMatrix = TsMatrix::identity;
+    TsMatrix treeMatrix = TsMatrix::identity;
+    TsTransForm* pTransform = m_pTransform;
+    while( pTransform != nullptr  )
+    {
+        boneMatrix *= pTransform->ToLocalMatrix();
+        if( hash == pTransform->GetHashCode() )
+            break;
+        pTransform = pTransform->GetParent();
+    }
+    if( pTransform )
+        pTransform = pTransform->GetParent();
+    while( pTransform != nullptr )
+    {
+        treeMatrix *= pTransform->ToLocalMatrix();
+        pTransform = pTransform->GetParent();
+    }
+    m_boneMatrix = treeMatrix *( m_invBindPoseMatrix * boneMatrix );
+#else
+    m_boneMatrix = ( m_invBindPoseMatrix * m_pTransform->ToWorldMatrix() );
+#endif
     return TS_TRUE;
 }
 

@@ -251,11 +251,31 @@ TsSkeleton* TsFbxScene::CreateSkeleton()
 
     for each( auto p in it )
     {
+        TsFbxNode* pRoot = p;
+
+        while( pRoot )
+        {
+            if( pRoot->GetParent() )
+            {
+#if 0
+                if( pRoot->GetParent()->IsSkeleton() )
+                    pRoot = pRoot->GetParent();
+                else
+                    break;
+#endif
+                pRoot = pRoot->GetParent();
+            }
+            else
+            {
+                break;
+            }
+        }
         pSkeleton->AddBone(
             p->GetTransform() ,
             p->GetBoneIndex() ,
-            p->GetBindPoseMatrix() );
+            p->GetBindPoseMatrix() ,
+            pRoot->GetTransform());
+
     };
-    pSkeleton->SetRootBoneByID( 0 );
     return m_pSkeletonCash = pSkeleton;
 }

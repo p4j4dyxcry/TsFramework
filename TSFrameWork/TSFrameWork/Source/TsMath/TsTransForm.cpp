@@ -98,18 +98,20 @@ TsMatrix TsTransForm::ToLocalTRSMatrix()
 //! [メソッド] ワールド行列を取得する
 TsMatrix TsTransForm::ToWorldMatrix()
 {
-    TsMatrix result = ToLocalMatrix();
-    TsTransForm* temp = this;
-    
-    //親を辿る
-    while( temp->m_parent != nullptr )
-    {
-        result *= temp->m_parent->ToLocalMatrix();
-        temp = temp->m_parent;
-    } 
+    //TsMatrix result = ToLocalMatrix();
+    //TsTransForm* temp = this;
+    //
+    ////親を辿る
+    //while( temp->m_parent != nullptr )
+    //{
+    //    result *= temp->m_parent->ToLocalMatrix();
+    //    temp = temp->m_parent;
+    //} 
 
-
-    return result;
+    if( m_parent )
+        return ToLocalMatrix() * m_parent->ToWorldMatrix();
+    else
+        return ToLocalMatrix();
 }
 
 TsTransForm* TsTransForm::GetParent()const

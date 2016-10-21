@@ -7,16 +7,12 @@ public:
     virtual ~TsSkeleton();
     TsBool AddBone( TsTransForm* pTransform ,
                     TsInt boneID ,
-                    const TsMatrix& bindPoseMatrix );
-    TsBool AddRootBone( TsTransForm* pTransform ,
-                        TsInt boneID ,
-                        const TsMatrix& bindPoseMatrix);
-    TsBool SetRootBoneByID(TsInt id);
+                    const TsMatrix& bindPoseMatrix ,
+                    TsTransForm* pRootBone);
 
     TsBool UpdateSkeleton();
     TsVector<TsBone*>& GetBoneList();
 protected:
 
     TsVector<TsBone*> m_boneList;
-    TsBone*           m_rootBone;
 };
