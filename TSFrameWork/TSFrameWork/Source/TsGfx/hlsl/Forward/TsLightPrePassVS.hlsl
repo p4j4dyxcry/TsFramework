@@ -7,6 +7,7 @@ struct VS_OUT
     float3 normal	: TEXCOORD1;
     float4 worldPos : TEXCOORD2;
 };
+
 VS_OUT main(VS_DEFAULT_INPUT input)
 {
     VS_OUT output;

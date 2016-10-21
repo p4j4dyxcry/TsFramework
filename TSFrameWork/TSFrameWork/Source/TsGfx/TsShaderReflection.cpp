@@ -19,6 +19,7 @@ TsBool TsShaderReflection::Analize(ID3D11ShaderReflection* pDxShaderReflection)
     {
         m_constantBuffers[i].Analize(pDxShaderReflection->GetConstantBufferByIndex(i));
     }
+    return TS_TRUE;
 }
 
 //----------------------------------------------------------------------------------

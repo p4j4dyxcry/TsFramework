@@ -18,7 +18,7 @@ float4 main( float4 pos		: SV_POSITION,
     d = saturate( d );
     d = d* 0.5f + 0.5f;
     //compute CameraVector
-    float3 eye = normalize(g_worldCameraPos - worldPos);
+    float3 eye = normalize(g_worldCameraPos.xyz - worldPos.xyz);
 
     //compute View And Camera HerfVector
     float3 VL = normalize(dir + eye);

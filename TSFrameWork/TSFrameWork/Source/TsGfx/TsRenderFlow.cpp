@@ -10,7 +10,7 @@ TsBool TsRenderFlow::Render( TsDeviceContext* pDC ,TsDrawQueue* pQue )
     for( auto it : m_renderPass )
     {
         it->Begin(pDC);
-        pQue->Render(pDC);
+        it->Render( pQue,pDC );
         it->End(pDC);
     }
     return TS_TRUE;
@@ -57,60 +57,31 @@ TsBool	TsRenderFlow::LoadFlowFromXML( TsDevice* pDev, const TsString& file )
 
     xml.LoadXML( TSUT::Resource::GetShaderFlowDirectory() + file );
     auto root = xml.GetRootNode();
-    auto pass = xml.GetRootNode()->GetFirstChild();
+    auto pElementPass = xml.GetRootNode()->GetFirstChild();
 
-    while( pass != nullptr )
+    while( pElementPass != nullptr )
     {
-        if( pass->GetName() == "Pass" )
+        if( pElementPass->GetName() == "Pass" )
         {
-                TsString passName = pass->GetAttribute( "Name" )->GetStringValue();
-                TsRenderPass* renderPass = TsRenderPass::CreateObject( passName);
-            
-                TsString shaderName = pass->GetAttribute( "Shader" )->GetStringValue();
-                TsShaderEffect* pShaderEffect = TsShaderEffect::Find( shaderName );
-                if( pShaderEffect == nullptr )
+                TsString passName = pElementPass->GetAttribute( "Name" )->GetStringValue();
+
+                TsRenderPass* renderPass;
+                if( passName == "Clear" )
                 {
-                    pShaderEffect = TsNew( TsShaderEffect );
-                    pShaderEffect->LoadPackageFromXml( pDev, shaderName + ".ts_shaderPackage" );
+                    renderPass = TsNew( TsClearPass );
                 }
-                renderPass->SetShader( pShaderEffect );
-                TsXMLElement* inputSlot = pass->FindChild("Input")->GetFirstChild();
-                for( TsInt index = 0; inputSlot != nullptr;  inputSlot = inputSlot->Next() )
+                else
                 {
-                    auto slot = inputSlot->GetAttribute( "Slot" );
-                    if( slot == nullptr )
-                        continue;
-                    TsString rtName = slot->GetStringValue();
-                    TsRenderTarget* rtv = TsRenderTarget::Find( rtName );
-                    renderPass->SetInputSlot( index, rtv);
-                    ++index;
+                    renderPass = TsNew( TsRenderPass );
                 }
 
-                TsXMLElement * outputSlot = pass->FindChild( "Output" )->GetFirstChild();
+                renderPass->SetName( passName );
+                renderPass->LoadShaderFromXMLElement( pDev , pElementPass );
+                renderPass->LoadIOSlotFromXMLElement( pDev , pElementPass );
 
-                for( TsInt index = 0; outputSlot != nullptr; outputSlot = outputSlot->Next() )
-                {
-                    auto slot = outputSlot->GetAttribute( "Slot" );
-
-                    if( slot == nullptr )
-                        continue;
-                    TsString rtName = slot->GetStringValue();
-                    if( outputSlot->GetName() == "Slot" )
-                    {
-                        TsRenderTarget* rtv = TsRenderTarget::Find( rtName );
-                        renderPass->SetOutputSlot( index , rtv );
-                        ++index;
-                    }
-                    else if( outputSlot->GetName() == "Depth" )
-                    {
-                        TsDepthStencil* rtv = TsDepthStencil::Find( rtName );
-                        renderPass->SetDepthSlot( rtv );
-                    }
-
-                }						
             m_renderPass.push_back( renderPass );
         }
-        pass = pass->Next();
+        pElementPass = pElementPass->Next();
     }
     return TS_TRUE;
 } 

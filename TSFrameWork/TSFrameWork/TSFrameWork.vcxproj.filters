@@ -52,9 +52,6 @@
     <Filter Include="ソース ファイル\TsGfx\hlsl\GBuffer">
       <UniqueIdentifier>{cd4d7d55-ea2b-428a-91d1-72ed887c00a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\TsGfx\hlsl\Deffered">
-      <UniqueIdentifier>{44d1775b-69e5-4bdb-afa0-d2e1ff5d8d00}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\TsGfx\hlsl\ScreenSpace">
       <UniqueIdentifier>{cd19862f-2d20-4225-87f3-259df1a6939e}</UniqueIdentifier>
     </Filter>
@@ -331,6 +328,9 @@
       <Filter>ソース ファイル\TsGfx</Filter>
     </ClCompile>
     <ClCompile Include="Source\TsGfx\TsShaderReflection.cpp">
+      <Filter>ソース ファイル\TsGfx\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\TsClearPass.cpp">
       <Filter>ソース ファイル\TsGfx\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -617,6 +617,9 @@
     <ClInclude Include="Source\TsGfx\TsShaderReflection.h">
       <Filter>ソース ファイル\TsGfx\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TsGfx\TsClearPass.h">
+      <Filter>ソース ファイル\TsGfx\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Extern\xna\xnamathconvert.inl">
@@ -674,6 +677,12 @@
     </FxCompile>
     <FxCompile Include="Source\TsGfx\hlsl\Forward\TsLightPrePassPS.hlsl">
       <Filter>ソース ファイル\TsGfx\hlsl\Forward</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsDefferedShadingPS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSAOPS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

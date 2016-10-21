@@ -41,6 +41,7 @@
     <ClCompile Include="Source\TsGfx\TsBoneCBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\TsCamera.cpp" />
     <ClCompile Include="Source\TsGfx\TsCBuffer.cpp" />
+    <ClCompile Include="Source\TsGfx\TsClearPass.cpp" />
     <ClCompile Include="Source\TsGfx\TsDepthStencil.cpp" />
     <ClCompile Include="Source\TsGfx\TsDevice.cpp" />
     <ClCompile Include="Source\TsGfx\TsDeviceContext.cpp" />
@@ -65,6 +66,7 @@
     <ClInclude Include="Source\TsGfx\TsBuffer.h" />
     <ClInclude Include="Source\TsGfx\TsCamera.h" />
     <ClInclude Include="Source\TsGfx\TsCBuffer.h" />
+    <ClInclude Include="Source\TsGfx\TsClearPass.h" />
     <ClInclude Include="Source\TsGfx\TsDepthStencil.h" />
     <ClInclude Include="Source\TsGfx\TsDirectXTex.h" />
     <ClInclude Include="Source\TsGfx\TsDrawQueue.h" />
@@ -281,35 +283,54 @@
     <None Include="Extern\xna\xnamathmisc.inl" />
     <None Include="Extern\xna\xnamathvector.inl" />
     <None Include="Source\TsGfx\hlsl\ScreenSpace\TsSS_common.hlsli" />
-    <None Include="Source\TsGfx\hlsl\TsDefaultShading_Common.hlsli" />
+    <ClInclude Include="Source\TsGfx\hlsl\TsDefaultShading_Common.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+    </ClInclude>
     <None Include="Source\TsGfx\hlsl\TsMath.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\TsGfx\hlsl\Forward\TsFWLambertPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Source\TsGfx\hlsl\Forward\TsFWLambertVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Source\TsGfx\hlsl\Forward\TsLightPrePassPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Source\TsGfx\hlsl\Forward\TsLightPrePassVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Source\TsGfx\hlsl\GBuffer\TsGBufferPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Source\TsGfx\hlsl\GBuffer\TsGBufferVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsDefferedShadingPS.hlsl">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSAOPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSBlendEdgePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
@@ -344,6 +365,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
     </FxCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -411,6 +433,8 @@ xcopy /y /r "$(TargetDir)*.exe" "$(ProjectDir)..\bin"</Command>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>TsAfx.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>TsAfx.h</ForcedIncludeFiles>
+      <MinimalRebuild>true</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

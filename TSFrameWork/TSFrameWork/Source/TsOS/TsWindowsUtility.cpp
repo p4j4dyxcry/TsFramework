@@ -9,7 +9,7 @@ namespace
     static	HWND	g_MainWindowHandle = nullptr;
     static  TsBool	g_isInitialize;
 
-    static	const TsInt2	g_defaultWindowSize( 4000 , 4000*(9.0f/16.0f) );
+    static	const TsInt2	g_defaultWindowSize( 1980 , 1024 );
     static  WNDPROC g_windowProc = TSDefaultWindowProc;
     static  TsUint  g_windowStyle = CS_HREDRAW | CS_VREDRAW;
 

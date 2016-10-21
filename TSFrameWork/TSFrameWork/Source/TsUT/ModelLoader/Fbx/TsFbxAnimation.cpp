@@ -38,7 +38,7 @@ TsFbxAnimation::TsFbxAnimation( TsFbxContext* pFbxContext ,
     // アニメーション終了時間／１フレームの時間の時間で終了フレームを求めている
     animationEndFrame =
         ( importOffset.Get() + stopTime.Get() ) / FbxTime::GetOneFrameValue( FbxTime::eFrames60 );
-    m_boneFrameLibrary.resize( animationEndFrame );
+    m_boneFrameLibrary.resize( (TsInt)animationEndFrame );
     for( TsInt i = 0; i < animationEndFrame; ++i )
     {
         for each( auto it in nodeList )

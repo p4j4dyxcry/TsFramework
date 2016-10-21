@@ -18,15 +18,26 @@ TsRenderPass::~TsRenderPass()
 {
 
 }
+TsBool TsRenderPass::ApplyRTV( TsDeviceContext* pDC )
+{
+    //! set render target
+    for( int i = 0; i < TsDeviceContext::MAX_RTs; ++i )
+        pDC->SetRT( i , m_pOutputSlot[i] );
+
+    //! set depth 
+    pDC->SetDepthStencil( m_pDepthStencil );
+
+    // apply
+    pDC->ApplyRenderTargets();
+
+    return TS_TRUE;
+}
+
 
 TsBool TsRenderPass::Begin( TsDeviceContext* pDc )
 {
-    ////! set render target
-    //for( int i = 0; i < TsDeviceContext::MAX_RTs; ++i )
-    //    pDc->SetRT( i , m_pOutputSlot[i] );
 
-    ////! set depth 
-    //pDc->SetDepthStencil( m_pDepthStencil );
+    ApplyRTV( pDc );
 
     //! set shader
     pDc->SetShader( m_pShader );
@@ -34,15 +45,23 @@ TsBool TsRenderPass::Begin( TsDeviceContext* pDc )
     //! set inputlayout
     pDc->ApplyInputLayout();
 
-    //! draw queue begin
-    m_pdrawQueue->Begin( pDc , m_zEnable , m_zWriteEnable , m_cullMode );
     return TS_TRUE;
 }
-TsBool TsRenderPass::End( TsDeviceContext* context)
+TsBool TsRenderPass::End( TsDeviceContext* pDC )
 {
-    ( void )context;
-    m_pdrawQueue->End();
-    //todo
+    //! set render target
+    for( int i = 0; i < TsDeviceContext::MAX_RTs; ++i )
+        pDC->SetRT( i , nullptr );
+
+    //! set depth 
+    pDC->SetDepthStencil( nullptr );
+
+    return TS_TRUE;
+}
+
+TsBool TsRenderPass::Render( TsDrawQueue* pQue , TsDeviceContext* pDC )
+{
+    pQue->Render( pDC );
     return TS_TRUE;
 }
 TsBool TsRenderPass::SetInputSlot( TsInt index , TsRenderTarget *rtv)
@@ -96,14 +115,71 @@ TsBool TsRenderPass::CullMode( D3D11_CULL_MODE mode)
     return TS_TRUE;
 }
 
-TsBool TsRenderPass::SetDrawQueue( TsDrawQueue * queue )
-{
-    m_pdrawQueue = queue;
-    return TS_TRUE;
-} 
-
 TsBool TsRenderPass::SetDepthSlot( TsDepthStencil* depth )
 {
     m_pDepthStencil = depth;
+    return TS_TRUE;
+}
+
+TsBool TsRenderPass::LoadShaderFromXMLElement( TsDevice* pDev , TsXMLElement * pElement )
+{
+    TsString shaderName = pElement->GetAttribute( "Shader" )->GetStringValue();
+    TsShaderEffect* pShaderEffect = TsShaderEffect::Find( shaderName );
+    if( pShaderEffect == nullptr )
+    {
+        pShaderEffect = TsNew( TsShaderEffect );
+        pShaderEffect->LoadPackageFromXml( pDev , shaderName + ".ts_shaderPackage" );
+    }
+    SetShader( pShaderEffect );
+
+    return TS_TRUE;
+}
+TsBool TsRenderPass::LoadIOSlotFromXMLElement( TsDevice* pDev , TsXMLElement * pElement )
+{
+    TsInt rtvIndex = 0;
+
+    TsXMLElement* inputSlot = pElement->FindChild( "Input" )->GetFirstChild();
+    for( ; inputSlot != nullptr; inputSlot = inputSlot->Next() )
+    {
+        auto slot = inputSlot->GetAttribute( "Slot" );
+        if( slot == nullptr )
+            continue;
+        TsString rtName = slot->GetStringValue();
+        TsRenderTarget* rtv = TsRenderTarget::Find( rtName );
+        SetInputSlot( rtvIndex , rtv );
+        ++rtvIndex;
+    }
+
+    TsXMLElement * outputSlot = pElement->FindChild( "Output" )->GetFirstChild();
+
+    rtvIndex = 0;
+    for( ; outputSlot != nullptr; outputSlot = outputSlot->Next() )
+    {
+        auto slot = outputSlot->GetAttribute( "Slot" );
+
+        if( slot == nullptr )
+            continue;
+        TsString rtName = slot->GetStringValue();
+        if( outputSlot->GetName() == "Slot" )
+        {
+            TsRenderTarget* rtv = nullptr;
+            if( rtName == "Main" )
+                rtv = pDev->GetDC()->GetMainRTV();
+            else
+                rtv = TsRenderTarget::Find( rtName );
+
+            SetOutputSlot( rtvIndex , rtv );
+            ++rtvIndex;
+        }
+        else if( outputSlot->GetName() == "Depth" )
+        {
+            TsDepthStencil* rtv = nullptr;
+            if( rtName == "Main" )
+                rtv = pDev->GetDC()->GetMainDSV();
+            else
+                rtv = TsDepthStencil::Find( rtName );
+            SetDepthSlot( rtv );
+        }
+    }
     return TS_TRUE;
 }

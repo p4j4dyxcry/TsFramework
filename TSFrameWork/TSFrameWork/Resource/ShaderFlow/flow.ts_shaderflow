@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FLow>
-  <Pass Name ="pass0"
-        Shader ="Lambert">
+  <Pass Name ="Clear">
     <Input>
       <Slot/>
     </Input>
     <Output>
+      <Slot Slot="Main"/>    	
+      <Slot Slot="Color"/>
       <Slot Slot="Normal"/>
+      <Slot Slot="UV"/>                
+      <Depth Slot="Main"/>
+    </Output>
+  </Pass>
+
+  <Pass Name ="pass0"
+        Shader ="GBuffer">
+    <Input>
+      <Slot/>
+    </Input>
+    <Output>
+      <Slot Slot="Main"/>
+      <Slot Slot="Normal"/>
+      <Slot Slot="UV"/>
+      <Slot Slot="Normal"/>                  
       <Depth Slot="Main"/>
     </Output>
   </Pass>

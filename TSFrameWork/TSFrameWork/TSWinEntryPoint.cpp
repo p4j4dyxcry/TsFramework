@@ -43,6 +43,11 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     pCamera->CreateCBuffer(pDev);
     pCamera->SetNearAndFar(1, 2000);
 
+    TsDrawQueue postQue;
+    TsScreenObject * pScreen = TsNew( TsScreenObject );
+    postQue.Add( pScreen );
+
+    rs.SetDrawQue( &postQue , TsRenderSystem::TARGET_FLOW::POST_RENDERER );
     MSG msg;
     while( true )
     {
@@ -56,7 +61,6 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
         else {
             //render 
             pAnim->Update();
-            pDev->GetDC()->Clear();
             pCamera->UpdateForCBuffer(pDev);
             pDev->GetDC()->SetCBuffer(pCamera->GetCBuffer());
 

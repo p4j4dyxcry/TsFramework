@@ -27,7 +27,7 @@ TsBool TsSkeleton::AddBone( TsTransForm* pTransform ,
 
 TsBool TsSkeleton::UpdateSkeleton()
 {
-    for( TsInt i = 0; i < m_boneList.size(); ++i )
+    for( TsUint i = 0; i < m_boneList.size(); ++i )
         m_boneList[i]->ComputeBoneMatrix();
     return TS_TRUE;
 }

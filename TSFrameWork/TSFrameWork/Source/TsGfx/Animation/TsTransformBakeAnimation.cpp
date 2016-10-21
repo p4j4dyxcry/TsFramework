@@ -14,7 +14,7 @@ m_frameRate(60.0f)
 //==============================================================
 TsBool TsTransformBakeAnimation::SetLocalFrame( TsInt frame )
 {
-    m_localFrame = TsClamp( frame , 0 , m_maxFrame );
+    m_localFrame = (TsF32)TsClamp( frame , 0 , m_maxFrame );
     return TS_TRUE;
 }
 
@@ -36,18 +36,18 @@ TsBool TsTransformBakeAnimation::Update()
         return TS_TRUE;
     m_localFrame += 60.0f / 60.0f;
 
-        if( m_localFrame < 0 )
-        m_localFrame = m_maxFrame - 1;
+    if( m_localFrame < 0 )
+        m_localFrame = m_maxFrame - 1.f;
 
     if( m_localFrame >= m_maxFrame )
         if( m_isLoop )
             m_localFrame = 0;
         else
-            m_localFrame = m_maxFrame - 1;
-
+            m_localFrame = m_maxFrame - 1.f;
+    TsInt frame = ( TsInt )m_localFrame;
     for each( auto p in m_pTransformList )
         if( p )
-            *p = m_bakedMatrixList[m_localFrame].find( p->GetHashCode() )->second;
+            *p = m_bakedMatrixList[frame].find( p->GetHashCode() )->second;
 
     return TS_TRUE;
 }

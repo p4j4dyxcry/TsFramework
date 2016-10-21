@@ -4,7 +4,8 @@ struct PS_IN
 {
     float4 pos		: SV_POSITION;
     float2 uv		: TEXCOORD0;
-    float3 normal	: NORMAL;
+    float3 normal	: TEXCOORD1;
+    float4 worldPos : TEXCOORD2;
 };
 
 PS_GBUFFER_OUTPUT_2 main( PS_IN input ,

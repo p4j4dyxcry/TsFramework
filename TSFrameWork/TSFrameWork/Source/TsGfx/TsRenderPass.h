@@ -13,23 +13,28 @@ public:
     TsRenderPass();
     virtual ~TsRenderPass();
 
-    TsBool Begin( TsDeviceContext* );
-    TsBool Render( TsDeviceContext* );
-    TsBool End	( TsDeviceContext* );
+    virtual TsBool Begin( TsDeviceContext* );
+    virtual TsBool Render(TsDrawQueue* pQue , TsDeviceContext* );
+    virtual TsBool End( TsDeviceContext* );
 
-    TsBool SetShader( TsShaderEffect* );
-    TsBool ZWrite( TsBool );
-    TsBool ZEnable( TsBool );
-    TsBool CullMode( D3D11_CULL_MODE );
-    TsBool SetInputSlot( TsInt index , TsRenderTarget* );
-    TsBool SetOutputSlot( TsInt index, TsRenderTarget * rtv );
-    TsBool SetDepthSlot( TsDepthStencil* pDepth );
-    TsBool SetDrawQueue( TsDrawQueue * queue );
-    TsRenderTarget* GetInputSlot(TsInt index);
-    TsRenderTarget* GetOutputSlot(TsInt index = 0);
+    virtual TsBool SetShader( TsShaderEffect* );
+    virtual TsBool ZWrite( TsBool );
+    virtual TsBool ZEnable( TsBool );
+    virtual TsBool CullMode( D3D11_CULL_MODE );
+
+    virtual TsBool SetInputSlot( TsInt index , TsRenderTarget* );
+    virtual TsBool SetOutputSlot( TsInt index , TsRenderTarget * rtv );
+    virtual TsBool SetDepthSlot( TsDepthStencil* pDepth );
+
+    virtual TsRenderTarget* GetInputSlot( TsInt index );
+    virtual TsRenderTarget* GetOutputSlot( TsInt index = 0 );
+
+    virtual TsBool LoadShaderFromXMLElement( TsDevice* pDev , TsXMLElement * pElement );
+    virtual TsBool LoadIOSlotFromXMLElement( TsDevice* pDev , TsXMLElement * pElement );
 
 protected:
-    TsDrawQueue*     m_pdrawQueue;
+    TsBool ApplyRTV( TsDeviceContext* pDC );
+protected:
     TsRenderTarget*  m_pInputSlot[TsDeviceContext::MAX_RTs];
     TsRenderTarget*  m_pOutputSlot[TsDeviceContext::MAX_RTs];
     TsDepthStencil*  m_pDepthStencil;

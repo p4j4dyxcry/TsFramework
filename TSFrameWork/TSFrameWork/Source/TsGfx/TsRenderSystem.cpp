@@ -133,7 +133,7 @@ TsBool TsRenderSystem::LoadShaderResourceFromXML(TsDevice* pDev, const TsString&
             TsInt2   size = elm->GetAttribute("Size")->GetInt2Value();
 
             if( size.x < 0 )
-                size = pDev->GetDC()->GetScreenRTV()->GetRTVSize();
+                size = pDev->GetDC()->GetMainRTV()->GetRTVSize();
             auto rtv = TsRenderTarget::CreateRTV(name, *pDev, size.x, size.y,TSShaderUT::ComvertTextureFormat(format));
 
             m_shaderResourceList.push_back(rtv);
@@ -146,7 +146,7 @@ TsBool TsRenderSystem::LoadShaderResourceFromXML(TsDevice* pDev, const TsString&
             TsInt2   size = elm->GetAttribute( "Size" )->GetInt2Value();
 
             if( size.x < 0 )
-                size = pDev->GetDC()->GetScreenRTV()->GetRTVSize();
+                size = pDev->GetDC()->GetMainRTV()->GetRTVSize();
             auto dsv = TsDepthStencil::CreateDSV( name , *pDev , size.x , size.y , TSShaderUT::ComvertTextureFormat( format ) );
 
             m_shaderResourceList.push_back( dsv );

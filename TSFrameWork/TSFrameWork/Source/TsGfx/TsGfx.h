@@ -51,6 +51,7 @@
 #include "TsShaderTechnique.h"
 #include "TsDrawQueue.h"
 #include "TsRenderPass.h"
+#include "TsClearPass.h"
 #include "TsRenderFlow.h"
 
 #include "TsRenderSystem.h"

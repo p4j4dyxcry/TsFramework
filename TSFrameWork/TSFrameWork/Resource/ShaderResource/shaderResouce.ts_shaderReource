@@ -5,9 +5,30 @@
     Name ="Lisa"
     Path ="sample.jpg">        
   </Texture>
-  
+
+  <RenderTarget
+    Name  ="Color"
+    Type  ="Texture2D"
+    Format="UNORM_R8G8B8A8"
+    Size ="-1 -1">            
+  </RenderTarget>
+
   <RenderTarget
     Name  ="Normal"
+    Type  ="Texture2D"
+    Format="UNORM_R8G8B8A8"
+    Size ="-1 -1">            
+  </RenderTarget>  
+  
+  <RenderTarget
+    Name  ="UV"
+    Type  ="Texture2D"
+    Format="UNORM_R8G8B8A8"
+    Size ="-1 -1">            
+  </RenderTarget>
+
+  <RenderTarget
+    Name  ="Temp"
     Type  ="Texture2D"
     Format="UNORM_R8G8B8A8"
     Size ="-1 -1">            

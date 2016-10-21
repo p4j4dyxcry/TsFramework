@@ -33,8 +33,8 @@ void TsDeviceContext::Clear( TsFloat4& color /* 0x~~~~~~ */ )
         }
         
         //! crear depth stencil view
-        if(m_mainDepthStencil )
-            m_pDeviceContext->ClearDepthStencilView(m_mainDepthStencil->GetDSV() , D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f , 0 );
+        if( m_depthStencil )
+            m_pDeviceContext->ClearDepthStencilView(m_depthStencil->GetDSV() , D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f , 0 );
     }
 }
 
@@ -55,11 +55,11 @@ TsBool TsDeviceContext::SetTexture( TsInt slotIndex,
     // テクスチャをgpuに設定
     switch( type )
     {
-        case VERTEX_SHADER:		m_pDeviceContext->VSSetShaderResources(slotIndex, 1, &srv); break;
-        case PIXEL_SHADER:		m_pDeviceContext->PSSetShaderResources(slotIndex, 1, &srv); break;
-        case GEOMETRY_SHADER:	m_pDeviceContext->GSSetShaderResources(slotIndex, 1, &srv); break;
-        case HULL_SHADER:		m_pDeviceContext->HSSetShaderResources( slotIndex , 1 , &srv );break;
-        case DOMAIN_SHADER:		m_pDeviceContext->DSSetShaderResources( slotIndex , 1 , &srv );break;
+        case VERTEX_SHADER:		m_pDeviceContext->VSSetShaderResources( slotIndex , 1 , &srv ); break;
+        case PIXEL_SHADER:		m_pDeviceContext->PSSetShaderResources( slotIndex , 1 , &srv ); break;
+        case GEOMETRY_SHADER:	m_pDeviceContext->GSSetShaderResources( slotIndex , 1 , &srv ); break;
+        case HULL_SHADER:		m_pDeviceContext->HSSetShaderResources( slotIndex , 1 , &srv ); break;
+        case DOMAIN_SHADER:		m_pDeviceContext->DSSetShaderResources( slotIndex , 1 , &srv ); break;
         case COMPUTE_SHADER:	m_pDeviceContext->CSSetShaderResources( slotIndex , 1 , &srv );	break;
         default:
             return TS_FALSE;
@@ -88,7 +88,7 @@ TsBool TsDeviceContext::SetSamplerState( TsSamplerState * pSamler ,
         case GEOMETRY_SHADER:	m_pDeviceContext->GSSetSamplers( registerIndex , 1 , &pD3DSampler ); break;
         case HULL_SHADER:		m_pDeviceContext->HSSetSamplers( registerIndex , 1 , &pD3DSampler ); break;
         case DOMAIN_SHADER:		m_pDeviceContext->DSSetSamplers( registerIndex , 1 , &pD3DSampler ); break;
-        case COMPUTE_SHADER:	m_pDeviceContext->CSSetSamplers( registerIndex , 1 , &pD3DSampler );	break;
+        case COMPUTE_SHADER:	m_pDeviceContext->CSSetSamplers( registerIndex , 1 , &pD3DSampler ); break;
         default:
             return TS_FALSE;
     }
@@ -208,8 +208,14 @@ TsBool TsDeviceContext::ApplyRenderTargets()
         return TS_FALSE;
 
     ID3D11RenderTargetView * renderTargets[MAX_RTs];
-    ID3D11DepthStencilView * depth = m_mainDepthStencil->GetDSV();
-    ID3D11DepthStencilState * dss = m_mainDepthStencil->GetDSS();
+    ID3D11DepthStencilView * dsv = nullptr;
+    ID3D11DepthStencilState * dss = nullptr;
+
+    if( m_depthStencil != nullptr )
+    {
+        dsv = m_depthStencil->GetDSV();
+        dss = m_depthStencil->GetDSS();
+    }
 
     int rtNum = 0;
     for( ; rtNum < MAX_RTs; ++rtNum )
@@ -225,8 +231,10 @@ TsBool TsDeviceContext::ApplyRenderTargets()
         TsDebugLog( "RenderTargets = null\n" );
         return TS_FALSE;
     }
-    m_pDeviceContext->OMSetRenderTargets( rtNum , renderTargets , depth );
-    m_pDeviceContext->OMSetDepthStencilState( dss ,0);
+
+    m_pDeviceContext->OMSetRenderTargets( rtNum , renderTargets , dsv );
+    m_pDeviceContext->OMSetDepthStencilState( dss , 0 );
+
     return TS_TRUE;
 }
 
@@ -243,6 +251,16 @@ TsBool TsDeviceContext::SetScreenRTV( TsRenderTarget * pRtv )
 
 //! Set Depth Stencil
 TsBool TsDeviceContext::SetDepthStencil(TsDepthStencil* dsv)
+{
+    if( m_pDeviceContext == nullptr )
+        return TS_FALSE;
+
+    m_depthStencil = dsv;
+    return TS_TRUE;
+}
+
+//! Set Depth Stencil
+TsBool TsDeviceContext::SetMainDepthStencil( TsDepthStencil* dsv )
 {
     if( m_pDeviceContext == nullptr )
         return TS_FALSE;

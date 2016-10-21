@@ -53,6 +53,13 @@ public:
     TsBool SetDepthStencil(TsDepthStencil* dsv);
 
     //=============================================
+    // ! SetDepth
+    // DepthStencilViewを登録
+    // @pram dsv 
+    // @return Success is true
+    TsBool SetMainDepthStencil( TsDepthStencil* dsv );
+
+    //=============================================
     // ! SetTexture
     // テクスチャを登録
     // @pram slotIndex 0-7
@@ -85,7 +92,13 @@ public:
     // ! GetScreenRTV
     // ディスプレイにバインドされているRTVを取得
     // @return ディスプレイにバインドされているRTV
-    TsRenderTarget* GetScreenRTV()const{ return m_mainRenderTarget; }
+    TsRenderTarget* GetMainRTV()const{ return m_mainRenderTarget; }
+
+    //=============================================
+    // ! GetMainDSV
+    // ディスプレイにバインドされているRTVを取得
+    // @return ディスプレイにバインドされているRTV
+    TsDepthStencil* GetMainDSV()const{ return m_mainDepthStencil; }
 
     TsBool SetAndChangeCBuffer( TsCBuffer* cbuffer , 
                                void * pData , 
@@ -130,6 +143,7 @@ private:
     TsRenderTarget *        m_renderTarget[MAX_RTs];
     TsRenderTarget *        m_mainRenderTarget;
     TsDepthStencil *        m_mainDepthStencil;
+    TsDepthStencil *        m_depthStencil;
     TsCamera*               m_mainCamera;
 
     TsInt                   m_drawCallCount;
