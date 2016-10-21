@@ -242,6 +242,26 @@ TsVector<TsFbxBone*> TsFbxScene::GetBoneList()
     return result;
 }
 
+TsF32 TsFbxScene::GetFrameRate()
+{
+   auto timeMode = m_pFbxScene->GetGlobalSettings().GetTimeMode();
+
+   switch(  timeMode )
+   {
+       case FbxTime::EMode::eFrames120:
+           return 120.0f;
+       case FbxTime::EMode::eFrames60:
+           return 60.0f;
+       case FbxTime::EMode::eFrames30:
+           return 30.0f;
+       case FbxTime::EMode::eFrames24:
+           return 24.0f;
+       default:
+           return 60.0f;
+   }
+   return 60.0f;
+}
+
 TsSkeleton* TsFbxScene::CreateSkeleton()
 {
     if( m_pSkeletonCash )

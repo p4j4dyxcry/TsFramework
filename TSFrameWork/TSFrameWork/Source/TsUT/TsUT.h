@@ -36,3 +36,5 @@
 #include "ModelLoader\Fbx\TsFbxLoader.h"
 
 #include "TsHDRTextureAnalizer.h"
+
+#pragma comment(lib,"winmm.lib")

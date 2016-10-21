@@ -318,7 +318,7 @@ TsBool TsDevice::LoadDefaultShader()
 TsBool TsDevice::Flip()
 {
     if( m_device && m_swapChain )
-        m_swapChain->Present( 0 , 0 );
+        m_swapChain->Present( 1 , 0 );
     else
         return TS_FALSE;
     return TS_TRUE;

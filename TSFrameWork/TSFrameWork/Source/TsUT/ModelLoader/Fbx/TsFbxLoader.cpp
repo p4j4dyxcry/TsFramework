@@ -93,7 +93,9 @@ TsSkeleton* TsFbxLoader::GetSkeleton()const
 TsTransformBakeAnimation* TsFbxLoader::CreateAnimation( TsInt no )
 {
     TsFbxAnimation* pFbxAnim = m_pFbxContext->GetSceneByIndex( 0 )->GetAnimation( no );
+    TsF32 frameRate = m_pFbxContext->GetSceneByIndex( 0 )->GetFrameRate( );
     TsTransformBakeAnimation* pTransAim = TsNew( TsTransformBakeAnimation );
     pTransAim->SetBakeAnimation( pFbxAnim->GetBoneFrameLibrary() );
+    pTransAim->SetFrameRate( frameRate );
     return pTransAim;
 }

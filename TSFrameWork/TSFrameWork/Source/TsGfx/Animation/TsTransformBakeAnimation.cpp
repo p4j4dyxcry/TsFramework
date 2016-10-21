@@ -4,7 +4,8 @@ TsTransformBakeAnimation::TsTransformBakeAnimation():
 m_isLoop(TS_TRUE),
 m_isRun(TS_TRUE),
 m_localFrame(0),
-m_maxFrame(0)
+m_maxFrame(0),
+m_frameRate(60.0f)
 {
 
 }
@@ -33,11 +34,9 @@ TsBool TsTransformBakeAnimation::Update()
 {
     if( m_isRun == TS_FALSE )
         return TS_TRUE;
-//    if( GetAsyncKeyState(VK_RIGHT) )
-        m_localFrame+= 1.0f/30.0f;
-//    if( GetAsyncKeyState( VK_LEFT ) )
-//        m_localFrame--;
-    if( m_localFrame < 0 )
+    m_localFrame += 60.0f / 60.0f;
+
+        if( m_localFrame < 0 )
         m_localFrame = m_maxFrame - 1;
 
     if( m_localFrame >= m_maxFrame )
@@ -93,5 +92,11 @@ TsBool TsTransformBakeAnimation::SetBakeAnimation( const TsVector<TsMap<TS_HASH 
 {
     m_bakedMatrixList = bakeAnim;
     m_maxFrame = m_bakedMatrixList.size();
+    return TS_TRUE;
+}
+
+TsBool TsTransformBakeAnimation::SetFrameRate( TsF32 frameRate )
+{
+    m_frameRate = frameRate;
     return TS_TRUE;
 }

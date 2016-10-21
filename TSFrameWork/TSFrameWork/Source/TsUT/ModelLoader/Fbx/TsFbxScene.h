@@ -32,6 +32,8 @@ public:
         return m_pFbxBindPoseHolder->GetBindPoseMatrix(name);
     }
     TsSkeleton* CreateSkeleton();
+    TsF32 GetFrameRate();
+
 private:
     TsBool ImportScene(const TsString& filename);
     TsBool ConvertScene();
