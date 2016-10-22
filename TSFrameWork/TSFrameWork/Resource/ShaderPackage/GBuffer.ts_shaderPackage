@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <root>
-  <name name ="GBufferPass"/>
+  <Name   Name ="GBufferPass"/>
   <Vertex Shader = "TsGBufferVS"/>
   <Pixel  Shader = "TsGBufferPS"/>
-  <Option
-    ZEnable ="True"
-    ZWriteEnable ="True"
-    CullMode ="CCW">    
-  </Option>
+  <DepthStencil
+    ZEnable  	 ="true"
+    ZWriteEnable ="true"
+	Func 		 ="LESS">
+  </DepthStencil>
+  <Rasterize
+    FillMode  	 ="WIREFRAME"
+    CullMode 	 ="CCW"
+	AntiAlias 	 ="true">
+  </Rasterize>        
 </root>

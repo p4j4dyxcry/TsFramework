@@ -42,7 +42,8 @@
     <ClCompile Include="Source\TsGfx\TsCamera.cpp" />
     <ClCompile Include="Source\TsGfx\TsCBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\TsClearPass.cpp" />
-    <ClCompile Include="Source\TsGfx\TsDepthStencil.cpp" />
+    <ClCompile Include="Source\TsGfx\TsDepthStencilView.cpp" />
+    <ClCompile Include="Source\TsGfx\TsDepthStencilState.cpp" />
     <ClCompile Include="Source\TsGfx\TsDevice.cpp" />
     <ClCompile Include="Source\TsGfx\TsDeviceContext.cpp" />
     <ClInclude Include="Extern\DirectXTex\WICTextureLoader.h" />
@@ -67,10 +68,12 @@
     <ClInclude Include="Source\TsGfx\TsCamera.h" />
     <ClInclude Include="Source\TsGfx\TsCBuffer.h" />
     <ClInclude Include="Source\TsGfx\TsClearPass.h" />
-    <ClInclude Include="Source\TsGfx\TsDepthStencil.h" />
+    <ClInclude Include="Source\TsGfx\TsDepthStencilView.h" />
+    <ClInclude Include="Source\TsGfx\TsDepthStencilState.h" />
     <ClInclude Include="Source\TsGfx\TsDirectXTex.h" />
     <ClInclude Include="Source\TsGfx\TsDrawQueue.h" />
     <ClInclude Include="Source\TsGfx\TsGeometryObject.h" />
+    <ClInclude Include="Source\TsGfx\TsRasterizerState.h" />
     <ClInclude Include="Source\TsGfx\TsShaderReflection.h" />
     <ClInclude Include="Source\TsGfx\TsVertexElement.h" />
     <ClInclude Include="Source\TsGfx\TsRenderFlow.h" />
@@ -89,6 +92,7 @@
     <ClCompile Include="Source\TsGfx\TsDrawObject.cpp" />
     <ClCompile Include="Source\TsGfx\TsDrawQueue.cpp" />
     <ClCompile Include="Source\TsGfx\TsGeometryObject.cpp" />
+    <ClCompile Include="Source\TsGfx\TsRasterizerState.cpp" />
     <ClCompile Include="Source\TsGfx\TsShaderReflection.cpp" />
     <ClCompile Include="Source\TsGfx\TsVertexElement.cpp" />
     <ClCompile Include="Source\TsGfx\TsRenderFlow.cpp" />
@@ -326,11 +330,13 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSAOPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSBlendEdgePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>

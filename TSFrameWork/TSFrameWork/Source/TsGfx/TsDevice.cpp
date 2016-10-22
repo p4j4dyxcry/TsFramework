@@ -84,9 +84,9 @@ TsBool TsDevice::CreateDevice( HWND hWnd , TsInt width , TsInt height )
     TsRenderTarget* rtv = TsRenderTarget::CrateScreenRTV( *this );
     m_deviceContext->SetScreenRTV( rtv );
 
-    TsDepthStencil* depthStencil = 
-        TsDepthStencil::CreateDSV( "MainDepthStencil",*this,width,height);
-    m_deviceContext->SetDepthStencil( depthStencil );
+    TsDepthStencilView* depthStencil = 
+        TsDepthStencilView::CreateDSV( "MainDepthStencil",*this,width,height);
+    m_deviceContext->SetDepthStencilView( depthStencil );
 
     m_deviceContext->ResetDrawCallCount();
     m_deviceContext->SetRT( 0 , rtv );
@@ -95,8 +95,6 @@ TsBool TsDevice::CreateDevice( HWND hWnd , TsInt width , TsInt height )
     TsViewport viewport;
     viewport.Create( width , height );
     m_deviceContext->SetViewport( &viewport );
-
-    CreateAndSetRaster();
 
     LoadDefaultShader();
     
@@ -161,35 +159,6 @@ TsBool TsDevice::GetRefreshRato( __out TsUint2& refreshRato ,
     TsSafeRelease( adapterOutput );
     TsSafeRelease( adapter );
     TsSafeRelease( factory );
-
-    return TS_TRUE;
-}
-
-TsBool TsDevice::CreateAndSetRaster()
-{
-    HRESULT hr;
-    D3D11_RASTERIZER_DESC rasterDesc;
-    ID3D11RasterizerState* rasterState;
-
-    // setup the raster description which will determine how and what polygons will be drawn
-    rasterDesc.AntialiasedLineEnable = false;
-    rasterDesc.CullMode = D3D11_CULL_BACK;
-    rasterDesc.DepthBias = 0;
-    rasterDesc.DepthBiasClamp = 0.0f;
-    rasterDesc.DepthClipEnable = true;
-    rasterDesc.FillMode = D3D11_FILL_SOLID;
-    rasterDesc.FrontCounterClockwise = TS_FALSE;
-    rasterDesc.MultisampleEnable = TS_FALSE;
-    rasterDesc.ScissorEnable = TS_FALSE;
-    rasterDesc.SlopeScaledDepthBias = 0.0f;
-
-    // create the rasterrizer state from the description we just filled out 
-    hr = m_device->CreateRasterizerState( &rasterDesc , &rasterState );
-    if( FAILED( hr ) )
-    {
-        return TS_FALSE;
-    }
-
 
     return TS_TRUE;
 }

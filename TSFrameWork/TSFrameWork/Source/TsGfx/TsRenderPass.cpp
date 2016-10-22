@@ -3,10 +3,10 @@
 TS_INSTANTIATE_NAME_OBJ_LIST( TsRenderPass );
 
 TsRenderPass::TsRenderPass():
-m_cullMode(D3D11_CULL_BACK),
 m_pShader(nullptr),
-m_zEnable(TS_TRUE),
-m_zWriteEnable(TS_TRUE)
+m_pDepthStencilState(nullptr),
+m_pDepthStencilView(nullptr),
+m_pRasterizerState(nullptr)
 {
     for( int i = 0; i < TsDeviceContext::MAX_RTs; ++i )
     {
@@ -25,7 +25,7 @@ TsBool TsRenderPass::ApplyRTV( TsDeviceContext* pDC )
         pDC->SetRT( i , m_pOutputSlot[i] );
 
     //! set depth 
-    pDC->SetDepthStencil( m_pDepthStencil );
+    pDC->SetDepthStencilView( m_pDepthStencilView );
 
     // apply
     pDC->ApplyRenderTargets();
@@ -36,7 +36,6 @@ TsBool TsRenderPass::ApplyRTV( TsDeviceContext* pDC )
 
 TsBool TsRenderPass::Begin( TsDeviceContext* pDc )
 {
-
     ApplyRTV( pDc );
 
     //! set shader
@@ -44,6 +43,12 @@ TsBool TsRenderPass::Begin( TsDeviceContext* pDc )
 
     //! set inputlayout
     pDc->ApplyInputLayout();
+
+    pDc->SetDepthStencilState( m_pDepthStencilState );
+    pDc->ApplyDepthStencil();
+
+    pDc->SetRasterizerState( m_pRasterizerState );
+    pDc->ApplyRasterizer();
 
     return TS_TRUE;
 }
@@ -54,13 +59,18 @@ TsBool TsRenderPass::End( TsDeviceContext* pDC )
         pDC->SetRT( i , nullptr );
 
     //! set depth 
-    pDC->SetDepthStencil( nullptr );
+    pDC->SetDepthStencilView( nullptr );
 
     return TS_TRUE;
 }
 
 TsBool TsRenderPass::Render( TsDrawQueue* pQue , TsDeviceContext* pDC )
 {
+    if( pDC == nullptr )
+        return TS_FALSE;
+    if( pQue == nullptr )
+        return TS_FALSE;
+
     pQue->Render( pDC );
     return TS_TRUE;
 }
@@ -85,12 +95,16 @@ TsBool TsRenderPass::SetOutputSlot(TsInt index, TsRenderTarget *rtv )
 //入力バッファを取得
 TsRenderTarget* TsRenderPass::GetInputSlot( TsInt index )
 {
+    if( index > TsDeviceContext::MAX_RTs || index < 0)
+        return nullptr;
     return m_pInputSlot[ index ];
 }
 
 //出力バッファを取得
 TsRenderTarget* TsRenderPass::GetOutputSlot( TsInt index /* = 0 */)
 {
+    if( index > TsDeviceContext::MAX_RTs || index < 0 )
+        return nullptr;
     return m_pOutputSlot[index];
 }
 
@@ -99,25 +113,11 @@ TsBool TsRenderPass::SetShader( TsShaderEffect* se )
     m_pShader = se;
     return TS_TRUE;
 }
-TsBool TsRenderPass::ZWrite( TsBool flg )
-{
-    m_zWriteEnable = flg;
-    return TS_TRUE;
-}
-TsBool TsRenderPass::ZEnable( TsBool flg)
-{
-    m_zEnable = flg;
-    return TS_TRUE;
-}
-TsBool TsRenderPass::CullMode( D3D11_CULL_MODE mode)
-{
-    m_cullMode = mode;
-    return TS_TRUE;
-}
 
-TsBool TsRenderPass::SetDepthSlot( TsDepthStencil* depth )
+
+TsBool TsRenderPass::SetDepthSlot( TsDepthStencilView* depth )
 {
-    m_pDepthStencil = depth;
+    m_pDepthStencilView = depth;
     return TS_TRUE;
 }
 
@@ -130,6 +130,8 @@ TsBool TsRenderPass::LoadShaderFromXMLElement( TsDevice* pDev , TsXMLElement * p
         pShaderEffect = TsNew( TsShaderEffect );
         pShaderEffect->LoadPackageFromXml( pDev , shaderName + ".ts_shaderPackage" );
     }
+    m_pDepthStencilState = pShaderEffect->GetDepthStencilState();
+    m_pRasterizerState = pShaderEffect->GetRasterizeState();
     SetShader( pShaderEffect );
 
     return TS_TRUE;
@@ -173,11 +175,11 @@ TsBool TsRenderPass::LoadIOSlotFromXMLElement( TsDevice* pDev , TsXMLElement * p
         }
         else if( outputSlot->GetName() == "Depth" )
         {
-            TsDepthStencil* rtv = nullptr;
+            TsDepthStencilView* rtv = nullptr;
             if( rtName == "Main" )
                 rtv = pDev->GetDC()->GetMainDSV();
             else
-                rtv = TsDepthStencil::Find( rtName );
+                rtv = TsDepthStencilView::Find( rtName );
             SetDepthSlot( rtv );
         }
     }

@@ -209,12 +209,10 @@ TsBool TsDeviceContext::ApplyRenderTargets()
 
     ID3D11RenderTargetView * renderTargets[MAX_RTs];
     ID3D11DepthStencilView * dsv = nullptr;
-    ID3D11DepthStencilState * dss = nullptr;
 
     if( m_depthStencil != nullptr )
     {
         dsv = m_depthStencil->GetDSV();
-        dss = m_depthStencil->GetDSS();
     }
 
     int rtNum = 0;
@@ -233,7 +231,6 @@ TsBool TsDeviceContext::ApplyRenderTargets()
     }
 
     m_pDeviceContext->OMSetRenderTargets( rtNum , renderTargets , dsv );
-    m_pDeviceContext->OMSetDepthStencilState( dss , 0 );
 
     return TS_TRUE;
 }
@@ -250,17 +247,17 @@ TsBool TsDeviceContext::SetScreenRTV( TsRenderTarget * pRtv )
 
 
 //! Set Depth Stencil
-TsBool TsDeviceContext::SetDepthStencil(TsDepthStencil* dsv)
+TsBool TsDeviceContext::SetDepthStencilView(TsDepthStencilView* dsv)
 {
     if( m_pDeviceContext == nullptr )
         return TS_FALSE;
-
-    m_depthStencil = dsv;
+    if( dsv )
+        m_depthStencil = dsv;
     return TS_TRUE;
 }
 
 //! Set Depth Stencil
-TsBool TsDeviceContext::SetMainDepthStencil( TsDepthStencil* dsv )
+TsBool TsDeviceContext::SetMainDepthStencil( TsDepthStencilView* dsv )
 {
     if( m_pDeviceContext == nullptr )
         return TS_FALSE;
@@ -369,6 +366,18 @@ TsBool TsDeviceContext::Draw( TsInt vtxNum , TsInt startSlot )
     return TS_TRUE;
 }
 
+TsBool TsDeviceContext::DrawIndex( TsInt index , TsInt startSlot  , TsInt indexLocation  )
+{
+    m_pDeviceContext->DrawIndexed( index , startSlot , indexLocation );
+    return TS_TRUE;
+}
+
+TsBool TsDeviceContext::ResetDrawCallCount()
+{
+    m_drawCallCount = 0;
+    return TS_TRUE;
+}
+
 //! Set View port
 TsBool TsDeviceContext::SetViewport( TsViewport* viewport )
 {
@@ -434,16 +443,22 @@ TsBool TsDeviceContext::SetIndexBuffer( TsIndexBuffer* pBuffer)
     return TS_TRUE;
 }
 
-TsBool TsDeviceContext::SetRasterizerState( ID3D11RasterizerState* raster )
+TsBool TsDeviceContext::SetRasterizerState( TsRasterizerState* raster )
 {
-    m_pRasterizeState = raster;
-    if( raster == nullptr )
-        return TS_FALSE;
     if( m_pDeviceContext == nullptr )
         return TS_FALSE;
 
-    m_pDeviceContext->RSSetState( m_pRasterizeState );
+    m_pRasterizerState = raster;
 
+    return TS_TRUE;
+}
+
+TsBool TsDeviceContext::SetDepthStencilState( TsDepthStencilState*  pDepthStencil)
+{
+    if( m_pDeviceContext == nullptr )
+        return TS_FALSE;
+
+    m_pDepthStencilState = pDepthStencil;
     return TS_TRUE;
 }
 
@@ -461,5 +476,24 @@ TsCamera * TsDeviceContext::GetMainCamera()const
 TsBool TsDeviceContext::SetMainCamera( TsCamera* camera )
 {
     m_mainCamera = camera;
+    return TS_TRUE;
+}
+TsBool TsDeviceContext::SetTopology( D3D_PRIMITIVE_TOPOLOGY topology )
+{
+    m_pDeviceContext->IASetPrimitiveTopology( topology );
+    return TS_TRUE;
+}
+
+
+TsBool TsDeviceContext::ApplyDepthStencil()
+{
+    if( m_pDeviceContext )
+        m_pDeviceContext->OMSetDepthStencilState( m_pDepthStencilState->GetDSS() , 0 );
+    return TS_TRUE;
+}
+TsBool TsDeviceContext::ApplyRasterizer()
+{
+    if( m_pDeviceContext )
+        m_pDeviceContext->RSSetState( m_pRasterizerState->GetRSS() );
     return TS_TRUE;
 }

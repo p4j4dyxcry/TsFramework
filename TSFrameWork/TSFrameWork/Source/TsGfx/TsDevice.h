@@ -16,6 +16,9 @@ class TsIndexBuffer;
 class TsVertexBuffer;
 class TsSamplerState;
 
+class TsRasterizerState;
+class TsDepthStencilState;
+
 // Dx11 Device Intarface
 class ITsDevice
 {
@@ -95,8 +98,6 @@ private:
                            const TsUint width , const TsUint height );
 
     TsBool LoadDefaultShader();
-
-    TsBool CreateAndSetRaster();
 
 private:
     ID3D11Device*       m_device;

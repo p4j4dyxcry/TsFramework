@@ -129,9 +129,6 @@
     <ClCompile Include="Source\TsUT\TsMeshLoader.cpp">
       <Filter>ソース ファイル\TsUT\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsDepthStencil.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsMath\TsQuaternion.cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
     </ClCompile>
@@ -333,6 +330,15 @@
     <ClCompile Include="Source\TsGfx\TsClearPass.cpp">
       <Filter>ソース ファイル\TsGfx\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsGfx\TsDepthStencilState.cpp">
+      <Filter>ソース ファイル\TsGfx\Header</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\TsRasterizerState.cpp">
+      <Filter>ソース ファイル\TsGfx\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\TsDepthStencilView.cpp">
+      <Filter>ソース ファイル\TsGfx\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -349,9 +355,6 @@
     </ClInclude>
     <ClInclude Include="Extern\xna\xnamath.h">
       <Filter>ソース ファイル\Extern\xna</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsDepthStencil.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsGfx\TsDevice.h">
       <Filter>ソース ファイル\TsGfx\Header</Filter>
@@ -620,6 +623,16 @@
     <ClInclude Include="Source\TsGfx\TsClearPass.h">
       <Filter>ソース ファイル\TsGfx\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TsGfx\TsDepthStencilState.h">
+      <Filter>ソース ファイル\TsGfx\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\TsRasterizerState.h">
+      <Filter>ソース ファイル\TsGfx\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\TsDepthStencilView.h">
+      <Filter>ソース ファイル\TsGfx\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\hlsl\TsDefaultShading_Common.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Extern\xna\xnamathconvert.inl">
@@ -633,9 +646,6 @@
     </None>
     <None Include="Extern\xna\xnamathvector.inl">
       <Filter>ソース ファイル\Extern\xna</Filter>
-    </None>
-    <None Include="Source\TsGfx\hlsl\TsDefaultShading_Common.hlsli">
-      <Filter>ソース ファイル\TsGfx\hlsl</Filter>
     </None>
     <None Include="Source\TsGfx\hlsl\ScreenSpace\TsSS_common.hlsli">
       <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace</Filter>

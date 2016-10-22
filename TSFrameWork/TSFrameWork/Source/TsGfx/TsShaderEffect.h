@@ -12,11 +12,13 @@ class TsShaderEffect :	public TsNameObject ,
 public:
     //! Constructor
     TsShaderEffect() :	m_vertexShader(nullptr),
-                        m_pixelShader(nullptr),
-                        m_geometoryShader( nullptr ) ,
-                        m_hullShader( nullptr ) ,
-                        m_domainShader( nullptr ) ,
-                        m_computeShader(nullptr){}
+                        m_pPixelShader(nullptr),
+                        m_pGeometoryShader( nullptr ) ,
+                        m_pHullShader( nullptr ) ,
+                        m_pDomainShader( nullptr ) ,
+                        m_pComputeShader(nullptr),
+                        m_pDepthStencilState(nullptr),
+                        m_pRasterizerState(nullptr){}
 
     TsBool LoadPackageFromXml( TsDevice* pDev , const TsString& file );
 
@@ -29,16 +31,23 @@ public:
 
     ID3D11InputLayout*  GetInputLayout();
     TsVertexShader*     GetVertexShader()const{return m_vertexShader;}
-    TsPixelShader*      GetPixelShader()const{ return m_pixelShader; }
-    TsGeometryShader*   GetGeometryShader()const{ return m_geometoryShader; }
-    TsHullShader*       GetHullShader()const{ return m_hullShader; }
-    TsDomainShader*     GetDomainShader()const{ return m_domainShader; }
-    TsComputeShader*    GetComputeShader()const{ return m_computeShader; }	
+    TsPixelShader*      GetPixelShader()const{ return m_pPixelShader; }
+    TsGeometryShader*   GetGeometryShader()const{ return m_pGeometoryShader; }
+    TsHullShader*       GetHullShader()const{ return m_pHullShader; }
+    TsDomainShader*     GetDomainShader()const{ return m_pDomainShader; }
+    TsComputeShader*    GetComputeShader()const{ return m_pComputeShader; }	
+
+    TsRasterizerState*      GetRasterizeState()      { return m_pRasterizerState; }
+    TsDepthStencilState* GetDepthStencilState(){ return m_pDepthStencilState; }
+
 protected:
     TsVertexShader *    m_vertexShader;
-    TsPixelShader *     m_pixelShader;
-    TsGeometryShader*   m_geometoryShader;
-    TsHullShader *      m_hullShader;
-    TsDomainShader *    m_domainShader;
-    TsComputeShader *   m_computeShader;
+    TsPixelShader *     m_pPixelShader;
+    TsGeometryShader*   m_pGeometoryShader;
+    TsHullShader *      m_pHullShader;
+    TsDomainShader *    m_pDomainShader;
+    TsComputeShader *   m_pComputeShader;
+
+    TsDepthStencilState* m_pDepthStencilState;
+    TsRasterizerState*      m_pRasterizerState;
 };

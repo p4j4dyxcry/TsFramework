@@ -72,7 +72,6 @@ struct TS_DEPTH_STENCIL_DESC : D3D11_DEPTH_STENCIL_DESC
 {
     TS_DEPTH_STENCIL_DESC()
     {
-        //細かいデフォルト設定　この辺りはちゃんと見てない。
         ZeroMemory( this , sizeof( TS_DEPTH_STENCIL_DESC ) );
         DepthEnable = TS_TRUE;
         DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;

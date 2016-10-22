@@ -9,6 +9,7 @@
 #include "../TsUT/TsUT.h"
 #include "../TsMath/TsMath.h"
 #include "TsDx11.h"
+
 #include "TsShaderUT.h"
 
 #include "TsDirectXTex.h"
@@ -17,6 +18,8 @@
 #include "TsShader.h"
 #include "TsDevice.h"
 #include "TsDeviceContext.h"
+#include "TsRasterizerState.h"
+#include "TsDepthStencilState.h"
 #include "TsShaderResource.h"
 #include "TsBuffer.h"
 #include "TsVertexBuffer.h"
@@ -27,7 +30,7 @@
 #include "TsSamplerState.h"
 #include "TsTexture.h"
 #include "TsRenderTarget.h"
-#include "TsDepthStencil.h"
+#include "TsDepthStencilView.h"
 #include "TsViewport.h"
 
 #include "Light\TsLight.h"

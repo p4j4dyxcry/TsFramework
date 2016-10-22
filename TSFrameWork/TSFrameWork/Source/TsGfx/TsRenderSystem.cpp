@@ -147,7 +147,7 @@ TsBool TsRenderSystem::LoadShaderResourceFromXML(TsDevice* pDev, const TsString&
 
             if( size.x < 0 )
                 size = pDev->GetDC()->GetMainRTV()->GetRTVSize();
-            auto dsv = TsDepthStencil::CreateDSV( name , *pDev , size.x , size.y , TSShaderUT::ComvertTextureFormat( format ) );
+            auto dsv = TsDepthStencilView::CreateDSV( name , *pDev , size.x , size.y , TSShaderUT::ComvertTextureFormat( format ) );
 
             m_shaderResourceList.push_back( dsv );
         }
