@@ -2,11 +2,11 @@
 
 <root>
   <name name ="LightPrePass"/>
-  <Vertex Shader = "TsFWLambertVS"/>
-  <Pixel  Shader = "LightPrePassPS"/>
+  <Vertex Shader = "TsSSDefaultVS"/>
+  <Pixel  Shader = "TsSSAOPS"/>
   <Option
-    ZEnable ="True"
-    ZWriteEnable ="True"
+    ZEnable ="False"
+    ZWriteEnable ="False"
     CullMode ="CCW">    
   </Option>
 </root>
