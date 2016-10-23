@@ -10,7 +10,7 @@
 	Func 		 ="LESS">
   </DepthStencil>
   <Rasterize
-    FillMode  	 ="WIREFRAME"
+    FillMode  	 ="SOLID"
     CullMode 	 ="CCW"
 	AntiAlias 	 ="true">
   </Rasterize>        

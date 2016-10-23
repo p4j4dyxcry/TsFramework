@@ -44,9 +44,15 @@ TsBool TsRenderPass::Begin( TsDeviceContext* pDc )
     //! set inputlayout
     pDc->ApplyInputLayout();
 
+    //! SetInputSlot
+    for( TsInt i = 0; m_pInputSlot[i] != nullptr; ++i )
+        pDc->SetTexture( i , m_pInputSlot[i] , TS_SHADER_TYPE::VP_SHADER );
+
+    //! Set Depth Stencil
     pDc->SetDepthStencilState( m_pDepthStencilState );
     pDc->ApplyDepthStencil();
 
+    //! Set Rasterize
     pDc->SetRasterizerState( m_pRasterizerState );
     pDc->ApplyRasterizer();
 
@@ -74,7 +80,7 @@ TsBool TsRenderPass::Render( TsDrawQueue* pQue , TsDeviceContext* pDC )
     pQue->Render( pDC );
     return TS_TRUE;
 }
-TsBool TsRenderPass::SetInputSlot( TsInt index , TsRenderTarget *rtv)
+TsBool TsRenderPass::SetInputSlot( TsInt index , TsTexture *rtv)
 {
     if( abs( index ) >= TsDeviceContext::MAX_RTs )
         return TS_FALSE;
@@ -93,7 +99,7 @@ TsBool TsRenderPass::SetOutputSlot(TsInt index, TsRenderTarget *rtv )
 }
 
 //入力バッファを取得
-TsRenderTarget* TsRenderPass::GetInputSlot( TsInt index )
+TsTexture* TsRenderPass::GetInputSlot( TsInt index )
 {
     if( index > TsDeviceContext::MAX_RTs || index < 0)
         return nullptr;
@@ -146,10 +152,30 @@ TsBool TsRenderPass::LoadIOSlotFromXMLElement( TsDevice* pDev , TsXMLElement * p
         auto slot = inputSlot->GetAttribute( "Slot" );
         if( slot == nullptr )
             continue;
-        TsString rtName = slot->GetStringValue();
-        TsRenderTarget* rtv = TsRenderTarget::Find( rtName );
-        SetInputSlot( rtvIndex , rtv );
-        ++rtvIndex;
+        if( inputSlot->GetName() == "Slot" )
+        {
+            TsString rtName = slot->GetStringValue();
+            TsRenderTarget* rtv = nullptr;
+            if( rtName == "Main" )
+                rtv = pDev->GetDC()->GetMainRTV();
+            else
+                rtv = TsRenderTarget::Find( rtName );
+            SetInputSlot( rtvIndex , rtv );
+            ++rtvIndex;
+        }
+        else if( inputSlot->GetName() == "Depth" )
+        {
+            TsString rtName = slot->GetStringValue();
+            TsDepthStencilView* dsv = nullptr;
+            if( rtName == "Main" )
+                dsv = pDev->GetDC()->GetMainDSV();
+            else
+                dsv = TsDepthStencilView::Find( rtName );
+            SetInputSlot( rtvIndex , dsv );
+            ++rtvIndex;
+        }
+
+
     }
 
     TsXMLElement * outputSlot = pElement->FindChild( "Output" )->GetFirstChild();
