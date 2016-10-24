@@ -2,7 +2,7 @@
 
 <FLow>
   <Pass Name ="SSAO"
- 	 	Shader ="SSAO">>
+ 	 	Shader ="SSAO"/>
     <Input>
       <Slot Slot ="Normal"/>
       <Slot Slot ="ProjPos"/>      

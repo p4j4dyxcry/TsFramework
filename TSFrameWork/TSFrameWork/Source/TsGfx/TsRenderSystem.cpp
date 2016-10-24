@@ -10,7 +10,7 @@ TsRenderSystem::~TsRenderSystem()
 }
 TsBool TsRenderSystem::CallRender(TsDeviceContext* pDC)
 {
-    m_PriFlowAndQue.Render(pDC);
+    m_PreFlowAndQue.Render(pDC);
     m_FlowAndQue.Render(pDC);
     m_PostFlowAndQue.Render(pDC);
 
@@ -21,7 +21,7 @@ TsBool TsRenderSystem::SetDrawQue(TsDrawQueue* pDrawQue, TARGET_FLOW targetFlow 
 {
     switch (targetFlow)
     {
-    case TARGET_FLOW::PRI_RENDERER      :m_PriFlowAndQue.pQue = pDrawQue; break;
+    case TARGET_FLOW::PRE_RENDERER      :m_PreFlowAndQue.pQue = pDrawQue; break;
     case TARGET_FLOW::DEFAULT_RENDERER  :m_FlowAndQue.pQue = pDrawQue; break;
     case TARGET_FLOW::POST_RENDERER     :m_PostFlowAndQue.pQue = pDrawQue; break;
     default:return TS_FALSE;
@@ -32,7 +32,7 @@ TsBool TsRenderSystem::SetShaderFlow(TsRenderFlow* pFlow, TARGET_FLOW targetFlow
 {
     switch (targetFlow)
     {
-    case TARGET_FLOW::PRI_RENDERER:     m_PriFlowAndQue.pFlow = pFlow; break;
+    case TARGET_FLOW::PRE_RENDERER:     m_PreFlowAndQue.pFlow = pFlow; break;
     case TARGET_FLOW::DEFAULT_RENDERER: m_FlowAndQue.pFlow = pFlow; break;
     case TARGET_FLOW::POST_RENDERER:    m_PostFlowAndQue.pFlow = pFlow; break;
     default:return TS_FALSE;
@@ -68,7 +68,7 @@ TsBool TsRenderSystem::LoadRenderSystemFromXML( TsDevice*pDev , const TsString& 
                 LoadShaderResourceFromXML( pDev , path );
             }
         }
-        else if( elm->GetName() == "PriRender" )
+        else if( elm->GetName() == "PreRender" )
         {
             TsString path = elm->GetAttribute( "flow" )->GetStringValue();
             TSUT::TsFilePathAnalyzer ana( path );
@@ -76,7 +76,7 @@ TsBool TsRenderSystem::LoadRenderSystemFromXML( TsDevice*pDev , const TsString& 
             {
                 TsRenderFlow* flow = TsNew( TsRenderFlow );
                 flow->LoadFlowFromXML( pDev , path );
-                m_PriFlowAndQue.pFlow = flow;
+                m_PreFlowAndQue.pFlow = flow;
             }
         }
         else if( elm->GetName() == "Render" )

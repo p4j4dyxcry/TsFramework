@@ -38,6 +38,7 @@ public:
         TsMatrix m_viewProjMatrix;
 
         TsFloat4 m_worldCameraPos;
+        //TsFloat4 m_projRaito;
 
         TsF32    m_near;
         TsF32    m_far;
