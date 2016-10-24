@@ -38,7 +38,7 @@ static float3 g_samples[16] =
     float3( -0.47761092 , 0.2847911 , -0.0271716 )
 };
 
-static float3 g_radius = 1;
+static float3 g_radius = 0.015;
 
 float4 main( PS_SS_INPUT_UVx1 In ,
              Texture2D NormalMap : register( t0 ) ,
@@ -80,13 +80,12 @@ float4 main( PS_SS_INPUT_UVx1 In ,
         float n = dot( normal , envNormal ) ;
         n += step( depth , envDepth );
         normalAO += min(n,1);
-
-        depthAO += abs( depth - envDepth ) / ( g_far );
+        depthAO += abs( depth - envDepth ) / (g_far - g_near);
     }
 
-    float ao = normalAO / 16.0f + depthAO;
+    float ao = normalAO / 16.0f + (depthAO);
 
-    //ao = pow( ao , 0.2f );
+   // ao = pow( ao , 2 );
     //return float4( In.uv0 , 0 , 0 );
     return ao;
 }
