@@ -126,6 +126,10 @@ public:
     TsBool SetVertexBuffer( TsVertexBuffer* );
     TsBool SetIndexBuffer( TsIndexBuffer* );
 
+    TsBool ClearVertexBuffer( );
+    TsBool ClearIndexBuffer( );
+    TsBool ClearCBuffer( TsInt index = -1 , TS_SHADER_TYPE type = TS_SHADER_TYPE::ALL_SHADER );
+
     TsCamera* GetMainCamera()const;
     TsBool SetMainCamera(TsCamera*);
     TsBool SetTopology( D3D_PRIMITIVE_TOPOLOGY topology );

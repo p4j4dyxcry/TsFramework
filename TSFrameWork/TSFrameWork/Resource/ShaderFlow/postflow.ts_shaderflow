@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FLow>
+  <Pass Name ="SSAO"
+ 	 	Shader ="SSAO">>
+    <Input>
+      <Slot Slot ="Normal"/>
+      <Slot Slot ="ProjPos"/>      
+    </Input>
+    <Output>
+      <Slot Slot="Main"/>
+      <Depth Slot ="MainDepth"/>
+    </Output>
+  </Pass>
+</FLow>

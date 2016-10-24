@@ -72,3 +72,13 @@ struct PS_SS_INPUT_UVx8
     float2 uv6 : TEXCOORD6;
     float2 uv7 : TEXCOORD7;
 };
+
+float ConvertLinearDepth( float depth )
+{
+    float near = 1; // camera z near
+    float far = 2000.0f; // camera z far
+    float z = depth * 2.0 - 1.0; // Back to NDC 
+    float dep = ( 2.0 * near ) / ( far + near - z * ( far - near ) );
+    float v = ( far + near / ( far - near + dep ) ) * ( 2.0 / near );
+    return ( v + 1.0 ) / 2; // Back to [0,1] range.
+}

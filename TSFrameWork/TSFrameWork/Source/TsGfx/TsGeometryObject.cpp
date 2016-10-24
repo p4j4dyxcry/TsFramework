@@ -93,7 +93,6 @@ TsBool TsGeometryObject::Draw( TsDeviceContext* context )
 {
     if( m_mesh )
     {
-        //todo debug
         context->SetTopology( D3D_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
         if (m_mesh->GetIndexNum() == 0)
             context->Draw(m_mesh->GetVertexNum());

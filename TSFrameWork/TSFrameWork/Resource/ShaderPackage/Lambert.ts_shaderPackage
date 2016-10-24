@@ -4,9 +4,14 @@
   <name name ="Lambert"/>
   <Vertex Shader = "TsFWLambertVS"/>
   <Pixel  Shader = "TsFWLambertPS"/>
-  <Option
-    ZEnable ="True"
-    ZWriteEnable ="True"
-    CullMode ="CCW">    
-  </Option>
+  <DepthStencil
+    ZEnable  	 ="true"
+    ZWriteEnable ="true"
+	Func 		 ="LESS">
+  </DepthStencil>
+  <Rasterize
+    FillMode  	 ="SOLID"
+    CullMode 	 ="CCW"
+	AntiAlias 	 ="true">
+  </Rasterize>   
 </root>

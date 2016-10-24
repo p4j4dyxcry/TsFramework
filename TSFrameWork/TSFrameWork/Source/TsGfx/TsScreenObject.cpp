@@ -22,13 +22,23 @@ TsBool TsScreenObject::Create( TsDevice* pDev )
 
 TsBool TsScreenObject::Draw( TsDeviceContext* context )
 {
+    context->SetTopology( D3D_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );
     context->Draw( 4 , 0 );
     return TS_TRUE;
 }
 
 TsBool TsScreenObject::ApplyVertexBuffer( TsDeviceContext* context )
 {
-    context->SetVertexBuffer(m_vertexBuffer);
-    
+    context->SetVertexBuffer(m_vertexBuffer);    
+    return TS_TRUE;
+}
+
+TsBool TsScreenObject::ApplyIndexBuffer( TsDeviceContext* context )
+{
+    return TS_TRUE;
+}
+
+TsBool TsScreenObject::ApplyTransForm( TsDeviceContext* context )
+{
     return TS_TRUE;
 }

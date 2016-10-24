@@ -41,10 +41,11 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     pCamera->SetEyePosition(TsVector3(0,70,200));
     pCamera->SetLookAtVector( TsVector3(0,70,0));
     pCamera->CreateCBuffer(pDev);
-    pCamera->SetNearAndFar(1, 2000);
+    pCamera->SetNearAndFar(30, 500);
 
     TsDrawQueue postQue;
     TsScreenObject * pScreen = TsNew( TsScreenObject );
+    pScreen->Create(pDev);
     postQue.Add( pScreen );
 
     rs.SetDrawQue( &postQue , TsRenderSystem::TARGET_FLOW::POST_RENDERER );

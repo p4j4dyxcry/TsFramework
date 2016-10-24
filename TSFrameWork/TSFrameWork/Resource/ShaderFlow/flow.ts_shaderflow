@@ -8,7 +8,8 @@
     <Output>
       <Slot Slot="Main"/>    	
       <Slot Slot="Normal"/>
-      <Slot Slot="UV"/>             
+      <Slot Slot="UV"/>
+      <Slot Slot="ProjPos"/>                   
       <Depth Slot="Main"/>
     </Output>
   </Pass>
@@ -19,9 +20,10 @@
       <Slot/>
     </Input>
     <Output>
-      <Slot Slot="Main"/>
+      <Slot Slot="Color"/>
       <Slot Slot="Normal"/>
       <Slot Slot="UV"/>
+      <Slot Slot="ProjPos"/>      
       <Depth Slot="Main"/>
     </Output>
   </Pass>

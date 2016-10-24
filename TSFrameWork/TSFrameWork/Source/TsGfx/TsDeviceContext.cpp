@@ -497,3 +497,40 @@ TsBool TsDeviceContext::ApplyRasterizer()
         m_pDeviceContext->RSSetState( m_pRasterizerState->GetRSS() );
     return TS_TRUE;
 }
+
+TsBool TsDeviceContext::ClearVertexBuffer()
+{
+    return TS_FALSE;
+}
+TsBool TsDeviceContext::ClearIndexBuffer()
+{
+    return TS_FALSE;
+}
+TsBool TsDeviceContext::ClearCBuffer( TsInt index , TS_SHADER_TYPE type )
+{ 
+    TsInt count = 1;
+    if( index < 0 )
+    {
+        index = 0;
+        count = 16;
+    }
+    if( index > 15 )
+    {
+        return TS_FALSE;
+    }
+
+    if( type & TS_SHADER_TYPE::VERTEX_SHADER & type )
+        m_pDeviceContext->VSSetConstantBuffers( index , count , nullptr );
+    if( type & TS_SHADER_TYPE::PIXEL_SHADER & type )
+        m_pDeviceContext->PSSetConstantBuffers( index , count , nullptr );
+    if( type & TS_SHADER_TYPE::GEOMETRY_SHADER & type )
+        m_pDeviceContext->GSSetConstantBuffers( index , count , nullptr );
+    if( type & TS_SHADER_TYPE::HULL_SHADER & type )
+        m_pDeviceContext->HSSetConstantBuffers( index , count , nullptr );
+    if( type & TS_SHADER_TYPE::DOMAIN_SHADER & type )
+        m_pDeviceContext->DSSetConstantBuffers( index , count , nullptr );
+    if( type & TS_SHADER_TYPE::COMPUTE_SHADER & type )
+        m_pDeviceContext->CSSetConstantBuffers( index , count , nullptr );
+
+    return TS_TRUE;
+}

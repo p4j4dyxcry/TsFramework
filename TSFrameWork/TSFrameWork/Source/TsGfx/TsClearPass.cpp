@@ -2,7 +2,7 @@
 
 TsClearPass::TsClearPass()
     :TsRenderPass(),
-    m_clearColor( TsFloat4( 0 , 1 , .5f , .5f ) )
+    m_clearColor(  )
 {
     
 }

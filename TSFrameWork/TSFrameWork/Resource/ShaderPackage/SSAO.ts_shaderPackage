@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <root>
-  <name name ="LightPrePass"/>
+  <Name Name ="SSAO"/>
   <Vertex Shader = "TsSSDefaultVS"/>
   <Pixel  Shader = "TsSSAOPS"/>
-  <Option
-    ZEnable ="False"
-    ZWriteEnable ="False"
-    CullMode ="CCW">    
-  </Option>
+  <DepthStencil
+    ZEnable  	 ="false"
+    ZWriteEnable ="false"
+	Func 		 ="LESS">
+  </DepthStencil>
+  <Rasterize
+    FillMode  	 ="SOLID"
+    CullMode 	 ="CCW"
+	AntiAlias 	 ="false">
+  </Rasterize>   
 </root>

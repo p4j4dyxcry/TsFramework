@@ -86,7 +86,7 @@ TsBool TsDevice::CreateDevice( HWND hWnd , TsInt width , TsInt height )
 
     TsDepthStencilView* depthStencil = 
         TsDepthStencilView::CreateDSV( "MainDepthStencil",*this,width,height);
-    m_deviceContext->SetDepthStencilView( depthStencil );
+    m_deviceContext->SetMainDepthStencil( depthStencil );
 
     m_deviceContext->ResetDrawCallCount();
     m_deviceContext->SetRT( 0 , rtv );
