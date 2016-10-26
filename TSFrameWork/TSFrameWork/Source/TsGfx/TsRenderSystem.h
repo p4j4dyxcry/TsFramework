@@ -30,7 +30,7 @@ public:
     };
     enum class TARGET_FLOW
     {
-        PRI_RENDERER,
+        PRE_RENDERER,
         DEFAULT_RENDERER,
         POST_RENDERER,
     };
@@ -49,7 +49,7 @@ protected:
     TsVector<TsTexture*>        m_shaderResourceList;
     TsVector<TsDrawQueue*>      m_drawque;
 
-    FlowAndQue                  m_PriFlowAndQue;
+    FlowAndQue                  m_PreFlowAndQue;
     FlowAndQue                  m_FlowAndQue;
     FlowAndQue                  m_PostFlowAndQue;
 
