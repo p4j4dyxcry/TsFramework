@@ -267,6 +267,7 @@
     <ClInclude Include="Source\TSUT\TsArrayType.h" />
     <ClInclude Include="Source\TsUT\TsBinaryFile.h" />
     <ClInclude Include="Source\TsUT\TsColladaLoader.h" />
+    <ClInclude Include="Source\TsUT\TsEASTL.h" />
     <ClInclude Include="Source\TsUT\TsFileUT.h" />
     <ClInclude Include="Source\TsUT\TsHDRTextureAnalizer.h" />
     <ClInclude Include="Source\TsUT\TsHelper.h" />
@@ -403,19 +404,19 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>Extern\FBX SDK\2016.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>Extern\FBX SDK\2016.0\lib\vs2013\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>Extern\EASTL\include;Extern\FBX SDK\2016.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>Extern\EASTL\lib;Extern\FBX SDK\2016.0\lib\vs2013\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>Extern\FBX SDK\2016.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>Extern\FBX SDK\2016.0\lib\vs2013\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>Extern\EASTL\include;Extern\FBX SDK\2016.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>Extern\EASTL\lib;Extern\FBX SDK\2016.0\lib\vs2013\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_TS_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_TS_DEBUG;EA_COMPLER_IS_CPLUSPLUS_0X;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>TsAfx.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>TsAfx.h</ForcedIncludeFiles>
@@ -438,9 +439,10 @@ xcopy /y /r "$(TargetDir)*.exe" "$(ProjectDir)..\bin"</Command>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>TsAfx.h</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>TsAfx.h</ForcedIncludeFiles>
+      <ForcedIncludeFiles>TsAfx.h;yvals.h</ForcedIncludeFiles>
       <MinimalRebuild>true</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PreprocessorDefinitions>EA_COMPLER_IS_CPLUSPLUS_0X;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

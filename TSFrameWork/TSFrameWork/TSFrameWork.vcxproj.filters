@@ -633,6 +633,9 @@
       <Filter>ソース ファイル\TsGfx\Header</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsGfx\hlsl\TsDefaultShading_Common.hlsli" />
+    <ClInclude Include="Source\TsUT\TsEASTL.h">
+      <Filter>ソース ファイル\TsUT\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Extern\xna\xnamathconvert.inl">

@@ -9,10 +9,9 @@
 
 #include <string>
 
-#include <vector>
-#include <list>
 #include <unordered_map>
-#include <stack>
+
+#include "TsEASTL.h"
 
 #include "TsType.h"
 #include "TsArrayType.h"
