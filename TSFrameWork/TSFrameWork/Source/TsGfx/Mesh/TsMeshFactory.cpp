@@ -63,7 +63,9 @@ TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev,
         TsFbxLoader loader;
         if( loader.LoadFromFile( filename ,opt) == TS_FALSE )
             return TS_FALSE;
-
+        TsSkeleton* pSkeleton = loader.GetSkeleton();
+        if( pSkeleton )
+            TsResourceManager::RegisterResource<TsSkeleton>( pSkeleton ,pSkeleton->GetName());
         for( TsInt i = 0; i < loader.GetMeshNum(); ++i )
         {
             TsVertexBuffer* buffer = pDev->CreateVertexBuffer(
@@ -91,7 +93,7 @@ TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev,
                 TsSkinGeometryObject * skin =
                     TsNew( TsSkinGeometryObject );
                 skin->CreateGeometryObject( pDev , mesh , material );
-                skin->SetSkeleton( loader.GetSkeleton() );
+                skin->SetSkeleton( pSkeleton );
                 obj = skin;
                 
             }

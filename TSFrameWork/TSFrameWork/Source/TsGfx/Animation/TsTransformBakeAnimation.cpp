@@ -5,7 +5,8 @@ m_isLoop(TS_TRUE),
 m_isRun(TS_TRUE),
 m_localFrame(0),
 m_maxFrame(0),
-m_frameRate(60.0f)
+m_frameRate(60.0f),
+m_pTargetSkeleton(nullptr)
 {
 
 }
@@ -46,9 +47,9 @@ TsBool TsTransformBakeAnimation::Update()
             m_localFrame = m_maxFrame - 1.f;
     TsInt frame = ( TsInt )m_localFrame;
     for each( auto p in m_pTransformList )
-        if( p )
-            *p = m_bakedMatrixList[frame].find( p->GetHashCode() )->second;
-
+        if( p ) *p = m_bakedMatrixList[frame].find( p->GetHashCode() )->second;
+    if( m_pTargetSkeleton )
+        m_pTargetSkeleton->ToExecutableState();
     return TS_TRUE;
 }
 
@@ -98,5 +99,11 @@ TsBool TsTransformBakeAnimation::SetBakeAnimation( const TsVector<TsMap<TS_HASH 
 TsBool TsTransformBakeAnimation::SetFrameRate( TsF32 frameRate )
 {
     m_frameRate = frameRate;
+    return TS_TRUE;
+}
+
+TsBool TsTransformBakeAnimation::SetTargetSkeleton( TsSkeleton* pSkeleton )
+{
+    m_pTargetSkeleton = pSkeleton;
     return TS_TRUE;
 }

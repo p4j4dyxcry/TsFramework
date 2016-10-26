@@ -58,6 +58,8 @@ private:
     TsVector<TsFbxMaterial> m_materialList;
     TsVector<TsFbxAnimation*> m_pAnimationList;
     TsFbxBindPoseHolder *   m_pFbxBindPoseHolder;
+
+    TsString m_fileName;
 private:
     TsSkeleton* m_pSkeletonCash = nullptr;
 };

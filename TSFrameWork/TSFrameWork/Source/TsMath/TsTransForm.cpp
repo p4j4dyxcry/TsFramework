@@ -84,6 +84,8 @@ TsTransForm& TsTransForm::operator*=( const TsMatrix& m )
 //! [メソッド] ローカル行列を取得する
 TsMatrix TsTransForm::ToLocalMatrix()
 {
+    //todo パフォーマンス測定の結果ボトルネック
+    //オーバーヘッドがかなりあるので最適化する必要がある。
     return TsMatrix( m_localPosition , m_localRotate ,m_localScale);
 }
 

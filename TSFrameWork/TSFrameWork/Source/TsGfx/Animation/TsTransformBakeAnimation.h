@@ -12,6 +12,7 @@ public :
     TsBool BindTransform( TsTransForm* pRoot );
     TsBool SetBakeAnimation( const TsVector<TsMap<TS_HASH , TsMatrix>>& );
     TsBool SetFrameRate( TsF32 frameRate );
+    TsBool SetTargetSkeleton( TsSkeleton* pSkeleton );
 protected:
     TsBool m_isRun;
     TsBool m_isLoop;
@@ -20,4 +21,5 @@ protected:
     TsF32 m_frameRate;
     TsVector<TsMap<TS_HASH , TsMatrix>> m_bakedMatrixList;
     TsVector<TsTransForm*>  m_pTransformList;
+    TsSkeleton* m_pTargetSkeleton;
 };

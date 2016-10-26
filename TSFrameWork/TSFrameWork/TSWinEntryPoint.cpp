@@ -22,15 +22,16 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsDrawQueue queue;
 
     TsMeshFactory factory;
-//     factory.LoadModelFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx","Test");
+     factory.LoadModelFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx","Test");
 //     factory.LoadModelFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
-     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
+//     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
 //     factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
-     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
-//     auto pAnim = factory.CreateBakeAnimation( "move_unity.fbx" );
+//     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
+     auto pAnim = factory.CreateBakeAnimation( "move_unity.fbx" );
 //     auto pAnim = factory.CreateBakeAnimation( "sd_anim.fbx" );
      TsMeshObject * pMesh = TsResourceManager::Find<TsMeshObject>("Test");
      pAnim->BindTransform( pMesh->GetGeometry( 0 )->GetTransform()->GetRootTransform() );
+     pAnim->SetTargetSkeleton( ( dynamic_cast< TsSkinGeometryObject*>( pMesh->GetGeometry( 8 ) ) )->GetSkeleton() );
      for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++ i)   
          queue.Add(pMesh->GetGeometry(i));
 

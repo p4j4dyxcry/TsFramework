@@ -74,6 +74,7 @@ TsBool TsFbxScene::ConvertScene()
 
 TsBool TsFbxScene::ImportScene(const TsString& filename)
 {
+    m_fileName = filename;
     m_pFbxImporter = FbxImporter::Create(m_pFbxContext->GetFbxManager(), filename.c_str());
     m_pFbxScene = FbxScene::Create(m_pFbxContext->GetFbxManager(), (filename + "Scene").c_str());
     m_pFbxImporter->Initialize(filename.c_str());
@@ -278,6 +279,9 @@ TsSkeleton* TsFbxScene::CreateSkeleton()
     if( m_pSkeletonCash )
         return m_pSkeletonCash;
     TsSkeleton* pSkeleton = TsNew( TsSkeleton) ;
+
+    pSkeleton->SetName( m_fileName + "_Skeleton"  );
+
     auto&& it = GetBoneList();
 
     for each( auto p in it )
