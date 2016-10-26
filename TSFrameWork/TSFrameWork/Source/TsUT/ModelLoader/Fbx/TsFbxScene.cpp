@@ -32,18 +32,25 @@ TsBool TsFbxScene::LoadFromFile( const TsString& filename )
     ParseNodeTree();
     if( m_pFbxScene->GetCurrentAnimationStack() )
     {
-        TsFbxAnimation* pAnim = TsNew( TsFbxAnimation( m_pFbxContext , this ) );
-        m_pAnimationList.push_back( pAnim );
+        if( m_pFbxContext->GetLoadOptin().loadAnimation )
+        {
+            TsFbxAnimation* pAnim = TsNew( TsFbxAnimation( m_pFbxContext , this ) );
+            m_pAnimationList.push_back( pAnim );
+        }
+
     }
 
     // ボーンノードに対してIDを割り当てる
-    ComputeBoneIndex();
+    if( m_pFbxContext->GetLoadOptin().loadSkeleton )
+        ComputeBoneIndex();
 
     // メッシュノードの詳細データを解析
-    ParseMesh();
+    if( m_pFbxContext->GetLoadOptin().loadMesh )
+        ParseMesh();
 
     // バインドポーズ(初期姿勢行列)の解析
-    ParseBindPose();
+    if( m_pFbxContext->GetLoadOptin().loadSkeleton )
+        ParseBindPose();
 
     return TS_TRUE;
 }
@@ -52,7 +59,10 @@ TsBool TsFbxScene::ConvertScene()
 {
     // convert Fbx Scene -> Maya up
     FbxAxisSystem system(FbxAxisSystem::eMayaYUp);
-    system.ConvertScene(m_pFbxScene);
+    FbxAxisSystem globalSystem = m_pFbxScene->GetGlobalSettings().GetAxisSystem();
+
+    if( globalSystem != system )
+        system.ConvertScene(m_pFbxScene);
 
     // conver mesh to triangle
     MeshToTriangulate();
@@ -145,7 +155,8 @@ TsBool TsFbxScene::MeshToTriangulate()const
         return TS_FALSE;
     
     FbxGeometryConverter geometryConverter( m_pFbxContext->GetFbxManager() );
-    geometryConverter.Triangulate( m_pFbxScene , TS_TRUE );
+    if( m_pFbxContext->GetLoadOptin().loadMesh )
+        geometryConverter.Triangulate( m_pFbxScene , TS_TRUE );
 
     return TS_TRUE;
 }

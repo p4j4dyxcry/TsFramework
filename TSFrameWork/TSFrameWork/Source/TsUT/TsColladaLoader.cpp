@@ -12,7 +12,7 @@ TsColladaLoader::~TsColladaLoader()
 {
 
 }
-TsBool TsColladaLoader::LoadFromFile(const TsString& filename)
+TsBool TsColladaLoader::LoadFromFile( const TsString& filename , TsLoadOption& option )
 {
     m_xmlData.LoadXML(filename);
 

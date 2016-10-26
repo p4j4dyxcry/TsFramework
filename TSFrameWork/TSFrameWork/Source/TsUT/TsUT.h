@@ -6,12 +6,15 @@
 //!	©	2016 Yuki Tsuneyama
 
 #pragma once
+#include <stdint.h>
 
+#include "TsEASTL.h"
 #include <string>
 
 #include <unordered_map>
-
-#include "TsEASTL.h"
+#include <vector>
+#include <stack>
+#include <list>
 
 #include "TsType.h"
 #include "TsArrayType.h"

@@ -9,7 +9,7 @@ public:
     virtual~TsFbxLoader();
 
     //! Load From File
-    virtual TsBool LoadFromFile( const TsString& filename ) override;
+    virtual TsBool LoadFromFile( const TsString& filename ,TsLoadOption& option = TsLoadOption() ) override;
 
     //! Load From Memory
     virtual TsBool LoadFromMemory( void* memory , size_t sz ) override;

@@ -40,14 +40,15 @@ TsBool TsFbxMesh::ParseFbxMesh()
         TsInt positionCount = pFbxMesh->GetControlPointsCount();
         FbxVector4* fbxPosList = pFbxMesh->GetControlPoints();
         posList.resize(positionCount);
+        TsFloat3* pos = &posList[0];
         for (TsInt i = 0; i < positionCount; ++i)
         {
-            posList[i][0] = static_cast<TsF32>(fbxPosList[i][0]);
-            posList[i][1] = static_cast<TsF32>(fbxPosList[i][1]);
-            posList[i][2] = static_cast<TsF32>(fbxPosList[i][2]);
+            pos[i].x = static_cast<TsF32>(fbxPosList[i][0]);
+            pos[i].y = static_cast<TsF32>(fbxPosList[i][1]);
+            pos[i].z = static_cast<TsF32>(fbxPosList[i][2]);
             
-            TsVector3 v = TsVector3(posList[i].x, posList[i].y, posList[i].z);
-            posList[i] = m_geometricTransform.ToWorldMatrix().TransformPoint(v);
+            TsVector3 v = TsVector3( pos[i].x , pos[i].y , pos[i].z );
+            pos[i] = m_geometricTransform.ToWorldMatrix().TransformPoint( v );
         }
     }
 
@@ -62,18 +63,19 @@ TsBool TsFbxMesh::ParseFbxMesh()
             FbxLayerElementArrayTemplate<FbxVector4> &vArray = pFBXNormals->GetDirectArray();
             normalList.resize(vArray.GetCount());
 
-            FbxVector4 *pNormals = NULL;
-            pNormals = vArray.GetLocked(pNormals, vArray.eReadLock);
-            if (pNormals != nullptr)
+            FbxVector4 *pfbxNormals = NULL;
+            pfbxNormals = vArray.GetLocked(pfbxNormals, vArray.eReadLock);
+            if (pfbxNormals != nullptr)
             {
+                TsFloat3* pNormal = &normalList[0];
                 for (TsUint i = 0; i<normalList.size(); i++)
                 {
-                    const FbxVector4 &normal = pNormals[i];
-                    normalList[i][0] = static_cast<TsF32>(normal[0]);
-                    normalList[i][1] = static_cast<TsF32>(normal[1]);
-                    normalList[i][2] = static_cast<TsF32>(normal[2]);
+                    const FbxVector4 &normal = pfbxNormals[i];
+                    pNormal[i].x = static_cast<TsF32>(normal[0]);
+                    pNormal[i].y = static_cast<TsF32>(normal[1]);
+                    pNormal[i].z = static_cast<TsF32>(normal[2]);
                 } 
-                vArray.Release(&pNormals, pNormals);
+                vArray.Release(&pfbxNormals, pfbxNormals);
             }
         }
     }
@@ -89,18 +91,19 @@ TsBool TsFbxMesh::ParseFbxMesh()
             FbxLayerElementArrayTemplate<FbxVector4> &vArray = pFBXTangents->GetDirectArray();
             tangentList.resize(vArray.GetCount());
 
-            FbxVector4 *pTangents = NULL;
-            pTangents = vArray.GetLocked(pTangents, vArray.eReadLock);
-            if (pTangents)
+            FbxVector4 *pfbxTangents = NULL;
+            pfbxTangents = vArray.GetLocked(pfbxTangents, vArray.eReadLock);
+            if (pfbxTangents)
             {
+                TsFloat3* pTan = &tangentList[0];
                 for (TsUint i = 0; i<tangentList.size(); i++)
                 {
-                    FbxVector4 tangent = pTangents[i];
-                    tangentList[i][0] = static_cast<TsF32>(tangent[0]);
-                    tangentList[i][1] = static_cast<TsF32>(tangent[1]);
-                    tangentList[i][2] = static_cast<TsF32>(tangent[2]);
+                    FbxVector4 tangent = pfbxTangents[i];
+                    pTan[i].x = static_cast<TsF32>(tangent[0]);
+                    pTan[i].y = static_cast<TsF32>(tangent[1]);
+                    pTan[i].z = static_cast<TsF32>(tangent[2]);
                 }
-                vArray.Release(&pTangents, pTangents);
+                vArray.Release(&pfbxTangents, pfbxTangents);
             }
         }
     }
@@ -116,19 +119,20 @@ TsBool TsFbxMesh::ParseFbxMesh()
             FbxLayerElementArrayTemplate<FbxVector4> &vArray = pFBXBinormals->GetDirectArray();
             binormalList.resize(vArray.GetCount());
 
-            FbxVector4 *pBinormals = NULL;
-            pBinormals = vArray.GetLocked(pBinormals, vArray.eReadLock);
-            if (pBinormals)
+            FbxVector4 *pfbxBinormals = NULL;
+            pfbxBinormals = vArray.GetLocked(pfbxBinormals, vArray.eReadLock);
+            if (pfbxBinormals)
             {
+                TsFloat3* pBinormal = &binormalList[0];
                 for (TsUint i = 0; i<binormalList.size(); i++)
                 {
-                    FbxVector4 binormal = pBinormals[i];
-                    binormalList[i][0] = static_cast<TsF32>(binormal[0]);
-                    binormalList[i][1] = static_cast<TsF32>(binormal[1]);
-                    binormalList[i][2] = static_cast<TsF32>(binormal[2]);
+                    FbxVector4 binormal = pfbxBinormals[i];
+                    pBinormal[i].x = static_cast<TsF32>(binormal[0]);
+                    pBinormal[i].y = static_cast<TsF32>(binormal[1]);
+                    pBinormal[i].z = static_cast<TsF32>(binormal[2]);
                 } 
             }
-            vArray.Release(&pBinormals, pBinormals);
+            vArray.Release(&pfbxBinormals, pfbxBinormals);
         } 
     }
 
@@ -147,13 +151,14 @@ TsBool TsFbxMesh::ParseFbxMesh()
             pVertexColors = vArray.GetLocked(pVertexColors, vArray.eReadLock);
             if (pVertexColors)
             {
+                TsColor* pColor = &vertexColorList[0];
                 for (TsUint i = 0; i<vertexColorList.size(); i++)
                 {
                     FbxColor vertexColor = pVertexColors[i];
-                    vertexColorList[i].m_color[0] = (TsF32)vertexColor.mRed;
-                    vertexColorList[i].m_color[1] = (TsF32)vertexColor.mGreen;
-                    vertexColorList[i].m_color[2] = (TsF32)vertexColor.mBlue;
-                    vertexColorList[i].m_color[3] = (TsF32)vertexColor.mAlpha;
+                    pColor[i].m_color[0] = (TsF32)vertexColor.mRed;
+                    pColor[i].m_color[1] = (TsF32)vertexColor.mGreen;
+                    pColor[i].m_color[2] = (TsF32)vertexColor.mBlue;
+                    pColor[i].m_color[3] = (TsF32)vertexColor.mAlpha;
                 } 
                 vArray.Release(&pVertexColors, pVertexColors);
             }
@@ -188,12 +193,13 @@ TsBool TsFbxMesh::ParseFbxMesh()
             FbxVector2 *pUVCoords = NULL;
             pUVCoords = vArray.GetLocked(pUVCoords, vArray.eReadLock);
 
+            TsFloat2* pUV = &uvList[i][0];
             for (TsUint j = 0; j<uvList[i].size(); j++)
             {
                 // UV - Y座標 を　右手から左手系へ
                 FbxVector2 uvCoord = pUVCoords[j];
-                uvList[i][j].x = (TsF32)uvCoord[0];
-                uvList[i][j].y = 1.0f- ( TsF32 )uvCoord[1];
+                pUV[j].x = (TsF32)uvCoord[0];
+                pUV[j].y = 1.0f- ( TsF32 )uvCoord[1];
             } 
             vArray.Release(&pUVCoords, pUVCoords);
         }
@@ -224,14 +230,14 @@ TsBool TsFbxMesh::ParseFbxMesh()
         m_faceList.resize(pFbxMesh->GetPolygonCount());
         memset(&m_faceList[0], 0, (sizeof(TsFbxFace)*m_faceList.size()));
 
+        TsFbxFace * face = &m_faceList[0];
         for (TsUint i = 0; i<m_faceList.size(); i++)
         {
             TsInt iPolySize = pFbxMesh->GetPolygonSize(i);
-
-            TsFbxFace &face = m_faceList[i];
+            
             for (TsInt j = 0; j<iPolySize; j++)
             {
-                face.posIndex[j] = pFbxMesh->GetPolygonVertex(i, j );
+                face[i].posIndex[j] = pFbxMesh->GetPolygonVertex(i, j );
             }
         } 
     }
@@ -315,9 +321,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
     // 頂点フォーマットの作成
     //--------------------------------------------------------------------------
     m_vertexList.reserve(m_faceList.size() * 3);
-
-    TsVector<TsFloat2> DebugUV;
-    DebugUV.reserve( 54444 );
+    m_indexList.reserve( m_faceList.size() * 3 );
     for (TsUint i = 0; i < m_faceList.size(); ++i)
     {
         for (TsUint j = 0; j < 3; ++j)
@@ -342,7 +346,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
                 vertex.color = vertexColorList[m_faceList[i].colorIndex[j]];
             for( TsInt k = 0; k < m_uvLayerCount; ++k )
             {
-                TsVector<TsFloat2> list = uvList[k];
+                TsVector<TsFloat2>& list = uvList[k];
                 TsInt index = m_faceList[i].UVIndex[k][j];
                 if( index > 0 )
                     vertex.uv[k] = list[index];
@@ -355,7 +359,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
 
             // 重複しているか？
             // modelMesh.vertexListは、最初空でだんだん登録されていく（重複していない頂点情報として）
-            auto it = std::find(m_vertexList.begin(), m_vertexList.end(), vertex);
+            auto it = eastl::find(m_vertexList.begin(), m_vertexList.end(), vertex);
             TsInt inversIndex = 2 - j;
 
             if (it == m_vertexList.end())
@@ -364,12 +368,11 @@ TsBool TsFbxMesh::ParseFbxMesh()
                 m_faceList[i].finalIndex[inversIndex] = m_vertexList.size();	// 頂点インデックスを格納
                 m_indexList.push_back(m_faceList[i].finalIndex[inversIndex]);
                 m_vertexList.push_back(vertex);									// 頂点情報を格納
-                DebugUV.push_back( vertex.uv[0] );
             }
             else
             {
                 // 重複している
-                auto index = std::distance(m_vertexList.begin(), it);	// 先頭から現イテレータ（重複頂点した先頭データを指し示している）までのインデックス番号を取得
+                auto index = eastl::distance( m_vertexList.begin() , it );	// 先頭から現イテレータ（重複頂点した先頭データを指し示している）までのインデックス番号を取得
                 m_faceList[i].finalIndex[inversIndex] = index;			// インデックス番号（重複頂点した先頭データを指し示している）をインデックスリストにセット
                 m_indexList.push_back(index);
             }
@@ -515,7 +518,7 @@ TsBool TsFbxMesh::MappingToFace( T* geometory,
     {
         TsVector<TsInt> indicesPerControlPoints;
         indicesPerControlPoints.resize(AsAttributeFbxMesh()->GetControlPointsCount());
-
+        TsInt * pIndexPerControlPoint = &indicesPerControlPoints[0];
         for (TsInt i = 0; i<AsAttributeFbxMesh()->GetControlPointsCount(); i++)
         {
             TsInt index = 0;
@@ -524,17 +527,17 @@ TsBool TsFbxMesh::MappingToFace( T* geometory,
             else if (refMode == FbxGeometryElement::eIndexToDirect)
                 index = pIndex[i];
 
-            indicesPerControlPoints[i] = index;
+            pIndexPerControlPoint[i] = index;
         }
 
+        TsFbxFace *face = &m_faceList[0];
         for (TsUint i = 0; i<m_faceList.size(); i++)
         {
             TsInt iPolySize = AsAttributeFbxMesh()->GetPolygonSize(i);
-
-            TsFbxFace &face = m_faceList[i];
+            
             for (TsInt j = 0; j<iPolySize; j++)
             {
-                face.data[startIndex + j] = indicesPerControlPoints[face.posIndex[j]];
+                face[i].data[startIndex + j] = indicesPerControlPoints[face[i].posIndex[j]];
             }
         }
     }
@@ -542,11 +545,10 @@ TsBool TsFbxMesh::MappingToFace( T* geometory,
     {
         TsInt iPolyDirectIndex = 0;
 
+        TsFbxFace *face = &m_faceList[0];
         for (TsUint i = 0; i<m_faceList.size(); i++)
         {
             TsInt iPolySize = AsAttributeFbxMesh()->GetPolygonSize(i);
-
-            TsFbxFace &face = m_faceList[i];
             for (TsInt j = 0; j<iPolySize; j++)
             {
                 TsInt index = 0;
@@ -556,7 +558,7 @@ TsBool TsFbxMesh::MappingToFace( T* geometory,
                 else if (refMode == FbxGeometryElement::eIndexToDirect)
                     index = pIndex[iPolyDirectIndex];
 
-                face.data[startIndex + j] = index;
+                face[i].data[startIndex + j] = index;
 
                 iPolyDirectIndex++;
             }
@@ -580,18 +582,20 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
     boneIndexList.resize(vertexCount);
     boneWeightList.resize(vertexCount);
 
+    TsInt4*     pIndex4 = &boneIndexList[0];
+    TsFloat4*   pWeight = &boneWeightList[0];
     TsInt i;
     for (i = 0; i<vertexCount; i++)
     {
-        boneIndexList[i].x = 0;
-        boneIndexList[i].y = 0;
-        boneIndexList[i].z = 0;
-        boneIndexList[i].w = 0;
+        pIndex4[i].x = 0;
+        pIndex4[i].y = 0;
+        pIndex4[i].z = 0;
+        pIndex4[i].w = 0;
 
-        boneWeightList[i].x = 0;
-        boneWeightList[i].y = 0;
-        boneWeightList[i].z = 0;
-        boneWeightList[i].w = 0;
+        pWeight[i].x = 0;
+        pWeight[i].y = 0;
+        pWeight[i].z = 0;
+        pWeight[i].w = 0;
     } // End for
 
     // Parse bones
@@ -599,12 +603,12 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
 
     TsVector<FbxNode*> nodes;
     nodes.resize((size_t)numClusters);
-
+    FbxNode** ppNode = &nodes[0];
     for (i = 0; i<numClusters; i++)
     {
         FbxCluster* pCluster = pFbxSkin->GetCluster(i);
         FbxNode *pNode = pCluster->GetLink();
-        nodes[i] = pNode;
+        ppNode[i] = pNode;
     } // End for
 
     for (i = 0; i<numClusters; i++)
@@ -709,10 +713,10 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
     // Now make sure we don' t have any weights in negative values
     for (i = 0; i<vertexCount; i++)
     {
-        boneWeightList[i].x = max(0.0f, boneWeightList[i].x);
-        boneWeightList[i].y = max(0.0f, boneWeightList[i].y);
-        boneWeightList[i].z = max(0.0f, boneWeightList[i].z);
-        boneWeightList[i].w = max(0.0f, boneWeightList[i].w);
+        boneWeightList[i].x = TsMax(0.0f, boneWeightList[i].x);
+        boneWeightList[i].y = TsMax( 0.0f , boneWeightList[i].y );
+        boneWeightList[i].z = TsMax( 0.0f , boneWeightList[i].z );
+        boneWeightList[i].w = TsMax( 0.0f , boneWeightList[i].w );
 
         TsF32 totalWeight = boneWeightList[i].x +
             boneWeightList[i].y +

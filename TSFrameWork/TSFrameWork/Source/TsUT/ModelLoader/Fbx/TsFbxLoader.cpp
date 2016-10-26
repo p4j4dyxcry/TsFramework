@@ -11,9 +11,17 @@ TsFbxLoader::~TsFbxLoader()
 }
 
 //! Load From File
-TsBool TsFbxLoader::LoadFromFile( const TsString& filename )
+TsBool TsFbxLoader::LoadFromFile( const TsString& filename , TsLoadOption& option )
 {
-    return m_pFbxContext->LoadFBX( filename.c_str() );
+    TsFbxContext::TsFbxLoadOption fbxLoadOption;
+
+    fbxLoadOption.loadAnimation = option.loadAnimation;
+    fbxLoadOption.loadBiNormal  = 
+    fbxLoadOption.loadMesh      = 
+    fbxLoadOption.loadTangent   =
+    fbxLoadOption.loadVertexColor = option.loadGeomery;
+
+    return m_pFbxContext->LoadFBX( filename.c_str() ,fbxLoadOption );
 }
 
 //! Load From Memory

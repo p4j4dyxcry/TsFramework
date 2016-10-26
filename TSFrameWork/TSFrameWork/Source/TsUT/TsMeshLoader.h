@@ -9,11 +9,20 @@
 class TsMeshLoader : TsBinary
 {
 public:
+    struct TsLoadOption
+    {
+        TsBool loadGeomery = TS_TRUE;
+        TsBool loadAnimation = TS_FALSE;
+        TsBool loadCamera = TS_FALSE;
+        TsBool loadLight = TS_FALSE;
+        TsLoadOption(){};
+    };
+
     TsMeshLoader(){};
     virtual ~TsMeshLoader(){};
 
     //! Load From File
-    virtual TsBool LoadFromFile(const TsString& filename ) = 0;
+    virtual TsBool LoadFromFile(const TsString& filename ,TsLoadOption& option) = 0;
 
     //! Load From Memory
     virtual TsBool LoadFromMemory( void* memory ,size_t sz) = 0;

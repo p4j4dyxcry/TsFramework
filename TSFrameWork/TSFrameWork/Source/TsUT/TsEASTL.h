@@ -1,8 +1,10 @@
 #pragma once
 
 #ifdef _DEBUG 
+#pragma comment (lib,"Release\\libtcmalloc_minimal.lib")
 #pragma comment (lib,"Debug\\EASTL.lib")
 #else
+#pragma comment (lib,"Release\\libtcmalloc_minimal.lib")
 #pragma comment (lib,"Release\\EASTL.lib")
 #endif
 

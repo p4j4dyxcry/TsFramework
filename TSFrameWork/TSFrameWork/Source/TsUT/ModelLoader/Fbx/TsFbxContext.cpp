@@ -32,6 +32,8 @@ FbxTime::EMode TsFbxContext::GetTimeLocale()
 TsBool TsFbxContext::LoadFBX( const TsChar * filename ,
                               const TsFbxLoadOption & option)
 {
+    m_loadOption = option;
+
     if( m_pFbxManager == nullptr )
     {
         TsBool isInitialize = Initialize();

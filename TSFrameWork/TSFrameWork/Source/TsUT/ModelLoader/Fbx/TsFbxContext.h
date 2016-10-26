@@ -33,8 +33,15 @@ public:
     TsFbxScene* GetSceneByIndex( TsInt index );
     TsFbxScene* GetSceneByFileName( const TsString& name );
     FbxTime::EMode GetTimeLocale();
+
+    const TsFbxLoadOption& GetLoadOptin()const
+    {
+        return m_loadOption;
+    }
+
 private:
     TsFbxScene* CreateScene( const TsString& filename );
+    TsFbxLoadOption m_loadOption;
 
     FbxManager*             m_pFbxManager;
     FbxTime::EMode          m_fbxTimeLocation;

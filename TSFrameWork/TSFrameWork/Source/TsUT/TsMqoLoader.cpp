@@ -16,7 +16,7 @@ TsMqoLoader::~TsMqoLoader()
     TsSafeDelete( m_mqoObject );
 }
 
-TsBool TsMqoLoader::LoadFromFile( const TsString& filename )
+TsBool TsMqoLoader::LoadFromFile( const TsString& filename , TsLoadOption& option )
 {
     std::ifstream ifs( filename );
 

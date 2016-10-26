@@ -11,8 +11,12 @@ TsMeshFactory::~TsMeshFactory()
 
 TsTransformBakeAnimation* TsMeshFactory::CreateBakeAnimation( const TsString& filename )
 {
+    TsMeshLoader::TsLoadOption opt;
+    opt.loadAnimation = TS_TRUE;
+    opt.loadGeomery = TS_FALSE;
+
     TsFbxLoader loader;
-    loader.LoadFromFile( filename );
+    loader.LoadFromFile( filename ,opt);
     return loader.CreateAnimation(0);
 }
 
@@ -53,8 +57,11 @@ TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev,
     if( filename.rfind( ".fbx" ) != TsString::npos || 
         filename.rfind( ".FBX" ) != TsString::npos)
     {
+        TsMeshLoader::TsLoadOption opt;
+        opt.loadAnimation = TS_FALSE;
+
         TsFbxLoader loader;
-        if( loader.LoadFromFile( filename ) == TS_FALSE )
+        if( loader.LoadFromFile( filename ,opt) == TS_FALSE )
             return TS_FALSE;
 
         for( TsInt i = 0; i < loader.GetMeshNum(); ++i )
