@@ -48,8 +48,12 @@ TsBool TsTransformBakeAnimation::Update()
     TsInt frame = ( TsInt )m_localFrame;
     for each( auto p in m_pTransformList )
         if( p ) *p = m_bakedMatrixList[frame].find( p->GetHashCode() )->second;
-    if( m_pTargetSkeleton )
+    
+    if (m_pTargetSkeleton)
+    {
         m_pTargetSkeleton->ToExecutableState();
+        m_pTargetSkeleton->UpdateSkeleton();
+    }
     return TS_TRUE;
 }
 

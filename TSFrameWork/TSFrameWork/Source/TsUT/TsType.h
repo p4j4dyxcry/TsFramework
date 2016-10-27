@@ -23,10 +23,18 @@ typedef long long           TsS64;
 typedef unsigned long long  TsU64;
 typedef std::string         TsString;
 
-#define TsList              eastl::list
-#define TsVector            eastl::vector
+#if USE_EASTL
+#define tstl               eastl
+#else
+#define tstl               std
+#endif
+
+#define TsList              tstl::list
+#define TsVector            tstl::vector
+#define TsStack             tstl::stack
+
+
 #define TsMap               std::unordered_map
-#define TsStack             eastl::stack
 
 #define TS_TRUE             true
 #define TS_FALSE            false

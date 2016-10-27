@@ -28,8 +28,11 @@ TsBool TsSkeleton::AddBone( TsTransForm* pTransform ,
 
 TsBool TsSkeleton::UpdateSkeleton()
 {
-    for( TsUint i = 0; i < m_boneList.size(); ++i )
-        m_boneList[i]->ComputeBoneMatrix();
+    if (m_isUpdate == TS_FALSE)
+    {
+        for (TsUint i = 0; i < m_boneList.size(); ++i)
+            m_boneList[i]->ComputeBoneMatrix();
+    }
     m_isUpdate = TS_TRUE;
     return TS_TRUE;
 }

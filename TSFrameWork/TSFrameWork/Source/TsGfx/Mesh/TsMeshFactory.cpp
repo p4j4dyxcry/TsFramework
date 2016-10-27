@@ -63,7 +63,9 @@ TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev,
         TsFbxLoader loader;
         if( loader.LoadFromFile( filename ,opt) == TS_FALSE )
             return TS_FALSE;
+
         TsSkeleton* pSkeleton = loader.GetSkeleton();
+        pMesh->SetSkeleton(pSkeleton);
         if( pSkeleton )
             TsResourceManager::RegisterResource<TsSkeleton>( pSkeleton ,pSkeleton->GetName());
         for( TsInt i = 0; i < loader.GetMeshNum(); ++i )

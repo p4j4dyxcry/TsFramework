@@ -359,7 +359,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
 
             // 重複しているか？
             // modelMesh.vertexListは、最初空でだんだん登録されていく（重複していない頂点情報として）
-            auto it = eastl::find(m_vertexList.begin(), m_vertexList.end(), vertex);
+            auto it = tstl::find(m_vertexList.begin(), m_vertexList.end(), vertex);
             TsInt inversIndex = 2 - j;
 
             if (it == m_vertexList.end())
@@ -372,7 +372,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
             else
             {
                 // 重複している
-                auto index = eastl::distance( m_vertexList.begin() , it );	// 先頭から現イテレータ（重複頂点した先頭データを指し示している）までのインデックス番号を取得
+                auto index = tstl::distance(m_vertexList.begin(), it);	// 先頭から現イテレータ（重複頂点した先頭データを指し示している）までのインデックス番号を取得
                 m_faceList[i].finalIndex[inversIndex] = index;			// インデックス番号（重複頂点した先頭データを指し示している）をインデックスリストにセット
                 m_indexList.push_back(index);
             }

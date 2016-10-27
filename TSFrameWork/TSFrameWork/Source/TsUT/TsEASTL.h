@@ -1,5 +1,9 @@
 #pragma once
 
+#define USE_EASTL 0
+
+#if USE_EASTL
+
 #ifdef _DEBUG 
 #pragma comment (lib,"Release\\libtcmalloc_minimal.lib")
 #pragma comment (lib,"Debug\\EASTL.lib")
@@ -26,3 +30,10 @@ const char* pName , int flags , unsigned debugFlags , const char* file , int lin
     EASTL_ASSERT( alignment <= 8 );
     return malloc( size );
 }
+#else
+
+#include <vector>
+#include <list>
+#include <stack>
+
+#endif
