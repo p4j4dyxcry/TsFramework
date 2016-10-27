@@ -174,3 +174,17 @@ float3 ComputeSkinNormal( VS_SKIN_INPUT v )
 
     return pos;
 }
+
+float3 DepthToWorldPos(float2 vTexCoord , float depth)
+{
+    // Get x/w and y/w from the viewport position
+    float x = vTexCoord.x * 2 - 1;
+    float y = (1 - vTexCoord.y) * 2 - 1;
+    float z = depth;
+
+    float4 vProjectedPos = float4(x, y, z, 1.0f);
+    // Transform by the inverse projection matrix
+    float4 vPositionVS = mul(vProjectedPos, g_MtxInvProj);
+    // Divide by w to get the view-space position
+    return vPositionVS.xyz / vPositionVS.w;
+}

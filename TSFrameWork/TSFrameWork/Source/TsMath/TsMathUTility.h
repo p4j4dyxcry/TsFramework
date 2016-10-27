@@ -75,3 +75,20 @@ inline TsF32 TsComputeTriangleArea( TsVector3 v0 , TsVector3 v1 , TsVector3 v2 )
     
     return cross.Length() / 2;
 }
+
+//! ガウス関数
+inline TsF32 Gaussian(float x, float mean, float deviation)
+{
+    // The gaussian equation is defined as such:
+    /*
+    -(x - mean)^2
+    -------------
+    1.0               2*std_dev^2
+    f(x,mean,std_dev) = -------------------- * e^
+    sqrt(2*pi*std_dev^2)
+
+    */
+
+    return (1.0f / sqrt(2.0f * TS_PI * deviation * deviation))
+        * expf((-((x - mean) * (x - mean))) / (2.0f * deviation * deviation));
+}

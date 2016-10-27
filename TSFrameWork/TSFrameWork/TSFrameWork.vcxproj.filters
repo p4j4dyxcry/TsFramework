@@ -97,6 +97,18 @@
     <Filter Include="ソース ファイル\TsUT\MeshLoader\Fbx\source">
       <UniqueIdentifier>{2d957d5c-7289-4049-a6fb-56345648818b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\TsGfx\hlsl\ScreenSpace\VertexShader">
+      <UniqueIdentifier>{f578793f-e2c9-4afb-8e21-5ea42996376f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TsGfx\hlsl\ScreenSpace\PixelShader">
+      <UniqueIdentifier>{a1e6e464-253f-4b9d-9df5-e64cd19e139e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TsGfx\hlsl\ScreenSpace\Header">
+      <UniqueIdentifier>{058ada1d-eec0-4ee4-a780-5c091282ac82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TsGfx\hlsl\Header">
+      <UniqueIdentifier>{01d6e16e-6f47-4b79-8ecd-d220d178a198}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TSWinEntryPoint.cpp">
@@ -632,9 +644,11 @@
     <ClInclude Include="Source\TsGfx\TsDepthStencilView.h">
       <Filter>ソース ファイル\TsGfx\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TsGfx\hlsl\TsDefaultShading_Common.hlsli" />
     <ClInclude Include="Source\TsUT\TsEASTL.h">
       <Filter>ソース ファイル\TsUT\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\hlsl\TsDefaultShading_Common.hlsli">
+      <Filter>ソース ファイル\TsGfx\hlsl\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -651,28 +665,13 @@
       <Filter>ソース ファイル\Extern\xna</Filter>
     </None>
     <None Include="Source\TsGfx\hlsl\ScreenSpace\TsSS_common.hlsli">
-      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace</Filter>
+      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace\Header</Filter>
     </None>
     <None Include="Source\TsGfx\hlsl\TsMath.hlsli">
-      <Filter>ソース ファイル\TsGfx\hlsl</Filter>
+      <Filter>ソース ファイル\TsGfx\hlsl\Header</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSBlendPS.hlsl">
-      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace</Filter>
-    </FxCompile>
-    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSDefaultVS.hlsl">
-      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace</Filter>
-    </FxCompile>
-    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSAddPS.hlsl">
-      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace</Filter>
-    </FxCompile>
-    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSToneMappingPS.hlsl">
-      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace</Filter>
-    </FxCompile>
-    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSBlendEdgePS.hlsl">
-      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace</Filter>
-    </FxCompile>
     <FxCompile Include="Source\TsGfx\hlsl\Forward\TsFWLambertVS.hlsl">
       <Filter>ソース ファイル\TsGfx\hlsl\Forward</Filter>
     </FxCompile>
@@ -691,11 +690,38 @@
     <FxCompile Include="Source\TsGfx\hlsl\Forward\TsLightPrePassPS.hlsl">
       <Filter>ソース ファイル\TsGfx\hlsl\Forward</Filter>
     </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSDefaultVS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace\VertexShader</Filter>
+    </FxCompile>
     <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsDefferedShadingPS.hlsl">
-      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace</Filter>
+      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSAddPS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace\PixelShader</Filter>
     </FxCompile>
     <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSAOPS.hlsl">
-      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace</Filter>
+      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSBlendPS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSToneMappingPS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSXBlurPS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSYBlurPS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSLaplacianPS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSSobelPS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSScreenPS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace\PixelShader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
