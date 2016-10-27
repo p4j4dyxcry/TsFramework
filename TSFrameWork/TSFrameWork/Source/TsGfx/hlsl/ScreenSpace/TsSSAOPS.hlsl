@@ -38,7 +38,7 @@ static float3 g_samples[16] =
     float3( -0.47761092 , 0.2847911 , -0.0271716 )
 };
 
-static float3 g_radius = 0.015;
+static float3 g_radius = 7.0f;
 
 float4 main( PS_SS_INPUT_UVx1 In ,
              Texture2D NormalMap : register( t0 ) ,
@@ -49,43 +49,30 @@ float4 main( PS_SS_INPUT_UVx1 In ,
     float4 normalDepth = NormalMap.Sample( samp , In.uv0 );
     float3 normal = normalDepth.xyz * 2.0 - 1.0f;
     float  depth  = normalDepth.w;
-    float4 screenPos;
-    screenPos.x = In.uv0.x * 2 - 1;
-    screenPos.y = (1 - In.uv0.y) * 2 - 1;
-    screenPos.z = depth;
-    screenPos.w = 1.0f;
-    float4 viewPos = mul( screenPos , g_MtxInvProj );
-
-    float normalAO = 0;
-    float depthAO = 0;
-    float4 test = 0;
+    
+    float ao = 0;
+    float radD = g_radius / depth;
+    float2 se = 0;
     for( int i = 0; i < 16; i++ )
     {
-        float3 ray = g_samples[i].xyz * g_radius;
-        ray = sign( dot( normal , ray ) ) * ray;
-        float4 envPos;
-        // move to ray direction
-        envPos.xyz = viewPos.xyz + ray;
-        // conversion clip space 
-        envPos = mul( float4( envPos.xyz , 1 ) , g_MtxProj );
-        // conversion screen space
-        envPos.xy = envPos.xy / envPos.w * float2( 0.5f , -0.5f ) + 0.5f;
+        float3 ray = reflect(g_samples[i].xyz, normal) * radD;
+        float2 se = In.uv0 + sign(dot(ray, normal)) * ray * float2(1.0f, -1.0f);
 
-        // sampling
-        float4 envNormalDepth = NormalMap.Sample( samp , envPos.xy );
-        float3 envNormal = (envNormalDepth.xyz -0.5f) *2.0f;
-        float  envDepth = envNormalDepth.w;
-        
-        // check dot
-        float n = dot( normal , envNormal ) ;
-        n += step( depth , envDepth );
-        normalAO += min(n,1);
-        depthAO += abs( depth - envDepth ) / (g_far - g_near);
+        float4 occNormalDepth = NormalMap.Sample( samp,se );
+        float3 occNormal = occNormalDepth.xyz * 2.0 -1.0f;
+        float3 occDepth  = occNormalDepth.w;
+
+        float depthDiff     = depth - occDepth;
+        float normalDiff = (1.0f - dot(normalize(occNormal), normalize(normal)));
+
+        float falloff = 0.000f;
+        float strength = 0.000f;
+        ao += step(falloff, depthDiff) * normalDiff * (1.0f - smoothstep(falloff, strength, depthDiff));
+
     }
+    float toStrength = 1.0f;
 
-    float ao = normalAO / 16.0f + (depthAO);
+    ao = 1.0f - toStrength * ao * (1.0f / 16.0f);
 
-   // ao = pow( ao , 2 );
-    //return float4( In.uv0 , 0 , 0 );
     return ao;
 }
