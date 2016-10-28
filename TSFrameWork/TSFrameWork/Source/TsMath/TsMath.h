@@ -7,4 +7,5 @@
 #include "TsTransForm.h"
 #include "TsBone.h"
 #include "TsSkeleton.h"
+#include "TsSphereMeshCreater.h"
 #include "TsMathUTility.h"

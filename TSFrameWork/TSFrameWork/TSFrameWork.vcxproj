@@ -117,6 +117,7 @@
     <ClCompile Include="Source\TsMath\TsMatrix.cpp" />
     <ClCompile Include="Source\TsMath\TsQuaternion.cpp" />
     <ClCompile Include="Source\TsMath\TsSkeleton.cpp" />
+    <ClCompile Include="Source\TsMath\TsSphereMeshCreater.cpp" />
     <ClCompile Include="Source\TsMath\TsTransForm.cpp" />
     <ClCompile Include="Source\TsMath\TsVector2.cpp" />
     <ClCompile Include="Source\TsMath\TsVector3.cpp" />
@@ -245,6 +246,7 @@
     <ClInclude Include="Source\TsMath\TsMatrix.h" />
     <ClInclude Include="Source\TsMath\TsQuaternion.h" />
     <ClInclude Include="Source\TsMath\TsSkeleton.h" />
+    <ClInclude Include="Source\TsMath\TsSphereMeshCreater.h" />
     <ClInclude Include="Source\TsMath\TsTransForm.h" />
     <ClInclude Include="Source\TsMath\TsVector.h" />
     <ClInclude Include="Source\TsOS\TsWindowsUtility.h" />
@@ -481,7 +483,8 @@ xcopy /y /r "$(TargetDir)*.exe" "$(ProjectDir)..\bin"</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <ForceSymbolReferences>__tcmalloc</ForceSymbolReferences>
+      <ForceSymbolReferences>
+      </ForceSymbolReferences>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /r "$(TargetDir)*.cso" "$(ProjectDir)\Resource\Shader"
