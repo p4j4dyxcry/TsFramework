@@ -7,7 +7,7 @@ float4 main( float4 pos		: SV_POSITION,
              Texture2D albedo : register(t0),
              SamplerState samp: register(s0)) : SV_TARGET
 {
-    float3 dir = float3( 1 , -1 , -1 );
+    float3 dir = float3( -1 , -1 , 0.5 );
     dir = normalize( dir );
     
     //albedo 

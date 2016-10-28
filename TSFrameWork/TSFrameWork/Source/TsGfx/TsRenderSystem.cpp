@@ -1,5 +1,4 @@
-#include "TsGfx.h"
-
+#include "../../TsAfx.h"
 TsRenderSystem::TsRenderSystem()
 {
 
@@ -117,14 +116,15 @@ TsBool TsRenderSystem::LoadShaderResourceFromXML(TsDevice* pDev, const TsString&
     {
         if (elm->GetName() == "Texture")
         {
-            TsTexture * pTex = TsNew(TsTexture2D);
+            TsTexture2D * pTex = TsNew( TsTexture2D );
             TsString name = elm->GetAttribute("Name")->GetStringValue();
             TsString path = elm->GetAttribute("Path")->GetStringValue();
             auto srv = TsDirectXTex::LoadFromFile(pDev->GetDevD3D(), path.c_str());
             pTex->SetName(name);
             pTex->SetSRV(srv);
-
+            
             m_shaderResourceList.push_back(pTex);
+            TsResourceManager::RegisterResource<TsTexture2D>( pTex , name );
         }
         if (elm->GetName() == "RenderTarget")
         {

@@ -1,0 +1,9 @@
+C:\git_rep\TsFramework\TSFrameWork\ShaderEditor\ShaderEditor\bin\Release\ShaderEditor.exe.config
+C:\git_rep\TsFramework\TSFrameWork\ShaderEditor\ShaderEditor\bin\Release\ShaderEditor.exe
+C:\git_rep\TsFramework\TSFrameWork\ShaderEditor\ShaderEditor\bin\Release\ShaderEditor.pdb
+C:\git_rep\TsFramework\TSFrameWork\ShaderEditor\ShaderEditor\obj\Release\ShaderEditor.csprojResolveAssemblyReference.cache
+C:\git_rep\TsFramework\TSFrameWork\ShaderEditor\ShaderEditor\obj\Release\ShaderEditor.Properties.Resources.resources
+C:\git_rep\TsFramework\TSFrameWork\ShaderEditor\ShaderEditor\obj\Release\ShaderEditor.csproj.GenerateResource.Cache
+C:\git_rep\TsFramework\TSFrameWork\ShaderEditor\ShaderEditor\obj\Release\ShaderEditor.exe
+C:\git_rep\TsFramework\TSFrameWork\ShaderEditor\ShaderEditor\obj\Release\ShaderEditor.pdb
+C:\git_rep\TsFramework\TSFrameWork\ShaderEditor\ShaderEditor\obj\Release\ShaderEditor.ShaderEditor.resources

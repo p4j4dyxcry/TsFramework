@@ -1,4 +1,4 @@
-#include "TsGfx.h"
+#include "../../TsAfx.h"
 
 TS_INSTANTIATE_NAME_OBJ_LIST( TsRenderPass );
 
@@ -160,7 +160,16 @@ TsBool TsRenderPass::LoadIOSlotFromXMLElement( TsDevice* pDev , TsXMLElement * p
                 rtv = pDev->GetDC()->GetMainRTV();
             else
                 rtv = TsRenderTarget::Find( rtName );
-            SetInputSlot( rtvIndex , rtv );
+            if( rtv != nullptr )
+            {
+                SetInputSlot( rtvIndex , rtv );
+            }
+            else
+            {
+                TsTexture2D* pTex = TsResourceManager::Find<TsTexture2D>( rtName );
+                if( pTex )
+                    SetInputSlot( rtvIndex , pTex );
+            }
             ++rtvIndex;
         }
         else if( inputSlot->GetName() == "Depth" )

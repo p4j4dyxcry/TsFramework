@@ -49,13 +49,13 @@
     <Output>
       <Slot Slot="Temp"/>
     </Output>  
-  </Pass>     
+  </Pass>   
 
-    <Pass Name ="Add"
-    Shader ="Add">
+  <Pass Name ="Blend"
+    Shader ="Blend">
     <Input>
       <Slot Slot ="Color"/>
-      <Slot Slot ="NormalDepth"/>              
+      <Slot Slot ="Temp"/>              
     </Input>
     <Output>
       <Slot Slot="Main"/>

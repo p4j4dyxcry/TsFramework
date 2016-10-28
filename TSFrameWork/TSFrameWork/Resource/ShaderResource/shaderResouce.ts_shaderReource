@@ -2,8 +2,8 @@
 <root>
 
   <Texture
-    Name ="Lisa"
-    Path ="sample.jpg">        
+    Name ="bg"
+    Path ="bg.jpg">        
   </Texture>
 
   <RenderTarget
