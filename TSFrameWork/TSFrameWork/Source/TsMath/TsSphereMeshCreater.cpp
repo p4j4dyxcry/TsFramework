@@ -6,6 +6,10 @@ TsBool TsSphereMeshCreater::CreateSphere(TsInt horizontalSlice,
     if (horizontalSlice <= 2 || rad <= 0)
         return TS_FALSE;
 
+    m_positions.clear();
+    m_normal.clear();
+    m_index.clear();
+
     m_horizontalSlice = horizontalSlice + 1;
     m_verticalSlice   = horizontalSlice * 2;
 

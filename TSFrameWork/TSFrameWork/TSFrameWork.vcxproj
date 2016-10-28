@@ -483,8 +483,7 @@ xcopy /y /r "$(TargetDir)*.exe" "$(ProjectDir)..\bin"</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <ForceSymbolReferences>
-      </ForceSymbolReferences>
+      <ForceSymbolReferences>__tcmalloc</ForceSymbolReferences>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /r "$(TargetDir)*.cso" "$(ProjectDir)\Resource\Shader"
