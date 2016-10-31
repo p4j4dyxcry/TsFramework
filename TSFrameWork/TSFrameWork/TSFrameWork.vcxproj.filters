@@ -351,6 +351,9 @@
     <ClCompile Include="Source\TsGfx\TsDepthStencilView.cpp">
       <Filter>ソース ファイル\TsGfx\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsMath\TsSphereMeshCreater.cpp">
+      <Filter>ソース ファイル\TsMath\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -649,6 +652,9 @@
     </ClInclude>
     <ClInclude Include="Source\TsGfx\hlsl\TsDefaultShading_Common.hlsli">
       <Filter>ソース ファイル\TsGfx\hlsl\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsMath\TsSphereMeshCreater.h">
+      <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

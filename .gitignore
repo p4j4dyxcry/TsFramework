@@ -75,3 +75,4 @@ TSFrameWork/TSFrameWork/Extern/FBX SDK/2016.0/lib/vs2013/x64/release/libfbxsdk-m
 TSFrameWork/TSFrameWork/Extern/EASTL/
 TSFrameWork/TSFrameWork/Extern/Google/
 *.dll
+*.cache

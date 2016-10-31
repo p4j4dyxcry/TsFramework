@@ -92,3 +92,4 @@ inline TsF32 Gaussian(float x, float mean, float deviation)
     return (1.0f / sqrt(2.0f * TS_PI * deviation * deviation))
         * expf((-((x - mean) * (x - mean))) / (2.0f * deviation * deviation));
 }
+
