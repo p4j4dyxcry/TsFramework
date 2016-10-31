@@ -174,7 +174,7 @@ m_firstChild(nullptr),
 m_parent(nullptr),
 m_subling(nullptr)
 {
-    m_attributeList.reserve( 32 );
+    m_attributeList.reserve( 1024 );
 };
 
 TsXMLElement::~TsXMLElement()
@@ -254,11 +254,6 @@ TsXMLElement* TsXMLElement::FindChildForAttribute(const TsString& attribute, TsS
         if (at != nullptr && at->GetStringValue() == name )
         {
             return elm;
-        }
-        if (at)
-        {
-            TsString atc;
-            atc = at->GetStringValue();
         }
 
         auto child = elm->GetFirstChild();
