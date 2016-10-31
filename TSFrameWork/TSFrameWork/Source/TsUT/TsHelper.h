@@ -49,3 +49,18 @@ delete (ptr);\
         pointer = nullptr;\
     }\
 }
+
+//! 指定されたクラスか調べる
+template<class Info , class T>
+TsBool  AsType( const T& _data )
+{
+    printf( "%s\n%s" , typeid( Info ).name() , typeid( _data ).name() );
+    return typeid( Info ).name() == typeid( _data ).name();
+}
+
+//! 指定されたクラスか調べる
+template<class Info , class T>
+TsBool  AsTypePtr( const T* _data )
+{
+    return typeid( Info ) == typeid( *_data );
+}

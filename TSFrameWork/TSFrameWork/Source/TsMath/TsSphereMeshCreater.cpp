@@ -94,5 +94,5 @@ TsBool TsSphereMeshCreater::CreateSphere(TsInt horizontalSlice,
         }
     }
 
-    // Compute Indexs
+    return TS_TRUE;
 }

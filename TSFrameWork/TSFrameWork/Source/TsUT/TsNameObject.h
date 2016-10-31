@@ -10,12 +10,19 @@ class TsNameObject
 {
 public:
     //! 名前を取得
-    TsString GetName()const{ return m_name; }
+    virtual TsString GetName()const{ return m_name; }
 
     //! 名前を設定
-    void SetName( TsString str ){
+    virtual void SetName( TsString str ){
         m_name = str;
         m_hashCode = TSUT::StringToHash( str );
+    }
+
+    virtual TsString ClassName()
+    {
+        TsString& str = TsString( typeid( *this ).name() );
+        str = str.substr( str.rfind( " " )+1 );
+        return str;
     }
 
     //ハッシュコードの取得

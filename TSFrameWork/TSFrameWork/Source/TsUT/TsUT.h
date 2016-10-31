@@ -15,6 +15,7 @@
 #include <vector>
 #include <stack>
 #include <list>
+#include <typeinfo>
 
 #include "TsType.h"
 #include "TsArrayType.h"
