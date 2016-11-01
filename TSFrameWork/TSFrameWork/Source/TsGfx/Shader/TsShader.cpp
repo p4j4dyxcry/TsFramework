@@ -1,0 +1,9 @@
+#include "../TsGfx.h"
+
+// static ïœêîÇÃíËã`
+TS_INSTANTIATE_NAME_OBJ_LIST( TsVertexShader )
+TS_INSTANTIATE_NAME_OBJ_LIST( TsPixelShader )
+TS_INSTANTIATE_NAME_OBJ_LIST( TsGeometryShader )
+TS_INSTANTIATE_NAME_OBJ_LIST( TsHullShader )
+TS_INSTANTIATE_NAME_OBJ_LIST( TsDomainShader )
+TS_INSTANTIATE_NAME_OBJ_LIST( TsComputeShader )

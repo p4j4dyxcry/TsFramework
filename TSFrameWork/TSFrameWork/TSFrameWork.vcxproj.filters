@@ -64,14 +64,8 @@
     <Filter Include="ソース ファイル\TsMath\Header">
       <UniqueIdentifier>{9c57032e-b4de-42c3-9381-8887e457b447}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\TsGfx\Header">
-      <UniqueIdentifier>{398645ec-1815-4d20-b85f-82e6459b1ef2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\TsGfx\Source\Material">
       <UniqueIdentifier>{08d342b6-1666-4623-b57a-2d797eb67786}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\TsGfx\Buffer">
-      <UniqueIdentifier>{50e39be4-3a0b-4b49-948d-0f069337bbc2}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\TsGfx\Source\Light">
       <UniqueIdentifier>{b3171787-cfc6-47ba-9b64-5b42c01fcf21}</UniqueIdentifier>
@@ -109,6 +103,33 @@
     <Filter Include="ソース ファイル\TsGfx\hlsl\Header">
       <UniqueIdentifier>{01d6e16e-6f47-4b79-8ecd-d220d178a198}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\TsGfx\Source\Animation">
+      <UniqueIdentifier>{f117d571-2a32-46c6-97c1-b687a76bb675}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TsGfx\Source\BufferResource">
+      <UniqueIdentifier>{3179f7ee-5dae-47b5-b079-1569c5ea182b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TsGfx\Source\Camera">
+      <UniqueIdentifier>{f2119bc8-afab-4a0e-8d17-f1176962aadd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TsGfx\Source\Core">
+      <UniqueIdentifier>{3da6e04b-708d-4375-860f-9c685ba3216d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TsGfx\Source\ExtLibs">
+      <UniqueIdentifier>{a987c3ef-b726-4862-8036-009ae9a6332e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TsGfx\Source\Geometry">
+      <UniqueIdentifier>{349cd484-d052-46f7-bc6e-12565f05289d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TsGfx\Source\RenderSystem">
+      <UniqueIdentifier>{82e968bd-94f5-43ca-b85a-e6a2ad0d1f93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TsGfx\Source\Shader">
+      <UniqueIdentifier>{e5ff02a5-371a-41f3-84a2-46147b6cc97a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TsGfx\Source\ShaderResource">
+      <UniqueIdentifier>{78a82e3c-9ba4-4350-b558-b3fd76eaa33c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TSWinEntryPoint.cpp">
@@ -125,18 +146,6 @@
     </ClCompile>
     <ClCompile Include="Extern\DirectXTex\WICTextureLoader.cpp">
       <Filter>ソース ファイル\Extern\DirectXTex</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsDevice.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsDeviceContext.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsDirectXTex.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsRenderTarget.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\TsUT\TsMeshLoader.cpp">
       <Filter>ソース ファイル\TsUT\Source</Filter>
@@ -162,51 +171,6 @@
     <ClCompile Include="Source\TsUT\TsNameObject.cpp">
       <Filter>ソース ファイル\TsUT\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsShader.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsObject.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsCBuffer.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsScreenObject.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsRenderGeometry.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsViewport.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsGeometryObject.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsRenderFlow.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsShaderEffect.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsDrawQueue.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsRenderPass.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsShaderResource.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsVertexBuffer.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsShaderTechnique.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsDrawObject.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsUT\TsAlloc.cpp">
       <Filter>ソース ファイル\TsUT\Source</Filter>
     </ClCompile>
@@ -216,26 +180,14 @@
     <ClCompile Include="Source\TsGfx\Material\TsLambertMatrial.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsCamera.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsTransformCBuffer.cpp">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsMath\TsMathUTility.cpp">
       <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClCompile>
     <ClCompile Include="Source\TsGfx\Light\TsLight.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Light</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsGfx\Mesh\TsMeshFactory.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsGfx\Material\TsScreeSpaceMaterial.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsRenderSystem.cpp">
-      <Filter>ソース ファイル\TsGfx</Filter>
     </ClCompile>
     <ClCompile Include="Source\TsCore\TsApplicationBase.cpp">
       <Filter>ソース ファイル\TsCore</Filter>
@@ -279,26 +231,11 @@
     <ClCompile Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.cpp">
       <Filter>ソース ファイル\TsGfx\Source\ShadowMap</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsSamplerState.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsBoneCBuffer.cpp">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsSkinGeometryObject.cpp">
-      <Filter>ソース ファイル\TsGfx</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsMath\TsSkeleton.cpp">
       <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClCompile>
     <ClCompile Include="Source\TsMath\TsBone.cpp">
       <Filter>ソース ファイル\TsMath\Header</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsVertexElement.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\Mesh\TsMeshObject.cpp">
-      <Filter>ソース ファイル\TsGfx</Filter>
     </ClCompile>
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxAfx.cpp">
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\source</Filter>
@@ -333,26 +270,113 @@
     <ClCompile Include="Source\TsUT\ModelLoader\Fbx\TsFbxAnimation.cpp">
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsGfx\Animation\TsTransformBakeAnimation.cpp">
-      <Filter>ソース ファイル\TsGfx</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsShaderReflection.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsClearPass.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsDepthStencilState.cpp">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsRasterizerState.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsGfx\TsDepthStencilView.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsMath\TsSphereMeshCreater.cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Animation\TsTransformBakeAnimation.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Camera\TsCamera.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Camera\TsViewport.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Core\TsDevice.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Core\TsDeviceContext.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Extlibs\TsDirectXTex.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\ExtLibs</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Geometry\TsMeshFactory.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Geometry\TsMeshObject.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Geometry\TsRenderGeometry.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Geometry\TsScreenObject.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Geometry\TsSkinGeometryObject.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Geometry\TsVertexElement.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Geometry\TsDrawObject.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Geometry\TsGeometryObject.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\RenderSystem\TsDrawQueue.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\RenderSystem\TsRenderFlow.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\RenderSystem\TsRenderPass.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\RenderSystem\TsRenderSystem.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\RenderSystem\TsClearPass.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Shader\TsShaderTechnique.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Shader\TsShader.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Shader\TsShaderEffect.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Shader\TsShaderInl.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Shader\TsShaderReflection.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\ShaderResources\TsRasterizerState.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\ShaderResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\ShaderResources\TsRenderTarget.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\ShaderResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\ShaderResources\TsSamplerState.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\ShaderResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\ShaderResources\TsShaderResource.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\ShaderResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\ShaderResources\TsDepthStencilState.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\ShaderResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\ShaderResources\TsDepthStencilView.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\ShaderResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\BufferResources\TsBoneCBuffer.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\BufferResources\TsCBuffer.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\BufferResources\TsCommonCBuffer.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\BufferResources\TsTransformCBuffer.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\BufferResources\TsVertexBuffer.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -370,42 +394,6 @@
     </ClInclude>
     <ClInclude Include="Extern\xna\xnamath.h">
       <Filter>ソース ファイル\Extern\xna</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsDevice.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsDeviceContext.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsDirectXTex.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsDx11.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsGfx.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsRenderTarget.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsResourceDesc.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsShader.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsShaderEffect.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsShaderUT.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsTexture.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsVertex.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsMath\TsMatrix.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
@@ -446,48 +434,6 @@
     <ClInclude Include="Source\TsUT\TsNameObject.h">
       <Filter>ソース ファイル\TsUT\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsShaderInl.cpp">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsShaderResource.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsCBuffer.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsScreenObject.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsViewport.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsIndexBuffer.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsVertexBuffer.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsBuffer.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsRenderPass.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsRenderFlow.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsDrawObject.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsGeometryObject.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsDrawQueue.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsShaderTechnique.h">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClInclude>
     <ClInclude Include="Source\TsUT\TsAlloc.h">
       <Filter>ソース ファイル\TsUT\Header</Filter>
     </ClInclude>
@@ -500,29 +446,17 @@
     <ClInclude Include="Source\TsGfx\Material\TsLambertMaterial.h">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsCamera.h">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClInclude>
     <ClInclude Include="Source\TsMath\TsMathUTility.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsMath\TsMath.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsTransformCBuffer.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Source\TsGfx\Light\TsLight.h">
       <Filter>ソース ファイル\TsGfx\Source\Light</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TsGfx\Mesh\TsMeshFactory.h">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClInclude>
     <ClInclude Include="Source\TsGfx\Material\TsScreeSpaceMaterial.h">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsRenderSystem.h">
-      <Filter>ソース ファイル\TsGfx</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsGfx\Material\TsDefaultMaterial.h">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
@@ -569,26 +503,11 @@
     <ClInclude Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.h">
       <Filter>ソース ファイル\TsGfx\Source\ShadowMap</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsSamplerState.h">
-      <Filter>ソース ファイル\TsGfx\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsBoneCBuffer.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsSkinGeometryObject.h">
-      <Filter>ソース ファイル\TsGfx</Filter>
-    </ClInclude>
     <ClInclude Include="Source\TsMath\TsSkeleton.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsMath\TsBone.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsVertexElement.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\Mesh\TsMeshObject.h">
-      <Filter>ソース ファイル\TsGfx</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxAfx.h">
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\header</Filter>
@@ -629,24 +548,6 @@
     <ClInclude Include="Source\TsUT\ModelLoader\Fbx\TsFbxType.h">
       <Filter>ソース ファイル\TsUT\MeshLoader\Fbx\header</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TsGfx\Animation\TsTransformBakeAnimation.h">
-      <Filter>ソース ファイル\TsGfx</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsShaderReflection.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsClearPass.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsDepthStencilState.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsRasterizerState.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\TsDepthStencilView.h">
-      <Filter>ソース ファイル\TsGfx\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Source\TsUT\TsEASTL.h">
       <Filter>ソース ファイル\TsUT\Header</Filter>
     </ClInclude>
@@ -655,6 +556,129 @@
     </ClInclude>
     <ClInclude Include="Source\TsMath\TsSphereMeshCreater.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Animation\TsTransformBakeAnimation.h">
+      <Filter>ソース ファイル\TsGfx\Source\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Camera\TsViewport.h">
+      <Filter>ソース ファイル\TsGfx\Source\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Camera\TsCamera.h">
+      <Filter>ソース ファイル\TsGfx\Source\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Core\TsDx11.h">
+      <Filter>ソース ファイル\TsGfx\Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Core\TsDevice.h">
+      <Filter>ソース ファイル\TsGfx\Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Core\TsDeviceContext.h">
+      <Filter>ソース ファイル\TsGfx\Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Extlibs\TsDirectXTex.h">
+      <Filter>ソース ファイル\TsGfx\Source\ExtLibs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Geometry\TsMeshFactory.h">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Geometry\TsMeshObject.h">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Geometry\TsScreenObject.h">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Geometry\TsSkinGeometryObject.h">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Geometry\TsVertexElement.h">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Geometry\TsDrawObject.h">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Geometry\TsGeometryObject.h">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\RenderSystem\TsClearPass.h">
+      <Filter>ソース ファイル\TsGfx\Source\RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\RenderSystem\TsDrawQueue.h">
+      <Filter>ソース ファイル\TsGfx\Source\RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\RenderSystem\TsRenderFlow.h">
+      <Filter>ソース ファイル\TsGfx\Source\RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\RenderSystem\TsRenderPass.h">
+      <Filter>ソース ファイル\TsGfx\Source\RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\RenderSystem\TsRenderSystem.h">
+      <Filter>ソース ファイル\TsGfx\Source\RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Shader\TsShaderReflection.h">
+      <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Shader\TsShaderTechnique.h">
+      <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Shader\TsShaderUT.h">
+      <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Shader\TsShader.h">
+      <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Shader\TsShaderEffect.h">
+      <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\ShaderResources\TsDepthStencilView.h">
+      <Filter>ソース ファイル\TsGfx\Source\ShaderResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\ShaderResources\TsRasterizerState.h">
+      <Filter>ソース ファイル\TsGfx\Source\ShaderResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\ShaderResources\TsRenderTarget.h">
+      <Filter>ソース ファイル\TsGfx\Source\ShaderResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\ShaderResources\TsResourceDesc.h">
+      <Filter>ソース ファイル\TsGfx\Source\ShaderResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\ShaderResources\TsSamplerState.h">
+      <Filter>ソース ファイル\TsGfx\Source\ShaderResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\ShaderResources\TsShaderResource.h">
+      <Filter>ソース ファイル\TsGfx\Source\ShaderResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\ShaderResources\TsTexture.h">
+      <Filter>ソース ファイル\TsGfx\Source\ShaderResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\ShaderResources\TsDepthStencilState.h">
+      <Filter>ソース ファイル\TsGfx\Source\ShaderResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\TsGfx.h">
+      <Filter>ソース ファイル\TsGfx\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\BufferResources\TsBoneCBuffer.h">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\BufferResources\TsBuffer.h">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\BufferResources\TsCBuffer.h">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\BufferResources\TsCommonCBuffer.h">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\BufferResources\TsIndexBuffer.h">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\BufferResources\TsTransformCBuffer.h">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\BufferResources\TsVertex.h">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\BufferResources\TsVertexBuffer.h">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
