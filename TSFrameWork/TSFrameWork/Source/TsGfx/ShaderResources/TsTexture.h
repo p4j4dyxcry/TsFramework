@@ -43,7 +43,15 @@ protected:
 
 class TsCubeMap : TsTexture
 {
-    //todo
+    TsCubeMap()
+    {
+        ZeroMemory(m_tex2d, sizeof(m_tex2d));
+    };
+    virtual ~TsCubeMap()
+    {
+        for ( auto p : m_tex2d )
+            TsSafeRelease(p);
+    }
 protected:
     ID3D11Texture2D * m_tex2d[6];
 };

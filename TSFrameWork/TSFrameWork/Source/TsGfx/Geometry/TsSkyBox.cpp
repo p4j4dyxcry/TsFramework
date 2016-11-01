@@ -116,31 +116,25 @@ TsBool TsSkyBox::Draw(TsDeviceContext* context)
 TsBool TsSkyBox::ApplyVertexBuffer(TsDeviceContext* context)
 {
     if (context && m_pVertexBuffer)
-    {
-        context->SetVertexBuffer(m_pVertexBuffer);
-        return TS_TRUE;
-    }
+        context->SetVertexBuffer(m_pVertexBuffer);        
     else
-    {
         return TS_FALSE;
-    }
+    return TS_TRUE;
 }
 
 TsBool TsSkyBox::ApplyIndexBuffer(TsDeviceContext* context)
 {
     if (context && m_pIndexBuffer)
-    {
         context->SetIndexBuffer(m_pIndexBuffer);
-        return TS_TRUE;
-    }
     else
-    {
         return TS_FALSE;
-    }
+    return TS_TRUE;
 }
 
 TsBool TsSkyBox::UpdateTransform(TsDeviceContext* context)
 {
+    //! スカイマップなのでカメラ位置を固定
+    //  回転だけを反映させる。
     TsCamera* pCamera = context->GetMainCamera();
 
     const TsVector3& eye = pCamera->GetEyePos();
@@ -158,10 +152,15 @@ TsBool TsSkyBox::UpdateTransform(TsDeviceContext* context)
     *m_pTransform = m * pCamera->GetProjMatrix();
 
     m_pTransformCBuffer->UpdateCBuffer(context);
+
+    return TS_TRUE;
 }
 
 TsBool TsSkyBox::ApplyTransForm(TsDeviceContext* context)
 {    
-    m_pTransformCBuffer->ApplyCBuffer(context);
+    if (context && m_pTransformCBuffer)
+        m_pTransformCBuffer->ApplyCBuffer(context);
+    else
+        return TS_FALSE;
     return TS_TRUE;
 }
