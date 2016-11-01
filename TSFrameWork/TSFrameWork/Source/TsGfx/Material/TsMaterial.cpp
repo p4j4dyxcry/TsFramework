@@ -29,7 +29,7 @@ TsBool TsMaterial::UpdateMaterial( TsDeviceContext* context )
 
 TsBool TsMaterial::LoadTextureFromFile( TsDevice* pDev )
 {
-    m_pTexture = TsResourceManager::Find<TsTexture2D>(m_textureName);
+    m_pTexture = TsResourceManager::Find<TsTexture>(m_textureName);
     if (m_pTexture)
         m_pTexture->SetName(m_textureName);
     else
@@ -41,7 +41,7 @@ TsBool TsMaterial::LoadTextureFromFile( TsDevice* pDev )
             m_pTexture->SetSRV(pSRV);
         else
             return TS_FALSE;
-        TsResourceManager::RegisterResource(m_pTexture, m_textureName);
+        TsResourceManager::RegisterResource<TsTexture>(m_pTexture, m_textureName);
         return TS_TRUE;
     }
     return TS_TRUE;

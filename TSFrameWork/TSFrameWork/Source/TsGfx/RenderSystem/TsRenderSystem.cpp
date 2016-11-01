@@ -124,8 +124,22 @@ TsBool TsRenderSystem::LoadShaderResourceFromXML(TsDevice* pDev, const TsString&
             pTex->SetSRV(srv);
             
             m_shaderResourceList.push_back(pTex);
-            TsResourceManager::RegisterResource<TsTexture2D>( pTex , name );
+            TsResourceManager::RegisterResource<TsTexture>( pTex , name );
         }
+
+        if( elm->GetName() == "CubeTexture" )
+        {
+            TsCubeMap * pTex = TsNew( TsCubeMap );
+            TsString name = elm->GetAttribute( "Name" )->GetStringValue();
+            TsString path = elm->GetAttribute( "Path" )->GetStringValue();
+            auto srv = TsDirectXTex::LoadFromFile( pDev->GetDevD3D() , path.c_str() );
+            pTex->SetName( name );
+            pTex->SetSRV( srv );
+
+            m_shaderResourceList.push_back( pTex );
+            TsResourceManager::RegisterResource<TsTexture>( pTex , name );
+        }
+
         if (elm->GetName() == "RenderTarget")
         {
             TsString name = elm->GetAttribute("Name")->GetStringValue();

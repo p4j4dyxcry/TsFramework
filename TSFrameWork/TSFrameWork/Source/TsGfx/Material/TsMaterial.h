@@ -17,5 +17,5 @@ public:
 
 protected:
     TsBool m_isUpdate;
-    TsTexture2D*   m_pTexture;
+    TsTexture*   m_pTexture;
 };

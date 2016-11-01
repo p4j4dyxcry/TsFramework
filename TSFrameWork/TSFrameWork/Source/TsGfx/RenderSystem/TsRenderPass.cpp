@@ -166,7 +166,7 @@ TsBool TsRenderPass::LoadIOSlotFromXMLElement( TsDevice* pDev , TsXMLElement * p
             }
             else
             {
-                TsTexture2D* pTex = TsResourceManager::Find<TsTexture2D>( rtName );
+                TsTexture* pTex = TsResourceManager::Find<TsTexture>( rtName );
                 if( pTex )
                     SetInputSlot( rtvIndex , pTex );
             }

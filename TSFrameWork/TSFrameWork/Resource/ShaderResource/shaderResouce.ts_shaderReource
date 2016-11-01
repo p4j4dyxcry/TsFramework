@@ -3,8 +3,13 @@
 
   <Texture
     Name ="bg"
-    Path ="bg.jpg">        
+    Path ="bg.png">        
   </Texture>
+
+  <CubeTexture
+    Name ="sky"
+    Path ="cubemap.dds">        
+  </CubeTexture>  
 
   <RenderTarget
     Name  ="Color"

@@ -63,6 +63,7 @@ T* TsResourceManager_Find( TsMap<TS_HASH , T*>& map ,
 template<typename T>
 static TsBool TsResourceManager::RegisterResource( T* pObject , const TsString& name )
 {
+    TsDebugLog( "ResouceManagerへの追加失敗。型\"%s\"はサポートされていません。\n" , typeid( T ).name() );
     ( void )pObject;
     ( void )name;
     return TS_FALSE;
@@ -139,5 +140,5 @@ TsBool TsResourceManager::InitializeSampler( TsDevice * pDev )
 TsDevice* TsResourceManager::m_pDevice = nullptr;
 ASSIGN_INTERFACE( TsSamplerState , m_SamplerLibrary );
 ASSIGN_INTERFACE( TsMeshObject , m_pMeshLibrary );
-ASSIGN_INTERFACE( TsTexture2D , m_FileTextureLibray );
+ASSIGN_INTERFACE( TsTexture , m_FileTextureLibray );
 ASSIGN_INTERFACE( TsSkeleton , m_pSkeletonLibrary );

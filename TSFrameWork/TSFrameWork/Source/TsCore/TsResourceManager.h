@@ -17,6 +17,6 @@ private:
     static TsDevice* m_pDevice;
     static TsMap<TS_HASH , TsSamplerState*> m_SamplerLibrary;
     static TsMap<TS_HASH , TsMeshObject*>   m_pMeshLibrary;
-    static TsMap<TS_HASH, TsTexture2D*>     m_FileTextureLibray;
+    static TsMap<TS_HASH, TsTexture*>     m_FileTextureLibray;
     static TsMap<TS_HASH , TsSkeleton*>     m_pSkeletonLibrary;
 };

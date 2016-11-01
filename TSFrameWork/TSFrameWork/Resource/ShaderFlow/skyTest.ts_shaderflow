@@ -11,10 +11,10 @@
     </Output>
   </Pass>
 
-  <Pass Name ="SkyBox"
-        Shader ="SkyBox">
+  <Pass Name ="RefrectionMap"
+        Shader ="RefrectionMap">
     <Input>
-      <Slot/>
+      <Slot Slot="sky"/> 
     </Input>
     <Output>
       <Slot Slot="Main"/>  
