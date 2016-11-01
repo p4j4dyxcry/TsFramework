@@ -393,6 +393,9 @@
     <ClCompile Include="Source\TsUT\Loader\Fbx\TsFbxNode.cpp">
       <Filter>ソース ファイル\TsUT\Loader\Fbx\source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsGfx\Geometry\TsSkyBox.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -691,6 +694,9 @@
     </ClInclude>
     <ClInclude Include="Source\TsUT\Loader\Fbx\TsFbxMaterial.h">
       <Filter>ソース ファイル\TsUT\Loader\Fbx\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Geometry\TsSkyBox.h">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -28,6 +28,13 @@ public:
     TsBool SetLookAtVector( TsVector3 at );
     TsBool SetFov( TsF32 fov );
     TsBool SetNearAndFar( TsF32 _near , TsF32 _far );
+    const TsVector3& GetEyePos()const{ return m_eye; }
+    const TsVector3& GetLockAtPos()const{ return m_at; }
+    const TsVector3& GetUpVector()const{ return m_up; }
+    TsF32 GetFov(){ return m_fov; }
+    TsF32 GetNear(){ return m_near; }
+    TsF32 GetFar(){ return m_far; }
+    TsF32 GetAspect(){ return m_aspect; }
 public:
     struct ViewCBuffer
     {

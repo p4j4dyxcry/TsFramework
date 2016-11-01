@@ -134,8 +134,6 @@ TsBool TsHDRTextureAnalizer::ReadPixelData()
                     while (c-- > 0)
                     {
                         *(bufferPtr++) = data;
-                        //if (bufferPtr > bufferEnd)
-                        // TsDebugLog("[%d]  %d :\n", i, (bufferPtr - bufferEnd));
                     }
                 }
                 else
@@ -143,13 +141,9 @@ TsBool TsHDRTextureAnalizer::ReadPixelData()
                     while (c-- > 0)
                     {
                         *(bufferPtr++) = *(ptr++);
-                        //if (bufferPtr > bufferEnd)
-                        //	TsDebugLog("[%d]  %d :\n", i, (bufferPtr - bufferEnd));
                     }
                 }
             }
-            //if (bufferPtr > bufferEnd)
-            //	TsDebugLog("[%d]  %d :\n",i, (bufferPtr - bufferEnd));
         }
 
         for (TsInt i = 0; i<scanlineW; i++) 
@@ -162,18 +156,8 @@ TsBool TsHDRTextureAnalizer::ReadPixelData()
         }
         numline--;
     }
-    //for (int i = 0; i < 10000; ++i)
-    //{
-    //  if (m_textureRawData[i].y > 0)
-    //  {
-    //      TsDebugLog("[%03d] R - %03d G - %03d B - %03d W - %03d \n", i,
-    //      m_textureRawData[i].x,
-    //      m_textureRawData[i].y,
-    //      m_textureRawData[i].z,
-    //      m_textureRawData[i].w);
-    //  }
-    //}
-    delete[] buffer;
+
+    TsDelete( buffer);
 
     return TS_TRUE;
 }

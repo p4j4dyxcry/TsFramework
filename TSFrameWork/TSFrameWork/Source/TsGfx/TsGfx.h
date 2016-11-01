@@ -54,6 +54,7 @@
 #include "Geometry\TsDrawObject.h"
 #include "Geometry\TsGeometryObject.h"
 #include "Geometry\TsMeshObject.h"
+#include "Geometry\TsSkyBox.h"
 #include "Geometry\TsSkinGeometryObject.h"
 #include "Geometry\TsScreenObject.h"
 

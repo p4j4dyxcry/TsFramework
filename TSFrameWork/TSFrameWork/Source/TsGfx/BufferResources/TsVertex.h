@@ -6,7 +6,7 @@
 //! © 2016 Yuki Tsuneyama
 #pragma once
 
-#include "../TsMath/TsVector.h"
+#include "../../TsMath/TsVector.h"
 
 // default Vertex
 struct TsVertexDefault
@@ -31,4 +31,10 @@ struct TSVertexScreenSpace
     // x & y = pos
     // z & w = uv;
     TsVector4 data;
+};
+
+struct TSVertexSkyBox
+{
+    TsVector4 m_pos;
+    TsVector2 m_uv;
 };
