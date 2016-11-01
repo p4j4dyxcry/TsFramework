@@ -1,4 +1,4 @@
-#include "TsUT.h"
+#include "../../TsUT.h"
 
 #include "TsHDRTextureAnalizer.h"
 

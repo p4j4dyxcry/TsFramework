@@ -1,7 +1,5 @@
 #pragma once
 
-#include "TsXML.h"
-
 class TsColladaLoader : public TsMeshLoader
 {
 public:

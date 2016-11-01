@@ -19,7 +19,6 @@
 
 #include "TsType.h"
 #include "TsArrayType.h"
-#include "TsAlloc.h"
 #include "TsLogger.h"
 
 #include "TsFileUT.h"
@@ -31,13 +30,13 @@
 #include "Intarface/ITsHasTransform.h"
 #include "TsBinaryFile.h"
 
-#include "TsMeshLoader.h"
-#include "TsXLoader.h"
-#include "TsMqoLoader.h"
-#include "TsColladaLoader.h"
+#include "Loader\virtual\TsMeshLoader.h"
+#include "Loader\XML\TsXML.h"
 
-#include "ModelLoader\Fbx\TsFbxLoader.h"
-
-#include "TsHDRTextureAnalizer.h"
+#include "Loader\dae\TsColladaLoader.h"
+#include "Loader\Fbx\TsFbxLoader.h"
+#include "Loader\hdr\TsHDRTextureAnalizer.h"
+#include "Loader\Mqo\TsMqoLoader.h"
+#include "Loader\x\TsXLoader.h"
 
 #pragma comment(lib,"winmm.lib")

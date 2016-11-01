@@ -1,5 +1,5 @@
-#include "TsUT.h"
-#include "../TsMath/TsMath.h"
+#include "../../TsUT.h"
+#include "../../../TsMath/TsMath.h"
 #include <fstream>
 #include <sstream>
 
