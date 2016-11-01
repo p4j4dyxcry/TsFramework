@@ -31,7 +31,9 @@ protected:
 class TsTexture2D : public TsTexture
 {
 public:
-    TsTexture2D() :m_tex2d( nullptr ){};
+    TsTexture2D() :
+        TsTexture(), 
+        m_tex2d( nullptr ){};
     virtual ~TsTexture2D()
     {
         TsSafeRelease( m_tex2d );
@@ -41,9 +43,10 @@ protected:
     ID3D11Texture2D * m_tex2d;
 };
 
-class TsCubeMap : TsTexture
+class TsCubeMap :public TsTexture
 {
-    TsCubeMap()
+public:
+    TsCubeMap() :TsTexture()
     {
         ZeroMemory(m_tex2d, sizeof(m_tex2d));
     };
@@ -56,16 +59,26 @@ protected:
     ID3D11Texture2D * m_tex2d[6];
 };
 
-class TsTexture3D : TsTexture
+class TsTexture3D : public TsTexture
 {
-    //todo
+public:
+    TsTexture3D() :TsTexture(),m_tex3d(nullptr){}
+    virtual ~TsTexture3D()
+    {
+        TsSafeRelease(m_tex3d);
+    };
 protected:
     ID3D11Texture3D * m_tex3d;
 };
 
-class TsTexture1D : TsTexture
+class TsTexture1D : public TsTexture
 {
-    //todo
+public:
+    TsTexture1D() :TsTexture(), m_tex1d(nullptr){}
+    virtual ~TsTexture1D()
+    {
+        TsSafeRelease(m_tex1d);
+    };
 protected:
     ID3D11Texture1D * m_tex1d;
 };

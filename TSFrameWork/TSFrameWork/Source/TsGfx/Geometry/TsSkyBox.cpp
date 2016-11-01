@@ -164,3 +164,10 @@ TsBool TsSkyBox::ApplyTransForm(TsDeviceContext* context)
         return TS_FALSE;
     return TS_TRUE;
 }
+
+//bind cube map
+TsBool TsSkyBox::SetCubeMap(TsCubeMap* pCubeMap)
+{
+    m_pCubeMap = pCubeMap;
+    return TS_TRUE;
+}
