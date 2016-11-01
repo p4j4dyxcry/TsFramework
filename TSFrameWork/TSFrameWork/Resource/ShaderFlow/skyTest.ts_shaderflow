@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FLow>
+  <Pass Name ="Clear">
+    <Input>
+      <Slot/>
+    </Input>
+    <Output>
+      <Slot Slot="Main"/>    	
+      <Depth Slot="Main"/>
+    </Output>
+  </Pass>
+
+  <Pass Name ="SkyBox"
+        Shader ="SkyBox">
+    <Input>
+      <Slot/>
+    </Input>
+    <Output>
+      <Slot Slot="Main"/>  
+      <Depth Slot="Main"/>
+    </Output>
+  </Pass>
+</FLow>

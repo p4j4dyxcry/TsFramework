@@ -36,5 +36,4 @@ struct TSVertexScreenSpace
 struct TSVertexSkyBox
 {
     TsVector4 m_pos;
-    TsVector2 m_uv;
 };

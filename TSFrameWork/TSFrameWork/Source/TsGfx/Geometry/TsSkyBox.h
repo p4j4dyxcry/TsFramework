@@ -12,6 +12,8 @@ public:
     virtual TsBool ApplyVertexBuffer(TsDeviceContext* context)override;
     virtual TsBool ApplyIndexBuffer(TsDeviceContext* context)override;
     virtual TsBool ApplyTransForm(TsDeviceContext* context)override;
+    virtual TsBool ApplyMaterial(TsDeviceContext* context)override;
+    TsBool SetCubeMap(TsCubeMap* pCubeMap);
 protected:
     TsVertexBuffer*         m_pVertexBuffer;
     TsIndexBuffer*          m_pIndexBuffer;
@@ -20,4 +22,6 @@ protected:
     TsMatrix                m_matrixCatch;
     TsTransformCBuffer*     m_pTransformCBuffer;
     TsTransForm*            m_pTransform;
+
+    TsCubeMap*              m_pCubeMap;
 };

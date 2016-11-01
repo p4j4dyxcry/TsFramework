@@ -107,7 +107,28 @@ TsBool TsResourceManager::InitializeSampler( TsDevice * pDev )
 
     desc.MipLODBias = 0;
     std::pair<TS_HASH , TsSamplerState*> pair( TSUT::StringToHash("Default") , pDev->CreateSamplerState( desc ) );
-    m_SamplerLibrary.insert(pair);
+
+    desc.AddressU = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_MIRROR;
+    desc.AddressV = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_MIRROR;
+    desc.AddressW = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
+
+    desc.BorderColor[0] =
+        desc.BorderColor[1] =
+        desc.BorderColor[2] =
+        desc.BorderColor[3] = 0.0f;
+
+    desc.ComparisonFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_ALWAYS;
+
+    desc.Filter = D3D11_FILTER::D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+    desc.MaxAnisotropy = 16;
+    desc.MinLOD = 0;
+    desc.MaxLOD = D3D11_FLOAT32_MAX;
+
+    desc.MipLODBias = 0;
+    std::pair<TS_HASH, TsSamplerState*> pair2(TSUT::StringToHash("Cube"), pDev->CreateSamplerState(desc));
+
+
+    m_SamplerLibrary.insert(pair2);
 
     return TS_TRUE;
 }

@@ -1,6 +1,4 @@
-#include "../TsGfx.h"
-
-#include "../TsGfx.h"
+#include "../../../TsAfx.h"
 
 TsSkyBox::TsSkyBox() :
 m_pVertexBuffer(nullptr)
@@ -19,62 +17,55 @@ TsSkyBox::~TsSkyBox()
 TsBool TsSkyBox::Create(TsDevice* pDev)
 {
     // front
-    m_vertex[0].m_pos = TsVector4(-1, 1, 0, 1);
-    m_vertex[1].m_pos = TsVector4(1, 1, 0, 1);
-    m_vertex[2].m_pos = TsVector4(-1, -1, 0, 1);
-    m_vertex[3].m_pos = TsVector4(1, -1, 0, 1);
+    m_vertex[0].m_pos = TsVector4(-1,  1, 1, 1);
+    m_vertex[1].m_pos = TsVector4( 1,  1, 1, 1);
+    m_vertex[2].m_pos = TsVector4(-1, -1, 1, 1);
+    m_vertex[3].m_pos = TsVector4( 1, -1, 1, 1);
 
     // back
-    m_vertex[4].m_pos = TsVector4(-1, 1, -1, 1);
-    m_vertex[5].m_pos = TsVector4(1, 1, -1, 1);
+    m_vertex[4].m_pos = TsVector4(-1,  1, -1, 1);
+    m_vertex[5].m_pos = TsVector4( 1,  1, -1, 1);
     m_vertex[6].m_pos = TsVector4(-1, -1, -1, 1);
-    m_vertex[7].m_pos = TsVector4(1, -1, -1, 1);
+    m_vertex[7].m_pos = TsVector4( 1, -1, -1, 1);
 
     // up
-    m_vertex[8].m_pos = TsVector4(-1, 1, -1, 1);
-    m_vertex[9].m_pos = TsVector4(1, 1, -1, 1);
-    m_vertex[10].m_pos = TsVector4(-1, 1, 0, 1);
-    m_vertex[11].m_pos = TsVector4(1, 1, 0, 1);
+    m_vertex[8].m_pos = TsVector4(- 1, 1, -1, 1);
+    m_vertex[9].m_pos = TsVector4(  1, 1, -1, 1);
+    m_vertex[10].m_pos = TsVector4(-1, 1,  1, 1);
+    m_vertex[11].m_pos = TsVector4( 1, 1,  1, 1);
 
     // down
     m_vertex[12].m_pos = TsVector4(-1, -1, -1, 1);
-    m_vertex[13].m_pos = TsVector4(1, -1, -1, 1);
-    m_vertex[14].m_pos = TsVector4(-1, -1, 0, 1);
-    m_vertex[15].m_pos = TsVector4(1, -1, 0, 1);
+    m_vertex[13].m_pos = TsVector4( 1, -1, -1, 1);
+    m_vertex[14].m_pos = TsVector4(-1, -1,  1, 1);
+    m_vertex[15].m_pos = TsVector4( 1, -1,  1, 1);
 
     // left
-    m_vertex[16].m_pos = TsVector4(-1, -1, -1, 1);
-    m_vertex[17].m_pos = TsVector4(-1, 1, -1, 1);
-    m_vertex[18].m_pos = TsVector4(-1, -1, 0, 1);
-    m_vertex[19].m_pos = TsVector4(-1, 1, 0, 1);
+    m_vertex[16].m_pos = TsVector4(-1,  1, -1, 1);
+    m_vertex[17].m_pos = TsVector4(-1,  1,  1, 1);
+    m_vertex[18].m_pos = TsVector4(-1, -1,  1, 1);
+    m_vertex[19].m_pos = TsVector4(-1, -1, -1, 1);
 
     // right
     m_vertex[20].m_pos = TsVector4(1, -1, -1, 1);
-    m_vertex[21].m_pos = TsVector4(1, 1, -1, 1);
-    m_vertex[22].m_pos = TsVector4(1, -1, 0, 1);
-    m_vertex[23].m_pos = TsVector4(1, 1, 0, 1);
+    m_vertex[21].m_pos = TsVector4(1,  1, -1, 1);
+    m_vertex[22].m_pos = TsVector4(1, -1,  1, 1);
+    m_vertex[23].m_pos = TsVector4(1,  1,  1, 1);
 
-    // fill uv
-    for (TsInt i = 0; i < 6 ; ++i)
-    {
-        m_vertex[i+0].m_uv = TsVector2(0, 0);
-        m_vertex[i+1].m_uv = TsVector2(1, 0);
-        m_vertex[i+2].m_uv = TsVector2(0, 1);
-        m_vertex[i+3].m_uv = TsVector2(1, 1);
-    }
+    for (int i = 0; i < 24; ++i)
+        m_vertex[i].m_pos *= 100;
 
     m_pVertexBuffer = pDev->CreateVertexBuffer(
         m_vertex, 
         sizeof(m_vertex), 
         sizeof(TSVertexSkyBox), 0);
 
-
     // Index
     TsInt index[36] =
     {
         //front
-        2, 1, 0,
-        3, 2, 1,
+        0, 2, 1,
+        2, 3, 1,
 
         //back
         6, 5, 4,
@@ -89,8 +80,8 @@ TsBool TsSkyBox::Create(TsDevice* pDev)
         15, 14, 13,
 
         //left
-        18, 17, 16,
-        19, 18, 17,
+        16, 17, 18,
+        18, 19, 17,
 
         //right
         22, 21, 20,
@@ -133,24 +124,6 @@ TsBool TsSkyBox::ApplyIndexBuffer(TsDeviceContext* context)
 
 TsBool TsSkyBox::UpdateTransform(TsDeviceContext* context)
 {
-    //! スカイマップなのでカメラ位置を固定
-    //  回転だけを反映させる。
-    TsCamera* pCamera = context->GetMainCamera();
-
-    const TsVector3& eye = pCamera->GetEyePos();
-    const TsVector3& at = pCamera->GetLockAtPos();
-
-    TsVector3 LockAt = at - eye;
-
-    TsMatrix m =
-        XMMatrixLookAtLH(
-        TsVector3::zero.ToXMVECTOR(),
-        LockAt.ToXMVECTOR(),
-        TsVector3::up.ToXMVECTOR());
-
-
-    *m_pTransform = m * pCamera->GetProjMatrix();
-
     m_pTransformCBuffer->UpdateCBuffer(context);
 
     return TS_TRUE;
@@ -160,6 +133,21 @@ TsBool TsSkyBox::ApplyTransForm(TsDeviceContext* context)
 {    
     if (context && m_pTransformCBuffer)
         m_pTransformCBuffer->ApplyCBuffer(context);
+    else
+        return TS_FALSE;
+    return TS_TRUE;
+}
+
+TsBool TsSkyBox::ApplyMaterial(TsDeviceContext* context)
+{
+    if (context)
+    {
+        context->SetTexture( 0 ,m_pCubeMap ,TS_SHADER_TYPE::PIXEL_SHADER);
+        context->SetSamplerState(
+            TsResourceManager::Find<TsSamplerState>("Cube"), 
+            0, 
+            TS_SHADER_TYPE::PIXEL_SHADER);
+    }
     else
         return TS_FALSE;
     return TS_TRUE;

@@ -96,8 +96,7 @@ TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev,
                     TsNew( TsSkinGeometryObject );
                 skin->CreateGeometryObject( pDev , mesh , material );
                 skin->SetSkeleton( pSkeleton );
-                obj = skin;
-                
+                obj = skin;                
             }
             else
             {

@@ -718,6 +718,9 @@
     <None Include="Source\TsGfx\hlsl\TsMath.hlsli">
       <Filter>ソース ファイル\TsGfx\hlsl\Header</Filter>
     </None>
+    <None Include="Source\TsGfx\hlsl\Forward\TsSkyBoxVS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\Forward</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\TsGfx\hlsl\Forward\TsFWLambertVS.hlsl">
@@ -770,6 +773,9 @@
     </FxCompile>
     <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSScreenPS.hlsl">
       <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\Forward\TsSkyBoxPS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\Forward</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

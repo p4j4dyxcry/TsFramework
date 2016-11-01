@@ -5,13 +5,13 @@
   <Vertex Shader = "TsSSDefaultVS"/>
   <Pixel  Shader = "TsSSScreenPS"/>
   <DepthStencil
-    ZEnable       ="false"
-    ZWriteEnable  ="false"
-    Func          ="LESS">
+    ZEnable ="false"
+    ZWriteEnable ="false"
+    Func ="LESS">
   </DepthStencil>
   <Rasterize
-    FillMode      ="SOLID"
-    CullMode      ="CCW"
-    AntiAlias     ="false">
+    FillMode ="SOLID"
+    CullMode ="CCW"
+    AntiAlias ="false">
   </Rasterize>    
 </root>
