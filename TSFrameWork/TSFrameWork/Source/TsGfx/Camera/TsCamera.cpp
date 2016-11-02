@@ -21,11 +21,31 @@ TsBool TsCamera::UpdateForCBuffer(TsDevice* pDevice)
 {
     if (m_pCBufferMemory == nullptr)
         return TS_FALSE;
+    static float r = 0;
+    static float m = 0;
+    if (GetAsyncKeyState(VK_LEFT))
+    {
+        r = r <= 0 ? 0 : r - 0.1f;
+    }
+    if (GetAsyncKeyState(VK_RIGHT))
+    {
+        r = r >= 1 ? 1 : r + 0.1f;
+    }
+
+    if (GetAsyncKeyState('Z'))
+    {
+        m = m <= 0 ? 0 : m - 0.1f;
+    }
+    if (GetAsyncKeyState('X'))
+    {
+        m = m >= 1 ? 1 : m + 0.1f;
+    }
+
 
     m_pCBufferMemory->m_worldCameraPos = m_eye;
     m_pCBufferMemory->m_near = m_near;
-    m_pCBufferMemory->m_far = m_far;
-    m_pCBufferMemory->m_fov = m_fov;
+    m_pCBufferMemory->m_far = m;
+    m_pCBufferMemory->m_fov = r;
 
     m_pCBufferMemory->m_viewMatrix = GetViewMatrix().Transposed();
     m_pCBufferMemory->m_invViewMatrix = GetViewMatrix().Inversed().Transposed();
