@@ -27,6 +27,14 @@ TsBool TsRenderPass::ApplyRTV( TsDeviceContext* pDC )
     //! set depth 
     pDC->SetDepthStencilView( m_pDepthStencilView );
 
+    if (m_pOutputSlot[0])
+    {
+        TsViewport viewport;
+        TsInt2 sz = m_pOutputSlot[0]->GetRTVSize();
+        viewport.Create(sz.x, sz.y);
+        pDC->SetViewport(&viewport);
+    }
+
     // apply
     pDC->ApplyRenderTargets();
 

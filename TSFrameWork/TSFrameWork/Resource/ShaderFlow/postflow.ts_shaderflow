@@ -17,45 +17,45 @@
       <Slot Slot ="Color"/>  
     </Input>
     <Output>
-      <Slot Slot="Temp2"/>
+      <Slot Slot="Temp1/2_1"/>
     </Output>
   </Pass>
 
   <Pass Name ="GaussY"
     Shader ="GaussY">
     <Input>
-      <Slot Slot ="Temp2"/>  
+      <Slot Slot ="Temp1/2_1"/>  
     </Input>
     <Output>
-      <Slot Slot="Temp"/>
+      <Slot Slot="Temp1/2_2"/>
     </Output>  
   </Pass>    
 
   <Pass Name ="GaussX"
     Shader ="GaussX">
     <Input>
-      <Slot Slot ="Temp"/>  
+      <Slot Slot ="Temp1/2_2"/>  
     </Input>
     <Output>
-      <Slot Slot="Temp2"/>
+      <Slot Slot="Temp1/16_1"/>
     </Output>
   </Pass>
 
   <Pass Name ="GaussY"
     Shader ="GaussY">
     <Input>
-      <Slot Slot ="Temp2"/>  
+      <Slot Slot ="Temp1/16_1"/>  
     </Input>
     <Output>
-      <Slot Slot="Temp"/>
-    </Output>  
+      <Slot Slot="Temp1/16_2"/>
+    </Output>
   </Pass>   
 
   <Pass Name ="Blend"
-    Shader ="Add">
+    Shader ="Screen">
     <Input>
-      <Slot Slot ="Temp"/>
-      <Slot Slot ="Temp"/>              
+      <Slot Slot ="Color"/>
+      <Slot Slot ="Temp1/16_2"/>              
     </Input>
     <Output>
       <Slot Slot="Main"/>

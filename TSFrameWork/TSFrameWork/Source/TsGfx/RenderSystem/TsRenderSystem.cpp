@@ -144,10 +144,58 @@ TsBool TsRenderSystem::LoadShaderResourceFromXML(TsDevice* pDev, const TsString&
         {
             TsString name = elm->GetAttribute("Name")->GetStringValue();
             TsString format = elm->GetAttribute("Format")->GetStringValue();
-            TsInt2   size = elm->GetAttribute("Size")->GetInt2Value();
 
-            if( size.x < 0 )
-                size = pDev->GetDC()->GetMainRTV()->GetRTVSize();
+            TsString str = elm->GetAttribute("Size")->GetStringValue();
+            TsInt2 size;
+            if (str != "nullptr")
+            {
+                size = elm->GetAttribute("Size")->GetInt2Value();
+                if (size.x < 0)
+                    size = pDev->GetDC()->GetMainRTV()->GetRTVSize();
+
+                if (str == "1/1")
+                {
+                    size = pDev->GetDC()->GetMainRTV()->GetRTVSize();
+                }
+                else if (str == "Half" || str == "1/2")
+                {
+                    size = pDev->GetDC()->GetMainRTV()->GetRTVSize() / 2;
+                }
+                else if (str == "Quater" || str == "1/4")
+                {
+                    size = pDev->GetDC()->GetMainRTV()->GetRTVSize() / 4;
+                }
+                else if (str == "1/8")
+                {
+                    size = pDev->GetDC()->GetMainRTV()->GetRTVSize() / 8;
+                }
+                else if (str == "1/16")
+                {
+                    size = pDev->GetDC()->GetMainRTV()->GetRTVSize() / 16;
+                }
+                else if (str == "1/32")
+                {
+                    size = pDev->GetDC()->GetMainRTV()->GetRTVSize() / 32;
+                }
+                else if (str == "1/64")
+                {
+                    size = pDev->GetDC()->GetMainRTV()->GetRTVSize() / 64;
+                }
+                else if (str == "1/128")
+                {
+                    size = pDev->GetDC()->GetMainRTV()->GetRTVSize() / 128;
+                }
+                else if (str == "1/256")
+                {
+                    size = pDev->GetDC()->GetMainRTV()->GetRTVSize() / 256;
+                }
+                else if (str == "1/512")
+                {
+                    size = pDev->GetDC()->GetMainRTV()->GetRTVSize() / 512;
+                }
+
+            }
+
             auto rtv = TsRenderTarget::CreateRTV(name, *pDev, size.x, size.y,TSShaderUT::ComvertTextureFormat(format));
 
             m_shaderResourceList.push_back(rtv);
