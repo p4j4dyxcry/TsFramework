@@ -41,14 +41,15 @@ float4 main(PS_SS_INPUT_UVx1 input,
     Texture2D tex0      : register(t0),
     SamplerState samp : register(s0)) : SV_TARGET
 {
-    // todo cbuffer
-    float invWidth = 1.0f / 1980.0f ;
+    float2 textureSize = GetTextureSize(tex0);
+
+    float2 invTextureSize = 1.0f / textureSize;
 
     float4 Color = 0;
 
     for (int i = 0; i < g_cKernelSize; i++)
     {
-        Color += tex0.Sample(samp, input.uv0 + g_PixelKernel[i] * invWidth) * g_BlurWeights[i];
+        Color += tex0.Sample(samp, input.uv0 + g_PixelKernel[i] * invTextureSize.x) * g_BlurWeights[i];
     }
 
     return Color;

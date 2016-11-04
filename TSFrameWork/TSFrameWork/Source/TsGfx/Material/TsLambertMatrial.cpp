@@ -30,7 +30,7 @@ TsBool TsLambertMatrial::CreateMaterial( TsDevice* pDev )
 TsBool TsLambertMatrial::ApplyMaterial( TsDeviceContext* pContext)
 {
     pContext->SetCBuffer( this );
-    pContext->SetTexture( 7 , m_pTexture , TS_SHADER_TYPE::PIXEL_SHADER );
+    pContext->SetTexture( 8 , m_pTexture , TS_SHADER_TYPE::PIXEL_SHADER );
     pContext->SetSamplerState( TsResourceManager::Find<TsSamplerState>( "Default" ) , 0 );
     return TS_TRUE;
 }

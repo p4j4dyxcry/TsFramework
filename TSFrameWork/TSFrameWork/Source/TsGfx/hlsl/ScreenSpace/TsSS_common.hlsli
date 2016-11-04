@@ -82,3 +82,21 @@ float ConvertLinearDepth( float depth )
     float v = ( far + near / ( far - near + dep ) ) * ( 2.0 / near );
     return ( v + 1.0 ) / 2; // Back to [0,1] range.
 }
+
+float2 GetTextureSize(Texture2D tex)
+{
+    float2 texSize;
+    float numMipMapLevels;
+    tex.GetDimensions(0, texSize.x, texSize.y, numMipMapLevels);
+
+    return texSize;
+}
+
+float GetMipMapCount( Texture2D tex )
+{
+    float2 texSize;
+    float numMipMapLevels;
+    tex.GetDimensions(0, texSize.x, texSize.y, numMipMapLevels);
+
+    return numMipMapLevels;
+}

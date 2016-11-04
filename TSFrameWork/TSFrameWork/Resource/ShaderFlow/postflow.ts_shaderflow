@@ -14,7 +14,7 @@
   <Pass Name ="GaussX"
     Shader ="GaussX">
     <Input>
-      <Slot Slot ="Temp"/>  
+      <Slot Slot ="Color"/>  
     </Input>
     <Output>
       <Slot Slot="Temp2"/>
@@ -52,9 +52,9 @@
   </Pass>   
 
   <Pass Name ="Blend"
-    Shader ="Blend">
+    Shader ="Add">
     <Input>
-      <Slot Slot ="Color"/>
+      <Slot Slot ="Temp"/>
       <Slot Slot ="Temp"/>              
     </Input>
     <Output>
