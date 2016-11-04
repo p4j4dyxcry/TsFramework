@@ -121,7 +121,7 @@ float4 main( float4 pos		: SV_POSITION ,
              float2 uv : TEXCOORD0 ,
              float3 normal : TEXCOORD1 ,
              float4 worldPos : TEXCOORD2 ,
-             Texture2D albedo : register( t7 ) ,
+             Texture2D albedo : register(TEX_REGISTER_ALBEDO),
              TextureCube skyMap : register(t0 ),
              SamplerState samp : register( s0 ) ) : SV_TARGET
 {

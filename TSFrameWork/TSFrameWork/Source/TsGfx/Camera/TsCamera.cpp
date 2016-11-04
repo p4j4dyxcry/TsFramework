@@ -21,6 +21,9 @@ TsBool TsCamera::UpdateForCBuffer(TsDevice* pDevice)
 {
     if (m_pCBufferMemory == nullptr)
         return TS_FALSE;
+
+    // ibl test code
+#if 0
     static float r = 0;
     static float m = 0;
     if (GetAsyncKeyState(VK_LEFT))
@@ -46,6 +49,11 @@ TsBool TsCamera::UpdateForCBuffer(TsDevice* pDevice)
     m_pCBufferMemory->m_near = m_near;
     m_pCBufferMemory->m_far = m;
     m_pCBufferMemory->m_fov = r;
+#endif
+    m_pCBufferMemory->m_worldCameraPos = m_eye;
+    m_pCBufferMemory->m_near = m_near;
+    m_pCBufferMemory->m_far = m_far;
+    m_pCBufferMemory->m_fov = m_fov;
 
     m_pCBufferMemory->m_viewMatrix = GetViewMatrix().Transposed();
     m_pCBufferMemory->m_invViewMatrix = GetViewMatrix().Inversed().Transposed();

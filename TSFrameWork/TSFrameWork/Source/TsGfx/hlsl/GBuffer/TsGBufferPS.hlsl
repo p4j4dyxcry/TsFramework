@@ -9,7 +9,7 @@ struct PS_IN
 };
 
 PS_GBUFFER_OUTPUT_3 main( PS_IN input ,
-                          Texture2D tex : register(t8),
+    Texture2D tex : register(TEX_REGISTER_ALBEDO),
                           SamplerState samp  : register(s0))
 {
     PS_GBUFFER_OUTPUT_3 output = ( PS_GBUFFER_OUTPUT_3 )0;

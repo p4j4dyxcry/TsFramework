@@ -1,4 +1,6 @@
 
+#define TEX_REGISTER_ALBEDO t8
+
 cbuffer matrixs : register (b0)
 {
     float4x4 g_MtxWorld;
