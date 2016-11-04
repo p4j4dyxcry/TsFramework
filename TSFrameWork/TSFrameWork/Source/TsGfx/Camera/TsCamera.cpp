@@ -89,7 +89,7 @@ TsBool TsCamera::CreateCBuffer(TsDevice* pDevice)
     m_pCameraBuffer = pDevice->CreateCBuffer(m_pCBufferMemory, sizeof(ViewCBuffer));
     if (m_pCameraBuffer == nullptr)
         return TS_FALSE;
-    m_pCameraBuffer->SetRegisterIndex(MainCameraCbufferRegisterIndex);
+    m_pCameraBuffer->SetRegisterIndex(TS_CBUFFER_REGISTER::View);
     m_pCameraBuffer->BindShaderType(TS_SHADER_TYPE::VP_SHADER);
 
     return TS_TRUE;

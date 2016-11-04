@@ -47,7 +47,7 @@ TsBool TsBoneCBuffer::CreateBoneCBuffer( TsDevice * pDev )
 
 
     SetD3DBufferAndSize( buffer , sz );
-    SetRegisterIndex( 1 );
+    SetRegisterIndex( TS_CBUFFER_REGISTER::Skin );
     BindShaderType( TS_SHADER_TYPE::VERTEX_SHADER );
 
     return TS_TRUE;

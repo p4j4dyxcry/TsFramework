@@ -42,7 +42,7 @@ TsBool TsTransformCBuffer::CreateTransformCBuffer( TsDevice* pDev )
 
 
     SetD3DBufferAndSize( buffer , sz );
-    SetRegisterIndex( 0 );
+    SetRegisterIndex( TS_CBUFFER_REGISTER::ObjectMatrix );
     BindShaderType( TS_SHADER_TYPE::VERTEX_SHADER );
 
     return TS_TRUE;

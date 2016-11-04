@@ -51,7 +51,7 @@ struct SpotLight
 };
 
 
-cbuffer light : register(b1)
+cbuffer light : register(b2)
 {
     float4 g_lightDir = float4(0,1,0,0);
 };

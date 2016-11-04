@@ -6,6 +6,14 @@
 //! © 2016 Yuki Tsuneyama
 #pragma once
 
+enum TS_CBUFFER_REGISTER
+{
+    ObjectMatrix = 0,
+    Skin = 1,
+    Light = 2,
+    View = 7,
+};
+
 class TsCBuffer : 
     public TsBuffer , 
     public TsShaderResource

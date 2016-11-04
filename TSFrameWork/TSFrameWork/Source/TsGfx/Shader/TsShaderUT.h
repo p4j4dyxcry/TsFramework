@@ -34,6 +34,16 @@ enum TS_SHADER_INDEX
     MAX_IDX = 0x06,
 };
 
+enum TS_CBUFFER_REGISTER
+{
+    ObjectMatrix = 0,
+    Skin = 1,       // used Vertex Shader
+    Light = 2,
+    Material = 3,   // used Pixel Shader;
+    View = 7,
+};
+
+
 namespace TSShaderUT
 {
     enum VARIABLE_TYPE

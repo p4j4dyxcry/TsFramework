@@ -3,6 +3,8 @@
 class TsMaterial : public TsCBuffer
 {
 public:
+    static const TsUint AlbedoTextureRegister = 7;
+
     TsMaterial();
     virtual ~TsMaterial();
     virtual TsBool ApplyMaterial( TsDeviceContext* context ) ;
