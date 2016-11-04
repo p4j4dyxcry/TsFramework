@@ -3,7 +3,7 @@
 class TsMaterial : public TsCBuffer
 {
 public:
-    static const TsUint AlbedoTextureRegister = 7;
+    static const TsUint AlbedoTextureRegister = 8;
 
     TsMaterial();
     virtual ~TsMaterial();

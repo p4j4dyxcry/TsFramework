@@ -11,14 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Extern\DirectXTex\WICTextureLoader.cpp">
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </ForcedIncludeFiles>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeaderFile>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_TS_DEBUG</PreprocessorDefinitions>
-    </ClCompile>
     <ClCompile Include="Extern\XML\tinyxml2.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -74,7 +66,6 @@
     <ClCompile Include="Source\TsGfx\Shader\TsShaderTechnique.cpp" />
     <ClCompile Include="Source\TsGfx\ShadowMap\TsLisPSM.cpp" />
     <ClCompile Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.cpp" />
-    <ClInclude Include="Extern\DirectXTex\WICTextureLoader.h" />
     <ClInclude Include="Extern\XML\tinyxml2.h" />
     <ClInclude Include="Extern\xna\Xna.h" />
     <ClInclude Include="Extern\xna\xnamath.h" />

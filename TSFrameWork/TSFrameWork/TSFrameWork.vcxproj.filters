@@ -162,9 +162,6 @@
     <ClCompile Include="Source\TSUT\TsLogger.cpp">
       <Filter>ソース ファイル\TsUT\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Extern\DirectXTex\WICTextureLoader.cpp">
-      <Filter>ソース ファイル\Extern\DirectXTex</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsMath\TsQuaternion.cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
     </ClCompile>
@@ -403,9 +400,6 @@
     </ClInclude>
     <ClInclude Include="Source\TsOS\TsWindowsUtility.h">
       <Filter>ソース ファイル\TsOS</Filter>
-    </ClInclude>
-    <ClInclude Include="Extern\DirectXTex\WICTextureLoader.h">
-      <Filter>ソース ファイル\Extern\DirectXTex</Filter>
     </ClInclude>
     <ClInclude Include="Extern\xna\Xna.h">
       <Filter>ソース ファイル\Extern\xna</Filter>
