@@ -16,9 +16,12 @@ public:
     TsColor GetColor();
     TsBool  SetColor( TsColor );
     virtual LIGHT_TYPE GetLightType() = 0;
+    TsBool Enable()const{ return m_isEnable; }
+    TsBool SetEnable( TsBool enable ){ m_isEnable = enable; }
 protected:
     TsColor m_color;
     TsF32   m_intensity;
+    TsBool  m_isEnable;
 };
 
 

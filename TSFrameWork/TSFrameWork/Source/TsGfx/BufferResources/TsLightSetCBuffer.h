@@ -3,6 +3,9 @@
 class TsLightSetCBuffer : public TsCBuffer
 {
 public:
+    //====================================================
+    // Define Number & Struct
+    //====================================================
     static const TsUint LIGHT_CB_MAX = 256;
 
     struct LightData
@@ -19,6 +22,17 @@ public:
     struct LightCB
     {
         TsUint              lightNum;
-        LightData           lightData[ LIGHT_CB_MAX ];
+        LightData           lightData[LIGHT_CB_MAX];
     };
+public:
+    //====================================================
+    //  ! public methods
+    //====================================================
+    TsBool CreateLightSetCBuffer( TsDevice* pDev );
+    virtual TsBool ApplyCBuffer( TsDeviceContext* pDevContext )override;
+    virtual TsBool UpdateCBuffer( TsDeviceContext* pDevContext )override;
+protected:
+    LightCB m_lightSetCBuffer;              //  Constant Buffer
+    TsVector<TsLight*>  m_pLightRefList;    //  GPUに転送するライト
+    TsBool m_isUpdateFlag;                  //  更新フラグ
 };

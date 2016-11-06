@@ -38,7 +38,7 @@ enum TS_CBUFFER_REGISTER
 {
     ObjectMatrix = 0,
     Skin = 1,       // used Vertex Shader
-    Light = 2,
+    LightSet = 2,
     Material = 3,   // used Pixel Shader;
     View = 7,
 };
