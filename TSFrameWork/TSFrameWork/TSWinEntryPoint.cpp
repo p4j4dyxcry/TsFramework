@@ -16,12 +16,12 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 
     auto p = TsDirectXTex::LoadFromFile(pDev->GetDevD3D(), "cubemap.dds");
     ID3D11Resource* ptr;
-    p->GetResource(&ptr);
+    p.pSrv->GetResource( &ptr );
     D3D11_SHADER_RESOURCE_VIEW_DESC desc;
-    p->GetDesc(&desc);
+    p.pSrv->GetDesc( &desc );
 
     TsCubeMap* pTex = TsNew( TsCubeMap) ;
-    pTex->SetSRV(p);
+    pTex->SetSRV(p.pSrv);
 
     //TsSkyBox * pSkyBox = new TsSkyBox;
     //pSkyBox->Create(pDev);
@@ -42,7 +42,8 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 //     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
 //     factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
 //     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
-     auto pAnim = factory.CreateBakeAnimation( "Resource/fbx/Unity-Chan/move_unity.fbx" );
+//     auto pAnim = factory.CreateBakeAnimation( "Resource/fbx/Unity-Chan/move_unity.fbx" );
+     auto pAnim = factory.CreateBakeAnimation( "move_unity.fbx" );
 //     auto pAnim = factory.CreateBakeAnimation( "sd_anim.fbx" );
      TsMeshObject * pMesh = TsResourceManager::Find<TsMeshObject>("Test");
      pAnim->BindTransform( pMesh->GetGeometry( 0 )->GetTransform()->GetRootTransform() );
@@ -82,6 +83,10 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
         else {
             //render 
             pAnim->Update();
+
+            auto pBlendState = TsResourceManager::Find<TsBlendState>( "ALPHA_BLEND" );
+            pDev->GetDC()->SetBlendState( pBlendState );
+            pDev->GetDC()->ApplyBlendState();
 
             pCamera->UpdateForCBuffer(pDev);
             pDev->GetDC()->SetCBuffer(pCamera->GetCBuffer());

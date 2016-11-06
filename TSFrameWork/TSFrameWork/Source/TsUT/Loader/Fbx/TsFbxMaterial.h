@@ -4,7 +4,7 @@ class TsFbxMaterial :	public TsFbxObject ,
                         public TsNameObject
 {
 public:
-    enum TextureType
+    enum class TextureType : TsUint
     {
         Albedo ,
         Specular ,
@@ -35,8 +35,8 @@ private:
     TsBool AnalizeCustomMaterial( FbxSurfaceMaterial* pFbxMaterial , const FbxImplementation* pFbxImplementation );
     TsBool AnalizeDefaultMaterial( FbxSurfaceMaterial* pFbxMaterial );
 
-    TSUT::TsFilePathAnalyzer    m_texturename[TextureType::TextureTypeNum][MAX_LAYER];
-    TsInt                       m_layersCount[TextureType::TextureTypeNum];
+    TSUT::TsFilePathAnalyzer    m_texturename[(TsUint)TextureType::TextureTypeNum][MAX_LAYER];
+    TsInt                       m_layersCount[(TsUint)TextureType::TextureTypeNum];
     TsFloat4                    m_diffuse;
     TsFloat3                    m_specular;
     TsFloat3                    m_ambient;

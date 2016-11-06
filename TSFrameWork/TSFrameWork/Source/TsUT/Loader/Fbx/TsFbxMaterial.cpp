@@ -91,7 +91,7 @@ TsBool TsFbxMaterial::AnalizeCustomMaterial( FbxSurfaceMaterial* pFbxMaterial ,
                     else if( pEntrySource == "Maya|ReflectionMapTexture" )
                         texType = TextureType::Reflection;
 
-                    m_texturename[texType][j].Analize( pTex->GetFileName() );
+                    m_texturename[(TsUint)texType][j].Analize( pTex->GetFileName() );
                 }
             }
         }

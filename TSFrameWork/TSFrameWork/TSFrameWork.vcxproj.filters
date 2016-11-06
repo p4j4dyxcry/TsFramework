@@ -393,6 +393,12 @@
     <ClCompile Include="Source\TsGfx\Geometry\TsSkyBox.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsGfx\ShaderResources\TsBlendStae.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\ShaderResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\BufferResources\TsLightSetCBuffer.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -691,6 +697,12 @@
     </ClInclude>
     <ClInclude Include="Source\TsGfx\Geometry\TsSkyBox.h">
       <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\ShaderResources\TsBlendStae.h">
+      <Filter>ソース ファイル\TsGfx\Source\ShaderResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\BufferResources\TsLightSetCBuffer.h">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

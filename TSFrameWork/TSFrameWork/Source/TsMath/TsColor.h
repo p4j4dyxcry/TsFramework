@@ -17,5 +17,12 @@ public:
         return m_color.w <= 1.0f;
     }
 
+    TsColor& operator = ( const TsFloat4& f )
+    {
+        m_color = f;
+        return *this;
+    }
+
     TsFloat4 m_color;
+
 };

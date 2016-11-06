@@ -24,6 +24,7 @@
 
 #include "Extlibs\TsDirectXTex.h"
 
+#include "ShaderResources\TsBlendStae.h"
 #include "ShaderResources\TsRasterizerState.h"
 #include "ShaderResources\TsDepthStencilState.h"
 #include "ShaderResources\TsShaderResource.h"
@@ -33,6 +34,7 @@
 #include "BufferResources\TsCBuffer.h"
 #include "BufferResources\TsTransformCBuffer.h"
 #include "BufferResources\TsBoneCBuffer.h"
+
 #include "ShaderResources\TsSamplerState.h"
 #include "ShaderResources\TsTexture.h"
 #include "ShaderResources\TsRenderTarget.h"
@@ -40,6 +42,7 @@
 #include "Camera\TsViewport.h"
 
 #include "Light\TsLight.h"
+#include "BufferResources\TsLightSetCBuffer.h"
 #include "ShadowMap\TsShadowMapRenderer.h"
 
 #include "Camera\TsCamera.h"

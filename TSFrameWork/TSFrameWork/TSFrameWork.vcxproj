@@ -25,6 +25,7 @@
     <ClCompile Include="Source\TsGfx\BufferResources\TsBoneCBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\BufferResources\TsCBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\BufferResources\TsCommonCBuffer.cpp" />
+    <ClCompile Include="Source\TsGfx\BufferResources\TsLightSetCBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\BufferResources\TsTransformCBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\BufferResources\TsVertexBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\Camera\TsCamera.cpp" />
@@ -50,6 +51,7 @@
     <ClCompile Include="Source\TsGfx\RenderSystem\TsRenderFlow.cpp" />
     <ClCompile Include="Source\TsGfx\RenderSystem\TsRenderPass.cpp" />
     <ClCompile Include="Source\TsGfx\RenderSystem\TsRenderSystem.cpp" />
+    <ClCompile Include="Source\TsGfx\ShaderResources\TsBlendStae.cpp" />
     <ClCompile Include="Source\TsGfx\ShaderResources\TsDepthStencilState.cpp" />
     <ClCompile Include="Source\TsGfx\ShaderResources\TsDepthStencilView.cpp" />
     <ClCompile Include="Source\TsGfx\ShaderResources\TsRasterizerState.cpp" />
@@ -78,6 +80,7 @@
     <ClInclude Include="Source\TsGfx\BufferResources\TsCBuffer.h" />
     <ClInclude Include="Source\TsGfx\BufferResources\TsCommonCBuffer.h" />
     <ClInclude Include="Source\TsGfx\BufferResources\TsIndexBuffer.h" />
+    <ClInclude Include="Source\TsGfx\BufferResources\TsLightSetCBuffer.h" />
     <ClInclude Include="Source\TsGfx\BufferResources\TsTransformCBuffer.h" />
     <ClInclude Include="Source\TsGfx\BufferResources\TsVertex.h" />
     <ClInclude Include="Source\TsGfx\BufferResources\TsVertexBuffer.h" />
@@ -105,6 +108,7 @@
     <ClInclude Include="Source\TsGfx\RenderSystem\TsRenderFlow.h" />
     <ClInclude Include="Source\TsGfx\RenderSystem\TsRenderPass.h" />
     <ClInclude Include="Source\TsGfx\RenderSystem\TsRenderSystem.h" />
+    <ClInclude Include="Source\TsGfx\ShaderResources\TsBlendStae.h" />
     <ClInclude Include="Source\TsGfx\ShaderResources\TsDepthStencilState.h" />
     <ClInclude Include="Source\TsGfx\ShaderResources\TsDepthStencilView.h" />
     <ClInclude Include="Source\TsGfx\ShaderResources\TsRasterizerState.h" />
@@ -461,8 +465,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <ForceSymbolReferences>
-      </ForceSymbolReferences>
+      <ForceSymbolReferences>__tcmalloc</ForceSymbolReferences>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /r "$(TargetDir)*.cso" "$(ProjectDir)\Resource\Shader"
@@ -489,8 +492,7 @@ xcopy /y /r "$(TargetDir)*.exe" "$(ProjectDir)..\bin"</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <ForceSymbolReferences>
-      </ForceSymbolReferences>
+      <ForceSymbolReferences>__tcmalloc</ForceSymbolReferences>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /r "$(TargetDir)*.cso" "$(ProjectDir)\Resource\Shader"
