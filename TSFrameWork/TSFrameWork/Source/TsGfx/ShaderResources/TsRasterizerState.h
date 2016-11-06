@@ -1,13 +1,13 @@
 #pragma once
 
-enum TS_CULL_MODE
+enum class TS_CULL_MODE : TsUint
 {
     BACK    = D3D11_CULL_BACK,
     FRONT   = D3D11_CULL_FRONT ,
     NONE    = D3D11_CULL_NONE
 };
 
-enum TS_FILL_MODE
+enum class TS_FILL_MODE : TsUint
 {
     SOLID       = D3D11_FILL_MODE::D3D11_FILL_SOLID,
     WIREFRAME   = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME 

@@ -1,6 +1,6 @@
 #pragma once
 
-enum TS_COMPARISON_FUNC
+enum class TS_COMPARISON_FUNC : TsUint
 {
     NEVER              = 1 ,   //&0 常に不合格
     LESS                  = 2 ,   //<= ソースが対象より小さいときに合格

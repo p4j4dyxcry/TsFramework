@@ -119,9 +119,10 @@ TsBool TsRenderSystem::LoadShaderResourceFromXML(TsDevice* pDev, const TsString&
             TsTexture2D * pTex = TsNew( TsTexture2D );
             TsString name = elm->GetAttribute("Name")->GetStringValue();
             TsString path = elm->GetAttribute("Path")->GetStringValue();
-            auto srv = TsDirectXTex::LoadFromFile(pDev->GetDevD3D(), path.c_str());
+            auto pResult = TsDirectXTex::LoadFromFile(pDev->GetDevD3D(), path.c_str());
             pTex->SetName(name);
-            pTex->SetSRV(srv);
+            pTex->SetSRV( pResult.pSrv);
+            pTex->SetAlphaMode( pResult.IsAlphaEnable );
             
             m_shaderResourceList.push_back(pTex);
             TsResourceManager::RegisterResource<TsTexture>( pTex , name );
@@ -132,9 +133,10 @@ TsBool TsRenderSystem::LoadShaderResourceFromXML(TsDevice* pDev, const TsString&
             TsCubeMap * pTex = TsNew( TsCubeMap );
             TsString name = elm->GetAttribute( "Name" )->GetStringValue();
             TsString path = elm->GetAttribute( "Path" )->GetStringValue();
-            auto srv = TsDirectXTex::LoadFromFile( pDev->GetDevD3D() , path.c_str() );
+            auto pResult = TsDirectXTex::LoadFromFile( pDev->GetDevD3D() , path.c_str() );
             pTex->SetName( name );
-            pTex->SetSRV( srv );
+            pTex->SetSRV( pResult.pSrv );
+            pTex->SetAlphaMode( pResult.IsAlphaEnable );
 
             m_shaderResourceList.push_back( pTex );
             TsResourceManager::RegisterResource<TsTexture>( pTex , name );

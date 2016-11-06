@@ -24,7 +24,7 @@ PS_GBUFFER_OUTPUT_3 main( PS_IN input ,
     output.data1.w = input.worldPos.z / input.worldPos.w;
 
     // world space uv
-    output.data2.xy  = input.uv;
+    output.data2  = float4(0,0,0.5f,1);
 
     return output;
 }

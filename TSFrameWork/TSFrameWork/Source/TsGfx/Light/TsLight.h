@@ -6,11 +6,11 @@ class TsLight :
     public IHasTransform
 {
 public:
-    enum LIGHT_TYPE
+    enum class LIGHT_TYPE : TsUint
     {
-        LIGHT_DIRECTIONAL,
-        LIGHT_POINT,
-        LIGHT_SPOT,
+        LIGHT_DIRECTIONAL = 0,
+        LIGHT_POINT = 1,
+        LIGHT_SPOT = 2,
     };
 
     TsColor GetColor();
@@ -28,7 +28,7 @@ class TsDirectioalLight :public TsLight
 public:
     LIGHT_TYPE GetLightType()override
     {
-        return LIGHT_DIRECTIONAL;
+        return LIGHT_TYPE::LIGHT_DIRECTIONAL;
     }
     TsVector3 GetLightDir()
     {
@@ -43,7 +43,7 @@ class TsPointLight : public TsLight
 public:
     LIGHT_TYPE GetLightType()override
     {
-        return LIGHT_POINT;
+        return LIGHT_TYPE::LIGHT_POINT;
     }
 protected:
     TsF32 m_rage;
@@ -53,7 +53,7 @@ class TsSpotLight : public TsLight
 {
     LIGHT_TYPE GetLightType()override
     {
-        return LIGHT_SPOT;
+        return LIGHT_TYPE::LIGHT_SPOT;
     }
 protected:
     TsF32 m_range;

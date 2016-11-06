@@ -57,7 +57,7 @@
     Name  ="Temp1/2_1"
     Type  ="Texture2D"
     Format="UNORM_R8G8B8A8"
-    Size ="1/2">            
+    Size ="1/8">            
   </RenderTarget>
 
     <RenderTarget
@@ -78,7 +78,7 @@
     Name  ="Temp1/16_2"
     Type  ="Texture2D"
     Format="UNORM_R8G8B8A8"
-    Size ="1/16">            
+    Size ="1/64">            
   </RenderTarget>
 
   <Depth 

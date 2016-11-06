@@ -6,7 +6,7 @@
 //! © 2016 Yuki Tsuneyama
 #pragma once
 
-enum TS_SHADER_TYPE
+enum TS_SHADER_TYPE 
 {
     UNKNOWN_SHADER = 0x00 ,
 
@@ -22,7 +22,7 @@ enum TS_SHADER_TYPE
     ALL_SHADER = 0x3f ,
 };
 
-enum TS_SHADER_INDEX
+enum TS_SHADER_INDEX 
 {
     VS_IDX = 0x00,
     PS_IDX = 0x01,
@@ -34,7 +34,7 @@ enum TS_SHADER_INDEX
     MAX_IDX = 0x06,
 };
 
-enum TS_CBUFFER_REGISTER
+enum TS_CBUFFER_REGISTER 
 {
     ObjectMatrix = 0,
     Skin = 1,       // used Vertex Shader
@@ -46,7 +46,7 @@ enum TS_CBUFFER_REGISTER
 
 namespace TSShaderUT
 {
-    enum VARIABLE_TYPE
+    enum class VARIABLE_TYPE : TsUint
     {
         FLOAT,
         INT,
@@ -56,7 +56,7 @@ namespace TSShaderUT
         NUM
     };
 
-    static const TsChar * VARIABLE_STRING[VARIABLE_TYPE::NUM] =
+    static const TsChar * VARIABLE_STRING[(TsUint)VARIABLE_TYPE::NUM] =
     {
         "Float",
         "Int",
@@ -81,32 +81,32 @@ namespace TSShaderUT
 
     inline TsBool IsVS( TS_SHADER_TYPE type )
     {
-        return (type & VERTEX_SHADER) > 0;
+        return ( ( TsUint )type & ( TsUint )TS_SHADER_TYPE::VERTEX_SHADER ) > 0;
     }
 
     inline TsBool IsPS( TS_SHADER_TYPE type )
     {
-        return (type & PIXEL_SHADER) > 0;
+        return ( ( TsUint )type & ( TsUint )TS_SHADER_TYPE::PIXEL_SHADER ) > 0;
     }
 
     inline TsBool IsGS( TS_SHADER_TYPE type )
     {
-        return (type & GEOMETRY_SHADER) > 0;
+        return ( ( TsUint )type & ( TsUint )TS_SHADER_TYPE::GEOMETRY_SHADER ) > 0;
     }
 
     inline TsBool IsHS( TS_SHADER_TYPE type )
     {
-        return (type & HULL_SHADER) > 0;
+        return ( ( TsUint )type & ( TsUint )TS_SHADER_TYPE::HULL_SHADER ) > 0;
     }
 
     inline TsBool IsDS( TS_SHADER_TYPE type )
     {
-        return (type & DOMAIN_SHADER) > 0;
+        return ( ( TsUint )type & ( TsUint )TS_SHADER_TYPE::DOMAIN_SHADER ) > 0;
     }
 
     inline TsBool IsCS( TS_SHADER_TYPE type )
     {
-        return (type & COMPUTE_SHADER) > 0;
+        return ( ( TsUint )type & ( TsUint )TS_SHADER_TYPE::COMPUTE_SHADER ) > 0;
     }
 
     inline DXGI_FORMAT ComvertTextureFormat(const TsString& fmt)

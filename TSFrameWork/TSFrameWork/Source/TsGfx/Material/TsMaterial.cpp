@@ -36,9 +36,12 @@ TsBool TsMaterial::LoadTextureFromFile( TsDevice* pDev )
     {
         m_pTexture = TsNew(TsTexture2D);
         m_pTexture->SetName(m_textureName);
-        ID3D11ShaderResourceView* pSRV = TsDirectXTex::LoadFromFile(pDev->GetDevD3D(), m_textureName.c_str());
-        if (pSRV)
-            m_pTexture->SetSRV(pSRV);
+        auto pResult = TsDirectXTex::LoadFromFile(pDev->GetDevD3D(), m_textureName.c_str());
+        if( pResult.pSrv )
+        {
+            m_pTexture->SetSRV( pResult.pSrv );
+            m_pTexture->SetAlphaMode( pResult.IsAlphaEnable );
+        }
         else
             return TS_FALSE;
         TsResourceManager::RegisterResource<TsTexture>(m_pTexture, m_textureName);

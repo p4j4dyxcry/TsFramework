@@ -57,12 +57,25 @@ TsBool TsRenderPass::Begin( TsDeviceContext* pDc )
         pDc->SetTexture( i , m_pInputSlot[i] , TS_SHADER_TYPE::PIXEL_SHADER );
 
     //! Set Depth Stencil
-    pDc->SetDepthStencilState( m_pDepthStencilState );
-    pDc->ApplyDepthStencil();
+    if( m_pDepthStencilState )
+    {
+        pDc->SetDepthStencilState( m_pDepthStencilState );
+        pDc->ApplyDepthStencil();
+    }
 
     //! Set Rasterize
-    pDc->SetRasterizerState( m_pRasterizerState );
-    pDc->ApplyRasterizer();
+    if( m_pRasterizerState )
+    {
+        pDc->SetRasterizerState( m_pRasterizerState );
+        pDc->ApplyRasterizer();
+    }
+
+    //! Set BlendState
+    if( m_pBlendState )
+    {
+        pDc->SetBlendState( m_pBlendState );
+        pDc->ApplyBlendState();
+    }
 
     return TS_TRUE;
 }
@@ -146,6 +159,7 @@ TsBool TsRenderPass::LoadShaderFromXMLElement( TsDevice* pDev , TsXMLElement * p
     }
     m_pDepthStencilState = pShaderEffect->GetDepthStencilState();
     m_pRasterizerState = pShaderEffect->GetRasterizeState();
+    m_pBlendState = pShaderEffect->GetBlendState();
     SetShader( pShaderEffect );
 
     return TS_TRUE;
@@ -191,8 +205,6 @@ TsBool TsRenderPass::LoadIOSlotFromXMLElement( TsDevice* pDev , TsXMLElement * p
             SetInputSlot( rtvIndex , dsv );
             ++rtvIndex;
         }
-
-
     }
 
     TsXMLElement * outputSlot = pElement->FindChild( "Output" )->GetFirstChild();

@@ -83,6 +83,47 @@ TsBool TsResourceManager::Initialize( TsDevice* pDev )
 {
     m_pDevice = pDev;
     InitializeSampler( pDev );
+    InitializeBlendState( pDev );
+    return TS_TRUE;
+}
+
+TsBool TsResourceManager::InitializeBlendState( TsDevice* pDev )
+{
+    //ブレンド無し
+    {
+        TsBlendState* pBlendState = nullptr;
+        pBlendState = TsNew( TsBlendState );
+        pBlendState->CreateBlendState( pDev , TS_BLEND_MODE::NONE );
+        std::pair<TS_HASH , TsBlendState*> pair( TSUT::StringToHash( "NONE" ) , pBlendState );
+        m_blendStateLibrary.insert( pair );
+    }
+
+    //アルファブレンド
+    {
+        TsBlendState* pBlendState = nullptr;
+        pBlendState = TsNew( TsBlendState );
+        pBlendState->CreateBlendState( pDev , TS_BLEND_MODE::ALPHA_BLEND );
+        std::pair<TS_HASH , TsBlendState*> pair( TSUT::StringToHash( "ALPHA_BLEND" ) , pBlendState );
+        m_blendStateLibrary.insert( pair );
+    }
+
+    //加算合成
+    {
+        TsBlendState* pBlendState = nullptr;
+        pBlendState = TsNew( TsBlendState );
+        pBlendState->CreateBlendState( pDev , TS_BLEND_MODE::ADD );
+        std::pair<TS_HASH , TsBlendState*> pair( TSUT::StringToHash( "ADD" ) , pBlendState );
+        m_blendStateLibrary.insert( pair );
+    }
+
+    //減算合成
+    {
+        TsBlendState* pBlendState = nullptr;
+        pBlendState = TsNew( TsBlendState );
+        pBlendState->CreateBlendState( pDev , TS_BLEND_MODE::SUBTRACT );
+        std::pair<TS_HASH , TsBlendState*> pair( TSUT::StringToHash( "SUBTRACT" ) , pBlendState );
+        m_blendStateLibrary.insert( pair );
+    }
 
     return TS_TRUE;
 }
@@ -129,7 +170,7 @@ TsBool TsResourceManager::InitializeSampler( TsDevice * pDev )
     std::pair<TS_HASH, TsSamplerState*> pair2(TSUT::StringToHash("Cube"), pDev->CreateSamplerState(desc));
 
 
-    m_SamplerLibrary.insert(pair2);
+    m_samplerLibrary.insert(pair2);
 
     return TS_TRUE;
 }
@@ -138,7 +179,8 @@ TsBool TsResourceManager::InitializeSampler( TsDevice * pDev )
 
 
 TsDevice* TsResourceManager::m_pDevice = nullptr;
-ASSIGN_INTERFACE( TsSamplerState , m_SamplerLibrary );
-ASSIGN_INTERFACE( TsMeshObject , m_pMeshLibrary );
-ASSIGN_INTERFACE( TsTexture , m_FileTextureLibray );
-ASSIGN_INTERFACE( TsSkeleton , m_pSkeletonLibrary );
+ASSIGN_INTERFACE( TsSamplerState , m_samplerLibrary );
+ASSIGN_INTERFACE( TsMeshObject , m_meshLibrary );
+ASSIGN_INTERFACE( TsTexture , m_fileTextureLibray );
+ASSIGN_INTERFACE( TsSkeleton , m_skeletonLibrary );
+ASSIGN_INTERFACE( TsBlendState , m_blendStateLibrary );

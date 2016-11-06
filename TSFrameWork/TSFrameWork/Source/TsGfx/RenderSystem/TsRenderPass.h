@@ -39,4 +39,5 @@ protected:
 
     TsRasterizerState*      m_pRasterizerState;
     TsDepthStencilState*    m_pDepthStencilState;
+    TsBlendState*           m_pBlendState;
 };

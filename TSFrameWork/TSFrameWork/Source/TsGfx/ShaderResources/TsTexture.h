@@ -23,9 +23,19 @@ public:
         m_srv = srv; 
         return TS_TRUE;
     }
+    TsBool IsAlpha()const
+    {
+        return m_isAlpha;
+    }
+    TsBool SetAlphaMode( TsBool flag)
+    {
+        m_isAlpha = flag;
+        return TS_TRUE;
+    }
 protected:
     ID3D11ShaderResourceView * m_srv;
     TsInt m_registerIndex = 0;
+    TsBool m_isAlpha = TS_FALSE;
 };
 
 class TsTexture2D : public TsTexture

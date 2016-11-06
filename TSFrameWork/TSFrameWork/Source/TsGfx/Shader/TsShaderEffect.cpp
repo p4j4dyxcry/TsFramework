@@ -1,4 +1,4 @@
-#include "../TsGfx.h"
+#include "../../../TsAfx.h"
 
 TS_INSTANTIATE_NAME_OBJ_LIST(TsShaderEffect);
 
@@ -85,6 +85,17 @@ TsBool TsShaderEffect::LoadPackageFromXml( TsDevice* pDev , const TsString& name
         {
             TsBool antiailias = pAttr->GetBoolValue();
             m_pRasterizerState->SetAntiAliasMode( antiailias );
+        }
+    }
+
+    xmlElement = xmlShaderPass.FindFirst( "BlendState" );
+    if( xmlElement != nullptr )
+    {        
+        TsXMLAttribute* pAttr = xmlElement->GetAttribute( "BlendMode" );
+        if( pAttr )
+        {
+            TsString blendMode = pAttr->GetStringValue();
+            m_pBlensState = TsResourceManager::Find<TsBlendState>( blendMode );
         }
     }
 

@@ -14,4 +14,7 @@
     CullMode ="CCW"
     AntiAlias ="false">
   </Rasterize>    
+  <BlendState
+    BlendMode      ="NONE">
+  </BlendState>     
 </root>

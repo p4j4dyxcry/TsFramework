@@ -29,7 +29,7 @@ float4 main( float4 pos		: SV_POSITION,
     //rimlight
     float rim = pow( 1 - saturate(dot( eye , normal )) , 12.5f );
 
-    float4 result = ( d * color + s + rim );
+    float4 result = float4(( d * color.rgb + s + rim ),color.a);
     result = saturate( result );
 
     return result;

@@ -8,8 +8,10 @@
 #endif
 using namespace DirectX;
 
-ID3D11ShaderResourceView* TsDirectXTex::LoadFromFile( ID3D11Device* pDev ,const TsChar* filename )
+TsDirectXTex::Result TsDirectXTex::LoadFromFile( ID3D11Device* pDev , const TsChar* filename )
 {
+    Result result;
+    memset( &result , 0 , sizeof( result ) );
     TSUT::TsFilePathAnalyzer analize = filename;
 
     ScratchImage image;
@@ -21,7 +23,6 @@ ID3D11ShaderResourceView* TsDirectXTex::LoadFromFile( ID3D11Device* pDev ,const 
 
     mbstowcs_s(&sz, lChar, filename, _TRUNCATE);
     HRESULT hr;
-    ID3D11ShaderResourceView* resourceView;
     if( analize.GetExtension() == ".tga" )
     {
         hr = LoadFromTGAFile( lChar ,0 ,image );
@@ -37,7 +38,7 @@ ID3D11ShaderResourceView* TsDirectXTex::LoadFromFile( ID3D11Device* pDev ,const 
     if( FAILED( hr ) )
     {
         TSUT::TsLog( "Texture Load Error \n\t %ws \n" , filename );
-        return nullptr;
+        return result;
     }
 
     // 画像からシェーダリソースView DirectXTex
@@ -45,13 +46,14 @@ ID3D11ShaderResourceView* TsDirectXTex::LoadFromFile( ID3D11Device* pDev ,const 
                                    image.GetImages() ,
                                    image.GetImageCount() ,
                                    image.GetMetadata() ,
-                                   &resourceView );
+                                   &result.pSrv );
     if( FAILED( hr ) )
     {
         TSUT::TsLog( "Texture Load Error \n\t %ws \n" , filename );
-        return nullptr;
+        return result;
     }
+    result.IsAlphaEnable = image.IsAlphaAllOpaque();
 
-    return resourceView;
+    return result;
 }
 

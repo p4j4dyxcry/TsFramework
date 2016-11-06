@@ -453,6 +453,16 @@ TsBool TsDeviceContext::SetRasterizerState( TsRasterizerState* raster )
     return TS_TRUE;
 }
 
+TsBool TsDeviceContext::SetBlendState( TsBlendState* pBlendState )
+{
+    if( m_pDeviceContext == nullptr )
+        return TS_FALSE;
+
+    m_pBlendState = pBlendState;
+
+    return TS_TRUE;
+}
+
 TsBool TsDeviceContext::SetDepthStencilState( TsDepthStencilState*  pDepthStencil)
 {
     if( m_pDeviceContext == nullptr )
@@ -495,6 +505,15 @@ TsBool TsDeviceContext::ApplyRasterizer()
 {
     if( m_pDeviceContext )
         m_pDeviceContext->RSSetState( m_pRasterizerState->GetRSS() );
+    return TS_TRUE;
+}
+TsBool TsDeviceContext::ApplyBlendState()
+{
+    if( m_pDeviceContext )
+    {
+        float blendFactor[4] = { 0.0f , 0.0f , 0.0f , 0.0f };
+        m_pDeviceContext->OMSetBlendState( m_pBlendState->GetBlendState() , blendFactor , 0xffffff );
+    }
     return TS_TRUE;
 }
 

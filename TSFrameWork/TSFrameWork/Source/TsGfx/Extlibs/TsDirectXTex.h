@@ -9,5 +9,11 @@
 class TsDirectXTex
 {
 public:
-    static ID3D11ShaderResourceView * LoadFromFile( ID3D11Device * pDev ,const TsChar* fileName );
+    struct Result
+    {
+        ID3D11ShaderResourceView* pSrv;
+        TsBool                    IsAlphaEnable;
+    };
+        
+    static Result LoadFromFile( ID3D11Device * pDev , const TsChar* fileName );
 };

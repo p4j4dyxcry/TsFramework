@@ -18,7 +18,8 @@ public:
                         m_pDomainShader( nullptr ) ,
                         m_pComputeShader(nullptr),
                         m_pDepthStencilState(nullptr),
-                        m_pRasterizerState(nullptr){}
+                        m_pRasterizerState(nullptr),
+                        m_pBlensState(nullptr){}
 
     TsBool LoadPackageFromXml( TsDevice* pDev , const TsString& file );
 
@@ -39,6 +40,7 @@ public:
 
     TsRasterizerState*      GetRasterizeState()      { return m_pRasterizerState; }
     TsDepthStencilState* GetDepthStencilState(){ return m_pDepthStencilState; }
+    TsBlendState*        GetBlendState(){ return m_pBlensState; };
 
 protected:
     TsVertexShader *    m_vertexShader;
@@ -49,5 +51,6 @@ protected:
     TsComputeShader *   m_pComputeShader;
 
     TsDepthStencilState* m_pDepthStencilState;
-    TsRasterizerState*      m_pRasterizerState;
+    TsRasterizerState*   m_pRasterizerState;
+    TsBlendState*        m_pBlensState;
 };

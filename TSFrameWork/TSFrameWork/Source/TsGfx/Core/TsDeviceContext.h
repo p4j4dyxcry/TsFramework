@@ -7,6 +7,7 @@
 
 class TsRenderTarget;
 class TsDepthStencilView;
+class TsBlendState;
 class TsTexture;
 class TsShaderEffect;
 class TsCBuffer;
@@ -102,6 +103,7 @@ public:
 
     TsBool SetDepthStencilState( TsDepthStencilState * pDepthStencil );
     TsBool SetRasterizerState( TsRasterizerState * pRasterState );
+    TsBool SetBlendState( TsBlendState * pBlendState );
 
     TsBool SetAndChangeCBuffer( TsCBuffer* cbuffer , 
                                void * pData , 
@@ -122,6 +124,7 @@ public:
 
     TsBool ApplyDepthStencil();
     TsBool ApplyRasterizer();
+    TsBool ApplyBlendState();
 
     TsBool SetVertexBuffer( TsVertexBuffer* );
     TsBool SetIndexBuffer( TsIndexBuffer* );
@@ -135,18 +138,19 @@ public:
     TsBool SetTopology( D3D_PRIMITIVE_TOPOLOGY topology );
 private:
     
-    TsDevice*                                     m_pDevice;
-    ID3D11DeviceContext*               m_pDeviceContext;
-    TsShaderEffect*                           m_bindShaderEffect;
-    TsBool                                          m_activeShaders[TS_SHADER_INDEX::MAX_IDX];
-    TsRenderTarget *                        m_renderTarget[MAX_RTs];
-    TsRenderTarget *                        m_mainRenderTarget;
-    TsDepthStencilView *                 m_mainDepthStencil;
-    TsDepthStencilView *                 m_depthStencil;
+    TsDevice*                              m_pDevice;
+    ID3D11DeviceContext*                   m_pDeviceContext;
+    TsShaderEffect*                        m_bindShaderEffect;
+    TsBool                                 m_activeShaders[TS_SHADER_INDEX::MAX_IDX];
+    TsRenderTarget *                       m_renderTarget[MAX_RTs];
+    TsRenderTarget *                       m_mainRenderTarget;
+    TsDepthStencilView *                   m_mainDepthStencil;
+    TsDepthStencilView *                   m_depthStencil;
 
+    TsBlendState*                          m_pBlendState;
     TsRasterizerState *                    m_pRasterizerState;
-    TsDepthStencilState*                m_pDepthStencilState;
+    TsDepthStencilState*                   m_pDepthStencilState;
 
-    TsCamera*                                 m_mainCamera;
-    TsInt                                           m_drawCallCount;
+    TsCamera*                              m_mainCamera;
+    TsInt                                  m_drawCallCount;
 };

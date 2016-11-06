@@ -13,10 +13,12 @@ public:
 
 private:
     static TsBool InitializeSampler( TsDevice* pDev );
+    static TsBool InitializeBlendState( TsDevice* pDev );
 
     static TsDevice* m_pDevice;
-    static TsMap<TS_HASH , TsSamplerState*> m_SamplerLibrary;
-    static TsMap<TS_HASH , TsMeshObject*>   m_pMeshLibrary;
-    static TsMap<TS_HASH, TsTexture*>     m_FileTextureLibray;
-    static TsMap<TS_HASH , TsSkeleton*>     m_pSkeletonLibrary;
+    static TsMap<TS_HASH , TsSamplerState*> m_samplerLibrary;
+    static TsMap<TS_HASH , TsMeshObject*>   m_meshLibrary;
+    static TsMap<TS_HASH, TsTexture*>       m_fileTextureLibray;
+    static TsMap<TS_HASH , TsSkeleton*>     m_skeletonLibrary;
+    static TsMap<TS_HASH,TsBlendState*>     m_blendStateLibrary;
 };
