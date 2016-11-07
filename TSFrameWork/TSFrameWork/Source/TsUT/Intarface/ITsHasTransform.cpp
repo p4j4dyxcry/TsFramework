@@ -128,3 +128,9 @@ TsBool IHasTransform::SetLocalRotateAxis(const TsVector3& v, TsF32 angle)
     m_pTransform->m_localRotate = TsQuaternion::AngleAxis(v, angle);
     return TS_TRUE;
 }
+
+TsBool IHasTransform::LookAt(const TsVector3& eye, const TsVector3& target, const TsVector3& up)
+{
+    *m_pTransform = TsMatrix::CreateLookAt(eye, target, up);
+    return TS_TRUE;
+}

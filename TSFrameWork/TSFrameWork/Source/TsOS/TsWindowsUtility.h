@@ -31,3 +31,11 @@ void   TsWINSetWindowTitle( TsString name );
 //! ウィンドウプロシージャを設定(このメソッドはCreateする前にCallする必要があります。)
 void   TsWINSetProc( WNDPROC proc);
  
+TsBool TsWINGetKey(TsU8 key);
+
+TsFloat2 TsWINGetMousePos();
+TsBool TsWINIsLeftClick();
+
+TsBool TsWINIsRightCkick();
+
+TsInt TsWINGetMouseWheel();

@@ -213,9 +213,6 @@
     <ClCompile Include="TsAfx.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsUT\Intarface\IHasTransform.cpp">
-      <Filter>ソース ファイル\TsUT\Interface</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsMath\TsColor.cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
     </ClCompile>
@@ -398,6 +395,9 @@
     </ClCompile>
     <ClCompile Include="Source\TsGfx\BufferResources\TsLightSetCBuffer.cpp">
       <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\Intarface\ITsHasTransform.cpp">
+      <Filter>ソース ファイル\TsUT\Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

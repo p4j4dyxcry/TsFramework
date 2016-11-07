@@ -70,6 +70,11 @@ public:
     //! ローカル空間でのスケールを設定する
     TsBool SetLocalScale(const TsVector3&);
 
+    //! 指定した座標を注視する
+    TsBool LookAt(const TsVector3& eye,
+                  const TsVector3& target,
+                  const TsVector3& up = TsVector3::up);
+
 protected:
     TsTransForm* m_pTransform;	//Transform
 };

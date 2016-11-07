@@ -14,6 +14,12 @@ namespace
     static  TsUint  g_windowStyle = CS_HREDRAW | CS_VREDRAW;
 
     static TsString g_windowName ="TsFramework";
+
+    static TsBool   g_IsLClick;
+    static TsBool   g_IsRClick;
+    static TsInt    g_Wheel;
+    static TsFloat2 g_MousePos;
+    static TsBool   g_keyDown[128];
 }
 
 //==============================================
@@ -92,10 +98,35 @@ void TsWINSetWindowTitle( TsString name )
 }
 
 //! set window proc
-void TsWINSetProc( WNDPROC proc )
+void TsWINTsWINSetProc(WNDPROC proc)
 {
     if( !g_isInitialize )
         g_windowProc = proc;
+}
+
+TsBool TsWINGetKey(TsU8 key)
+{
+    return g_keyDown[key];
+}
+
+TsFloat2 TsWINGetMousePos()
+{
+    return g_MousePos;
+}
+
+TsBool TsWINIsLeftClick()
+{
+    return g_IsLClick;
+}
+
+TsBool TsWINIsRightCkick()
+{
+    return g_IsRClick;
+}
+
+TsInt TsWINGetMouseWheel()
+{
+    return g_Wheel;
 }
 
 //Default windowproc
@@ -104,11 +135,33 @@ LRESULT CALLBACK TSDefaultWindowProc( HWND hWnd ,
                                       WPARAM wParam , 
                                       LPARAM lParam )
 {
+    TsUint x, y;
+    x = LOWORD(lParam);
+    y = HIWORD(lParam);
+    g_MousePos = TsFloat2((TsF32)x, (TsF32)y);
+    g_Wheel = GET_WHEEL_DELTA_WPARAM(wParam);
     switch( message )
     {
         case WM_DESTROY:
             PostQuitMessage( 0 );
             break;
+        case WM_LBUTTONDOWN:
+            g_IsLClick = TS_TRUE;
+            break;
+        case WM_LBUTTONUP:
+            g_IsLClick = TS_FALSE;
+            break;
+        case WM_RBUTTONDOWN:
+            g_IsRClick = TS_TRUE;
+            break;
+        case WM_RBUTTONUP:
+            g_IsRClick = TS_FALSE;
+            break;
+        case WM_KEYDOWN:
+            g_keyDown[wParam] = TS_TRUE;
+            break;
+        case WM_KEYUP:
+            g_keyDown[wParam] = TS_FALSE;
         default:
             return DefWindowProc( hWnd , message , wParam , lParam );
     }
