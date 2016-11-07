@@ -12,16 +12,23 @@ public:
         LIGHT_POINT = 1,
         LIGHT_SPOT = 2,
     };
+    TsLight();
+    virtual ~TsLight();
+    const TsColor& GetColor()const;
+    TsBool  SetColor(const TsColor& );
 
-    TsColor GetColor();
-    TsBool  SetColor( TsColor );
+    TsF32  GetIntensity()const;
+    TsBool SetIntensity(TsF32);
+
     virtual LIGHT_TYPE GetLightType() = 0;
     TsBool Enable()const{ return m_isEnable; }
+    TsBool IsUpdate()const{ return m_isUpdate; }
     TsBool SetEnable( TsBool enable ){ m_isEnable = enable; }
 protected:
     TsColor m_color;
     TsF32   m_intensity;
     TsBool  m_isEnable;
+    TsBool  m_isUpdate;
 };
 
 

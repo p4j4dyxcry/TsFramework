@@ -141,6 +141,19 @@ TsMatrix TsCamera::GetProjMatrix()const
     return proj;
 }
 
+TsMatrix TsCamera::GetLinearProjMatrix()const
+{
+    // 2/(r-l)      0             0           0
+    // 0            2/(t-b)       0           0
+    // 0            0            -1/(zf-zn)   0
+    // (l+r)/(l-r)  (t+b)/(b-t)  -zn/(zf-zn)  1
+
+    TsMatrix proj = GetProjMatrix();
+    proj._22 /= m_far;
+    proj._32 /= m_far;
+    return proj;
+}
+
 TsBool TsCamera::SetEyePosition( TsVector3 eye )
 {
     m_eye = eye;

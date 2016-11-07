@@ -24,15 +24,23 @@ public:
         TsUint              lightNum;
         LightData           lightData[LIGHT_CB_MAX];
     };
+
+    TsBool AddLight(TsLight * pLight);
+    TsBool RemoveLight(TsLight *pLight);
+    TsBool RemoveLightByName(const TsString& name);
+
 public:
     //====================================================
     //  ! public methods
     //====================================================
+    TsLightSetCBuffer();
+    virtual ~TsLightSetCBuffer();
+
     TsBool CreateLightSetCBuffer( TsDevice* pDev );
     virtual TsBool ApplyCBuffer( TsDeviceContext* pDevContext )override;
     virtual TsBool UpdateCBuffer( TsDeviceContext* pDevContext )override;
 protected:
     LightCB m_lightSetCBuffer;              //  Constant Buffer
     TsVector<TsLight*>  m_pLightRefList;    //  GPUに転送するライト
-    TsBool m_isUpdateFlag;                  //  更新フラグ
+    TsBool m_isUpdate;
 };

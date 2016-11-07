@@ -221,27 +221,23 @@ TsMatrix TsComputeLisPSM::GetPerspective( TsF32 nearDist , TsF32 farDist )
     return result;
 }
 
-TsBool TsComputeLisPSM::SetEyePos( TsVector3& value )
+TsBool TsComputeLisPSM::SetEyePos(const TsVector3& value )
 {
     m_eyePostion = value;
     return TS_TRUE;
 }
-TsBool TsComputeLisPSM::SetViewDir( TsVector3& value )
+TsBool TsComputeLisPSM::SetViewDir(const TsVector3& value )
 {
     m_viewDir = value;
     return TS_TRUE;
 }
-TsBool TsComputeLisPSM::SetLightDir( TsVector3& value )
+TsBool TsComputeLisPSM::SetLightDir(const TsVector3& value )
 {
     m_lightDir = value;
     return TS_TRUE;
 }
-TsBool TsComputeLisPSM::SetEyeView( TsVector3& value )
-{
-    m_eyePostion = value;
-    return TS_TRUE;
-}
-TsBool TsComputeLisPSM::SetEyeProjection( TsMatrix& value )
+
+TsBool TsComputeLisPSM::SetEyeProjection(const TsMatrix& value )
 {
     m_viewProjectionMatrix = value;
     return TS_TRUE;

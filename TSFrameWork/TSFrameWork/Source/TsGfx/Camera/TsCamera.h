@@ -17,6 +17,7 @@ public:
                    TsF32	 far);
 
     TsMatrix GetProjMatrix()const;
+    TsMatrix GetLinearProjMatrix()const;
     TsMatrix GetViewMatrix()const;
     TsMatrix GetViewProjMatrix();// const;
     TsBool	 CreateCBuffer( TsDevice* );
