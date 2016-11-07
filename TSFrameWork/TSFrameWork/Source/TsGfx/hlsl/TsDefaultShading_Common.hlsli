@@ -1,18 +1,26 @@
 
 #define TEX_REGISTER_ALBEDO t8
 
-cbuffer matrixs : register (b0)
+
+#define CBUFFER_OBJ_MTX_REGISTER  b0
+#define CBUFFER_SKIN_REGISTER b1
+#define CBUFFER_LIGHT_SET_REGISTER b2
+#define CBUFFER_MATERIAL_REGISTER b3
+#define CBUFFER_VIEW_REGISTER b7
+
+
+cbuffer matrixs : register (CBUFFER_OBJ_MTX_REGISTER)
 {
     float4x4 g_MtxWorld;
     float4x4 g_MtxInvWorld;
 }
 
-cbuffer BoneMatrixs : register ( b1 )
+cbuffer BoneMatrixs : register (CBUFFER_SKIN_REGISTER)
 {
     float4x4 g_BoneMatrix[512];
 }
 
-cbuffer ViewCB : register (b7)
+cbuffer ViewCB : register (CBUFFER_VIEW_REGISTER)
 {
     float4x4 g_MtxView;
     float4x4 g_MtxProj;
@@ -28,32 +36,22 @@ cbuffer ViewCB : register (b7)
     float ViewCB_Dumy;
 }
 
-struct DirectionalLight
+struct LightData
 {
-    float4 dir;
-    float3 color;
-    float  intensity;
+    uint             type;  // 0 directional / 1 point / 2 spot
+    float4           color;
+    float3           pos;
+    float3           dir;   // directional onry
+    float            intensity;
+    float            range; // spot & point 
+    float            angle; // spot only
+    float4x4         worldToShadowMatrix;    //directional Only
 };
 
-struct PointLight
+cbuffer LightSetCB : register(CBUFFER_LIGHT_SET_REGISTER)
 {
-    float4 pos;
-    float  intensity;
-};
-
-struct SpotLight
-{
-    float4 pos;
-    float4 dir;
-    float  length;
-    float  angle;
-    float  intensity;
-};
-
-
-cbuffer light : register(b2)
-{
-    float4 g_lightDir = float4(0,1,0,0);
+    LightData           g_LightData[256];
+    uint                g_LightNum;
 };
 
 struct VS_DEFAULT_INPUT
