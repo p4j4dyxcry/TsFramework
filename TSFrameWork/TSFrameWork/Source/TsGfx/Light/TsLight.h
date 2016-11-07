@@ -42,7 +42,8 @@ public:
     }
     TsVector3 GetLightDir()
     {
-        return TsVector3::up * m_pTransform->ToWorldMatrix();
+        TsVector3 v = TsVector3::front * m_pTransform->ToWorldMatrix();
+        return v.Normalized();
     }
 protected:
 
