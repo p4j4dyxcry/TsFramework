@@ -80,10 +80,10 @@ TsBool TsLightSetCBuffer::UpdateCBuffer(TsDeviceContext* pDevContext)
             {
                 TsComputeLisPSM lispsm;
                 TsCamera* pCamera = pDevContext->GetMainCamera();
-                lispsm.SetEyePos(pCamera->GetEyePos());
+                lispsm.SetEyePos(pCamera->GetWorldPosition());
                 lispsm.SetEyeProjection(pCamera->GetLinearProjMatrix());
                 lispsm.SetNearClip(pCamera->GetNear());
-                lispsm.SetViewDir((TsVector3(pCamera->GetLockAtPos() - pCamera->GetEyePos())).Normalized());
+                lispsm.SetViewDir( pCamera->GetZAxis() );
                 lispsm.SetLightDir(m_lightSetCBuffer.lightData[i].dir);
                 lispsm.UpdateShadowMatrix();
                 m_lightSetCBuffer.lightData[i].worldToShadowMatrix = lispsm.GetLVPMatrix();

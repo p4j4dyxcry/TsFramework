@@ -467,6 +467,7 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <ForceSymbolReferences>
       </ForceSymbolReferences>
+      <DelayLoadDLLs>__tcmalloc</DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /r "$(TargetDir)*.cso" "$(ProjectDir)\Resource\Shader"

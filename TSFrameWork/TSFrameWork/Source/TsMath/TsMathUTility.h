@@ -10,16 +10,18 @@
 #define TS_PI (3.14159265359f)
 
 //! degree -> radian
-inline TsF32 TsRadian( TsF32 degree )
+template<typename T>
+inline T TsRadian( T degree )
 {
     return degree * TS_PI / 180.0f;;
 
 }
 
 //! radian -> degree
-inline TsF32 TsDegree( TsF32 radian )
+template<typename T>
+inline T TsDegree( T radian )
 {
-    return radian * 180 / TS_PI;;
+    return radian * 180.0f / TS_PI;;
 }
 
 //! 値を min ~ max　に設定

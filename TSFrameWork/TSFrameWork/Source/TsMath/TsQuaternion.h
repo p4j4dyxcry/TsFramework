@@ -24,12 +24,16 @@ public:
     TsQuaternion( XMVECTOR vector )	: XMFLOAT4( vector.m128_f32[0] , vector.m128_f32[1] , vector.m128_f32[2] , vector.m128_f32[3] ){};
     XMVECTOR  ToXMVECTOR()const;
     TsMatrix  ToMatrix()const;
-
+    TsVector3 ToEuler()const;
     TsQuaternion& operator = ( TsMatrix matrix );
     TsQuaternion  operator * ( const TsQuaternion& quaternion )const;
     TsQuaternion& operator *=( const TsQuaternion& quaternion );
 
     static TsQuaternion Euler( const TsVector3& Euler );
+    static TsQuaternion Euler( TsF32 x , TsF32 y , TsF32 z )
+    {
+        return Euler( TsVector3( x , y , z ) );
+    }
     static TsQuaternion AngleAxis( TsVector3 axis , FLOAT angle );
     static const TsQuaternion identity;
 protected:

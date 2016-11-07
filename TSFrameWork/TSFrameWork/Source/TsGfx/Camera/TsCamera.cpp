@@ -1,9 +1,6 @@
 #include "../TsGfx.h"
 
 TsCamera::TsCamera() :
-m_eye(TsVector3(0, 0, 3)),
-m_up(TsVector3(0, 1, 0)),
-m_at(TsVector3(0, 0, 0)),
 m_aspect(16.0f / 9.0f),
 m_fov(45),
 m_near(0.001f),
@@ -50,7 +47,8 @@ TsBool TsCamera::UpdateForCBuffer(TsDevice* pDevice)
     m_pCBufferMemory->m_far = m;
     m_pCBufferMemory->m_fov = r;
 #endif
-    m_pCBufferMemory->m_worldCameraPos = TsFloat4(m_eye.x,m_eye.y,m_eye.z,1);
+    TsVector3 p = GetWorldPosition();
+    m_pCBufferMemory->m_worldCameraPos = TsFloat4(p.x,p.y,p.z,1);
     m_pCBufferMemory->m_near = m_near;
     m_pCBufferMemory->m_far = m_far;
     m_pCBufferMemory->m_fov = m_fov;
@@ -95,19 +93,11 @@ TsBool TsCamera::CreateCBuffer(TsDevice* pDevice)
     return TS_TRUE;
 }
 
-TsBool TsCamera::Create( TsVector3 eye ,
-                         TsVector3 up ,
-                         TsVector3 at ,
-                         TsF32	 aspect ,
+TsBool TsCamera::Create(TsF32	 aspect ,
                          TsF32	 fov ,
                          TsF32	 _near ,
                          TsF32	 _far )
 {
-
-    m_eye = eye;
-    m_up = up;
-    m_at = at;
-
     m_aspect = aspect;
     m_fov = fov;
     m_near = _near;
@@ -119,11 +109,36 @@ TsBool TsCamera::Create( TsVector3 eye ,
 
 TsMatrix TsCamera::GetViewMatrix()const
 {
-    Matrix view =
-        XMMatrixLookAtLH( 
-        m_eye.ToXMVECTOR() ,
-        m_at.ToXMVECTOR() ,
-        m_up.ToXMVECTOR() );
+    TsMatrix m = GetWorldMatrix();
+    Matrix view;
+
+    TsVector3 xAxis , yAxis , zAxis;
+    zAxis = TsVector3( m._31 , m._32 , m._33 );
+    yAxis = TsVector3( m._21 , m._22 , m._23 );
+    xAxis = TsVector3::Cross( yAxis , zAxis );
+    yAxis = TsVector3::Cross( zAxis , xAxis );
+
+    view._11 = xAxis.x;
+    view._21 = xAxis.y;
+    view._31 = xAxis.z;
+
+    view._12 = yAxis.x;
+    view._22 = yAxis.y;
+    view._32 = yAxis.z;
+
+    view._13 = zAxis.x;
+    view._23 = zAxis.y; 
+    view._33 = zAxis.z;
+
+    view._41 = -TsVector3::Dot( TsVector3( view._11 , view._21 , view._31 ) , GetWorldPosition() + m_lookAt);
+    view._42 = -TsVector3::Dot( TsVector3( view._12 , view._22 , view._32 ) , GetWorldPosition() + m_lookAt);
+    view._43 = -TsVector3::Dot( TsVector3( view._13 , view._23 , view._33 ) , GetWorldPosition() + m_lookAt);
+
+    view = TsMatrix::CreateTranslate( m_lookAt * -1 )*
+           TsMatrix::CreateRotate( TsQuaternion::Euler( m_eulerAngle ) )  *         
+            view 
+           ;
+
     return view;
 }
 TsMatrix TsCamera::GetViewProjMatrix()
@@ -154,21 +169,6 @@ TsMatrix TsCamera::GetLinearProjMatrix()const
     return proj;
 }
 
-TsBool TsCamera::SetEyePosition( TsVector3 eye )
-{
-    m_eye = eye;
-    return TS_TRUE;
-}
-TsBool TsCamera::SetUpVector( TsVector3 up )
-{
-    m_up= up;
-    return TS_TRUE;
-}
-TsBool TsCamera::SetLookAtVector( TsVector3 at )
-{
-    m_at = at;
-    return TS_TRUE;
-}
 TsBool TsCamera::SetFov( TsF32 fov )
 {
     m_fov = fov;

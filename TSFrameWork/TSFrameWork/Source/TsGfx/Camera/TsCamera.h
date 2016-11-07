@@ -1,6 +1,7 @@
 #pragma once
 
-class TsCamera : public TsNameObject
+class TsCamera : public TsNameObject,
+                 public IHasTransform
 {
 public:
     
@@ -8,10 +9,7 @@ public:
 
     TsCamera();
     virtual ~TsCamera();
-    TsBool Create( TsVector3 eye , 
-                   TsVector3 up  ,
-                   TsVector3 at  ,
-                   TsF32	 aspect,
+    TsBool Create( TsF32	 aspect,
                    TsF32	 fov,
                    TsF32	 near,
                    TsF32	 far);
@@ -24,14 +22,8 @@ public:
     TsBool	 UpdateForCBuffer( TsDevice* );
     const TsCBuffer* GetCBuffer()const;
 
-    TsBool SetEyePosition( TsVector3 eye );
-    TsBool SetUpVector( TsVector3 up );
-    TsBool SetLookAtVector( TsVector3 at );
     TsBool SetFov( TsF32 fov );
     TsBool SetNearAndFar( TsF32 _near , TsF32 _far );
-    const TsVector3& GetEyePos()const{ return m_eye; }
-    const TsVector3& GetLockAtPos()const{ return m_at; }
-    const TsVector3& GetUpVector()const{ return m_up; }
     TsF32 GetFov(){ return m_fov; }
     TsF32 GetNear(){ return m_near; }
     TsF32 GetFar(){ return m_far; }
@@ -53,11 +45,21 @@ public:
         TsF32    m_fov;
         TsF32    m_dumy;
     };
-
+    TsBool SetLockAt( TsVector3 p )
+    {
+        m_lookAt = p;
+        return 1;
+    }
+    TsVector3 GetEuler()
+    {
+        return m_eulerAngle;
+    }
+    TsBool SetEuler( TsVector3 v )
+    {
+        m_eulerAngle = v;
+        return 1;
+    }
 protected:
-    TsVector3 m_eye;
-    TsVector3 m_up;
-    TsVector3 m_at;
 
     TsF32 m_aspect; 
     TsF32 m_fov;
@@ -67,4 +69,8 @@ protected:
 
     TsCBuffer*      m_pCameraBuffer;
     ViewCBuffer*    m_pCBufferMemory;
+
+    //サテライト用
+    TsVector3       m_lookAt;
+    TsVector3       m_eulerAngle;
 };

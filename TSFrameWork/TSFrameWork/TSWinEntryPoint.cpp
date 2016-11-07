@@ -12,33 +12,24 @@ void TestUpdateCamera(TsCamera* pCamera)
     static TsFloat2 old;
     TsFloat2 pos = TsWINGetMousePos();
 
-    TsF32 diffX, diffY;
     TsInt wheel = TsWINGetMouseWheel();
-    diffX = pos.x - old.x;
-    diffY = pos.y - old.y;
+    TsVector3 diff;
+    diff.y = pos.x - old.x;
+    diff.x = pos.y - old.y;
 
-    diffX = abs(diffX) > 1 ? diffX : 0;
-    diffY = abs(diffY) > 1 ? diffY : 0;
+    diff.y *= 0.25f;
+    diff.x *= 0.125f;
 
     if (TsWINIsLeftClick())
     {
-        TsVector3 p         = pCamera->GetEyePos();
-        TsVector3 lookAt    = pCamera->GetEyePos() - pCamera->GetLockAtPos();
-        TsQuaternion XRot = TsQuaternion::AngleAxis(TsVector3(1, 0, 0).Normalized(), TsRadian(diffY));
-        TsQuaternion YRot = TsQuaternion::AngleAxis(TsVector3(0, 1, 0).Normalized(), TsRadian(diffX));
-
-        TsMatrix m = TsMatrix::CreateRotate(YRot) *  TsMatrix::CreateRotate(XRot);
-        p = m.TransformPoint(p);
-        lookAt.Normalize();
-        TsVector3 left = TsVector3::Cross(lookAt, TsVector3::up);
-        
-        pCamera->SetEyePosition(p);
-        pCamera->SetUpVector(TsVector3::Cross(lookAt * -1,left));
+        TsVector3 euler = pCamera->GetEuler();
+        euler += diff;
+        pCamera->SetEuler(euler);
     }
 
 
     TsF32 fov = pCamera->GetFov();
-    fov += wheel;
+    fov += wheel * 0.01f;
     fov = TsClamp(fov, 5.0f, 80.0f);
     pCamera->SetFov(fov);
 
@@ -48,6 +39,8 @@ void TestUpdateCamera(TsCamera* pCamera)
 int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lpszArgs , TsInt nWinMode )
 {
     TSUT::TsLoggerInit();
+    TsQuaternion q;
+
     TsDirectioalLight dir;
     dir.LookAt(TsVector3::front * 100, TsVector3::back, TsVector3::up);
     auto mat = dir.GetWorldMatrix();
@@ -78,13 +71,12 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     //queue.Add( pSkyBox );
 
     TsMeshFactory factory;
-     factory.LoadModelFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx","Test");
+//     factory.LoadModelFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx","Test");
 //     factory.LoadModelFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
-//     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
+     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
 //     factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
-//     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
-     auto pAnim = factory.CreateBakeAnimation( "Resource/fbx/Unity-Chan/move_unity.fbx" );
-//     auto pAnim = factory.CreateBakeAnimation( "move_unity.fbx" );
+     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
+//     auto pAnim = factory.CreateBakeAnimation( "Resource/fbx/Unity-Chan/move_unity.fbx" );
 //     auto pAnim = factory.CreateBakeAnimation( "sd_anim.fbx" );
      TsMeshObject * pMesh = TsResourceManager::Find<TsMeshObject>("Test");
      pAnim->BindTransform( pMesh->GetGeometry( 0 )->GetTransform()->GetRootTransform() );
@@ -99,8 +91,9 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 
     TsCamera* pCamera = pDev->GetDC()->GetMainCamera();
 
-    pCamera->SetEyePosition(TsVector3(0,150,200));
-    pCamera->SetLookAtVector( TsVector3(0,150,0));
+    pCamera->SetLocalRotate( TsQuaternion::AngleAxis( TsVector3::up , TsRadian( 180 ) ) );
+    pCamera->SetLocalPosition(TsVector3(0,-70,200));
+    pCamera->SetLockAt( TsVector3( TsVector3( 0 , 70 , 0 ) ) );
     pCamera->SetNearAndFar(30, 700);
 
     pCamera->CreateCBuffer(pDev);
@@ -124,7 +117,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
         else {
             //render 
             pAnim->Update();
-
+            
             auto pBlendState = TsResourceManager::Find<TsBlendState>( "ALPHA_BLEND" );
             pDev->GetDC()->SetBlendState( pBlendState );
             pDev->GetDC()->ApplyBlendState();
