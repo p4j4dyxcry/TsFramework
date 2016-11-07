@@ -385,7 +385,7 @@ public:
         x = ( Type )n.x;
         y = ( Type )n.y;
         z = ( Type )n.z;
-        w = ( Type )n.z;
+        w = ( Type )n.w;
         return *this;
     }
     template<typename T>
