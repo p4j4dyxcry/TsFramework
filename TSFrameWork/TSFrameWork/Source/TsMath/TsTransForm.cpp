@@ -134,7 +134,7 @@ TsTransForm* TsTransForm::GetSubling()const
 TsVector3 TsTransForm::GetWorldPos()
 {
     TsMatrix m = ToWorldMatrix();
-    return TsVector3(m._42, m._42, m._43);
+    return TsVector3(m._41, m._42, m._43);
 }
 
 TsVector3 TsTransForm::GetWorldScale()
