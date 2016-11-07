@@ -1,6 +1,6 @@
 #pragma once
 
-#define USE_EASTL 1
+#define USE_EASTL 0
 
 #if USE_EASTL
 

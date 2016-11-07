@@ -8,7 +8,7 @@ enum class TS_BLEND_MODE
     SUBTRACT        = 3 ,     //å∏éZçáê¨
 };
 
-TS_BLEND_MODE ConvertBlendModeToString( const char* str )
+static TS_BLEND_MODE ConvertBlendModeToString( const char* str )
 {
     if( str == "NONE" )
         return TS_BLEND_MODE::NONE;

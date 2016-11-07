@@ -50,7 +50,7 @@ TsBool TsCamera::UpdateForCBuffer(TsDevice* pDevice)
     m_pCBufferMemory->m_far = m;
     m_pCBufferMemory->m_fov = r;
 #endif
-    m_pCBufferMemory->m_worldCameraPos = m_eye;
+    m_pCBufferMemory->m_worldCameraPos = TsFloat4(m_eye.x,m_eye.y,m_eye.z,1);
     m_pCBufferMemory->m_near = m_near;
     m_pCBufferMemory->m_far = m_far;
     m_pCBufferMemory->m_fov = m_fov;
