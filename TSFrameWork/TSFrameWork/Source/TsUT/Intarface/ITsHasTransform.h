@@ -75,6 +75,14 @@ public:
                   const TsVector3& target,
                   const TsVector3& up = TsVector3::up);
 
+    //! 
+    TsVector3 GetXAxis()const;
+
+    //! 
+    TsVector3 GetYAxis()const;
+
+    //! 
+    TsVector3 GetZAxis()const;
 protected:
     TsTransForm* m_pTransform;	//Transform
 };

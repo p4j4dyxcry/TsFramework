@@ -134,3 +134,24 @@ TsBool IHasTransform::LookAt(const TsVector3& eye, const TsVector3& target, cons
     *m_pTransform = TsMatrix::CreateLookAt(eye, target, up);
     return TS_TRUE;
 }
+
+//! 
+TsVector3 IHasTransform::GetXAxis()const
+{
+    TsMatrix m = m_pTransform->ToWorldMatrix();
+    return TsVector3( m._11 , m._12 , m._13 );
+}
+
+//! 
+TsVector3 IHasTransform::GetYAxis()const
+{
+    TsMatrix m = m_pTransform->ToWorldMatrix();
+    return TsVector3( m._21 , m._22 , m._23 );
+}
+
+//! 
+TsVector3 IHasTransform::GetZAxis()const
+{
+    TsMatrix m = m_pTransform->ToWorldMatrix();
+    return TsVector3( m._31 , m._32 , m._33 );
+}
