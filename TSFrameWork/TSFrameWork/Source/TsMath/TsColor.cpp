@@ -1,11 +1,11 @@
 #include "../../TsAfx.h"
 
-static const TsColor White  = TsColor(1, 1, 1, 1);
-static const TsColor Black  = TsColor(0, 0, 0, 1);
-static const TsColor Red    = TsColor(1, 0, 0, 1);
-static const TsColor Blue   = TsColor(0, 1, 0, 1);
-static const TsColor Green  = TsColor(0, 0, 1, 1);
-static const TsColor Gray   = TsColor(.5,.5,.5,1);
+const TsColor TsColor::White    = TsColor(1, 1, 1, 1);
+const TsColor TsColor::Black    = TsColor(0, 0, 0, 1);
+const TsColor TsColor::Red      = TsColor(1, 0, 0, 1);
+const TsColor TsColor::Blue     = TsColor(0, 1, 0, 1);
+const TsColor TsColor::Green    = TsColor(0, 0, 1, 1);
+const TsColor TsColor::Gray     = TsColor(.5, .5, .5, 1);
 
 TsColor::TsColor(const TsFloat4& color )
 {
