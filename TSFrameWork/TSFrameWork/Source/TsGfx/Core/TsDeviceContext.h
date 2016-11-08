@@ -141,7 +141,7 @@ private:
     TsDevice*                              m_pDevice;
     ID3D11DeviceContext*                   m_pDeviceContext;
     TsShaderEffect*                        m_bindShaderEffect;
-    TsBool                                 m_activeShaders[TS_SHADER_INDEX::MAX_IDX];
+    TsBool                                 m_activeShaders[TS_SHADER_INDEX::SHADER_MAX_IDX];
     TsRenderTarget *                       m_renderTarget[MAX_RTs];
     TsRenderTarget *                       m_mainRenderTarget;
     TsDepthStencilView *                   m_mainDepthStencil;

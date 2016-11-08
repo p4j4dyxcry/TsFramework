@@ -22,7 +22,7 @@ TsBool TsLambertMatrial::CreateMaterial( TsDevice* pDev )
     ID3D11Buffer* buffer = pDev->CreateBuffer( &m_material , sizeof( m_material ) , 0 , D3D11_BIND_CONSTANT_BUFFER );
     this->SetD3DBufferAndSize( buffer , sizeof( m_material ) );
 
-    SetRegisterIndex(TS_CBUFFER_REGISTER::Material);  //register Index = [c1]
+    SetRegisterIndex(TS_CBUFFER_REGISTER::MaterialB);  //register Index = [c1]
     BindShaderType( TS_SHADER_TYPE::PIXEL_SHADER );
     return TS_TRUE;
 }

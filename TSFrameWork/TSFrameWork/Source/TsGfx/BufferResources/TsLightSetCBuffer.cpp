@@ -22,7 +22,7 @@ TsBool TsLightSetCBuffer::CreateLightSetCBuffer( TsDevice* pDev )
 
 
     SetD3DBufferAndSize( buffer , sz );
-    SetRegisterIndex( TS_CBUFFER_REGISTER::LightSet );
+    SetRegisterIndex( TS_CBUFFER_REGISTER::LightSetCB );
     BindShaderType( ( TS_SHADER_TYPE )( TS_SHADER_TYPE::VERTEX_SHADER |
         TS_SHADER_TYPE::PIXEL_SHADER ) );
 

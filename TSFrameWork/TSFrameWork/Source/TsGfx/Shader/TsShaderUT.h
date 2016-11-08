@@ -31,16 +31,16 @@ enum TS_SHADER_INDEX
     DS_IDX = 0x04,
     CS_IDX = 0x05,
 
-    MAX_IDX = 0x06,
+    SHADER_MAX_IDX = 0x06,
 };
 
 enum TS_CBUFFER_REGISTER 
 {
-    ObjectMatrix = 0,
-    Skin = 1,       // used Vertex Shader
-    LightSet = 2,
-    Material = 3,   // used Pixel Shader;
-    View = 7,
+    ObjectMatrixCB = 0,
+    SkinBoneCB = 1,       // used Vertex Shader
+    LightSetCB = 2,
+    MaterialB = 3,   // used Pixel Shader;
+    ViewCB = 7,
 };
 
 
