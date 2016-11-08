@@ -3,22 +3,31 @@
 #include "TsMatrix.h"
 const TsQuaternion TsQuaternion::identity = TsQuaternion( 0 , 0 , 0 , 1 );
 
+//===================================================================
+//  ! simdに変換
+//===================================================================
 XMVECTOR TsQuaternion::ToXMVECTOR()const
 {
     return XMLoadFloat4( this );
 }
 
+//===================================================================
+//  ! RotateMatrixに変換
+//===================================================================
 TsMatrix TsQuaternion::ToMatrix()const
 {
     return TsMatrix::CreateRotate( *this );
 }
 
+//===================================================================
+//  ! オイラー角に変換
+//===================================================================
 TsVector3 TsQuaternion::ToEuler()const
 {
     TsVector3 result;
 
     TsF32& yAxis = result.y;    //  y axis
-    TsF32& zAxis= result.z;     //  z axis
+    TsF32& zAxis = result.z;    //  z axis
     TsF32& xAxis = result.x;    //  x axis
 
     TsF32 sqx = x*x;
@@ -51,32 +60,75 @@ TsVector3 TsQuaternion::ToEuler()const
             (-sqx + sqy - sqz + sqw));
     } 
 
-    return TsDegree(result);
+    return TsDegree( result );
+}
+
+//===================================================================
+//  ! Euler →　Quaternion
+//===================================================================
+const TsQuaternion& TsQuaternion::Euler(TsF32 x, TsF32 y, TsF32 z)
+{
+    return *this = CreateByEuler( x , y, z);
+}
+//===================================================================
+//  ! Euler →　Quaternion
+//===================================================================
+const TsQuaternion& TsQuaternion::Euler(const TsVector3& v)
+{
+    return *this = CreateByEuler(v.x, v.y, v.z);
+}
+
+//===================================================================
+//  ! AngleAxis →　Quaternion
+//===================================================================
+const TsQuaternion& TsQuaternion::AngleAxis(const TsVector3& axis, TsF32 angle)
+{
+    return *this = CreateByAngleAxis(axis, angle);
 }
 
 
+//===================================================================
+//  ! Quaternion * Quaternion
+//===================================================================
 TsQuaternion  TsQuaternion::operator * ( const TsQuaternion& quaternion )const
 {
     return TsQuaternion( XMQuaternionMultiply( ToXMVECTOR() , quaternion.ToXMVECTOR() ));
 }
 
+//===================================================================
+//  ! Quaternion *= Quaternion
+//===================================================================
 TsQuaternion& TsQuaternion::operator *=( const TsQuaternion& quaternion )
 {
     return *this = *this * quaternion;
 }
 
-TsQuaternion TsQuaternion::Euler( const TsVector3& Euler )
+//===================================================================
+//  ! Create Quaternion By Euler Angles
+//===================================================================
+TsQuaternion TsQuaternion::CreateByEuler(TsF32 x, TsF32 y, TsF32 z)
+{
+    return
+        CreateByAngleAxis(TsVector3::right, TsRadian(x)) *
+        CreateByAngleAxis(TsVector3::up, TsRadian(y)) *
+        CreateByAngleAxis(TsVector3::front, TsRadian(z));
+}
+
+//===================================================================
+//  ! Create Quaternion By Euler Angles
+//===================================================================
+TsQuaternion TsQuaternion::CreateByEuler( const TsVector3& Euler )
 {
     TsF32 x = Euler.x ;
     TsF32 y = Euler.y ;
     TsF32 z = Euler.z ;
-    return 
-        AngleAxis( TsVector3::right , TsRadian( x ) ) *
-        AngleAxis( TsVector3::up , TsRadian( y ) ) *
-        AngleAxis( TsVector3::front , TsRadian( z ) );
+    return CreateByEuler(x,y,z);
 }
 
-TsQuaternion TsQuaternion::AngleAxis( TsVector3 axis , FLOAT angle )
+//===================================================================
+//  ! Create Quaternion By Axis Angle
+//===================================================================
+TsQuaternion TsQuaternion::CreateByAngleAxis(const TsVector3& axis , TsF32 angle )
 {
     return TsQuaternion( XMQuaternionRotationMatrix( XMMatrixRotationAxis( axis.ToXMVECTOR() , angle ) ) );
 }

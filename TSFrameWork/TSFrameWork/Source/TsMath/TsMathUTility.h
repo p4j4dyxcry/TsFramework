@@ -11,17 +11,17 @@
 
 //! degree -> radian
 template<typename T>
-inline T TsRadian( T degree )
+inline T TsRadian( const T& degree )
 {
-    return degree * TS_PI / 180.0f;;
+    return degree * TS_PI / 180.0f;
 
 }
 
 //! radian -> degree
 template<typename T>
-inline T TsDegree( T radian )
+inline T TsDegree( const T& radian )
 {
-    return radian * 180.0f / TS_PI;;
+    return radian * 180.0f / TS_PI;
 }
 
 //! 値を min ~ max　に設定
@@ -49,7 +49,7 @@ inline T TsMin( const T& a , const T& b )
 template<typename T>
 inline T TsLerp( const T& a , const T&b , TsF32 t )
 {
-    return a * ( 1 - t ) + b * t;
+    return a * ( 1.0f - t ) + b * t;
 }
 
 //! a と b を t で3次補完する
@@ -75,7 +75,7 @@ inline TsF32 TsComputeTriangleArea( TsVector3 v0 , TsVector3 v1 , TsVector3 v2 )
 {
     TsVector3 cross = TsVector3::Cross( ( v0 - v1 ) , ( v1 - v2 ) );
     
-    return cross.Length() / 2;
+    return cross.Length() / 2.0f;
 }
 
 //! ガウス関数
@@ -91,7 +91,8 @@ inline TsF32 Gaussian(float x, float mean, float deviation)
 
     */
 
-    return (1.0f / sqrt(2.0f * TS_PI * deviation * deviation))
+    return 
+        (1.0f / sqrt(2.0f * TS_PI * deviation * deviation))
         * expf((-((x - mean) * (x - mean))) / (2.0f * deviation * deviation));
 }
 

@@ -125,7 +125,7 @@ TsBool IHasTransform::SetLocalScale(const TsVector3& scale)
 
 TsBool IHasTransform::SetLocalRotateAxis(const TsVector3& v, TsF32 angle)
 {
-    m_pTransform->m_localRotate = TsQuaternion::AngleAxis(v, angle);
+    m_pTransform->m_localRotate = TsQuaternion::CreateByAngleAxis(v, angle);
     return TS_TRUE;
 }
 

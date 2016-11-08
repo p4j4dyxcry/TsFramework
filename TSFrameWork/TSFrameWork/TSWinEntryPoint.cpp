@@ -17,14 +17,12 @@ void TestUpdateCamera(TsCamera* pCamera)
     diff.y = pos.x - old.x;
     diff.x = pos.y - old.y;
 
-    diff.y *= 0.25f;
-    diff.x *= 0.125f;
 
     if (TsWINIsLeftClick())
     {
-        TsVector3 euler = pCamera->GetEuler();
+        TsVector3 euler = pCamera->GetLocalRotate().ToEuler();
         euler += diff;
-        pCamera->SetEuler(euler);
+        pCamera->SetLocalRotate( TsQuaternion::CreateByEuler(euler)) ;
     }
 
 
@@ -39,7 +37,6 @@ void TestUpdateCamera(TsCamera* pCamera)
 int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lpszArgs , TsInt nWinMode )
 {
     TSUT::TsLoggerInit();
-    TsQuaternion q;
 
     TsDirectioalLight dir;
     dir.LookAt(TsVector3::front * 100, TsVector3::back, TsVector3::up);
@@ -73,17 +70,18 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsMeshFactory factory;
 //     factory.LoadModelFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx","Test");
 //     factory.LoadModelFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
-     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
+//     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
 //     factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
-     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
+       factory.LoadModelFromFile(pDev, "Face.fbx","Test");
+//     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
 //     auto pAnim = factory.CreateBakeAnimation( "Resource/fbx/Unity-Chan/move_unity.fbx" );
 //     auto pAnim = factory.CreateBakeAnimation( "sd_anim.fbx" );
      TsMeshObject * pMesh = TsResourceManager::Find<TsMeshObject>("Test");
-     pAnim->BindTransform( pMesh->GetGeometry( 0 )->GetTransform()->GetRootTransform() );
+//     pAnim->BindTransform( pMesh->GetGeometry( 0 )->GetTransform()->GetRootTransform() );
 
      TsSkeleton* pSkeleton = pMesh->GetSkeleton();
 
-     pAnim->SetTargetSkeleton( pSkeleton );
+//     pAnim->SetTargetSkeleton( pSkeleton );
     for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++ i)   
          queue.Add(pMesh->GetGeometry(i));
 
@@ -91,9 +89,9 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 
     TsCamera* pCamera = pDev->GetDC()->GetMainCamera();
 
-    pCamera->SetLocalRotate( TsQuaternion::AngleAxis( TsVector3::up , TsRadian( 180 ) ) );
-    pCamera->SetLocalPosition(TsVector3(0,-70,200));
-    pCamera->SetLockAt( TsVector3( TsVector3( 0 , 70 , 0 ) ) );
+//    pCamera->SetLocalRotate( TsQuaternion::AngleAxis( TsVector3::up , TsRadian( 180.0f ) ) );
+    pCamera->SetLocalPosition(TsVector3(0,0,-100));
+    pCamera->SetLockAt( TsVector3( TsVector3( 0 , 0 , 0 ) ) );
     pCamera->SetNearAndFar(30, 700);
 
     pCamera->CreateCBuffer(pDev);
@@ -116,7 +114,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
         }
         else {
             //render 
-            pAnim->Update();
+//            pAnim->Update();
             
             auto pBlendState = TsResourceManager::Find<TsBlendState>( "ALPHA_BLEND" );
             pDev->GetDC()->SetBlendState( pBlendState );
