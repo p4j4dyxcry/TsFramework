@@ -50,15 +50,7 @@ public:
         m_lookAt = p;
         return 1;
     }
-    TsVector3 GetEuler()
-    {
-        return m_eulerAngle;
-    }
-    TsBool SetEuler( TsVector3 v )
-    {
-        m_eulerAngle = v;
-        return 1;
-    }
+
 protected:
 
     TsF32 m_aspect; 
@@ -72,5 +64,5 @@ protected:
 
     //サテライト用
     TsVector3       m_lookAt;
-    TsVector3       m_eulerAngle;
+    TsBool          m_isLookAt = TS_TRUE;
 };

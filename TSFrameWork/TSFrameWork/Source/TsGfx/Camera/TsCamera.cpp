@@ -112,6 +112,11 @@ TsMatrix TsCamera::GetViewMatrix()const
     TsMatrix m = GetWorldMatrix();
     Matrix view;
 
+    TsVector3 lookAtDistance = m_lookAt - GetWorldPosition();
+
+    if (m_isLookAt == TS_FALSE)
+        lookAtDistance = TsVector3::zero;
+
     TsVector3 xAxis , yAxis , zAxis;
     zAxis = TsVector3( m._31 , m._32 , m._33 );
     yAxis = TsVector3( m._21 , m._22 , m._23 );
@@ -130,14 +135,11 @@ TsMatrix TsCamera::GetViewMatrix()const
     view._23 = zAxis.y; 
     view._33 = zAxis.z;
 
-    view._41 = -TsVector3::Dot( TsVector3( view._11 , view._21 , view._31 ) , GetWorldPosition() + m_lookAt);
-    view._42 = -TsVector3::Dot( TsVector3( view._12 , view._22 , view._32 ) , GetWorldPosition() + m_lookAt);
-    view._43 = -TsVector3::Dot( TsVector3( view._13 , view._23 , view._33 ) , GetWorldPosition() + m_lookAt);
+    view._41 = -TsVector3::Dot(TsVector3(view._11, view._21, view._31), GetWorldPosition() + lookAtDistance);
+    view._42 = -TsVector3::Dot(TsVector3(view._12, view._22, view._32), GetWorldPosition() + lookAtDistance);
+    view._43 = -TsVector3::Dot(TsVector3(view._13, view._23, view._33), GetWorldPosition() + lookAtDistance);
 
-    view = TsMatrix::CreateTranslate( m_lookAt * -1 )*
-           TsMatrix::CreateRotate( TsQuaternion::Euler( m_eulerAngle ) )  *         
-            view 
-           ;
+    view = view * TsMatrix::CreateTranslate(lookAtDistance);
 
     return view;
 }

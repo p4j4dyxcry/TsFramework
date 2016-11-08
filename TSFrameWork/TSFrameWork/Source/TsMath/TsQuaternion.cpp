@@ -17,8 +17,8 @@ TsVector3 TsQuaternion::ToEuler()const
 {
     TsVector3 result;
 
-    TsF32& yAxis = result.y; //  y axis
-    TsF32& zAxis= result.z; //  z axis
+    TsF32& yAxis = result.y;    //  y axis
+    TsF32& zAxis= result.z;     //  z axis
     TsF32& xAxis = result.x;    //  x axis
 
     TsF32 sqx = x*x;
@@ -34,14 +34,14 @@ TsVector3 TsQuaternion::ToEuler()const
         yAxis = 2.0f * (TsF32)atan2f(x,w);
         zAxis = (TsF32)TS_PI / 2.0f;
         xAxis = 0.0f;
-    } // End if
+    } 
     else if (test < -0.499*unit)
     {
         // singularity at south pole
         yAxis = -2.0f * (TsF32)atan2f(x,w);
         zAxis = -(TsF32)TS_PI / 2.0f;
         xAxis = 0.0f;
-    } // End else if
+    } 
     else
     {
         yAxis = (TsF32)atan2f((2.0f*y*w - 2.0f*x*z),
@@ -49,7 +49,7 @@ TsVector3 TsQuaternion::ToEuler()const
         zAxis = (TsF32)asinf(2.0f*test / unit);
         xAxis = (TsF32)atan2f((2.0f*x*w - 2.0f*y*z),
             (-sqx + sqy - sqz + sqw));
-    } // End else
+    } 
 
     return TsDegree(result);
 }
