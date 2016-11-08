@@ -15,48 +15,41 @@ TsMatrix TsQuaternion::ToMatrix()const
 
 TsVector3 TsQuaternion::ToEuler()const
 {
-    TsMatrix m = ToMatrix();
-
-    TsF32 r00 = m._11;
-    TsF32 r01 = m._12;
-    TsF32 r02 = m._13;
-
-    TsF32 r10 = m._21;
-    TsF32 r11 = m._22;
-    TsF32 r12 = m._23;
-
-    TsF32 r20 = m._31;
-    TsF32 r21 = m._32;
-    TsF32 r22 = m._33;
-
     TsVector3 result;
-    TsF32& thetaX = result.x;
-    TsF32& thetaY = result.y;
-    TsF32& thetaZ = result.z;
 
-    if( r02 < +1 )
+    TsF32& yAxis = result.y; //  y axis
+    TsF32& zAxis= result.z; //  z axis
+    TsF32& xAxis = result.x;    //  x axis
+
+    TsF32 sqx = x*x;
+    TsF32 sqy = y*y;
+    TsF32 sqz = z*z;
+    TsF32 sqw = w*w;
+
+    TsF32 unit = sqx + sqy + sqz + sqw;
+    TsF32 test = x*y + z*w;
+    if (test > 0.499f * unit)
     {
-        if( r02 > -1 )
-        {
-            thetaY = asinf( r02 );
-            thetaX = atan2f( -r12 , r22 );
-            thetaZ = atan2f( -r01 , r00 );
-        }
-        else     // r02 = -1
-        {
-            // Not a unique solution: thetaZ - thetaX = atan2f(r10,r11)
-            thetaY = -TS_PI / 2;
-            thetaX = -atan2f( r10 , r11 );
-            thetaZ = 0;
-        }
-    }
-    else // r02 = +1
+        // singularity at north pole
+        yAxis = 2.0f * (TsF32)atan2f(x,w);
+        zAxis = (TsF32)TS_PI / 2.0f;
+        xAxis = 0.0f;
+    } // End if
+    else if (test < -0.499*unit)
     {
-        // Not a unique solution: thetaZ + thetaX = atan2f(r10,r11)
-        thetaY = +TS_PI / 2;
-        thetaX = atan2f( r10 , r11 );
-        thetaZ = 0;
-    }
+        // singularity at south pole
+        yAxis = -2.0f * (TsF32)atan2f(x,w);
+        zAxis = -(TsF32)TS_PI / 2.0f;
+        xAxis = 0.0f;
+    } // End else if
+    else
+    {
+        yAxis = (TsF32)atan2f((2.0f*y*w - 2.0f*x*z),
+            (sqx - sqy - sqz + sqw));
+        zAxis = (TsF32)asinf(2.0f*test / unit);
+        xAxis = (TsF32)atan2f((2.0f*x*w - 2.0f*y*z),
+            (-sqx + sqy - sqz + sqw));
+    } // End else
 
     return TsDegree(result);
 }
