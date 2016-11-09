@@ -1,25 +1,40 @@
+﻿/*
+    hlsl 用の Utility 関数群
+    
+    一部関数をDefineマクロにしているのは、float4 float3 等の関数を
+    オーバーライドで実装しなくてもよくなるため。
 
-static const float TS_PI = 3.14159265358979323846f;
+    © 2016 Yuki Tsuneyama
+*/
 
-//! -1�`1��ԁ@�� 0�`1��Ԃɕϊ�
-#define PackUnsigned( data )    ( data * 0.5f + 0.5f )
+// π
+#define TS_PI (3.14159265358979323846f)
 
-//! 0�`1��ԁ@�� -1�`1��Ԃɕϊ�
-#define UnPackUnsigned( data )  ( ( data - 0.5f ) * 2 )
+//! -1～1空間　を 0～1空間に変換
+#define PackUnsigned( data ) \
+    ( data * 0.5f + 0.5f )
 
-//! 2���⊮
-#define EaseIn( t ) ( t*t )
+//! 0～1空間　を -1～1空間に変換
+#define UnPackUnsigned( data )  \
+    ( ( data - 0.5f ) * 2 )
 
-//! 2���⊮
-#define EaseOut( t ) ( t*(2-t) )
+//! 2次補完
+#define EaseIn( t ) \
+    ( t*t )
 
-//! 3���⊮
-#define Cubic( t ) ( t * t( 3.0f - 2.0f + t ) )
+//! 2次補完
+#define EaseOut( t ) \
+    ( t*(2-t) )
 
-//! 5���⊮
-#define HexLerp ( t * t * t * ( t * ( 6 * t - 15 ) + 10 ) )
+//! 3次補完
+#define Cubic( t ) \
+    ( t * t( 3.0f - 2.0f + t ) )
 
-//! �e�N�X�`���T�C�Y�̎擾
+//! 5次補完
+#define HexLerp \
+    ( t * t * t * ( t * ( 6 * t - 15 ) + 10 ) )
+
+//! テクスチャサイズの取得
 float2 TexSize(Texture2D tex)
 {
     float2 size;
@@ -29,7 +44,7 @@ float2 TexSize(Texture2D tex)
     return size;
 }
 
-//! 4�_�T���v�����O
+//! 4点サンプリング
 float4 Sample4( Texture2D tex , 
                 SamplerState samp , 
                 float2 texcoord )
@@ -48,7 +63,7 @@ float4 Sample4( Texture2D tex ,
     return result / 5.0f;
 }
 
-//! 8�_�T���v�����O
+//! 8点サンプリング
 float4 Sample8( Texture2D tex ,
                 SamplerState samp ,
                 float2 texcoord )
