@@ -63,6 +63,11 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     rs.LoadRenderSystemFromXML( pDev , "RenderSystem.ts_rs" );
     // ! Screen Space Test
 
+    TsLightSetCBuffer * pLightSetCB = TsNew(TsLightSetCBuffer);
+    pLightSetCB->CreateLightSetCBuffer( pDev );
+    TsDirectioalLight * pLight = TsNew(TsDirectioalLight);
+    pLightSetCB->AddLight( pLight );
+
     //load mesh
     TsDrawQueue queue;
     //queue.Add( pSkyBox );
@@ -119,6 +124,9 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
             auto pBlendState = TsResourceManager::Find<TsBlendState>( "ALPHA_BLEND" );
             pDev->GetDC()->SetBlendState( pBlendState );
             pDev->GetDC()->ApplyBlendState();
+
+            pLightSetCB->UpdateCBuffer(pDev->GetDC());
+            pLightSetCB->ApplyCBuffer(pDev->GetDC());
 
             TestUpdateCamera(pCamera);
             pCamera->UpdateForCBuffer(pDev);

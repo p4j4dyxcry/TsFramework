@@ -787,5 +787,11 @@
     <FxCompile Include="Source\TsGfx\hlsl\Forward\TsFWRefrectionVS.hlsl">
       <Filter>ソース ファイル\TsGfx\hlsl\Forward</Filter>
     </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\Forward\TsShadowMapPrePassVS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\Forward</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\Forward\TsShadowMapPrePassPS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\Forward</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
