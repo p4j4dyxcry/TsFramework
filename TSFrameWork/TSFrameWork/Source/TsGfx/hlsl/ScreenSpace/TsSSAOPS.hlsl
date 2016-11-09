@@ -62,7 +62,7 @@ static float3 g_samples32[32] =
 };
 static int    SAMPLE_NUM = 16;
 static float  INV_SAMPLE = 1.0f / (float)SAMPLE_NUM;
-static float3 g_radius = 30.0f;
+static float  g_radius = 30.0f;
 
 float4 main( PS_SS_INPUT_UVx1 In ,
              Texture2D NormalMap : register( t0 ) ,
@@ -80,11 +80,11 @@ float4 main( PS_SS_INPUT_UVx1 In ,
     for (int i = 0; i < SAMPLE_NUM; i++)
     {
         float3 ray = reflect(g_samples32[i].xyz, normal) * radD;
-        float2 se = In.uv0 + sign(dot(ray, normal)) * ray * float2(1.0f, -1.0f);
+        float2 se = In.uv0 + (sign(dot(ray, normal)) * ray).xy * float2(1.0f, -1.0f);
 
         float4 occNormalDepth = NormalMap.Sample( samp,se );
         float3 occNormal = occNormalDepth.xyz * 2.0 -1.0f;
-        float3 occDepth  = occNormalDepth.w;
+        float  occDepth  = occNormalDepth.w;
 
         float depthDiff     = depth - occDepth;
         float normalDiff = (1.0f - dot(normalize(occNormal), normalize(normal)));

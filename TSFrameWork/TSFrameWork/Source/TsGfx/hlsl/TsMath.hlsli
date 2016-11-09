@@ -1,40 +1,70 @@
-ï»¿/*
-    hlsl ç”¨ã® Utility é–¢æ•°ç¾¤
-    
-    ä¸€éƒ¨é–¢æ•°ã‚’Defineãƒã‚¯ãƒ­ã«ã—ã¦ã„ã‚‹ã®ã¯ã€float4 float3 ç­‰ã®é–¢æ•°ã‚’
-    ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã§å®Ÿè£…ã—ãªãã¦ã‚‚ã‚ˆããªã‚‹ãŸã‚ã€‚
 
-    Â© 2016 Yuki Tsuneyama
+
+
+/*
+hlsl —p‚Ì Utility ŠÖ”ŒQ
+
+ˆê•”ŠÖ”‚ğDefineƒ}ƒNƒ‚É‚µ‚Ä‚¢‚é‚Ì‚ÍAfloat4 float3 “™‚ÌŠÖ”‚ğ
+ƒI[ƒo[ƒ‰ƒCƒh‚ÅÀ‘•‚µ‚È‚­‚Ä‚à‚æ‚­‚È‚é‚½‚ßB
+
+2016 Yuki Tsuneyama
 */
 
-// Ï€
+// ƒÎ
 #define TS_PI (3.14159265358979323846f)
 
-//! -1ï½1ç©ºé–“ã€€ã‚’ 0ï½1ç©ºé–“ã«å¤‰æ›
+//! -1`1‹óŠÔ@‚ğ 0`1‹óŠÔ‚É•ÏŠ·
 #define PackUnsigned( data ) \
-    ( data * 0.5f + 0.5f )
+    (data * 0.5f + 0.5f)
 
-//! 0ï½1ç©ºé–“ã€€ã‚’ -1ï½1ç©ºé–“ã«å¤‰æ›
+//! 0`1‹óŠÔ@‚ğ -1`1‹óŠÔ‚É•ÏŠ·
 #define UnPackUnsigned( data )  \
-    ( ( data - 0.5f ) * 2 )
+    ((data - 0.5f) * 2)
 
-//! 2æ¬¡è£œå®Œ
+//! 2Ÿ•âŠ®
 #define EaseIn( t ) \
-    ( t*t )
+    (t*t)
 
-//! 2æ¬¡è£œå®Œ
+//! 2Ÿ•âŠ®
 #define EaseOut( t ) \
-    ( t*(2-t) )
+    (t*(2 - t))
 
-//! 3æ¬¡è£œå®Œ
+//! 3Ÿ•âŠ®
 #define Cubic( t ) \
-    ( t * t( 3.0f - 2.0f + t ) )
+    (t * t(3.0f - 2.0f + t))
 
-//! 5æ¬¡è£œå®Œ
+//! 5Ÿ•âŠ®
 #define HexLerp \
-    ( t * t * t * ( t * ( 6 * t - 15 ) + 10 ) )
+    (t * t * t * (t * (6 * t - 15) + 10))
 
-//! ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚ºã®å–å¾—
+// ƒŠƒjƒA‹óŠÔ‚É•ÏŠ·
+#define ToLinear( gamma ) \
+    (pow(gamma, 1.0f / 2.2f))
+
+// ƒKƒ“ƒ}‹óŠÔ‚É•ÏŠ·
+#define ToGamma( lin ) \
+    (pow(lin, 2.2f))
+
+// ƒg[ƒ“ƒ}ƒbƒsƒ“ƒO
+#define Tone( color , exposure) \
+    (1.0 - exp(color * exposure))
+// uv ‚©‚çƒ‰ƒ“ƒ_ƒ€‚ÈƒXƒJƒ‰‚ğì¬‚·‚é
+float Rand(float2 uv)
+{
+    float a = frac(dot(uv, float2(2.067390879775102, 12.451168662908249))) - 0.5;
+    float s = a * (6.182785114200511 + a * a * (-38.026512460676566 + a * a * 53.392573080032137));
+    float t = frac(s * 43758.5453);
+    return UnPackUnsigned(t);
+}
+
+
+// ‹P“x’Šo
+float Luminance(float3 color)
+{
+    return dot(color, float3(0.298912f, 0.586611f, 0.114478f));
+}
+
+//! ƒeƒNƒXƒ`ƒƒƒTƒCƒY‚Ìæ“¾
 float2 TexSize(Texture2D tex)
 {
     float2 size;
@@ -44,47 +74,47 @@ float2 TexSize(Texture2D tex)
     return size;
 }
 
-//! 4ç‚¹ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°
-float4 Sample4( Texture2D tex , 
-                SamplerState samp , 
-                float2 texcoord )
+//! 4“_ƒTƒ“ƒvƒŠƒ“ƒO
+float4 Sample4(Texture2D tex,
+    SamplerState samp,
+    float2 texcoord)
 {
-    float2 size =  1.0f / TexSize(tex);
-    float x = size.x;
+    float2 size = 1.0f / TexSize(tex);
+        float x = size.x;
     float y = size.y;
-        
+
     float4 result = 0;
 
-    result += tex.Sample( samp , texcoord + float2( x , 0 ) );
-    result += tex.Sample( samp , texcoord + float2(-x , 0 ) );
-    result += tex.Sample( samp , texcoord + float2( 0 , y ) );
-    result += tex.Sample( samp , texcoord + float2( 0 ,-y ) );
+        result += tex.Sample(samp, texcoord + float2(x, 0));
+    result += tex.Sample(samp, texcoord + float2(-x, 0));
+    result += tex.Sample(samp, texcoord + float2(0, y));
+    result += tex.Sample(samp, texcoord + float2(0, -y));
 
     const float invTotal = 1.0f / 5.0f;
 
     return result / invTotal;
 }
 
-//! 8ç‚¹ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°
-float4 Sample8( Texture2D tex ,
-                SamplerState samp ,
-                float2 texcoord )
+//! 8“_ƒTƒ“ƒvƒŠƒ“ƒO
+float4 Sample8(Texture2D tex,
+    SamplerState samp,
+    float2 texcoord)
 {
-    float2 size =  1.0f / TexSize(tex);
-    float x = size.x;
+    float2 size = 1.0f / TexSize(tex);
+        float x = size.x;
     float y = size.y;
     float4 result = 0;
-    result += tex.Sample( samp , texcoord );
+        result += tex.Sample(samp, texcoord);
 
-    result += tex.Sample( samp , texcoord + float2( x , 0 ) );
-    result += tex.Sample( samp , texcoord + float2(-x , 0 ) );
-    result += tex.Sample( samp , texcoord + float2( 0 , y ) );
-    result += tex.Sample( samp , texcoord + float2( 0 ,-y ) );
+    result += tex.Sample(samp, texcoord + float2(x, 0));
+    result += tex.Sample(samp, texcoord + float2(-x, 0));
+    result += tex.Sample(samp, texcoord + float2(0, y));
+    result += tex.Sample(samp, texcoord + float2(0, -y));
 
-    result += tex.Sample( samp , texcoord + float2( x , y ) );
-    result += tex.Sample( samp , texcoord + float2(-x , y ) );
-    result += tex.Sample( samp , texcoord + float2( x , y ) );
-    result += tex.Sample( samp , texcoord + float2(-x ,-y ) );
+    result += tex.Sample(samp, texcoord + float2(x, y));
+    result += tex.Sample(samp, texcoord + float2(-x, y));
+    result += tex.Sample(samp, texcoord + float2(x, y));
+    result += tex.Sample(samp, texcoord + float2(-x, -y));
 
     const float invTotal = 1.0f / 9.0f;
 

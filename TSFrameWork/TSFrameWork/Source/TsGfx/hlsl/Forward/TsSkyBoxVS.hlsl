@@ -10,6 +10,6 @@ VS_OUT main(float4 input : SV_POSITION)
 {
     VS_OUT output;
     output.pos = mul(input, g_MtxVP);
-    output.uv = input - g_worldCameraPos.xyz;
+    output.uv = input.xyz - g_worldCameraPos.xyz;
     return output;
 }

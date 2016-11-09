@@ -34,7 +34,7 @@ float radicalInverse_VdC(uint bits)
     return float(bits) * 2.3283064365386963e-10f; // / 0x100000000
 }
 
-float Hammersley(uint i, uint N)
+float2 Hammersley(uint i, uint N)
 {
     return float2(float(i) / float(N), radicalInverse_VdC(i));
 }
