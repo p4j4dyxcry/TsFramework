@@ -1,21 +1,6 @@
 #include "../TsMath.hlsli"
+#include "../TsDefaultShading_Common.hlsli"
 #include "TsSS_common.hlsli"
-
-cbuffer ViewCB : register ( b7 )
-{
-    float4x4 g_MtxView;
-    float4x4 g_MtxProj;
-    float4x4 g_MtxInvView;
-    float4x4 g_MtxInvProj;
-    float4x4 g_MtxVP;
-
-    float4 g_worldCameraPos;
-
-    float g_near;
-    float g_far;
-    float g_fov;
-    float ViewCB_Dumy;
-}
 
 //‹…‚ð‹ßŽ—‚µ‚½“_
 static float3 g_samples32[32] =
@@ -60,43 +45,50 @@ static float3 g_samples32[32] =
     float3(-0.011737816, -0.0643377, 0.16030222),
     float3(0.035941467, 0.04990871, -0.46533614)
 };
-static int    SAMPLE_NUM = 16;
-static float  INV_SAMPLE = 1.0f / (float)SAMPLE_NUM;
-static float  g_radius = 30.0f;
+static const int    SAMPLE_NUM = 16;
+static const float  INV_SAMPLE = 1.0f / (float)SAMPLE_NUM;
+static const float  g_radius = 2.0f;
 
 float4 main( PS_SS_INPUT_UVx1 In ,
              Texture2D NormalMap : register( t0 ) ,
-             Texture2D PositionMap : register( t1 ) ,
              SamplerState samp : register( s0 ) ) : SV_TARGET
 {
 
-    float4 normalDepth = NormalMap.Sample( samp , In.uv0 );
+    float4 normalDepth = NormalMap.Sample(samp, In.uv0);
     float3 normal = normalDepth.xyz * 2.0 - 1.0f;
+
+    //todo Š®‘S‚Èƒ‰ƒ“ƒ_ƒ€‚É‚µ‚½‚¢
+    float random = Rand(In.uv0);
+    float3 rand3 = float3(random, Rand(float2(In.uv0.y, random)), Rand(float2(random, Rand(float2(random, In.uv0.y)))));
+
     float  depth  = normalDepth.w;
-    float4 color = PositionMap.Sample(samp,In.uv0);
+    depth = DepthToLinear(depth);
     float ao = 0;
     float radD = g_radius / depth;
     float2 se = 0;
+        float2 set = 0;
+    float a = 0;
     for (int i = 0; i < SAMPLE_NUM; i++)
     {
-        float3 ray = reflect(g_samples32[i].xyz, normal) * radD;
-        float2 se = In.uv0 + (sign(dot(ray, normal)) * ray).xy * float2(1.0f, -1.0f);
-
+        float3 ray = reflect(g_samples32[i].xyz, rand3 ) * radD;
+        float2 se = In.uv0 + sign(dot(ray, normal)) * ray * float2(1.0f, -1.0f);
+        set +=se;
         float4 occNormalDepth = NormalMap.Sample( samp,se );
         float3 occNormal = occNormalDepth.xyz * 2.0 -1.0f;
         float  occDepth  = occNormalDepth.w;
-
+        occDepth = DepthToLinear(occDepth);
         float depthDiff     = depth - occDepth;
         float normalDiff = (1.0f - dot(normalize(occNormal), normalize(normal)));
 
-        float falloff = 0.00001f;
-        float strength = 0.01f;
+        float falloff = 0.0000001f;
+        float strength = INV_SAMPLE;
+        a += depthDiff;
         ao += step(falloff, depthDiff) * normalDiff * (1.0f - smoothstep(falloff, strength, depthDiff));
 
     }
-    float toStrength = 20.0f;
+    float toStrength = 50.0f;
 
     ao = 1.0f - toStrength * ao * INV_SAMPLE;
 
-    return ao ;
+    return float4(ao,ao,ao,1);
 }

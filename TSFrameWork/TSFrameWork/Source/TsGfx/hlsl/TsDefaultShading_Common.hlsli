@@ -188,3 +188,29 @@ float3 DepthToWorldPos(float2 vTexCoord , float depth)
     // Divide by w to get the view-space position
     return vPositionVS.xyz / vPositionVS.w;
 }
+
+float DepthToLinear(float depth)
+{
+    // rhs
+    //x = proj[2][2], 
+    //y = -proj[3][2], 
+    //z = proj[2][3], 
+    //w = -proj[3][3]
+
+    float4x4 proj = g_MtxProj;
+
+    float x = proj[2][2];
+    float y = -proj[3][2];
+    float z = proj[2][3];
+    float w = -proj[3][3];
+
+    float linearDepth = 
+          mad(depth, w, -y) / mad(-depth, z, x);
+
+    return linearDepth;
+}
+
+float2 UVToScreenPos(float2 uv)
+{
+    return mad(uv, float2(2.0f, -2.0f), float2(-1.0f, 1.0f));
+}

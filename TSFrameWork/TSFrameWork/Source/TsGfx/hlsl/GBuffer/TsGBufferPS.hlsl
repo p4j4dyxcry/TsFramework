@@ -15,7 +15,7 @@ PS_GBUFFER_OUTPUT_3 main( PS_IN input ,
     PS_GBUFFER_OUTPUT_3 output = ( PS_GBUFFER_OUTPUT_3 )0;
 
     // albedo color
-    output.data0	 = tex.Sample( samp , input.uv );
+    output.data0 =  tex.Sample(samp, input.uv);
 
     // normal to 0 ~ 1
     output.data1.xyz = PackUnsigned( input.normal );
@@ -24,7 +24,7 @@ PS_GBUFFER_OUTPUT_3 main( PS_IN input ,
     output.data1.w = input.worldPos.z / input.worldPos.w;
 
     // world space uv
-    output.data2  = float4(0,0,0.5f,1);
+    output.data2 = float4(0, 0, 0.5f, 1);
 
     return output;
 }

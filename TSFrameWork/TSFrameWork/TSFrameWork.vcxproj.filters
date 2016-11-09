@@ -148,6 +148,21 @@
     <Filter Include="ソース ファイル\TsUT\Loader\Mqo">
       <UniqueIdentifier>{b4f566b0-ebc1-4447-bf6f-d14688632ef2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Resource">
+      <UniqueIdentifier>{a357c4ad-0d93-4567-8566-add426fcce00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Resource\RenderSystem">
+      <UniqueIdentifier>{668462fc-bd60-4c3d-86bf-cb67de4deac9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Resource\ShaderFlow">
+      <UniqueIdentifier>{26efbc50-bc99-4ca8-8a0e-76155cba1e34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Resource\ShaderPackage">
+      <UniqueIdentifier>{b42271de-ab5d-408a-9c54-ec08af53ea2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Resource\ShaderResource">
+      <UniqueIdentifier>{c8ea68eb-a20c-4557-ae6f-8735241c86c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TSWinEntryPoint.cpp">
@@ -723,6 +738,63 @@
     </None>
     <None Include="Source\TsGfx\hlsl\TsMath.hlsli">
       <Filter>ソース ファイル\TsGfx\hlsl\Header</Filter>
+    </None>
+    <None Include="Resource\ShaderResource\shaderResouce.ts_shaderReource">
+      <Filter>ソース ファイル\Resource\ShaderResource</Filter>
+    </None>
+    <None Include="Resource\ShaderPackage\Add.ts_shaderPackage">
+      <Filter>ソース ファイル\Resource\ShaderPackage</Filter>
+    </None>
+    <None Include="Resource\ShaderPackage\Blend.ts_shaderPackage">
+      <Filter>ソース ファイル\Resource\ShaderPackage</Filter>
+    </None>
+    <None Include="Resource\ShaderPackage\GaussX.ts_shaderPackage">
+      <Filter>ソース ファイル\Resource\ShaderPackage</Filter>
+    </None>
+    <None Include="Resource\ShaderPackage\GaussY.ts_shaderPackage">
+      <Filter>ソース ファイル\Resource\ShaderPackage</Filter>
+    </None>
+    <None Include="Resource\ShaderPackage\GBuffer.ts_shaderPackage">
+      <Filter>ソース ファイル\Resource\ShaderPackage</Filter>
+    </None>
+    <None Include="Resource\ShaderPackage\Lambert.ts_shaderPackage">
+      <Filter>ソース ファイル\Resource\ShaderPackage</Filter>
+    </None>
+    <None Include="Resource\ShaderPackage\Laplacian.ts_shaderPackage">
+      <Filter>ソース ファイル\Resource\ShaderPackage</Filter>
+    </None>
+    <None Include="Resource\ShaderPackage\LightPrePass.ts_shaderPackage">
+      <Filter>ソース ファイル\Resource\ShaderPackage</Filter>
+    </None>
+    <None Include="Resource\ShaderPackage\RefrectionMap.ts_shaderPackage">
+      <Filter>ソース ファイル\Resource\ShaderPackage</Filter>
+    </None>
+    <None Include="Resource\ShaderPackage\Screen.ts_shaderPackage">
+      <Filter>ソース ファイル\Resource\ShaderPackage</Filter>
+    </None>
+    <None Include="Resource\ShaderPackage\SkyBox.ts_shaderPackage">
+      <Filter>ソース ファイル\Resource\ShaderPackage</Filter>
+    </None>
+    <None Include="Resource\ShaderPackage\Sobel.ts_shaderPackage">
+      <Filter>ソース ファイル\Resource\ShaderPackage</Filter>
+    </None>
+    <None Include="Resource\ShaderPackage\SSAO.ts_shaderPackage">
+      <Filter>ソース ファイル\Resource\ShaderPackage</Filter>
+    </None>
+    <None Include="Resource\ShaderFlow\flow.ts_shaderflow">
+      <Filter>ソース ファイル\Resource\ShaderFlow</Filter>
+    </None>
+    <None Include="Resource\ShaderFlow\lambert.ts_shaderflow">
+      <Filter>ソース ファイル\Resource\ShaderFlow</Filter>
+    </None>
+    <None Include="Resource\ShaderFlow\postflow.ts_shaderflow">
+      <Filter>ソース ファイル\Resource\ShaderFlow</Filter>
+    </None>
+    <None Include="Resource\ShaderFlow\skyTest.ts_shaderflow">
+      <Filter>ソース ファイル\Resource\ShaderFlow</Filter>
+    </None>
+    <None Include="Resource\RenderSystem\RenderSystem.ts_rs">
+      <Filter>ソース ファイル\Resource\RenderSystem</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
