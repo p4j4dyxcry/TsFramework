@@ -60,7 +60,9 @@ float4 Sample4( Texture2D tex ,
     result += tex.Sample( samp , texcoord + float2( 0 , y ) );
     result += tex.Sample( samp , texcoord + float2( 0 ,-y ) );
 
-    return result / 5.0f;
+    const float invTotal = 1.0f / 5.0f;
+
+    return result / invTotal;
 }
 
 //! 8点サンプリング
@@ -84,5 +86,7 @@ float4 Sample8( Texture2D tex ,
     result += tex.Sample( samp , texcoord + float2( x , y ) );
     result += tex.Sample( samp , texcoord + float2(-x ,-y ) );
 
-    return result / 9.0f;
+    const float invTotal = 1.0f / 9.0f;
+
+    return result / invTotal;
 }
