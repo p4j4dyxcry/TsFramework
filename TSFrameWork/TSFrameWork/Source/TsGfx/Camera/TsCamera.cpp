@@ -163,7 +163,7 @@ TsMatrix TsCamera::GetViewMatrix()const
     //=========================================================================
     TsVector3 lookAtDistance = TsVector3::zero;
 
-    if (m_isLookAt == TS_FALSE)
+    if (m_isLookAt == TS_TRUE)
         lookAtDistance = m_lookAt - GetWorldPosition();
     
     view._11 = xAxis.x;

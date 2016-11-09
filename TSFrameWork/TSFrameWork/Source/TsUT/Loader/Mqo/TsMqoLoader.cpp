@@ -95,7 +95,7 @@ TsBool TsMqoLoader::LoadFromFile( const TsString& filename , TsLoadOption& optio
                 {
                     for( auto pr : posRefList[tl.index[i]] )
                     {
-                        if( TsFloat3::Dot( tl.normal , pr.normal ) < TsRadian( 45 ) )
+                        if( TsFloat3::Dot( tl.normal , pr.normal ) < TsRadian( 45.0f ) )
                         {
                             TsFloat3 n = pr.normal;
                             n *= ( pr.angle * pr.area ) / tl.angle / pr.area;
