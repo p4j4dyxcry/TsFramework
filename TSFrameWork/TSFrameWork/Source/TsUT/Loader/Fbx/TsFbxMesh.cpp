@@ -348,7 +348,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
             {
                 TsVector<TsFloat2>& list = uvList[k];
                 TsInt index = m_faceList[i].UVIndex[k][j];
-                if( index > 0 )
+                if ( index >= 0)
                     vertex.uv[k] = list[index];
             }
             if (!boneWeightList.empty())
@@ -752,7 +752,7 @@ void*  TsFbxMesh::CreateIndexBuffer()const
 
 size_t  TsFbxMesh::GetIndexBufferSize()const
 {
-    return m_faceList.size() * sizeof(TsInt) * 3;
+    return m_faceList.size() * sizeof(TsUint) * 3;
 }
 
 TsInt TsFbxMesh::GetMaterialIndex()const
