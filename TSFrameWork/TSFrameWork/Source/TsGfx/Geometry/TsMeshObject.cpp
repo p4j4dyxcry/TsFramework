@@ -15,3 +15,9 @@ TsGeometryObject* TsMeshObject::GetGeometry(TsInt index)
 {
     return m_pGeometryList[index];
 }
+
+TsBool  TsMeshObject::SetSkeleton(TsSkeleton* pSkeleton)
+{
+    m_pSkeleton = pSkeleton;
+    return TS_TRUE;
+}

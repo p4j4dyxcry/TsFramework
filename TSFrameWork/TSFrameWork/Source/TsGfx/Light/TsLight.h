@@ -1,19 +1,36 @@
+﻿//**********************************************************
+//! TsLight.h
+//! Light Class.
+//!
+//! © 2016 Yuki Tsuneyama
+
 #pragma once
 
+//----------------------------------------------------------
+//! Light Base
+//----------------------------------------------------------
 class TsLight :
     public TsNameObject,
     public ITsStaticNameObjectList<TsLight>,
     public IHasTransform
 {
 public:
+    //----------------------------------------------------------
+    // Define
+    //----------------------------------------------------------
     enum class LIGHT_TYPE : TsUint
     {
         LIGHT_DIRECTIONAL = 0,
         LIGHT_POINT = 1,
         LIGHT_SPOT = 2,
     };
+
     TsLight();
     virtual ~TsLight();
+
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     const TsColor& GetColor()const;
     TsBool  SetColor(const TsColor& );
 
@@ -25,6 +42,9 @@ public:
     TsBool IsUpdate()const{ return m_isUpdate; }
     TsBool SetEnable( TsBool enable ){ m_isEnable = enable; }
 protected:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     TsColor m_color;
     TsF32   m_intensity;
     TsBool  m_isEnable;
@@ -32,10 +52,15 @@ protected:
 };
 
 
-
+//----------------------------------------------------------
+//! Directional Light
+//----------------------------------------------------------
 class TsDirectioalLight :public TsLight
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     LIGHT_TYPE GetLightType()override
     {
         return LIGHT_TYPE::LIGHT_DIRECTIONAL;
@@ -49,24 +74,42 @@ protected:
 
 };
 
+//----------------------------------------------------------
+//! Point Light
+//----------------------------------------------------------
 class TsPointLight : public TsLight
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     LIGHT_TYPE GetLightType()override
     {
         return LIGHT_TYPE::LIGHT_POINT;
     }
 protected:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     TsF32 m_rage;
 };
 
+//----------------------------------------------------------
+//! Spot Light
+//----------------------------------------------------------
 class TsSpotLight : public TsLight
 {
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     LIGHT_TYPE GetLightType()override
     {
         return LIGHT_TYPE::LIGHT_SPOT;
     }
 protected:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     TsF32 m_range;
     TsF32 m_angle;
 };

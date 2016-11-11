@@ -1,3 +1,9 @@
+﻿//**********************************************************
+//! TsCore.h
+//! Core.
+//!
+//! © 2016 Yuki Tsuneyama
+
 #pragma once
 
 #include "../TsUT/TsUT.h"

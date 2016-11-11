@@ -42,7 +42,10 @@
     <ClCompile Include="Source\TsGfx\Geometry\TsSkinGeometryObject.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsSkyBox.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsVertexElement.cpp" />
+    <ClCompile Include="Source\TsGfx\Light\TsDirectionalLight.cpp" />
     <ClCompile Include="Source\TsGfx\Light\TsLight.cpp" />
+    <ClCompile Include="Source\TsGfx\Light\TsPointLight.cpp" />
+    <ClCompile Include="Source\TsGfx\Light\TsSpotLight.cpp" />
     <ClCompile Include="Source\TsGfx\Material\TsLambertMatrial.cpp" />
     <ClCompile Include="Source\TsGfx\Material\TsMaterial.cpp" />
     <ClCompile Include="Source\TsGfx\Material\TsScreeSpaceMaterial.cpp" />

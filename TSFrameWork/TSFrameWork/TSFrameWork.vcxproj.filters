@@ -414,6 +414,15 @@
     <ClCompile Include="Source\TsUT\Intarface\ITsHasTransform.cpp">
       <Filter>ソース ファイル\TsUT\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsGfx\Light\TsSpotLight.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Light\TsDirectionalLight.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Light\TsPointLight.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Light</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">

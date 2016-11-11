@@ -25,6 +25,11 @@ TsBool TsFbxBone::SetBindPose( FbxMatrix baseposeMatrix )
     return TS_TRUE;
 }
 
+TsMatrix TsFbxBone::GetBindPoseMatrix()
+{
+    return m_bindPoseMatrixList[0];
+}
+
 TsBool TsFbxBone::ComputeBindPose()
 {
 #if 0

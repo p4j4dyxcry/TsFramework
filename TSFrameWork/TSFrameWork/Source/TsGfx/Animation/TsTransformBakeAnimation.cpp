@@ -46,8 +46,10 @@ TsBool TsTransformBakeAnimation::Update()
         else
             m_localFrame = m_maxFrame - 1.f;
     TsInt frame = ( TsInt )m_localFrame;
-    for each( auto p in m_pTransformList )
-        if( p ) *p = m_bakedMatrixList[frame].find( p->GetHashCode() )->second;
+    for each(auto p in m_pTransformList)
+    {
+        if (p) *p = m_bakedMatrixList[frame].find(p->GetHashCode())->second;
+    }
     
     if (m_pTargetSkeleton)
     {

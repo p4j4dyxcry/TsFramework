@@ -1,3 +1,9 @@
+﻿//**********************************************************
+//! TsTransformBakeAnimation.h
+//! 事前計算済みのTransformをアニメーションさせる。
+//!
+//! © 2016 Yuki Tsuneyama
+
 #pragma once
 
 class TsTransformBakeAnimation

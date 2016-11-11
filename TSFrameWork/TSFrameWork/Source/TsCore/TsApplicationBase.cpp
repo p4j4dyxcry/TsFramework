@@ -8,6 +8,12 @@ m_pGfxDevice( nullptr )
 
 }
 
+TsApplicationBase::~TsApplicationBase()
+{
+    TsSafeDelete( m_pGfxDevice );
+    CloseWindow(TsWINGetMainHWND());
+}
+
 TsBool TsApplicationBase::Initialize( HINSTANCE hInstance , TsInt nWinMode )
 {
     TSUT::TsLoggerInit();

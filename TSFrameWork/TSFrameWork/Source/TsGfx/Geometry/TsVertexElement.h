@@ -7,6 +7,9 @@ class TsVertexElement :public TsNameObject
 	friend class TsMeshFactory;
 
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
 	TsVertexElement();
 	virtual ~TsVertexElement();
 	TsBool CreateVertexBuffer( TsDevice * ,void * memory , size_t sz);
@@ -16,6 +19,9 @@ public:
 	TsVertexBuffer* GetVertexBuffer(  )const;
 	TsIndexBuffer* GetIndexBuffer(  )const;
 protected:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
 	TsVertexBuffer*	m_vertexBuffer;
 	TsIndexBuffer*	m_indexBuffer;
 };

@@ -176,7 +176,9 @@ TsBool TsResourceManager::InitializeSampler( TsDevice * pDev )
 }
 
 
-
+//! ResourceManagerに新しい管理対象を追加する場合は
+//  static TsMap<TS_HASH , [管理対象型]> m_変数名を追加後;
+//　下記にASSIGN_INTERFACE( [管理対象型] , m_変数名)を追加することで基本メソッドが生成されます。
 
 TsDevice* TsResourceManager::m_pDevice = nullptr;
 ASSIGN_INTERFACE( TsSamplerState , m_samplerLibrary );

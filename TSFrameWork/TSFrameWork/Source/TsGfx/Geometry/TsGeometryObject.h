@@ -1,7 +1,7 @@
 ﻿//!*******************************************************
 //! TsGeometryObject.h
 //!
-//! Mesh base.
+//! this class has Vertex Element , Material And Material.
 //!
 //! © 2016 Yuki Tsuneyama
 #pragma once
@@ -9,12 +9,23 @@
 class TsGeometryObject : virtual public TsDrawObject
 {
 public:
+    //! Constructor
     TsGeometryObject();
+
+    //! Destructor
     virtual ~TsGeometryObject();
+
+
+    //! CreateGeometry
+    //
+    // @param in pDev       Device.
+    // @param in pMesh      Vertex Elements.
+    // @param in pMaterial  Material
     virtual TsBool CreateGeometryObject( TsDevice* pDev ,
                                          TsVertexElement * pMesh ,
                                          TsMaterial* pMaterial );
 
+    //! public Override Methods
     virtual TsBool UpdateTransform( TsDeviceContext* context )override;
     virtual TsBool UpdateMaterial( TsDeviceContext* context )override;
     virtual TsBool UpdateIndexBuffer( TsDeviceContext* context )override;
@@ -26,14 +37,18 @@ public:
     virtual TsBool ApplyVertexBuffer( TsDeviceContext* context )override;
     virtual TsBool Draw( TsDeviceContext* )override;
 
+    //! Set Method
     TsBool SetMaterial( TsMaterial* pMaterial );
     TsBool SetTransform( TsTransForm * pTransform );
     TsBool SetMesh( TsVertexElement* );
 
+    //! Get Method
     TsTransForm* GetTransform()const;
 private:
+
+    //! propery
     TsTransForm*            m_transform;
-    TsVertexElement*                 m_mesh;
+    TsVertexElement*        m_mesh;
     TsMaterial*             m_material;
     TsTransformCBuffer*     m_transformCBuffer;
 };
