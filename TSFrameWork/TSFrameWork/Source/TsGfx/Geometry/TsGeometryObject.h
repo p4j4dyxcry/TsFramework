@@ -44,6 +44,9 @@ public:
 
     //! Get Method
     TsTransForm* GetTransform()const;
+
+    virtual TsMatrix GetWorldMatrix()const;
+    virtual TsMatrix GetLocalMatrix()const;
 private:
 
     //! propery

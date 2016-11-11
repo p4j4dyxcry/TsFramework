@@ -2,6 +2,9 @@
 
 TS_INSTANTIATE_NAME_OBJ_LIST( TsRenderPass );
 
+//----------------------------------------------------------
+//! Constructor
+//----------------------------------------------------------
 TsRenderPass::TsRenderPass():
 m_pShader(nullptr),
 m_pDepthStencilState(nullptr),
@@ -14,10 +17,17 @@ m_pRasterizerState(nullptr)
         m_pOutputSlot[i] = nullptr;
     }
 }
+//----------------------------------------------------------
+//! Destructor
+//----------------------------------------------------------
 TsRenderPass::~TsRenderPass()
 {
 
 }
+
+//----------------------------------------------------------
+//! RenderTargetをパイプライン上に確定させる
+//----------------------------------------------------------
 TsBool TsRenderPass::ApplyRTV( TsDeviceContext* pDC )
 {
     //! set render target
@@ -41,7 +51,9 @@ TsBool TsRenderPass::ApplyRTV( TsDeviceContext* pDC )
     return TS_TRUE;
 }
 
-
+//----------------------------------------------------------
+//! 事前処理
+//----------------------------------------------------------
 TsBool TsRenderPass::Begin( TsDeviceContext* pDc )
 {
     ApplyRTV( pDc );
@@ -79,18 +91,25 @@ TsBool TsRenderPass::Begin( TsDeviceContext* pDc )
 
     return TS_TRUE;
 }
+
+//----------------------------------------------------------
+//! 終了処理
+//----------------------------------------------------------
 TsBool TsRenderPass::End( TsDeviceContext* pDC )
 {
-    //! set render target
+    //パイプライン上の全てのRenderTargetをクリアする
     for( int i = 0; i < TsDeviceContext::MAX_RTs; ++i )
         pDC->SetRT( i , nullptr );
 
-    //! set depth 
+    //パイプライン上の全ての深度/ステンシルをクリアする
     pDC->SetDepthStencilView( nullptr );
 
     return TS_TRUE;
 }
 
+//----------------------------------------------------------
+//! QueueのRenderingを実行
+//----------------------------------------------------------
 TsBool TsRenderPass::Render( TsDrawQueue* pQue , TsDeviceContext* pDC )
 {
     if( pDC == nullptr )
@@ -101,8 +120,13 @@ TsBool TsRenderPass::Render( TsDrawQueue* pQue , TsDeviceContext* pDC )
     pQue->Render( pDC );
     return TS_TRUE;
 }
+
+//----------------------------------------------------------
+//! InputSlotを設定する
+//----------------------------------------------------------
 TsBool TsRenderPass::SetInputSlot( TsInt index , TsTexture *rtv)
 {
+    //領域として t0 ~ t7までを割り当てる
     if( abs( index ) >= TsDeviceContext::MAX_RTs )
         return TS_FALSE;
     m_pInputSlot[index] = rtv;
@@ -110,6 +134,9 @@ TsBool TsRenderPass::SetInputSlot( TsInt index , TsTexture *rtv)
     return TS_TRUE;
 }
 
+//----------------------------------------------------------
+//! 出力スロットを設定する
+//----------------------------------------------------------
 TsBool TsRenderPass::SetOutputSlot(TsInt index, TsRenderTarget *rtv )
 {
     if( abs( index ) >= TsDeviceContext::MAX_RTs )
@@ -119,7 +146,9 @@ TsBool TsRenderPass::SetOutputSlot(TsInt index, TsRenderTarget *rtv )
     return TS_TRUE;
 }
 
-//入力バッファを取得
+//----------------------------------------------------------
+//! 入力スロットにバインドされているテクスチャを取得する
+//----------------------------------------------------------
 TsTexture* TsRenderPass::GetInputSlot( TsInt index )
 {
     if( index > TsDeviceContext::MAX_RTs || index < 0)
@@ -127,7 +156,9 @@ TsTexture* TsRenderPass::GetInputSlot( TsInt index )
     return m_pInputSlot[ index ];
 }
 
-//出力バッファを取得
+//----------------------------------------------------------
+//! 出力スロットにバインドされているRenderTargetを取得する
+//----------------------------------------------------------
 TsRenderTarget* TsRenderPass::GetOutputSlot( TsInt index /* = 0 */)
 {
     if( index > TsDeviceContext::MAX_RTs || index < 0 )
@@ -135,19 +166,27 @@ TsRenderTarget* TsRenderPass::GetOutputSlot( TsInt index /* = 0 */)
     return m_pOutputSlot[index];
 }
 
+//----------------------------------------------------------
+//! Shader Effect を設定する
+//----------------------------------------------------------
 TsBool TsRenderPass::SetShader( TsShaderEffect* se )
 {
     m_pShader = se;
     return TS_TRUE;
 }
 
-
+//----------------------------------------------------------
+//! Depth/Stencilの出力を設定する
+//----------------------------------------------------------
 TsBool TsRenderPass::SetDepthSlot( TsDepthStencilView* depth )
 {
     m_pDepthStencilView = depth;
     return TS_TRUE;
 }
 
+//----------------------------------------------------------
+//! XMLからシェーダエフェクトを読み込む
+//----------------------------------------------------------
 TsBool TsRenderPass::LoadShaderFromXMLElement( TsDevice* pDev , TsXMLElement * pElement )
 {
     TsString shaderName = pElement->GetAttribute( "Shader" )->GetStringValue();
@@ -164,6 +203,10 @@ TsBool TsRenderPass::LoadShaderFromXMLElement( TsDevice* pDev , TsXMLElement * p
 
     return TS_TRUE;
 }
+
+//----------------------------------------------------------
+//! XMLからRenderPass情報を読み込む
+//----------------------------------------------------------
 TsBool TsRenderPass::LoadIOSlotFromXMLElement( TsDevice* pDev , TsXMLElement * pElement )
 {
     TsInt rtvIndex = 0;
@@ -171,6 +214,9 @@ TsBool TsRenderPass::LoadIOSlotFromXMLElement( TsDevice* pDev , TsXMLElement * p
     TsXMLElement* inputSlot = pElement->FindChild( "Input" )->GetFirstChild();
     for( ; inputSlot != nullptr; inputSlot = inputSlot->Next() )
     {
+        //----------------------------------------------------------
+        //! インプットスロットの読み込み
+        //----------------------------------------------------------
         auto slot = inputSlot->GetAttribute( "Slot" );
         if( slot == nullptr )
             continue;
@@ -207,6 +253,9 @@ TsBool TsRenderPass::LoadIOSlotFromXMLElement( TsDevice* pDev , TsXMLElement * p
         }
     }
 
+    //----------------------------------------------------------
+    //! OutPutスロットの読み込み
+    //----------------------------------------------------------
     TsXMLElement * outputSlot = pElement->FindChild( "Output" )->GetFirstChild();
 
     rtvIndex = 0;

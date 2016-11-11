@@ -47,7 +47,8 @@ hlsl 用の Utility 関数群
 
 // トーンマッピング
 #define Tone( color , exposure) \
-    (1.0 - exp(color * exposure))
+    (1.0 - exp(color * exposure))
+
 // uv からランダムなスカラを作成する
 float Rand(float2 uv)
 {

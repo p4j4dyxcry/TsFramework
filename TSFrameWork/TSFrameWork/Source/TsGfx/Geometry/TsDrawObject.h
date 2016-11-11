@@ -69,10 +69,10 @@ public:
     //----------------------------------------------------------
     //! オブジェクトのWorldMatrixを取得します。
     //----------------------------------------------------------
-    virtual TsMatrix GetWorldMatrix();
+    virtual TsMatrix GetWorldMatrix()const;
 
     //----------------------------------------------------------
     //! オブジェクトのLocalMatrixを取得します。
     //----------------------------------------------------------
-    virtual TsMatrix GetLocalMatrix();
+    virtual TsMatrix GetLocalMatrix()const;
 };

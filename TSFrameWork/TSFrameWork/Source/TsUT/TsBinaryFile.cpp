@@ -1,5 +1,9 @@
 #include "TsUT.h"
 #include <fstream>
+
+//----------------------------------------------------------
+//! Constructor
+//----------------------------------------------------------
 TsBinary::TsBinary() :
 m_bin( nullptr ) ,
 m_size( 0 )
@@ -7,22 +11,34 @@ m_size( 0 )
 
 };
 
+//----------------------------------------------------------
+//! Copy Constructor
+//----------------------------------------------------------
 TsBinary::TsBinary( const TsBinary& bin )
 {
     *this = bin;
 }
 
+//----------------------------------------------------------
+//! Constructor of Load
+//----------------------------------------------------------
 TsBinary::TsBinary( TsString filename )
 {
     Load( filename );
 }
 
+//----------------------------------------------------------
+//! Destructor
+//----------------------------------------------------------
 TsBinary::~TsBinary()
 {
     TsSafeDelete( m_bin );
     m_size = 0;
 }
 
+//----------------------------------------------------------
+//! Load Binary
+//----------------------------------------------------------
 TsBool TsBinary::Load( TsString fileName )
 {
     UnLoad();
@@ -48,19 +64,33 @@ TsBool TsBinary::Load( TsString fileName )
     return TS_TRUE;
 }
 
+//----------------------------------------------------------
+//! Release Binary
+//----------------------------------------------------------
 void TsBinary::UnLoad()
 {
     TsSafeDelete( m_bin );
 }
+
+//----------------------------------------------------------
+//! Get Binary
+//----------------------------------------------------------
 TsByte* TsBinary::GetBinary()const
 {
     return m_bin;
 }
+
+//----------------------------------------------------------
+//! Get Binary Size
+//----------------------------------------------------------
 TsInt	TsBinary::GetSize()const
 {
     return m_size;
 }
 
+//----------------------------------------------------------
+//! Deep Copy
+//----------------------------------------------------------
 TsBinary TsBinary::operator=( const TsBinary& bin )
 {
     m_size = bin.GetSize();
@@ -75,7 +105,9 @@ TsBinary TsBinary::operator=( const TsBinary& bin )
     return *this;
 }
 
-//Seek
+//----------------------------------------------------------
+//! Seek To String
+//----------------------------------------------------------
 TsByte*	TsBinary::SeekString(	const TsChar* target,
                                 TsInt startIndex ,		/*= 0 */
                                 __out TsInt* outIndex	/*= nullptr */)
@@ -115,6 +147,9 @@ TsByte*	TsBinary::SeekString(	const TsChar* target,
     return nullptr;
 }
 
+//----------------------------------------------------------
+//! Seek To Number Value
+//----------------------------------------------------------
 TsByte* TsBinary::SeekNumber(	TsInt startIndex ,		/*= 0 */
                                 __out TsInt* outIndex	/*= nullptr */	 )
 {

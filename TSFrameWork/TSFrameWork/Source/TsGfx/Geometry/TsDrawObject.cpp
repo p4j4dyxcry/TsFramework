@@ -1,82 +1,120 @@
 #include "../TsGfx.h"
 
-//! 継承して利用
+//----------------------------------------------------------
+//! ジオメトリを作成します。
+//  継承して利用
+//----------------------------------------------------------
 TsBool TsDrawObject::Create( TsDevice* pDev)
 {
     ( void )pDev;
     return TS_FALSE;
 }
 
-//! 継承して利用
+//----------------------------------------------------------
+//! オブジェクトのDrawCallです作成します。
+//  継承して利用
+//----------------------------------------------------------
 TsBool TsDrawObject::Draw( TsDeviceContext* context)
 {
     ( void )context;
     return TS_FALSE;
 }
 
-//! 継承して利用
+//----------------------------------------------------------
+//! オブジェクトのTransformを更新します。
+//  継承して利用
+//----------------------------------------------------------
 TsBool TsDrawObject::UpdateTransform( TsDeviceContext* context )
 {
     ( void )context;
     return TS_FALSE;
 }
 
-//! 継承して利用
+//----------------------------------------------------------
+//! オブジェクトのMaterialを更新します。
+//  継承して利用
+//----------------------------------------------------------
 TsBool TsDrawObject::UpdateMaterial( TsDeviceContext* context )
 {
     ( void )context;
     return TS_FALSE;
 }
 
-//! 継承して利用
+//----------------------------------------------------------
+//! オブジェクトのインデックスバッファを更新します。
+//  継承して利用
+//----------------------------------------------------------
 TsBool TsDrawObject::UpdateIndexBuffer( TsDeviceContext* context )
 {
     ( void )context;
     return TS_FALSE;
 }
 
-//! 継承して利用
+//----------------------------------------------------------
+//! オブジェクトの頂点バッファを更新します。
+//  継承して利用
+//----------------------------------------------------------
 TsBool TsDrawObject::UpdateVertexBuffer( TsDeviceContext* context )
 {
     ( void )context;
     return TS_FALSE;
 }
 
-//! 継承して利用
+//----------------------------------------------------------
+//! オブジェクトの頂点バッファを確定します。
+//  継承して利用
+//----------------------------------------------------------
 TsBool TsDrawObject::ApplyVertexBuffer( TsDeviceContext* context )
 {
     ( void )context;
     return TS_FALSE;
 }
 
-//! 継承して利用
+//----------------------------------------------------------
+//! オブジェクトのTransofromを確定します。
+//  継承して利用
+//----------------------------------------------------------
 TsBool TsDrawObject::ApplyTransForm( TsDeviceContext* context )
 {
     ( void )context;
     return TS_FALSE;
 }
 
-//! 継承して利用
+//----------------------------------------------------------
+//! オブジェクトのIndexBufferを確定します。
+//  継承して利用
+//----------------------------------------------------------
 TsBool TsDrawObject::ApplyIndexBuffer( TsDeviceContext* context )
 {
     ( void )context;
     return TS_FALSE;
 }
 
-//! 継承して利用
+//----------------------------------------------------------
+//! オブジェクトのMaterialを確定します。
+//  継承して利用
+//----------------------------------------------------------
 TsBool TsDrawObject::ApplyMaterial( TsDeviceContext* context )
 {
     ( void )context;
     return TS_FALSE;
 }
-//! 継承して利用
-TsMatrix TsDrawObject::GetWorldMatrix()
+
+//----------------------------------------------------------
+//! オブジェクトのWorldMatrixを確定します。
+//  継承して利用
+//----------------------------------------------------------
+TsMatrix TsDrawObject::GetWorldMatrix()const
 {
     return TsMatrix::identity;
 }
 
-//! 継承して利用
-TsMatrix TsDrawObject::GetLocalMatrix()
+
+//----------------------------------------------------------
+//! オブジェクトのLocalMatrixを確定します。
+//  継承して利用
+//----------------------------------------------------------
+TsMatrix TsDrawObject::GetLocalMatrix()const
 {
     return TsMatrix::identity;
 }

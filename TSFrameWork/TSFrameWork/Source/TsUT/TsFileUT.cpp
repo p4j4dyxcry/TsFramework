@@ -4,12 +4,17 @@
 
 using namespace TSUT;
 
-
+//----------------------------------------------------------
+//! Constructor
+//----------------------------------------------------------
 TsFilePathAnalyzer::TsFilePathAnalyzer( TsString filepath )
 {
     Analize( filepath );
 }
 
+//----------------------------------------------------------
+//! Analize File Path
+//----------------------------------------------------------
 TsBool TsFilePathAnalyzer::Analize( TsString filepath )
 {
     m_filePath = filepath;
@@ -22,28 +27,49 @@ TsBool TsFilePathAnalyzer::Analize( TsString filepath )
     return TS_TRUE;
 }
 
+//----------------------------------------------------------
+//! Get Loaded File Path
+//----------------------------------------------------------
 TsString TsFilePathAnalyzer::GetFilePath()
 {
     return m_filePath;
 }
+
+//----------------------------------------------------------
+//! Get Full Dirctory Path
+//----------------------------------------------------------
 TsString TsFilePathAnalyzer::GetFullPath()
 {
     return m_fullPath;
 }
+
+//----------------------------------------------------------
+//! Get Extension
+//----------------------------------------------------------
 TsString TsFilePathAnalyzer::GetExtension()
 {
     return m_extension;
 }
+
+//----------------------------------------------------------
+//! Get Local File Path Sub Extension
+//----------------------------------------------------------
 TsString TsFilePathAnalyzer::GetFileName()
 {
     return m_fileName;
 }
 
+//----------------------------------------------------------
+//! Get Local File Directory Path
+//----------------------------------------------------------
 TsString TsFilePathAnalyzer::GetLocalDirectory()
 {
     return m_localDirectory;
 }
 
+//----------------------------------------------------------
+//! Get Full Directory Path
+//----------------------------------------------------------
 TsString TsFilePathAnalyzer::GetFullDirectory()
 {
     return m_fullDirectory;

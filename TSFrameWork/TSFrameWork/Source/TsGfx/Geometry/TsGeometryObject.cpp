@@ -126,3 +126,12 @@ TsTransForm* TsGeometryObject::GetTransform()const
 {
     return m_transform;
 }
+
+TsMatrix TsGeometryObject::GetWorldMatrix()const
+{
+    return m_transform->ToWorldMatrix();
+}
+TsMatrix TsGeometryObject::GetLocalMatrix()const
+{
+    return m_transform->ToLocalMatrix();
+}
