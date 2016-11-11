@@ -337,11 +337,19 @@ TsBool TsDeviceContext::ChangeCBuffer( TsCBuffer * cbuffer , void * pData , size
 
     D3D11_MAPPED_SUBRESOURCE mappedResource;
 
-    m_pDeviceContext->Map( buffer , 0 , D3D11_MAP_WRITE_DISCARD , 0 , &mappedResource );
+    HRESULT hr =m_pDeviceContext->Map( buffer , 0 , D3D11_MAP_WRITE_DISCARD , 0 , &mappedResource );
+    if( hr == S_OK )
+    {
+        CopyMemory( mappedResource.pData , pData , sz );
 
-    CopyMemory( mappedResource.pData , pData , sz );
+        m_pDeviceContext->Unmap( buffer , 0 );
+    }
+    else
+    {
+        TsDebugLog( "GpuƒŠƒ\[ƒX‚Ö‚Ì‘‚«ž‚Ý‚ÉŽ¸”s\n" );
+        return TS_FALSE;
+    }
 
-    m_pDeviceContext->Unmap( buffer , 0 );
     return TS_TRUE;
 }
 

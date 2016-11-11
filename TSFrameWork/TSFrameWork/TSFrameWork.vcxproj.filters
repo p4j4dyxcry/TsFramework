@@ -201,9 +201,6 @@
     <ClCompile Include="Source\TsGfx\Material\TsMaterial.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsGfx\Material\TsLambertMatrial.cpp">
-      <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsMath\TsMathUTility.cpp">
       <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClCompile>
@@ -422,6 +419,9 @@
     </ClCompile>
     <ClCompile Include="Source\TsGfx\Geometry\TsPlaneObject.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\Material\TsDefaultMaterial.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

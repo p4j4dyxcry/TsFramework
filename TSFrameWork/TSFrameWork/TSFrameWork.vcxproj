@@ -47,7 +47,7 @@
     <ClCompile Include="Source\TsGfx\Light\TsLight.cpp" />
     <ClCompile Include="Source\TsGfx\Light\TsPointLight.cpp" />
     <ClCompile Include="Source\TsGfx\Light\TsSpotLight.cpp" />
-    <ClCompile Include="Source\TsGfx\Material\TsLambertMatrial.cpp" />
+    <ClCompile Include="Source\TsGfx\Material\TsDefaultMaterial.cpp" />
     <ClCompile Include="Source\TsGfx\Material\TsMaterial.cpp" />
     <ClCompile Include="Source\TsGfx\Material\TsScreeSpaceMaterial.cpp" />
     <ClCompile Include="Source\TsGfx\RenderSystem\TsClearPass.cpp" />

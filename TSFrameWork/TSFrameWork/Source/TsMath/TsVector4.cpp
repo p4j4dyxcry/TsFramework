@@ -1,13 +1,13 @@
 #include "TsVector.h"
 #include "TsMatrix.h"
-const TsVector4 TsVector4::zero = TsVector4( 0 , 0 , 0 );
-const TsVector4 TsVector4::one  = TsVector4( 1 , 1 , 1 );
-const TsVector4 TsVector4::up   = TsVector4( 0 , 1 , 0 );
-const TsVector4 TsVector4::down = TsVector4( 0 , -1 , 0 );
-const TsVector4 TsVector4::left = TsVector4( -1 , 0 , 0 );
-const TsVector4 TsVector4::right= TsVector4( 1 , 0 , 0 );
-const TsVector4 TsVector4::front= TsVector4( 0 , 0 , 1 );
-const TsVector4 TsVector4::back = TsVector4( 0 , 0 , -1 );
+const TsVector4 TsVector4::zero = TsVector4( 0 , 0 , 0 ,0 );
+const TsVector4 TsVector4::one  = TsVector4( 1 , 1 , 1 ,1);
+const TsVector4 TsVector4::up   = TsVector4( 0 , 1 , 0 ,0);
+const TsVector4 TsVector4::down = TsVector4( 0 , -1 , 0,0 );
+const TsVector4 TsVector4::left = TsVector4( -1 , 0 , 0,0 );
+const TsVector4 TsVector4::right= TsVector4( 1 , 0 , 0 ,0);
+const TsVector4 TsVector4::front= TsVector4( 0 , 0 , 1 ,0);
+const TsVector4 TsVector4::back = TsVector4( 0 , 0 , -1 ,0);
 
 TsVector4& TsVector4::operator = ( const XMVECTOR& Float4 )
 {

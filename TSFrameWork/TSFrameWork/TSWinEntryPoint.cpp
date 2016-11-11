@@ -73,13 +73,13 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     //queue.Add( pSkyBox );
 
     TsMeshFactory factory;
-     factory.LoadModelFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx","Test");
+//     factory.LoadModelFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx","Test");
 //     factory.LoadModelFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
-//     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
+     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
 //     factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
 //       factory.LoadModelFromFile(pDev, "Face.fbx","Test");
-//     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
-     auto pAnim = factory.CreateBakeAnimation( "Resource/fbx/Unity-Chan/move_unity.fbx" );
+     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
+//     auto pAnim = factory.CreateBakeAnimation( "Resource/fbx/Unity-Chan/move_unity.fbx" );
 //     auto pAnim = factory.CreateBakeAnimation( "sd_anim.fbx" );
      TsMeshObject * pMesh = TsResourceManager::Find<TsMeshObject>("Test");
      pAnim->BindTransform( pMesh->GetGeometry( 0 )->GetTransform()->GetRootTransform() );
@@ -87,8 +87,16 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
      TsSkeleton* pSkeleton = pMesh->GetSkeleton();
 
      pAnim->SetTargetSkeleton( pSkeleton );
+
     for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++ i)   
          queue.Add(pMesh->GetGeometry(i));
+
+    TsPlaneObject plane;
+    TsTransForm planeTransform;
+    planeTransform.m_localScale = TsVector3( 500 , 1 , 500 );
+    plane.Create( pDev );
+    plane.SetTransform( &planeTransform );
+    queue.Add( &plane );
 
     rs.SetDrawQue( &queue );
 
@@ -97,6 +105,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 //    pCamera->SetLocalRotate( TsQuaternion::AngleAxis( TsVector3::up , TsRadian( 180.0f ) ) );
     pCamera->SetLocalPosition(TsVector3(0,100,-400));
     pCamera->SetLockAt( TsVector3( TsVector3( 0 , 100 , 0 ) ) );
+
     pCamera->SetNearAndFar(30, 700);
 
     pCamera->CreateCBuffer(pDev);

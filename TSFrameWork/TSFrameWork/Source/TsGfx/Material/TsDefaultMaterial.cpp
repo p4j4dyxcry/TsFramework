@@ -2,7 +2,16 @@
 
 TsDefaultMatrial::TsDefaultMatrial() 
 {
+    m_material.diffuse = TsFloat4( 1 , 1 , 1 , 1 );
+    m_material.specluar = TsFloat4( 1 , 1 , 1 , 0 );
+    m_material.ambient = TsFloat4( .5 , .5 , .5 , .5 );
+    m_material.emissive = TsFloat3( 0 , 0 , 0 );
+    m_material.mataric = 0;
+    m_material.roughness = 0;
 
+    m_material.useDiffuseMap = 0;
+    m_material.useNomalMap = 0;
+    m_material.useSpeculerMap = 0;
 };
 
 TsDefaultMatrial::~TsDefaultMatrial()
@@ -11,7 +20,7 @@ TsDefaultMatrial::~TsDefaultMatrial()
 
 TsBool TsDefaultMatrial::CreateMaterial( TsDevice* pDev )
 {
-    ID3D11Buffer* buffer = pDev->CreateBuffer( &m_material , sizeof( m_material ) , 0 , D3D11_BIND_CONSTANT_BUFFER );
+    ID3D11Buffer* buffer = pDev->CreateBuffer( &m_material , sizeof( m_material ) , D3D11_CPU_ACCESS_WRITE , D3D11_BIND_CONSTANT_BUFFER );
     this->SetD3DBufferAndSize( buffer , sizeof( m_material ) );
 
     SetRegisterIndex(TS_CBUFFER_REGISTER::MaterialCB);  //register Index = [c1]
@@ -70,15 +79,16 @@ TsBool TsDefaultMatrial::LoadAlbedoTextureFromFile( TsDevice * pDev , const TsSt
 {
     m_pAlbedoTexture = LoadTextureFromFile( pDev , name );
 
-    TsBool useTexture = m_material.useDiffuseMap;
+    TsBool useTexture = (TsBool)m_material.useDiffuseMap;
     if( m_pAlbedoTexture )
     {
-        m_material.useDiffuseMap = TS_TRUE;
-        m_isUpdate = useTexture == TS_TRUE;
+        m_material.useDiffuseMap = 1.0f;
+        m_isUpdate |= useTexture != TS_TRUE;
     }
     else
     {
-        m_isUpdate = useTexture == TS_FALSE;
+        m_material.useDiffuseMap = 0;
+        m_isUpdate |= useTexture != TS_FALSE;
     }
     return TS_TRUE;
 }
@@ -87,15 +97,16 @@ TsBool TsDefaultMatrial::LoadNormalTextureFromFile( TsDevice * pDev , const TsSt
 {
     m_pNormalTexture = LoadTextureFromFile( pDev , name );
 
-    TsBool useTexture = m_material.useNomalMap;
+    TsBool useTexture = ( TsBool )m_material.useNomalMap;
     if( m_pNormalTexture )
     {
-        m_material.useNomalMap = TS_TRUE;
-        m_isUpdate = useTexture == TS_TRUE;
+        m_material.useNomalMap = 1.0f;
+        m_isUpdate |= useTexture != TS_TRUE;
     }
     else
     {
-        m_isUpdate = useTexture == TS_FALSE;
+        m_material.useNomalMap = 0;
+        m_isUpdate |= useTexture != TS_FALSE;
     }
     return TS_TRUE;
 }
@@ -104,15 +115,16 @@ TsBool TsDefaultMatrial::LoadSpeculerTextureFromFile( TsDevice * pDev , const Ts
 {
     m_pSpeclurTexture = LoadTextureFromFile( pDev , name );
 
-    TsBool useTexture = m_material.useSpeculerMap;
+    TsBool useTexture = (TsBool)m_material.useSpeculerMap;
     if( m_pSpeclurTexture )
     {
-        m_material.useSpeculerMap = TS_TRUE;
-        m_isUpdate = useTexture == TS_TRUE;
+        m_material.useSpeculerMap = 1.0f;
+        m_isUpdate |= useTexture != TS_TRUE;
     }
     else
     {
-        m_isUpdate = useTexture == TS_FALSE;
+        m_material.useSpeculerMap = 0;
+        m_isUpdate |= useTexture != TS_FALSE;
     }
     return TS_TRUE;
 }

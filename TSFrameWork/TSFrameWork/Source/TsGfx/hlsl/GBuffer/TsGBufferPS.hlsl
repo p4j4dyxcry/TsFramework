@@ -17,12 +17,12 @@ PS_GBUFFER_OUTPUT_3 main( PS_IN input ,
     PS_GBUFFER_OUTPUT_3 output = ( PS_GBUFFER_OUTPUT_3 )0;
 
     // albedo color
-    output.data0 = g_useDiffuseMap ?
+    output.data0 = g_useDiffuseMap >0?
         albedoMap.Sample( samp , input.uv ) :
         float4( max( g_Diffuse.xyz , g_Ambient.xyz ) , g_Diffuse.w );
 
     // normal to 0 ~ 1
-    output.data1.xyz = g_useNomalMap ?
+    output.data1.xyz = g_useNomalMap >0 ?
         nomalMap.Sample( samp , input.uv ) :
         PackUnsigned( input.normal );
 

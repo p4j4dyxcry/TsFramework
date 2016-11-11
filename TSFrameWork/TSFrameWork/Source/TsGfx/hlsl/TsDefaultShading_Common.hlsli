@@ -31,9 +31,9 @@ cbuffer MaterialCB : register ( CBUFFER_MATERIAL_REGISTER )
     float  g_Mataric;       // mataric
     float  g_Roughness;     // roughness
 
-    bool   g_useDiffuseMap; // true on using albedo map
-    bool   g_useNomalMap;   // true on using nomal map
-    bool   g_useSpeculerMap;// true on using speclur map
+    float  g_useDiffuseMap; // true on using albedo map
+    float  g_useNomalMap;   // true on using nomal map
+    float  g_useSpeculerMap;// true on using speclur map
 }
 
 cbuffer ViewCB : register (CBUFFER_VIEW_REGISTER)

@@ -50,17 +50,16 @@ TsBool TsTransformBakeAnimation::Update()
     {
         if ( p )
         {
-            TsTransForm begin = m_bakedMatrixList[frame].find(p->GetHashCode())->second;
+            TsTransForm begin =m_bakedMatrixList[frame].find( p->GetHashCode() )->second;
             TsTransForm end;
             if ( frame + 1 < m_maxFrame)
                 end = m_bakedMatrixList[frame].find(p->GetHashCode())->second;
             else 
             {
-                *p = begin;
-                break;
+                end = m_bakedMatrixList[0].find( p->GetHashCode() )->second;;
             }
             TsF32 t = m_localFrame - (TsInt)m_localFrame;
-            *p = TsLerp(begin, end, t);
+            *p = TsLerp(begin, end, t).ToLocalMatrix();
         }
     }
     

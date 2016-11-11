@@ -20,10 +20,10 @@ struct TsVertexDefault
 struct TsVertexSkin
 {
     TsVector3 pos;
-    TsVector2 uv;
     TsVector3 normal;
     TsVector4 weight;
     TsInt4	  boneIndex;
+    TsVector2 uv;
 };
 
 struct TSVertexScreenSpace

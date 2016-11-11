@@ -24,22 +24,9 @@ public:
         TsF32    mataric;       // mataric
         TsF32    roughness;     // roughness
 
-        TsBool   useDiffuseMap; // true on using albedo map
-        TsBool   useNomalMap;   // true on using nomal map
-        TsBool   useSpeculerMap;// true on using speclur map
-        DefaultMatrial()
-        {
-            diffuse = TsFloat4( 1 , 1 , 1 , 1 );
-            specluar = TsFloat4( 1 , 1 , 1 , 0 );
-            ambient = TsFloat4( .5 , .5 , .5 , .5 );
-            emissive = TsFloat3( 0 , 0 , 0 );
-            mataric = 0;
-            roughness = 0;
-
-            useDiffuseMap = TS_FALSE;
-            useNomalMap = TS_FALSE;
-            useSpeculerMap = TS_FALSE;
-        }
+        TsF32   useDiffuseMap; // true on using albedo map
+        TsF32   useNomalMap;   // true on using nomal map
+        TsF32   useSpeculerMap;// true on using speclur map
     };
     //=========================================================================
     //! public method
