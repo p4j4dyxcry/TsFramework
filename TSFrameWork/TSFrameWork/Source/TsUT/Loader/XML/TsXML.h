@@ -7,9 +7,7 @@
 
 #pragma once
 
-#include "../../Extern/XML/tinyxml2.h"
-#include "TsType.h"
-#include "TsArrayType.h"
+#include "../../../../Extern/XML/tinyxml2.h"
 
 //==================================================
 //! xml アトリビュート

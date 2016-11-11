@@ -9,6 +9,11 @@ TsDepthStencilState::TsDepthStencilState()
 
 }
 
+TsDepthStencilState::~TsDepthStencilState()
+{
+    TsSafeDelete(m_pDepteStencil);
+}
+
 TsBool TsDepthStencilState::CreateDepthStencil( TsDevice* pDev )
 {
     TS_DEPTH_STENCIL_DESC desc;

@@ -13,7 +13,7 @@ public:
     //----------------------------------------------------------
     // public method
     //----------------------------------------------------------
-    TsShader() :m_shader(nullptr), m_inputLayout(nullptr);
+    TsShader();
     virtual ~TsShader();
 
     inline TsBool CompileFromFile( __in ID3D11Device* pDev ,

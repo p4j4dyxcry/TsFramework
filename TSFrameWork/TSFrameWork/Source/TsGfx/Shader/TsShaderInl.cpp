@@ -1,9 +1,8 @@
-
 //----------------------------------------------------------
 //! Constructor
 //----------------------------------------------------------
 template<typename T>
-TsShader<T>::TsShader<T>()
+TsShader<T>::TsShader()
 :m_shader(nullptr), 
  m_inputLayout(nullptr)
 {
@@ -14,7 +13,7 @@ TsShader<T>::TsShader<T>()
 //! Destructor
 //----------------------------------------------------------
 template<typename T>
-TsShader<T>::~TsShader<T>()
+TsShader<T>::~TsShader()
 {
     TsSafeRelease(m_shader);
     TsSafeRelease(m_inputLayout);
