@@ -10,6 +10,9 @@ class TsRenderPass :public TsNameObject ,
                     public ITsStaticNameObjectList<TsRenderPass>
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     TsRenderPass();
     virtual ~TsRenderPass();
 
@@ -30,8 +33,14 @@ public:
     virtual TsBool LoadIOSlotFromXMLElement( TsDevice* pDev , TsXMLElement * pElement );
      
 protected:
+    //----------------------------------------------------------
+    // private method
+    //----------------------------------------------------------
     TsBool ApplyRTV( TsDeviceContext* pDC );
 protected:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     TsTexture*              m_pInputSlot[TsDeviceContext::MAX_RTs];
     TsRenderTarget*         m_pOutputSlot[TsDeviceContext::MAX_RTs];
     TsDepthStencilView*     m_pDepthStencilView;

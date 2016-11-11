@@ -1,22 +1,34 @@
+ï»¿//**********************************************************
+//! TsDepthStencilState.h
+//! Depth / Stencil State.
+//!
+//! Â© 2016 Yuki Tsuneyama
+
 #pragma once
 
+//----------------------------------------------------------
+// Define of Depth Test Function
+//----------------------------------------------------------
 enum class TS_COMPARISON_FUNC : TsUint
 {
-    NEVER              = 1 ,   //&0 í‚É•s‡Ši
-    LESS                  = 2 ,   //<= ƒ\[ƒX‚ª‘ÎÛ‚æ‚è¬‚³‚¢‚Æ‚«‚É‡Ši
-    EQUAL              = 3 ,   //== “™‚µ‚¢‚É‡Ši
-    LESS_EQUAL = 4 ,   //<=  ¬‚³‚¢‚©“™‚µ‚¢‚É‡Ši
-    GREATER            = 5 ,   //>  ƒ\[ƒX‚ª‘ÎÛ‚æ‚è‘å‚«‚¢‚É‡Ši
-    NOT_EQUAL          = 6 ,   //!= “™‚µ‚­‚È‚¢‚Æ‚«‚É‡Ši
-    GREATER_EQUAL      = 7 ,   //>= ‘å‚«‚¢‚Æ‚«‚©“™‚µ‚¢‚É‡Ši
-    ALWAYS             = 8 ,   //|1 í‚É‡Ši
+    NEVER              = 1 ,   //&0 å¸¸ã«ä¸åˆæ ¼
+    LESS               = 2 ,   //<= ã‚½ãƒ¼ã‚¹ãŒå¯¾è±¡ã‚ˆã‚Šå°ã•ã„ã¨ãã«åˆæ ¼
+    EQUAL              = 3 ,   //== ç­‰ã—ã„æ™‚ã«åˆæ ¼
+    LESS_EQUAL         = 4 ,   //<=  å°ã•ã„ã‹ç­‰ã—ã„æ™‚ã«åˆæ ¼
+    GREATER            = 5 ,   //>  ã‚½ãƒ¼ã‚¹ãŒå¯¾è±¡ã‚ˆã‚Šå¤§ãã„æ™‚ã«åˆæ ¼
+    NOT_EQUAL          = 6 ,   //!= ç­‰ã—ããªã„ã¨ãã«åˆæ ¼
+    GREATER_EQUAL      = 7 ,   //>= å¤§ãã„ã¨ãã‹ç­‰ã—ã„æ™‚ã«åˆæ ¼
+    ALWAYS             = 8 ,   //|1 å¸¸ã«åˆæ ¼
 };
 
 class TsDepthStencilState
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     TsDepthStencilState();
-    ~TsDepthStencilState();
+    virtual ~TsDepthStencilState();
     TsBool CreateDepthStencil( TsDevice * pDev );
     TsBool SetZEnable( TsBool flag);
     TsBool SetZWriteEnable( TsBool flag );
@@ -25,6 +37,9 @@ public:
 
     ID3D11DepthStencilState* GetDSS(){ return m_pDepteStencil; }
 private:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     TsBool m_zRwriteEnable;
     TsBool m_zEnable;
     TS_COMPARISON_FUNC m_depthtTestFunc;

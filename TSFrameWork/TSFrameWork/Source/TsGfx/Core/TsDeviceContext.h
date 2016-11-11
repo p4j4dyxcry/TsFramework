@@ -5,6 +5,9 @@
 //!
 //! © 2016 Yuki Tsuneyama
 
+//----------------------------------------------------------
+// Define
+//----------------------------------------------------------
 class TsRenderTarget;
 class TsDepthStencilView;
 class TsBlendState;
@@ -17,11 +20,17 @@ class TsCamera;
 class TsDeviceContext
 {
 public:
+    //----------------------------------------------------------
+    // Define
+    //----------------------------------------------------------
     static const TsInt	 MAX_RTs = D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT;
+
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
 
     TsDeviceContext( TsDevice* device , ID3D11DeviceContext* pDevContext );
     virtual ~TsDeviceContext();
-    //todo functions.
 
     //=============================================
     // ! Clear
@@ -71,6 +80,10 @@ public:
                        const TsTexture* texture , 
                        TS_SHADER_TYPE type );
 
+    //=============================================
+    // ! SetSamplerState
+    // デバイスにサンプラーステートを設定
+    // @return true on success
     TsBool SetSamplerState( TsSamplerState* pSampler , 
                             TsInt registerIndex ,
                             TS_SHADER_TYPE type = TS_SHADER_TYPE::PIXEL_SHADER);
@@ -101,43 +114,137 @@ public:
     // @return ディスプレイにバインドされているRTV
     TsDepthStencilView* GetMainDSV()const{ return m_mainDepthStencil; }
 
+    //=============================================
+    // ! SetDepthStencilState
+    // パイプラインに設定する深度/ステンシルの設定
+    // @return True on Success
     TsBool SetDepthStencilState( TsDepthStencilState * pDepthStencil );
+    
+    //=============================================
+    // ! SetRasterizerState
+    // パイプラインに設定するラスタライズステートの設定
+    // @return True on Success
     TsBool SetRasterizerState( TsRasterizerState * pRasterState );
+
+    //=============================================
+    // ! SetBlendState
+    // パイプラインに設定するブレンドステートの設定
+    // @return True on Success
     TsBool SetBlendState( TsBlendState * pBlendState );
 
+    //=============================================
+    // ! SetCBuffer
+    // CBuffer をパイプラインにセットする
+    // @return True on Success
+    TsBool SetCBuffer(const TsCBuffer * cbuffer);
+
+    //=============================================
+    // ! ChangeCBuffer
+    // CBuffer の更新をロックし更新する
+    // @return True on Success
+    TsBool ChangeCBuffer(TsCBuffer * cbuffer, void * pData, size_t sz);
+
+    //=============================================
+    // ! SetAndChangeCBuffer
+    // CBuffer の更新　かつ　パイプラインにセットする
+    // @return True on Success
     TsBool SetAndChangeCBuffer( TsCBuffer* cbuffer , 
                                void * pData , 
                                size_t size );
 
-    TsBool SetCBuffer(const TsCBuffer * cbuffer );
-    TsBool ChangeCBuffer( TsCBuffer * cbuffer , void * pData , size_t sz );
-
+    //=============================================
+    // ! Draw
+    // ジオメトリを頂点をGPUに転送する
+    // @return True on Success
     TsBool Draw( TsInt vtxNum , TsInt startSlot = 0);
+
+    //=============================================
+    // ! DrawIndex
+    // ジオメトリを頂点をIndexBufferを元にGPUに転送する
+    // @return True on Success
     TsBool DrawIndex( TsInt index , TsInt startSlot = 0 , TsInt indexLocation = 0 );
 
+    //! todo 未使用
     TsBool ResetDrawCallCount();
 
-
+    //=============================================
+    // ! SetViewport
+    //  Viewport をパイプラインに設定する
+    // @return True on Success
     TsBool SetViewport( TsViewport* viewport );
 
+    //=============================================
+    // ! ApplyInputLayout
+    //  インプットレイアウトの確定
+    // @return True on Success
     TsBool ApplyInputLayout();
 
+    //=============================================
+    // ! ApplyInputLayout
+    //  深度＆ステンシルの確定
+    // @return True on Success
     TsBool ApplyDepthStencil();
+
+    //=============================================
+    // ! ApplyInputLayout
+    //  ラスタライズステートの確定
+    // @return True on Success
     TsBool ApplyRasterizer();
+
+    //=============================================
+    // ! ApplyInputLayout
+    //  ブレンドステートの確定
+    // @return True on Success
     TsBool ApplyBlendState();
 
+    //=============================================
+    // ! SetVertexBuffer
+    //  VertexBufferをパイプラインに設定
+    // @return True on Success
     TsBool SetVertexBuffer( TsVertexBuffer* );
+
+    //=============================================
+    // ! SetIndexBuffer
+    //  IndexBufferをデバイスに設定
+    // @return True on Success
     TsBool SetIndexBuffer( TsIndexBuffer* );
 
+    //! todo 未作成
     TsBool ClearVertexBuffer( );
+    //! todo 未作成
     TsBool ClearIndexBuffer( );
+
+    //=============================================
+    // ! ClearCBuffer
+    //  GPUメモリのCBufferResouceをクリアする
+    // @return True on Success
     TsBool ClearCBuffer( TsInt index = -1 , TS_SHADER_TYPE type = TS_SHADER_TYPE::ALL_SHADER );
 
+    //=============================================
+    // ! GetMainCamera
+    //  パイプラインに設定されているカメラを取得する。
+    //  パイプラインにカメラが設定されていない場合は
+    //  デフォルトカメラを作成する。
+    // @return True on Success
     TsCamera* GetMainCamera()const;
+
+    //=============================================
+    // ! SetMainCamera
+    //  パイプラインにカメラを設定する。
+    //  nullを指定した場合デフォルトカメラが使用される。
+    // @return True on Success
     TsBool SetMainCamera(TsCamera*);
+
+    //=============================================
+    // ! SetTopology
+    // 頂点の並び構造を設定する
+    // @return True on Success
     TsBool SetTopology( D3D_PRIMITIVE_TOPOLOGY topology );
-private:
-    
+private:    
+
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------    
     TsDevice*                              m_pDevice;
     ID3D11DeviceContext*                   m_pDeviceContext;
     TsShaderEffect*                        m_bindShaderEffect;

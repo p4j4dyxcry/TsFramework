@@ -10,6 +10,9 @@ class TsShaderEffect :	public TsNameObject ,
                         public ITsStaticNameObjectList<TsShaderEffect>
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     //! Constructor
     TsShaderEffect() :	m_vertexShader(nullptr),
                         m_pPixelShader(nullptr),
@@ -38,11 +41,14 @@ public:
     TsDomainShader*     GetDomainShader()const{ return m_pDomainShader; }
     TsComputeShader*    GetComputeShader()const{ return m_pComputeShader; }	
 
-    TsRasterizerState*      GetRasterizeState()      { return m_pRasterizerState; }
+    TsRasterizerState*   GetRasterizeState()      { return m_pRasterizerState; }
     TsDepthStencilState* GetDepthStencilState(){ return m_pDepthStencilState; }
     TsBlendState*        GetBlendState(){ return m_pBlensState; };
 
 protected:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     TsVertexShader *    m_vertexShader;
     TsPixelShader *     m_pPixelShader;
     TsGeometryShader*   m_pGeometoryShader;

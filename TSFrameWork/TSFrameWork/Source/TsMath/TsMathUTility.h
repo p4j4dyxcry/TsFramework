@@ -51,6 +51,26 @@ inline T TsLerp( const T& a , const T&b , TsF32 t )
 {
     return a * ( 1.0f - t ) + b * t;
 }
+class TsQuaternion;
+template<>
+inline TsQuaternion TsLerp(const TsQuaternion& a, const TsQuaternion& b, TsF32 t)
+{
+    TsVector3 euler = TsLerp(a.ToEuler(), b.ToEuler(), t);
+    return TsQuaternion::CreateByEuler(euler);
+}
+// 線形補完 の特殊化
+class TsTransForm;
+template<>
+inline TsTransForm TsLerp(const TsTransForm& a, const TsTransForm& b, TsF32 t)
+{
+    TsTransForm result;
+
+    result.m_localPosition = TsLerp(a.m_localPosition, b.m_localPosition, t);
+    result.m_localScale = TsLerp(a.m_localScale, b.m_localScale, t);
+    result.m_localRotate = TsLerp(a.m_localRotate,b.m_localRotate,t);
+
+    return result;
+}
 
 //! a と b を t で3次補完する
 template<typename T>

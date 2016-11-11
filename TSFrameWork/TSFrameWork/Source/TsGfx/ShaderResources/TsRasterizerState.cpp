@@ -8,6 +8,11 @@ TsRasterizerState::TsRasterizerState()
 { 
 }
 
+TsRasterizerState::~TsRasterizerState()
+{
+    TsSafeDelete(m_pD3DRasterizerState);
+}
+
 TsBool TsRasterizerState::SetCullMode( TS_CULL_MODE mode )
 {
     m_cullMode = mode;

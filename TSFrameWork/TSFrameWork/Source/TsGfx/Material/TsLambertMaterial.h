@@ -1,3 +1,8 @@
+﻿//**********************************************************
+//! TsLambertMaterial.h
+//! lambert material.
+//!
+//! © 2016 Yuki Tsuneyama
 #pragma once
 
 class TsLambertMatrial : public TsMaterial

@@ -68,7 +68,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Source\TsGfx\Shader\TsShaderReflection.cpp" />
-    <ClCompile Include="Source\TsGfx\Shader\TsShaderTechnique.cpp" />
     <ClCompile Include="Source\TsGfx\ShadowMap\TsLisPSM.cpp" />
     <ClCompile Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.cpp" />
     <ClInclude Include="Extern\XML\tinyxml2.h" />
@@ -123,7 +122,6 @@
     <ClInclude Include="Source\TsGfx\Shader\TsShader.h" />
     <ClInclude Include="Source\TsGfx\Shader\TsShaderEffect.h" />
     <ClInclude Include="Source\TsGfx\Shader\TsShaderReflection.h" />
-    <ClInclude Include="Source\TsGfx\Shader\TsShaderTechnique.h" />
     <ClInclude Include="Source\TsGfx\Shader\TsShaderUT.h" />
     <ClInclude Include="Source\TsGfx\ShadowMap\TsLisPSM.h" />
     <ClInclude Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.h" />

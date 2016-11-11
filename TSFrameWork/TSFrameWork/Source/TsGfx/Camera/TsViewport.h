@@ -9,6 +9,9 @@
 class TsViewport
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     void Create( const TsInt width ,
                  const TsInt height ,
                  const TsInt _topLeftX = 0 ,
@@ -18,5 +21,8 @@ public:
     TsInt2 GetSize();
     const D3D11_VIEWPORT* GetD3DViewport()const;
 protected:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     D3D11_VIEWPORT	m_d3dviewport;
 };

@@ -1,3 +1,9 @@
+﻿//**********************************************************
+//! TsVertexElement.h
+//! 頂点群.
+//!
+//! © 2016 Yuki Tsuneyama
+
 #pragma once
 
 class TsMeshFactory;

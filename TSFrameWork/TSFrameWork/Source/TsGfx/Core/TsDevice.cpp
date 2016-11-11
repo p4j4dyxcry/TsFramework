@@ -284,10 +284,10 @@ TsBool TsDevice::LoadDefaultShader()
     return TS_TRUE;
 }
 
-TsBool TsDevice::Flip()
+TsBool TsDevice::Flip( TsBool vSinc )
 {
     if( m_device && m_swapChain )
-        m_swapChain->Present( 1 , 0 );
+        m_swapChain->Present( vSinc , 0 );
     else
         return TS_FALSE;
     return TS_TRUE;

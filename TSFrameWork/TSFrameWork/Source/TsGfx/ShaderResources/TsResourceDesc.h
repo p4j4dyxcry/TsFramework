@@ -7,7 +7,9 @@
 
 #pragma once
 
-//dx11 multi sample desc.
+//----------------------------------------------------------
+// Define of dx11 multi sample desc.
+//----------------------------------------------------------
 struct TS_SAMPLE_DESC : DXGI_SAMPLE_DESC
 {
     TS_SAMPLE_DESC( TsInt count = 1, TsInt quality = 0 )
@@ -17,6 +19,9 @@ struct TS_SAMPLE_DESC : DXGI_SAMPLE_DESC
     }
 };
 
+//----------------------------------------------------------
+// Define of dx11 DXGI_MODE_DESC
+//----------------------------------------------------------
 struct TS_MODE_DESC : DXGI_MODE_DESC
 {
     TS_MODE_DESC( TsUint width , 
@@ -36,7 +41,9 @@ struct TS_MODE_DESC : DXGI_MODE_DESC
     }
 };
 
-// dx11 swapchain desc
+//----------------------------------------------------------
+// Define of dx11 DXGI_SWAP_CHAIN_DESC
+//----------------------------------------------------------
 struct TS_SWAP_CHAIN_DESC : DXGI_SWAP_CHAIN_DESC
 {
     //todo
@@ -68,6 +75,9 @@ struct TS_BUFFER_DESC : D3D11_BUFFER_DESC
     //todo
 };
 
+//----------------------------------------------------------
+// Define of dx11 D3D11_DEPTH_STENCIL_DESC
+//----------------------------------------------------------
 struct TS_DEPTH_STENCIL_DESC : D3D11_DEPTH_STENCIL_DESC
 {
     TS_DEPTH_STENCIL_DESC()
@@ -96,6 +106,9 @@ struct TS_DEPTH_STENCIL_DESC : D3D11_DEPTH_STENCIL_DESC
     }
 };
 
+//----------------------------------------------------------
+// Define of dx11 D3D11_SHADER_RESOURCE_VIEW_DESC
+//----------------------------------------------------------
 struct TS_SRV_DESC : D3D11_SHADER_RESOURCE_VIEW_DESC
 {
     TS_SRV_DESC( DXGI_FORMAT format )
@@ -106,7 +119,9 @@ struct TS_SRV_DESC : D3D11_SHADER_RESOURCE_VIEW_DESC
     }
 };
 
-// dx11 rtv desc
+//----------------------------------------------------------
+// Define of dx11 D3D11_RENDER_TARGET_VIEW_DESC
+//----------------------------------------------------------
 struct TS_RTV_DESC : D3D11_RENDER_TARGET_VIEW_DESC
 {
     TS_RTV_DESC( DXGI_FORMAT format )
@@ -136,7 +151,9 @@ struct TS_RTV_DESC : D3D11_RENDER_TARGET_VIEW_DESC
     }
 };
 
-// dx11 texture desc.
+//----------------------------------------------------------
+// Define of dx11 D3D11_TEXTURE2D_DESC
+//----------------------------------------------------------
 struct TS_TEX2D_DESC : D3D11_TEXTURE2D_DESC
 {
     TS_TEX2D_DESC( TsUint width ,

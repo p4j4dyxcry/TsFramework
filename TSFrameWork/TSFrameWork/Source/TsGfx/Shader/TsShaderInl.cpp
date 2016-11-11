@@ -1,3 +1,28 @@
+
+//----------------------------------------------------------
+//! Constructor
+//----------------------------------------------------------
+template<typename T>
+TsShader<T>::TsShader<T>()
+:m_shader(nullptr), 
+ m_inputLayout(nullptr)
+{
+    this->TsBinary::TsBinary();
+}
+
+//----------------------------------------------------------
+//! Destructor
+//----------------------------------------------------------
+template<typename T>
+TsShader<T>::~TsShader<T>()
+{
+    TsSafeRelease(m_shader);
+    TsSafeRelease(m_inputLayout);
+};
+
+//----------------------------------------------------------
+//! Compile from file
+//----------------------------------------------------------
 template<typename T>
 TsBool TsShader<T>::CompileFromFile(
     __in ID3D11Device* pDev ,
@@ -52,6 +77,9 @@ TsBool TsShader<T>::CompileFromFile(
     return TS_TRUE;
 };
 
+//----------------------------------------------------------
+//! Load From Shader Binary
+//----------------------------------------------------------
 template<typename T>
 TsBool TsShader<T>::LoadFromCSO( ID3D11Device* pd3dDevice , const TsChar* filename )
 {
@@ -78,6 +106,9 @@ TsBool TsShader<T>::LoadFromCSO( ID3D11Device* pd3dDevice , const TsChar* filena
     return TS_TRUE;
 }
 
+//----------------------------------------------------------
+//! Vertex Shader Compile From Memory 
+//----------------------------------------------------------
 template<>
 TsBool TsVertexShader::CompileFromMemory( ID3D11Device* pDev , void* memory , size_t sz )
 {
@@ -89,6 +120,9 @@ TsBool TsVertexShader::CompileFromMemory( ID3D11Device* pDev , void* memory , si
     return TS_TRUE;
 }
 
+//----------------------------------------------------------
+//! Pixel Shader Compile From Memory 
+//----------------------------------------------------------
 template<>
 TsBool TsPixelShader::CompileFromMemory( ID3D11Device* pDev , void* memory , size_t sz )
 {
@@ -97,6 +131,10 @@ TsBool TsPixelShader::CompileFromMemory( ID3D11Device* pDev , void* memory , siz
     if( FAILED( hr ) )return TS_FALSE;
     return TS_TRUE;
 }
+
+//----------------------------------------------------------
+//! Hull Shader Compile From Memory 
+//----------------------------------------------------------
 template<>
 TsBool TsHullShader::CompileFromMemory( ID3D11Device* pDev , void* memory , size_t sz )
 {
@@ -105,6 +143,10 @@ TsBool TsHullShader::CompileFromMemory( ID3D11Device* pDev , void* memory , size
     if( FAILED( hr ) )return TS_FALSE;
     return TS_TRUE;
 }
+
+//----------------------------------------------------------
+//! Geometry Shader Compile From Memory 
+//----------------------------------------------------------
 template<>
 TsBool TsGeometryShader::CompileFromMemory( ID3D11Device* pDev , void* memory , size_t sz )
 {
@@ -113,6 +155,10 @@ TsBool TsGeometryShader::CompileFromMemory( ID3D11Device* pDev , void* memory , 
     if( FAILED( hr ) )return TS_FALSE;
     return TS_TRUE;
 }
+
+//----------------------------------------------------------
+//! Compute Shader Compile From Memory 
+//----------------------------------------------------------
 template<>
 TsBool TsComputeShader::CompileFromMemory( ID3D11Device* pDev , void* memory , size_t sz )
 {
@@ -121,6 +167,10 @@ TsBool TsComputeShader::CompileFromMemory( ID3D11Device* pDev , void* memory , s
     if( FAILED( hr ) )return TS_FALSE;
     return TS_TRUE;
 }
+
+//----------------------------------------------------------
+//! Domain Shader Compile From Memory 
+//----------------------------------------------------------
 template<>
 TsBool TsDomainShader::CompileFromMemory( ID3D11Device* pDev , void* memory , size_t sz )
 {

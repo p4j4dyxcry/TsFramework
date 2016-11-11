@@ -1,14 +1,27 @@
+ï»¿//**********************************************************
+//! TsBlendState.h
+//! BlendState.
+//!
+//! Â© 2016 Yuki Tsuneyama
+
 #pragma once
 
+//----------------------------------------------------------
+// ! Blend Mode Define
+//----------------------------------------------------------
 enum class TS_BLEND_MODE
 {
-    NONE            = 0 ,   //ƒuƒŒƒ“ƒh–³‚µ
-    ALPHA_BLEND     = 1 ,   //ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh
-    ADD             = 2 ,   //‰ÁZ‡¬
-    SUBTRACT        = 3 ,     //Œ¸Z‡¬
+    NONE            = 0 ,   //ãƒ–ãƒ¬ãƒ³ãƒ‰ç„¡ã—
+    ALPHA_BLEND     = 1 ,   //ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰
+    ADD             = 2 ,   //åŠ ç®—åˆæˆ
+    SUBTRACT        = 3 ,     //æ¸›ç®—åˆæˆ
 };
 
-static TS_BLEND_MODE ConvertBlendModeToString( const char* str )
+
+//----------------------------------------------------------
+// ! Convert Blend Mode from String
+//----------------------------------------------------------
+static TS_BLEND_MODE ConvertBlendModeFromString(const char* str)
 {
     if( str == "NONE" )
         return TS_BLEND_MODE::NONE;
@@ -22,9 +35,15 @@ static TS_BLEND_MODE ConvertBlendModeToString( const char* str )
     return TS_BLEND_MODE::NONE;
 }
 
+//----------------------------------------------------------
+// ! Blend State
+//----------------------------------------------------------
 class TsBlendState
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     TsBlendState();
     virtual ~TsBlendState();
     TsBool CreateBlendState( TsDevice* pDev ,TS_BLEND_MODE bolenMode);
@@ -33,6 +52,9 @@ public:
         return m_pD3DBlendState;
     }
 private:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     ID3D11BlendState* m_pD3DBlendState;
 
 };

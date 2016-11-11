@@ -1,3 +1,9 @@
+﻿//**********************************************************
+//! TsMeshFactory.h
+//! このクラスは一時的なものです。
+//!
+//! © 2016 Yuki Tsuneyama
+
 #pragma once
 
 class TsGeometryObject;

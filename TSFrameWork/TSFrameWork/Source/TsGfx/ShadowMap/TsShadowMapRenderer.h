@@ -1,3 +1,9 @@
+﻿//**********************************************************
+//! TsShadoMapRenderer.h
+//! todo.
+//!
+//! © 2016 Yuki Tsuneyama
+
 #pragma once
 
 class TsShadowMapRenderer 

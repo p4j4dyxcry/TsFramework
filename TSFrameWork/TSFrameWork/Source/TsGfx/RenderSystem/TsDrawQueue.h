@@ -9,6 +9,10 @@
 class TsDrawQueue
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
+    
     //! constructor
     TsDrawQueue();
 
@@ -34,7 +38,15 @@ public:
     TsBool Render( TsDeviceContext* );
 
 private:
+
+    //----------------------------------------------------------
+    // private method
+    //----------------------------------------------------------
     TsDrawQueue& operator = ( const TsDrawQueue& ) = delete;
     TsDrawQueue( const TsDrawQueue& ) = delete;
+
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     TsVector<TsDrawObject*> m_drawObjList;
 };

@@ -1,5 +1,14 @@
+﻿//**********************************************************
+//! TsRasterizerState.h
+//! ラスタライズステート.
+//!
+//! © 2016 Yuki Tsuneyama
+
 #pragma once
 
+//----------------------------------------------------------
+// Define of Culling Mode
+//----------------------------------------------------------
 enum class TS_CULL_MODE : TsUint
 {
     BACK    = D3D11_CULL_BACK,
@@ -7,6 +16,9 @@ enum class TS_CULL_MODE : TsUint
     NONE    = D3D11_CULL_NONE
 };
 
+//----------------------------------------------------------
+// Define of Fill Mode
+//----------------------------------------------------------
 enum class TS_FILL_MODE : TsUint
 {
     SOLID       = D3D11_FILL_MODE::D3D11_FILL_SOLID,
@@ -17,7 +29,11 @@ enum class TS_FILL_MODE : TsUint
 class TsRasterizerState
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     TsRasterizerState();
+    virtual ~TsRasterizerState();
 
     TsBool SetCullMode( TS_CULL_MODE mode );
     TsBool SetFillMode( TS_FILL_MODE mode );
@@ -39,6 +55,9 @@ public:
 
     TsBool       GetAntiAlias(){ return m_antiAlias; }
 private:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     TS_CULL_MODE m_cullMode;
     TS_FILL_MODE m_fillMode;
     TsBool       m_antiAlias;

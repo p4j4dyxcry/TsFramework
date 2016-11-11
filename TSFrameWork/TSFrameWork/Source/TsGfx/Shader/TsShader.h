@@ -10,10 +10,11 @@ template<typename Shader>
 class TsShader : public TsBinary , public ITsStaticNameObjectList<TsShader<Shader>>
 {
 public:
-    TsShader() :m_shader( nullptr ) , m_inputLayout( nullptr )
-    {
-        this->TsBinary::TsBinary();
-    }
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
+    TsShader() :m_shader(nullptr), m_inputLayout(nullptr);
+    virtual ~TsShader();
 
     inline TsBool CompileFromFile( __in ID3D11Device* pDev ,
                                    __in const TsLChar* filename ,
@@ -32,16 +33,18 @@ public:
     ID3D11InputLayout* GetInputLayout()const{ return m_inputLayout; }
     Shader* GetShader()const { return m_shader; }
 
-    virtual ~TsShader()
-    {
-        TsSafeRelease( m_shader );
-        TsSafeRelease( m_inputLayout );
-    };
+
 protected:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     Shader*             m_shader;
     ID3D11InputLayout*  m_inputLayout;
 };
 
+//----------------------------------------------------------
+// Type Define
+//----------------------------------------------------------
 typedef TsShader<ID3D11VertexShader>    TsVertexShader;
 typedef TsShader<ID3D11PixelShader>     TsPixelShader;
 typedef TsShader<ID3D11GeometryShader>  TsGeometryShader;

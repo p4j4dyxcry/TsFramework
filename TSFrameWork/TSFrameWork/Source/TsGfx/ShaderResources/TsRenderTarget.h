@@ -10,6 +10,9 @@ class TsRenderTarget :public TsTexture2D ,
                       public ITsStaticNameObjectList<TsRenderTarget>
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //---------------------------------------------------------- 
     virtual ~TsRenderTarget();
 
     ID3D11RenderTargetView* GetRTV(){ return m_rtv; }
@@ -24,6 +27,9 @@ public:
                                       DXGI_FORMAT format = DXGI_FORMAT_R8G8B8A8_UNORM );
 
 protected:
+    //----------------------------------------------------------
+    // private method
+    //----------------------------------------------------------
     void operator = ( TsRenderTarget* ) = delete;
     TsRenderTarget( const TsRenderTarget& ) = delete;
     TsRenderTarget();
@@ -35,6 +41,9 @@ protected:
     void UnInit();
 
 private:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     ID3D11RenderTargetView*	  m_rtv;
     TsInt2                    m_rtvSize;
 };

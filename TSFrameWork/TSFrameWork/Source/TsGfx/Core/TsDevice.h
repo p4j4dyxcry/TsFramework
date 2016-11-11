@@ -6,6 +6,9 @@
 //! © 2016 Yuki Tsuneyama
 #pragma once
 
+//----------------------------------------------------------
+// Define
+//----------------------------------------------------------
 class TsDevice;
 class TsDeviceContext;
 class TsTexture;
@@ -19,7 +22,13 @@ class TsSamplerState;
 class TsRasterizerState;
 class TsDepthStencilState;
 
-// Dx11 Device Intarface
+
+//----------------------------------------------------------
+//! Deviceのインターフェイスクラス【現在未使用】
+//
+//  マルチプラットフォームに本格的に対応することになったら
+//  使用する予定
+//----------------------------------------------------------
 class ITsDevice
 {
 public:
@@ -30,10 +39,15 @@ public:
 private:
 };
 
-// Dx11 Device
+//----------------------------------------------------------
+//! Deviceのラッピングクラス
+//----------------------------------------------------------
 class TsDevice : ITsDevice
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     virtual ~TsDevice();
 
     void UnInit();
@@ -59,6 +73,7 @@ public:
     // ! Get DirectX Swap Chain
     IDXGISwapChain*	    GetSC()const override{ return m_swapChain; }
 
+#if 0
     //todo
     TsTexture*          CreateTextureFromFile( TsString name );
     TsRenderTarget*     CreateRenderTarget( TsString name );
@@ -70,7 +85,7 @@ public:
     TsHullShader*       CreateHSFromCSO( TsString filename );
     TsComputeShader*    CreateCSFromCSO( TsString filename );
     TsDomainShader*     CreateDSFromCSO( TsString filename );
-
+#endif
     TsSamplerState* CreateSamplerState( const D3D11_SAMPLER_DESC& desc );
 
     TsCBuffer* CreateCBuffer(__in void * pData ,
@@ -81,7 +96,8 @@ public:
                                   __in UINT cpuAct ,
                                   __in UINT type )const;
 
-    TsBool Flip();
+
+    TsBool Flip(TsBool vSinc = TS_TRUE);
 
     TsIndexBuffer* CreateIndexBuffer( void* pData , size_t size )const ;
     TsVertexBuffer* CreateVertexBuffer( void* pData , size_t size ,size_t stride,TsUint offset = 0)const ;
@@ -100,6 +116,9 @@ private:
     TsBool LoadDefaultShader();
 
 private:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     ID3D11Device*       m_device;
     IDXGISwapChain*     m_swapChain;
     D3D_DRIVER_TYPE     m_driverType;

@@ -118,3 +118,4 @@ protected:
     //  このメソッドは関連する親子関係の全情報を書き換えることがある。
     TsBool RemoveOfParantChild( );
 };
+

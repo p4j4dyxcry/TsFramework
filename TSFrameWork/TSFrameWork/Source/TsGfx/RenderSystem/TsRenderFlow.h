@@ -9,6 +9,9 @@
 class TsRenderFlow : public TsNameObject
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     virtual TsBool Render( TsDeviceContext* pDC,  TsDrawQueue* pQue );
     TsRenderPass*  GetRenderPass(TsString);
     TsRenderPass*  GetRenderPass(TsInt index);
@@ -17,5 +20,8 @@ public:
 
     TsBool         LoadFlowFromXML( TsDevice* pDev , const TsString& file );
 protected:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     TsVector<TsRenderPass*> m_renderPass;
 };

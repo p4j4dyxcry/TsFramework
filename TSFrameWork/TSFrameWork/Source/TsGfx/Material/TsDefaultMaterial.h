@@ -1,3 +1,9 @@
+﻿//**********************************************************
+//! TsDefaultMaterial.h
+//! material.
+//!
+//! © 2016 Yuki Tsuneyama
+
 #pragma once
 
 class TsDefaultMaterial

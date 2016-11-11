@@ -20,7 +20,6 @@
 #include "Core\TsDeviceContext.h"
 
 #include "Shader\TsShaderEffect.h"
-#include "Shader\TsShaderTechnique.h"
 
 #include "Extlibs\TsDirectXTex.h"
 

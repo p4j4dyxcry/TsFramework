@@ -303,9 +303,6 @@
     <ClCompile Include="Source\TsGfx\RenderSystem\TsClearPass.cpp">
       <Filter>ソース ファイル\TsGfx\Source\RenderSystem</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsGfx\Shader\TsShaderTechnique.cpp">
-      <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsGfx\Shader\TsShader.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
     </ClCompile>
@@ -597,9 +594,6 @@
       <Filter>ソース ファイル\TsGfx\Source\RenderSystem</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsGfx\Shader\TsShaderReflection.h">
-      <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\Shader\TsShaderTechnique.h">
       <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsGfx\Shader\TsShaderUT.h">

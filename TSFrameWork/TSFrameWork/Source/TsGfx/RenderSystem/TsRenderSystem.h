@@ -8,11 +8,9 @@
 class TsRenderSystem : TsNameObject
 {
 public:
-
-    TsRenderSystem();
-    virtual ~TsRenderSystem();
-    virtual TsBool CallRender( TsDeviceContext* pDC );
-
+    //----------------------------------------------------------
+    // Define
+    //----------------------------------------------------------
     struct FlowAndQue
     {
         TsRenderFlow* pFlow = nullptr;
@@ -34,6 +32,15 @@ public:
         DEFAULT_RENDERER,
         POST_RENDERER,
     };
+
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
+    TsRenderSystem();
+    virtual ~TsRenderSystem();
+    virtual TsBool CallRender( TsDeviceContext* pDC );
+
+
     TsBool SetDrawQue(TsDrawQueue* pDrawQue, TARGET_FLOW = TARGET_FLOW::DEFAULT_RENDERER);
     TsBool SetShaderFlow(TsRenderFlow* pFlow, TARGET_FLOW = TARGET_FLOW::DEFAULT_RENDERER);
 
@@ -42,7 +49,9 @@ public:
     TsBool LoadRenderSystemFromXML( TsDevice* pDev , const TsString& );
 protected:
 
-
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
 
     //todo : shadowmap class 
     TsVector<TsLight*>          m_lights;

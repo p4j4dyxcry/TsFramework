@@ -9,6 +9,9 @@
 class TsClearPass : public TsRenderPass
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     TsClearPass();
     virtual ~TsClearPass();
 
@@ -17,5 +20,8 @@ public:
 
     virtual TsBool LoadShaderFromXMLElement( TsDevice* pDev , TsXMLElement * pElement )override;
 protected:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     TsFloat4 m_clearColor;
 };

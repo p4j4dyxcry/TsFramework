@@ -1,3 +1,9 @@
+﻿//**********************************************************
+//! TsLightSetCBuffer.h
+//! ライトをまとめたConstantBuffer.
+//!
+//! © 2016 Yuki Tsuneyama
+
 #pragma once
 
 class TsLightSetCBuffer : public TsCBuffer
@@ -41,6 +47,6 @@ public:
     virtual TsBool UpdateCBuffer( TsDeviceContext* pDevContext )override;
 protected:
     LightCB m_lightSetCBuffer;              //  Constant Buffer
-    TsVector<TsLight*>  m_pLightRefList;    //  GPU�ɓ]�����郉�C�g
+    TsVector<TsLight*>  m_pLightRefList;    //  GPUに転送するライト
     TsBool m_isUpdate;
 };

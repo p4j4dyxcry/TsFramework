@@ -1,3 +1,8 @@
+﻿//**********************************************************
+//! TsSkyBox.h
+//! CubeMapをレンダリングするための内側を向いた立方体を定義.
+//!
+//! © 2016 Yuki Tsuneyama
 #pragma once
 
 class TsSkyBox : public TsDrawObject

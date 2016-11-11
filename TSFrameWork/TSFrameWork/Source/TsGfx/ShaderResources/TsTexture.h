@@ -10,6 +10,9 @@ class TsTexture : public TsShaderResource ,
                   public TsNameObject 
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     TsTexture() :m_srv( nullptr ){};
     virtual ~TsTexture()
     {
@@ -33,6 +36,9 @@ public:
         return TS_TRUE;
     }
 protected:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     ID3D11ShaderResourceView * m_srv;
     TsInt m_registerIndex = 0;
     TsBool m_isAlpha = TS_FALSE;
@@ -41,6 +47,9 @@ protected:
 class TsTexture2D : public TsTexture
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     TsTexture2D() :
         TsTexture(), 
         m_tex2d( nullptr ){};
@@ -50,12 +59,18 @@ public:
     }
 
 protected:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     ID3D11Texture2D * m_tex2d;
 };
 
 class TsCubeMap :public TsTexture
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     TsCubeMap() :TsTexture()
     {
         ZeroMemory(m_tex2d, sizeof(m_tex2d));
@@ -66,29 +81,44 @@ public:
             TsSafeRelease(p);
     }
 protected:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     ID3D11Texture2D * m_tex2d[6];
 };
 
 class TsTexture3D : public TsTexture
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     TsTexture3D() :TsTexture(),m_tex3d(nullptr){}
     virtual ~TsTexture3D()
     {
         TsSafeRelease(m_tex3d);
     };
 protected:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     ID3D11Texture3D * m_tex3d;
 };
 
 class TsTexture1D : public TsTexture
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     TsTexture1D() :TsTexture(), m_tex1d(nullptr){}
     virtual ~TsTexture1D()
     {
         TsSafeRelease(m_tex1d);
     };
 protected:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     ID3D11Texture1D * m_tex1d;
 };

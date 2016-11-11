@@ -9,6 +9,9 @@ class TsDepthStencilView :  public TsTexture2D ,
                             public ITsStaticNameObjectList<TsDepthStencilView>
 {
 public:
+    //----------------------------------------------------------
+    // public method
+    //----------------------------------------------------------
     //! コンストラクタ
     TsDepthStencilView() :m_depthStencilView( nullptr ){};
 
@@ -25,12 +28,17 @@ public:
     // Dx11レイヤーの Deptsh Stencil Viewの取得
     ID3D11DepthStencilView * GetDSV()const{ return m_depthStencilView; }
 private:
-
+    //----------------------------------------------------------
+    // private method
+    //----------------------------------------------------------
     //作成
     TsBool Create( const TsDevice& dev ,
                    TsInt width ,
                    TsInt height ,
                    DXGI_FORMAT format);
-
+private:
+    //----------------------------------------------------------
+    // propery
+    //----------------------------------------------------------
     ID3D11DepthStencilView * m_depthStencilView;
 };
