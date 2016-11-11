@@ -37,6 +37,11 @@ public:
         y = ( Type )v.y;
     }
 
+    inline const Type& operator[]( int n )const
+    {
+        return m[n];
+    }
+
     inline Type& operator[]( int n )
     {
         return m[n];
@@ -50,32 +55,32 @@ public:
         return *this;
     }
     template<typename T>
-    inline TsArrayType2<Type> operator+ ( const T& n )
+    inline TsArrayType2<Type> operator+ ( const T& n )const
     {
         return TsArrayType2<Type>( x + ( Type )n.x , y + ( Type )n.y );
     }
     template<typename T>
-    inline TsArrayType2<Type> operator- ( const T& n )
+    inline TsArrayType2<Type> operator- ( const T& n )const
     {
         return TsArrayType2<Type>( x - ( Type )n.x , y - ( Type )n.y );
     }
     template<typename T>
-    inline TsArrayType2<Type> operator* ( const T& n )
+    inline TsArrayType2<Type> operator* ( const T& n )const
     {
         return TsArrayType2( x*( Type )n.x , y * ( Type )n.y );
     }
 
-    inline TsArrayType2<Type> operator* ( Type n )
+    inline TsArrayType2<Type> operator* ( Type n )const
     {
         return TsArrayType2( x*( Type )n , y*( Type )n );
     }
     template<typename T>
-    inline TsArrayType2<Type> operator/ ( const T& n )
+    inline TsArrayType2<Type> operator/ ( const T& n )const
     {
         return TsArrayType2( x / ( Type )n.x , y / ( Type )n.y );
     }
 
-    inline TsArrayType2<Type> operator/ ( Type n )
+    inline TsArrayType2<Type> operator/ ( Type n )const
     {
         return TsArrayType2( x / ( Type )n , y / ( Type )n );
     }
@@ -123,17 +128,17 @@ public:
         return *this;
     }
 
-    TsBool operator ==(const TsArrayType2<Type>& b)
+    TsBool operator ==( const TsArrayType2<Type>& b )const
     {
         return x == b.x && y == b.y ;
     }
 
-    TsBool operator !=(const TsArrayType2<Type>& b)
+    TsBool operator !=( const TsArrayType2<Type>& b )const
     {
         return !(*this == b);
     }
 
-    inline Type	 Sum()
+    inline Type	 Sum()const
     {
         return x + y;
     }
@@ -185,6 +190,11 @@ public:
         *this = n;
     }
 
+    inline const Type& operator[]( int n )const
+    {
+        return m[n];
+    }
+
     inline Type& operator[]( int n )
     {
         return m[n];
@@ -199,32 +209,32 @@ public:
         return *this;
     }
     template<typename T>
-    inline TsArrayType3<Type> operator+ ( const T& n )
+    inline TsArrayType3<Type> operator+ ( const T& n )const
     {
         return TsArrayType3<Type>( x + ( Type )n.x , y + ( Type )n.y , z + ( Type )n.z );
     }
     template<typename T>
-    inline TsArrayType3<Type> operator- ( const T& n )
+    inline TsArrayType3<Type> operator- ( const T& n )const
     {
         return TsArrayType3<Type>( x - ( Type )n.x , y - ( Type )n.y , z - ( Type )n.z );
     }
     template<typename T>
-    inline TsArrayType3<Type> operator* ( const T& n )
+    inline TsArrayType3<Type> operator* ( const T& n )const
     {
         return TsArrayType3( x*( Type )n.x , y * ( Type )n.y , z*( Type )n.z );
     }
 
-    inline TsArrayType3<Type> operator* ( Type n )
+    inline TsArrayType3<Type> operator* ( Type n )const
     {
         return TsArrayType3( x*( Type )n , y*( Type )n , z*( Type )n );
     }
     template<typename T>
-    inline TsArrayType3<Type> operator/ ( const T& n )
+    inline TsArrayType3<Type> operator/ ( const T& n )const
     {
         return TsArrayType3( x / ( Type )n.x , y / ( Type )n.y , z / ( Type )n.z );
     }
 
-    inline TsArrayType3<Type> operator/ ( Type n )
+    inline TsArrayType3<Type> operator/ ( Type n )const
     {
         return TsArrayType3( x / ( Type )n , y / ( Type )n , z / ( Type )n );
     }
@@ -278,12 +288,12 @@ public:
         return *this;
     }
 
-    inline Type	 Sum()
+    inline Type	 Sum()const
     {
         return x + y + z;
     }
 
-    inline Type Length()
+    inline Type Length()const
     {
         return ( Type )pow( ( x * x ) + ( y * y ) + ( z * z ) , 0.5 );
     }
@@ -306,12 +316,12 @@ public:
         return a.x * b.x + a.y * b.y + a.z * b.z;
     }
 
-    TsBool operator ==(const TsArrayType3<Type>& b )
+    TsBool operator ==( const TsArrayType3<Type>& b )const
     {
         return x == b.x && y == b.y && z == b.z ;
     }
 
-    TsBool operator !=(const TsArrayType3<Type>& b)
+    TsBool operator !=( const TsArrayType3<Type>& b )const
     {
         return !(*this == b);
     }
@@ -374,6 +384,12 @@ public:
         *this = n;
     }
 
+    inline const Type& operator[]( int n )const
+    {
+        return m[n];
+    }
+
+
     inline Type& operator[]( int n )
     {
         return m[n];
@@ -389,32 +405,32 @@ public:
         return *this;
     }
     template<typename T>
-    inline TsArrayType4<Type> operator+ ( const T& n )
+    inline TsArrayType4<Type> operator+ ( const T& n )const
     {
         return TsArrayType4<Type>( x + ( Type )n.x , y + ( Type )n.y , z + ( Type )n.z , w + ( Type )n.w );
     }
     template<typename T>
-    inline TsArrayType4<Type> operator- ( const T& n )
+    inline TsArrayType4<Type> operator- ( const T& n )const
     {
         return TsArrayType4<Type>( x - ( Type )n.x , y - ( Type )n.y , z - ( Type )n.z , w + ( Type )n.w );
     }
     template<typename T>
-    inline TsArrayType4<Type> operator* ( const T& n )
+    inline TsArrayType4<Type> operator* ( const T& n )const
     {
         return TsArrayType4( x*( Type )n.x , y * ( Type )n.y , z*( Type )n.z , w + ( Type )n.w );
     }
 
-    inline TsArrayType4<Type> operator* ( Type n )
+    inline TsArrayType4<Type> operator* ( Type n )const
     {
         return TsArrayType4( x*( Type )n , y*( Type )n , z*( Type )n , w*( Type )n );
     }
     template<typename T>
-    inline TsArrayType4<Type> operator/ ( const T& n )
+    inline TsArrayType4<Type> operator/ ( const T& n )const
     {
         return TsArrayType4( x / ( Type )n.x , y / ( Type )n.y , z / ( Type )n.z , w / ( Type )n.z );
     }
 
-    inline TsArrayType4<Type> operator/ ( Type n )
+    inline TsArrayType4<Type> operator/ ( Type n )const
     {
         return TsArrayType4( x / ( Type )n , y / ( Type )n , z / ( Type )n , w / ( Type )n );
     }
@@ -474,11 +490,11 @@ public:
         return *this;
     }
 
-    inline Type	 Sum()
+    inline Type	 Sum()const
     {
         return x + y + z + w;
     }
-    TsBool operator == (const TsArrayType4<Type>& b )
+    TsBool operator == (const TsArrayType4<Type>& b )const
     {
         return x == b.x && y == b.y && z == b.z && w == b.w;
     }

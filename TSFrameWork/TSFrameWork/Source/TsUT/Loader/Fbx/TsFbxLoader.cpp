@@ -79,14 +79,34 @@ TsTransForm* TsFbxLoader::GetTransform( TsInt index )const
     return meshList[index]->GetTransform();
 }
 
-//! GetIndexBuffer
-TsString  TsFbxLoader::GetAlbedoTexturePass( TsInt index )
+//! GetAlbedoTex path
+TsString  TsFbxLoader::GetAlbedoTexturePath( TsInt index )
 {
     auto&& meshList = m_pFbxContext->GetSceneByIndex( 0 )->GetMeshList();
     TsInt materialIndex = meshList[index]->GetMaterialIndex();
     TsFbxMaterial material = m_pFbxContext->GetSceneByIndex( 0 )->GetMaterialList()[materialIndex];
     return material.GetAlbedoTextureName().GetFileName();
 }
+
+//! GetNormalTex path
+TsString  TsFbxLoader::GetNormalTexturePath( TsInt index )
+{
+    auto&& meshList = m_pFbxContext->GetSceneByIndex( 0 )->GetMeshList();
+    TsInt materialIndex = meshList[index]->GetMaterialIndex();
+    TsFbxMaterial material = m_pFbxContext->GetSceneByIndex( 0 )->GetMaterialList()[materialIndex];
+    return material.GetNormalTextureName().GetFileName();
+}
+
+//! GetSpeculerTex path
+TsString  TsFbxLoader::GetSpeculerTexturePath( TsInt index )
+{
+    auto&& meshList = m_pFbxContext->GetSceneByIndex( 0 )->GetMeshList();
+    TsInt materialIndex = meshList[index]->GetMaterialIndex();
+    TsFbxMaterial material = m_pFbxContext->GetSceneByIndex( 0 )->GetMaterialList()[materialIndex];
+    return material.GetSpecularTextureName().GetFileName();
+}
+
+
 
 TsBool TsFbxLoader::IsSkinMesh( TsInt index )
 {

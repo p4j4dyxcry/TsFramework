@@ -42,9 +42,9 @@ TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev,
             TsVertexElement * mesh = TsNew( TsVertexElement );
             mesh->m_vertexBuffer = buffer;
 
-            TsMaterial* material = TsNew( TsMaterial);
-            material->m_textureName = loader.GetTexturePass( i );
-            material->LoadTextureFromFile( pDev );
+            TsDefaultMatrial* material = TsNew( TsDefaultMatrial );
+            TsString path = loader.GetTexturePass( i );
+            material->LoadAlbedoTextureFromFile( pDev ,path);
 
             TsGeometryObject *  obj = TsNew( TsGeometryObject );
             obj->CreateGeometryObject( pDev , mesh , material );
@@ -82,12 +82,20 @@ TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev,
             TsVertexElement * mesh = TsNew( TsVertexElement );
             mesh->m_vertexBuffer = buffer;
             mesh->m_indexBuffer = indexBuffer;
-            TsLambertMatrial* material = TsNew( TsLambertMatrial );
+            TsDefaultMatrial* material = TsNew( TsDefaultMatrial );
 
             TSUT::TsFilePathAnalyzer ana = filename;
-            material->m_textureName = ana.GetLocalDirectory() + loader.GetAlbedoTexturePass( i );
+            
+            TsString filepath = ana.GetLocalDirectory() + loader.GetAlbedoTexturePath( i );
+            material->LoadAlbedoTextureFromFile( pDev , filepath );
 
-            material->LoadTextureFromFile( pDev );
+            filepath = ana.GetLocalDirectory() + loader.GetNormalTexturePath( i );
+            material->LoadNormalTextureFromFile( pDev , filepath );
+
+            filepath = ana.GetLocalDirectory() + loader.GetSpeculerTexturePath( i );
+            material->LoadSpeculerTextureFromFile( pDev , filepath );
+
+
             TsInt id = mesh->GetIndexNum();
             TsGeometryObject * obj = nullptr;
             if( loader.IsSkinMesh( i ) )

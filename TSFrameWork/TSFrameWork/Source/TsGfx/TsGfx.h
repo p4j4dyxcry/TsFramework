@@ -47,7 +47,6 @@
 #include "Camera\TsCamera.h"
 #include "BufferResources\TsVertex.h"
 #include "Material\TsMaterial.h"
-#include "Material\TsLambertMaterial.h"
 #include "Material\TsScreeSpaceMaterial.h"
 #include "Material\TsDefaultMaterial.h"
 

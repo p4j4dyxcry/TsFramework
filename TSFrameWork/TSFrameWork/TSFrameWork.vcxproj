@@ -104,7 +104,6 @@
     <ClInclude Include="Source\TsGfx\Geometry\TsVertexElement.h" />
     <ClInclude Include="Source\TsGfx\Light\TsLight.h" />
     <ClInclude Include="Source\TsGfx\Material\TsDefaultMaterial.h" />
-    <ClInclude Include="Source\TsGfx\Material\TsLambertMaterial.h" />
     <ClInclude Include="Source\TsGfx\Material\TsMaterial.h" />
     <ClInclude Include="Source\TsGfx\Material\TsScreeSpaceMaterial.h" />
     <ClInclude Include="Source\TsGfx\RenderSystem\TsClearPass.h" />

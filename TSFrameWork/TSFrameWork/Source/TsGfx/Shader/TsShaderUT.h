@@ -39,7 +39,7 @@ enum TS_CBUFFER_REGISTER
     ObjectMatrixCB = 0,
     SkinBoneCB = 1,       // used Vertex Shader
     LightSetCB = 2,
-    MaterialB = 3,   // used Pixel Shader;
+    MaterialCB = 3,   // used Pixel Shader;
     ViewCB = 7,
 };
 

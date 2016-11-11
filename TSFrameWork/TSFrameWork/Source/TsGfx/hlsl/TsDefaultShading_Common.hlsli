@@ -1,5 +1,7 @@
 
-#define TEX_REGISTER_ALBEDO t8
+#define TEX_REGISTER_ALBEDO     t8
+#define TEX_REGISTER_NORMAL     t9
+#define TEX_REGISTER_SPECULER   t10
 
 
 #define CBUFFER_OBJ_MTX_REGISTER  b0
@@ -20,6 +22,20 @@ cbuffer BoneMatrixs : register (CBUFFER_SKIN_REGISTER)
     float4x4 g_BoneMatrix[512];
 }
 
+cbuffer MaterialCB : register ( CBUFFER_MATERIAL_REGISTER )
+{
+    float4 g_Diffuse;       // xyz = diffuse w = alphaTest
+    float4 g_Specluar;      // xyz = color w = power
+    float4 g_Ambient;       // xyz = color w = not using
+    float3 g_Emissive;      // xyz = emissive w
+    float  g_Mataric;       // mataric
+    float  g_Roughness;     // roughness
+
+    bool   g_useDiffuseMap; // true on using albedo map
+    bool   g_useNomalMap;   // true on using nomal map
+    bool   g_useSpeculerMap;// true on using speclur map
+}
+
 cbuffer ViewCB : register (CBUFFER_VIEW_REGISTER)
 {
     float4x4 g_MtxView;
@@ -33,7 +49,7 @@ cbuffer ViewCB : register (CBUFFER_VIEW_REGISTER)
     float g_near;
     float g_far;
     float g_fov;
-    float ViewCB_Dumy;
+    float ViewCB_Dummy;
 }
 
 struct LightData

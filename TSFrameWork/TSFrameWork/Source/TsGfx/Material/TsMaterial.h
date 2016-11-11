@@ -9,11 +9,6 @@ class TsMaterial : public TsCBuffer
 {
 public:
     //----------------------------------------------------------
-    // Define
-    //----------------------------------------------------------
-    static const TsUint AlbedoTextureRegister = 8;
-
-    //----------------------------------------------------------
     // public method
     //----------------------------------------------------------
     TsMaterial();
@@ -22,16 +17,9 @@ public:
     virtual TsBool UpdateMaterial( TsDeviceContext* context );
     virtual TsBool CreateMaterial( TsDevice* pDevice );
 
-    virtual TsBool LoadTextureFromFile( TsDevice* pDevice );
-    virtual TsTexture* GetTexture()const;
-
-public:
-    TsString m_textureName;
-
 protected:
     //----------------------------------------------------------
     // propery
     //----------------------------------------------------------
-    TsBool m_isUpdate;
-    TsTexture*   m_pTexture;
+    TsBool       m_isUpdate;
 };

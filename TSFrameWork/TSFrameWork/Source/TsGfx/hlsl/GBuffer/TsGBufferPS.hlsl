@@ -9,22 +9,28 @@ struct PS_IN
 };
 
 PS_GBUFFER_OUTPUT_3 main( PS_IN input ,
-    Texture2D tex : register(TEX_REGISTER_ALBEDO),
-                          SamplerState samp  : register(s0))
+    Texture2D albedoMap  : register(TEX_REGISTER_ALBEDO),
+    Texture2D nomalMap   : register( TEX_REGISTER_NORMAL ) ,
+    Texture2D speclurMap : register( TEX_REGISTER_SPECULER ) ,
+    SamplerState samp    : register(s0))
 {
     PS_GBUFFER_OUTPUT_3 output = ( PS_GBUFFER_OUTPUT_3 )0;
 
     // albedo color
-    output.data0 =  tex.Sample(samp, input.uv);
+    output.data0 = g_useDiffuseMap ?
+        albedoMap.Sample( samp , input.uv ) :
+        float4( max( g_Diffuse.xyz , g_Ambient.xyz ) , g_Diffuse.w );
 
     // normal to 0 ~ 1
-    output.data1.xyz = PackUnsigned( input.normal );
+    output.data1.xyz = g_useNomalMap ?
+        nomalMap.Sample( samp , input.uv ) :
+        PackUnsigned( input.normal );
 
     // depth
     output.data1.w = input.worldPos.z / input.worldPos.w;
 
     // world space uv
-    output.data2 = float4(0, 0, 0.5f, 1);
+    output.data2 = float4(input.uv,0,1);
 
     return output;
 }

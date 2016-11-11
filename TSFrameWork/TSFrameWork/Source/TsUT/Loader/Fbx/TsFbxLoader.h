@@ -30,7 +30,9 @@ public:
 
     virtual void* GetIndexBuffer(TsInt index)override;
 
-    TsString      GetAlbedoTexturePass( TsInt index );
+    TsString      GetAlbedoTexturePath( TsInt index );
+    TsString      GetNormalTexturePath( TsInt index );
+    TsString      GetSpeculerTexturePath( TsInt index );
 
     TsTransForm*   GetTransform(TsInt index)const;
 

@@ -479,9 +479,6 @@
     <ClInclude Include="Source\TsGfx\Material\TsMaterial.h">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TsGfx\Material\TsLambertMaterial.h">
-      <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
-    </ClInclude>
     <ClInclude Include="Source\TsMath\TsMathUTility.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClInclude>
@@ -492,9 +489,6 @@
       <Filter>ソース ファイル\TsGfx\Source\Light</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsGfx\Material\TsScreeSpaceMaterial.h">
-      <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\Material\TsDefaultMaterial.h">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsCore\TsApplicationBase.h">
@@ -727,6 +721,9 @@
     </ClInclude>
     <ClInclude Include="Source\TsGfx\Geometry\TsPlaneObject.h">
       <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Material\TsDefaultMaterial.h">
+      <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
