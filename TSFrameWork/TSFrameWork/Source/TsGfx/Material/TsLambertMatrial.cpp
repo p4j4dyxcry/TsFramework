@@ -55,11 +55,11 @@ TsTexture* TsDefaultMatrial::LoadTextureFromFile( TsDevice* pDev ,const TsString
         auto pResult = TsDirectXTex::LoadFromFile( pDev->GetDevD3D() , name.c_str() );
         if( pResult.pSrv )
         {
-            pTex->SetSRV( pResult.pSrv );
-            pTex->SetAlphaMode( pResult.IsAlphaEnable );
-
             pTex = TsNew( TsTexture2D );
             pTex->SetName( name );
+
+            pTex->SetSRV( pResult.pSrv );
+            pTex->SetAlphaMode( pResult.IsAlphaEnable );
         }        
         TsResourceManager::RegisterResource<TsTexture>( pTex , name );
     }
