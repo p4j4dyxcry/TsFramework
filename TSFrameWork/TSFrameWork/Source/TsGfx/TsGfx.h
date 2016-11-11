@@ -59,6 +59,7 @@
 #include "Geometry\TsSkyBox.h"
 #include "Geometry\TsSkinGeometryObject.h"
 #include "Geometry\TsScreenObject.h"
+#include "Geometry\TsPlaneObject.h"
 
 #include "RenderSystem\TsDrawQueue.h"
 #include "RenderSystem\TsRenderPass.h"

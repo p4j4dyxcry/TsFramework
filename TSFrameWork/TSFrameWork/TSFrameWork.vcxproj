@@ -37,6 +37,7 @@
     <ClCompile Include="Source\TsGfx\Geometry\TsGeometryObject.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsMeshFactory.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsMeshObject.cpp" />
+    <ClCompile Include="Source\TsGfx\Geometry\TsPlaneObject.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsRenderGeometry.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsScreenObject.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsSkinGeometryObject.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="Source\TsGfx\Geometry\TsGeometryObject.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsMeshFactory.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsMeshObject.h" />
+    <ClInclude Include="Source\TsGfx\Geometry\TsPlaneObject.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsScreenObject.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsSkinGeometryObject.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsSkyBox.h" />

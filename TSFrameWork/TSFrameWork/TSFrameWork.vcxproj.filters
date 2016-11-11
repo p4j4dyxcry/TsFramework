@@ -420,6 +420,9 @@
     <ClCompile Include="Source\TsGfx\Light\TsPointLight.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Light</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsGfx\Geometry\TsPlaneObject.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -721,6 +724,9 @@
     </ClInclude>
     <ClInclude Include="Source\TsGfx\BufferResources\TsLightSetCBuffer.h">
       <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Geometry\TsPlaneObject.h">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
