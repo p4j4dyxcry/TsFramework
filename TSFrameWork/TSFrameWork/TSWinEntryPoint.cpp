@@ -38,8 +38,12 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 {
     TSUT::TsLoggerInit();
 
+    auto m02 = TsMatrix::CreateRotate( TsQuaternion::CreateByEuler( 0 , 90.0f , 0 ) );
+    auto m01 = TsMatrix::CreateRotate( TsQuaternion::CreateByAngleAxis( TsVector3::front , TsRadian( 90.0f ) ) );
+
     TsDirectioalLight dir;
-    dir.LookAt(TsVector3::front * 100, TsVector3::back, TsVector3::up);
+
+//    dir.LookAt(TsVector3::front * 100, TsVector3::back, TsVector3::up);
     auto mat = dir.GetWorldMatrix();
     TsApplicationBase api;
     api.Initialize(hInstance, nWinMode);
@@ -66,6 +70,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsLightSetCBuffer * pLightSetCB = TsNew(TsLightSetCBuffer);
     pLightSetCB->CreateLightSetCBuffer( pDev );
     TsDirectioalLight * pLight = TsNew(TsDirectioalLight);
+    pLight->SetLocalRotate( TsQuaternion::CreateByEuler( 0 , 45 , 45 ) );
     pLightSetCB->AddLight( pLight );
 
     //load mesh
@@ -106,7 +111,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     pCamera->SetLocalPosition(TsVector3(0,100,-400));
     pCamera->SetLockAt( TsVector3( TsVector3( 0 , 100 , 0 ) ) );
 
-    pCamera->SetNearAndFar(30, 700);
+    pCamera->SetNearAndFar(30, 300);
 
     pCamera->CreateCBuffer(pDev);
 

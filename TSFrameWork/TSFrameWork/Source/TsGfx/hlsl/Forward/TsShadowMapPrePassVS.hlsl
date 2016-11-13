@@ -9,8 +9,8 @@ struct VS_OUT
 VS_OUT main(VS_SKIN_INPUT input)
 {
     VS_OUT output;
-
-    float4x4 shadowMtx = g_LightData[0].worldToShadowMatrix;
+    LightData lightData = g_LightData[0];
+    float4x4 shadowMtx = lightData.worldToShadowMatrix;
 
     output.worldPos = mul(ComputeSkinMesh(input), g_MtxWorld);
     output.pos = mul(output.worldPos, shadowMtx);

@@ -47,17 +47,19 @@ TsBool TsLightSetCBuffer::UpdateCBuffer(TsDeviceContext* pDevContext)
     //if (isUpdate)
     {
         m_lightSetCBuffer.lightNum = m_pLightRefList.size();
-        for (TsUint i = 0; i > m_pLightRefList.size(); ++i)
+        for (TsUint i = 0; i < m_pLightRefList.size(); ++i)
         {
             TsLight* pLight = m_pLightRefList[i];
-            m_lightSetCBuffer.lightData[i].type = pLight->GetLightType();
+            m_lightSetCBuffer.lightData[i].type = (TsUint)pLight->GetLightType();
             m_lightSetCBuffer.lightData[i].pos = pLight->GetWorldPosition();
             m_lightSetCBuffer.lightData[i].dir = TsVector3::zero;
-            m_lightSetCBuffer.lightData[i].color = pLight->GetColor();
+            m_lightSetCBuffer.lightData[i].color = pLight->GetColor().m_color;
             if (pLight->GetLightType() == TsLight::LIGHT_TYPE::LIGHT_DIRECTIONAL)
             {
-                TsVector3 v = pLight->GetWorldMatrix().TransformCoord(TsVector3(0, 0, 1));
-                m_lightSetCBuffer.lightData[i].dir = v.Normalized();
+                TsVector3 v = TsVector3::front;
+                v *= pLight->GetWorldMatrix();
+                v.Normalize();
+                m_lightSetCBuffer.lightData[i].dir = v;
             }
 
             m_lightSetCBuffer.lightData[i].intensity = pLight->GetIntensity();
@@ -80,17 +82,18 @@ TsBool TsLightSetCBuffer::UpdateCBuffer(TsDeviceContext* pDevContext)
             {
                 TsComputeLisPSM lispsm;
                 TsCamera* pCamera = pDevContext->GetMainCamera();
+                lispsm.SetEyeViewMatrix( pCamera->GetViewMatrix() );
                 lispsm.SetEyePos(pCamera->GetWorldPosition());
-                lispsm.SetEyeProjection(pCamera->GetLinearProjMatrix());
-                lispsm.SetNearClip(pCamera->GetNear());
+                lispsm.SetEyeProjection(pCamera->GetProjMatrix());
                 lispsm.SetViewDir( pCamera->GetZAxis() );
                 lispsm.SetLightDir(m_lightSetCBuffer.lightData[i].dir);
                 lispsm.UpdateShadowMatrix();
-                m_lightSetCBuffer.lightData[i].worldToShadowMatrix = lispsm.GetLVPMatrix();
+                m_lightSetCBuffer.lightData[i].worldToShadowMatrix = lispsm.GetLVPMatrix().Transposed();
             }
             else
                 m_lightSetCBuffer.lightData[i].worldToShadowMatrix = TsMatrix::identity;
         }
+        pDevContext->ChangeCBuffer( this , &m_lightSetCBuffer , sizeof( m_lightSetCBuffer ) );
     }
     m_isUpdate = TS_FALSE;
     return TS_TRUE;

@@ -54,20 +54,24 @@ cbuffer ViewCB : register (CBUFFER_VIEW_REGISTER)
 
 struct LightData
 {
-    uint             type;  // 0 directional / 1 point / 2 spot
+    float4x4         worldToShadowMatrix;    //directional Only
+
     float4           color;
     float3           pos;
     float3           dir;   // directional onry
+
+    uint             type;  // 0 directional / 1 point / 2 spot
     float            intensity;
     float            range; // spot & point 
     float            angle; // spot only
-    float4x4         worldToShadowMatrix;    //directional Only
+
 };
 
 cbuffer LightSetCB : register(CBUFFER_LIGHT_SET_REGISTER)
 {
     LightData           g_LightData[256];
     uint                g_LightNum;
+    float               LightSetCBufferDummy;
 };
 
 struct VS_DEFAULT_INPUT

@@ -16,19 +16,21 @@ public:
 
     struct LightData
     {
-        TsLight::LIGHT_TYPE type;
-        TsColor             color;
+        TsMatrix            worldToShadowMatrix;    //directional Only
+        TsFloat4            color;
         TsVector3           pos;
         TsVector3           dir;
+
+        TsUint              type;
         TsF32               intensity;
         TsF32               range;
         TsF32               angle;
-        TsMatrix            worldToShadowMatrix;    //directional Only
     };
     struct LightCB
     {
-        TsUint              lightNum;
         LightData           lightData[LIGHT_CB_MAX];
+        TsUint              lightNum;
+        TsF32               dumy[3];
     };
 
     TsBool AddLight(TsLight * pLight);

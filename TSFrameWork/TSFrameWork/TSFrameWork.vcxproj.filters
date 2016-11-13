@@ -802,6 +802,9 @@
     <None Include="Resource\RenderSystem\RenderSystem.ts_rs">
       <Filter>ソース ファイル\Resource\RenderSystem</Filter>
     </None>
+    <None Include="Resource\ShaderFlow\shadow.ts_shaderflow">
+      <Filter>ソース ファイル\Resource\ShaderFlow</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\TsGfx\hlsl\Forward\TsFWLambertVS.hlsl">

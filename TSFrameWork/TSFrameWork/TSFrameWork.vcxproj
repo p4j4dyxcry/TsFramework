@@ -310,6 +310,7 @@
     <None Include="Resource\ShaderFlow\flow.ts_shaderflow" />
     <None Include="Resource\ShaderFlow\lambert.ts_shaderflow" />
     <None Include="Resource\ShaderFlow\postflow.ts_shaderflow" />
+    <None Include="Resource\ShaderFlow\shadow.ts_shaderflow" />
     <None Include="Resource\ShaderFlow\skyTest.ts_shaderflow" />
     <None Include="Resource\ShaderPackage\Add.ts_shaderPackage" />
     <None Include="Resource\ShaderPackage\Blend.ts_shaderPackage" />
