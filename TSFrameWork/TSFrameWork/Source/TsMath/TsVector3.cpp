@@ -73,6 +73,12 @@ TsVector3  TsVector3::operator*( const TsMatrix& mat )const
 {
     return TsVector3( XMVector3Transform( ToXMVECTOR() , mat.ToXMMATRIX() ) );
 }
+
+TsVector3 operator * ( TsF32 f , const class TsVector3& v )
+{
+    return v * f;
+}
+
 TsVector3& TsVector3::operator*=( const TsMatrix& mat )
 {
     return *this = *this * mat;
@@ -104,6 +110,11 @@ TsBool TsVector3::operator<( const TsVector3& value )const
 {
     return x < value.x && y < value.y && z >value.z;
 }
+
+TsVector3  TsVector3::operator - ( )const
+{
+    return *this * -1; 
+}
 TsVector3& TsVector3::TransformCood( const TsMatrix& mat )
 {
     return 	*this = XMVector3TransformCoord( ToXMVECTOR() , mat.ToXMMATRIX() );
@@ -126,7 +137,11 @@ TsVector3& TsVector3::Normalize()
 }
 TsVector3 TsVector3::Normalized()const
 {
-    return TsVector3( XMVector3Normalize( ToXMVECTOR() ) );
+    TsVector3 v = TsVector3( XMVector3Normalize( ToXMVECTOR() ) );
+    v.x = abs( v.x ) < 0.000001f ? 0 : v.x;
+    v.y = abs( v.y ) < 0.000001f ? 0 : v.y;
+    v.z = abs( v.z ) < 0.000001f ? 0 : v.z;
+    return v;
 }
 
 FLOAT TsVector3::Dot( TsVector3 v0 ,

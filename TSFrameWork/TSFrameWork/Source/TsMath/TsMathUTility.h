@@ -14,8 +14,8 @@ template<typename T>
 inline T TsRadian( const T& degree )
 {
     return degree * TS_PI / 180.0f;
-
 }
+
 
 //! radian -> degree
 template<typename T>
@@ -44,6 +44,59 @@ inline T TsMin( const T& a , const T& b )
 {
     return a < b ? a : b;
 }
+
+class TsVector2;
+class TsVector3;
+class TsVector4;
+
+template<>
+inline TsVector2 TsMin( const TsVector2& a , const TsVector2& b )
+{
+    return TsVector2( TsMin( a.x , b.x ) ,
+                      TsMin( a.y , b.y ));
+}
+
+template<>
+inline TsVector3 TsMin( const TsVector3& a , const TsVector3& b )
+{
+    return TsVector3( TsMin( a.x , b.x ) ,
+                      TsMin( a.y , b.y ) ,
+                      TsMin( a.z , b.z ) );
+}                                        
+
+template<>
+inline TsVector4 TsMin( const TsVector4& a , const TsVector4& b )
+{
+    return TsVector4( TsMin( a.x , b.x ) ,
+                      TsMin( a.y , b.y ) ,
+                      TsMin( a.z , b.z ) ,
+                      TsMin( a.w , b.w ) );
+}
+
+template<>
+inline TsVector2 TsMax( const TsVector2& a , const TsVector2& b )
+{
+    return TsVector2( TsMax( a.x , b.x ) ,
+                      TsMax( a.y , b.y ) );
+}
+
+template<>
+inline TsVector3 TsMax( const TsVector3& a , const TsVector3& b )
+{
+    return TsVector3( TsMax( a.x , b.x ) ,
+                      TsMax( a.y , b.y ) ,
+                      TsMax( a.z , b.z ) );
+}
+
+template<>
+inline TsVector4 TsMax( const TsVector4& a , const TsVector4& b )
+{
+    return TsVector4( TsMax( a.x , b.x ) ,
+                      TsMax( a.y , b.y ) ,
+                      TsMax( a.z , b.z ) ,
+                      TsMax( a.w , b.w ) );
+}
+
 
 //! a と b を t で線形補完する
 template<typename T>

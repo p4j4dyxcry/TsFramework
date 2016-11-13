@@ -3,9 +3,21 @@
 #include "TsQuaternion.h"
 
 const TsMatrix TsMatrix::identity = XMFLOAT4X4( 1 , 0 , 0 , 0 ,
-                                              0 , 1 , 0 , 0 ,
-                                              0 , 0 , 1 , 0 ,
-                                              0 , 0 , 0 , 1 );
+                                                0 , 1 , 0 , 0 ,
+                                                0 , 0 , 1 , 0 ,
+                                                0 , 0 , 0 , 1 );
+
+TsMatrix::TsMatrix( TsF32 m11 , TsF32 m12 , TsF32 m13 , TsF32 m14 ,
+                    TsF32 m21 , TsF32 m22 , TsF32 m23 , TsF32 m24 ,
+                    TsF32 m31 , TsF32 m32 , TsF32 m33 , TsF32 m34 ,
+                    TsF32 m41 , TsF32 m42 , TsF32 m43 , TsF32 m44 )
+{
+    *this = XMFLOAT4X4( m11 , m12 , m13 , m14 ,
+                        m21 , m22 , m23 , m24 ,
+                        m31 , m32 , m33 , m34 ,
+                        m41 , m42 , m43 , m44 );
+}
+
 //! 位置と回転から行列を生成するコンストラクタ
 TsMatrix::TsMatrix(TsVector3& p , TsQuaternion& q)
 {
@@ -151,15 +163,15 @@ TsMatrix TsMatrix::CreateLookAt( const TsVector3& eye , const TsVector3& at , co
     return TsMatrix( XMMatrixLookAtLH( eye.ToXMVECTOR() , at.ToXMVECTOR() , up.ToXMVECTOR() ));
 }
 
-TsVector3 TsMatrix::TransformCoord(const TsVector3& v)
+TsVector3 TsMatrix::TransformCoord(const TsVector3& v)const
 {
     return XMVector3TransformCoord(v.ToXMVECTOR(), ToXMMATRIX());
 }
-TsVector3 TsMatrix::TransformVector(const TsVector3& v)
+TsVector3 TsMatrix::TransformVector(const TsVector3& v)const
 {
     return TsVector3(XMVector3Transform(v.ToXMVECTOR(), ToXMMATRIX()));
 }
-TsVector3 TsMatrix::TransformPoint(const TsVector3& v)
+TsVector3 TsMatrix::TransformPoint(const TsVector3& v)const
 {
     TsVector3 result;
     result.x = v.x * m[0][0] +
@@ -180,7 +192,15 @@ TsVector3 TsMatrix::TransformPoint(const TsVector3& v)
     return result;
 }
 
-TsVector4 TsMatrix::TransformVector(const TsVector4& v)
+TsVector3 TsMatrix::TransformNormal( const TsVector3& vNormal )const
+{
+    TsMatrix m = *this;
+    m._41 = 0.0f;  m._42 = 0.0f;  m._43 = 0.0f;
+
+    return m.TransformVector(vNormal);
+}
+
+TsVector4 TsMatrix::TransformVector(const TsVector4& v)const
 {
     return TsVector4(XMVector4Transform(v.ToXMVECTOR(), ToXMMATRIX()));;
 }

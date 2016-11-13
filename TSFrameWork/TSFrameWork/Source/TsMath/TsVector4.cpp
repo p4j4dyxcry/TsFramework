@@ -81,6 +81,12 @@ TsVector4  TsVector4::operator*( const TsMatrix& mat )
 {
     return TsVector4( XMVector4Transform( ToXMVECTOR() , mat.ToXMMATRIX() ) );
 }
+
+TsVector4 operator * ( TsF32 f , const class TsVector4& v )
+{
+    return v * f;
+}
+
 TsVector4& TsVector4::operator*=( const TsMatrix& mat )
 {
     return *this = *this * mat;
@@ -111,6 +117,11 @@ TsBool TsVector4::operator>(const TsVector4& value )const
 TsBool TsVector4::operator<(const TsVector4& value )const
 {
     return x < value.x && y < value.y && z >value.z;
+}
+
+TsVector4  TsVector4::operator - ( )const
+{
+    return *this * -1;
 }
 
 XMVECTOR TsVector4::ToXMVECTOR()const

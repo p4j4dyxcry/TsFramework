@@ -19,6 +19,10 @@ class TsMatrix : public XMFLOAT4X4
 public:
     using oprator = XMFLOAT4X4;
     TsMatrix( XMFLOAT4X4& float4x4 ) :XMFLOAT4X4( float4x4 ){};
+    TsMatrix( TsF32 , TsF32 , TsF32 , TsF32 ,
+              TsF32 , TsF32 , TsF32 , TsF32 ,
+              TsF32 , TsF32 , TsF32 , TsF32 ,
+              TsF32 , TsF32 , TsF32 , TsF32 );
     TsMatrix(){ *this = TsMatrix::identity; };
     TsMatrix( XMMATRIX& matrix ){ *this = matrix; }
     TsMatrix( TsVector3& pos , TsQuaternion& rotate );
@@ -35,11 +39,17 @@ public:
     TsMatrix Transposed()const;
     TsMatrix Inversed();
 
-    TsVector3 TransformCoord(const TsVector3&);
-    TsVector3 TransformVector(const TsVector3&);
-    TsVector3 TransformPoint(const TsVector3&);
+    // 計算結果を w = 1.0f
+    TsVector3 TransformCoord(const TsVector3&)const;
+    TsVector3 TransformVector(const TsVector3&)const;
 
-    TsVector4 TransformVector(const TsVector4&);
+    //位置をTransform　するためのMethod
+    TsVector3 TransformPoint(const TsVector3&)const;
+
+    //法線をTransform するためのMethod
+    TsVector3 TransformNormal( const TsVector3& )const;
+
+    TsVector4 TransformVector(const TsVector4&)const;
 
     TsBool operator == (const TsMatrix&);
     TsBool operator != (const TsMatrix&);

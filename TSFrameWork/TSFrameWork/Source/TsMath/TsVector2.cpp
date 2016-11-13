@@ -26,6 +26,10 @@ TsVector2  TsVector2::operator* ( FLOAT Float )const
 {
     return TsVector2( x*Float , y*Float );
 }
+TsVector2 operator * ( TsF32 f , const class TsVector2& v )
+{
+    return v * f;
+}
 TsVector2  TsVector2::operator/ ( FLOAT Float )const
 {
     return TsVector2( x/Float , y/Float );
@@ -71,6 +75,12 @@ TsBool TsVector2::operator<( const TsVector2& value )const
 {
     return x < value.x && y < value.y;
 }
+
+TsVector2  TsVector2::operator - ( )const
+{
+    return *this * -1;
+}
+
 XMVECTOR TsVector2::ToXMVECTOR()const
 {
     return XMLoadFloat2( this );

@@ -15,10 +15,10 @@ public:
     TsComputeLisPSM();
 
     TsBool SetEyePos(const TsVector3& value);
+    TsBool SetEyeViewMatrix( const TsMatrix& viewMatrix );
     TsBool SetViewDir(const TsVector3& value);
     TsBool SetLightDir(const TsVector3& value);
     TsBool SetEyeProjection(const TsMatrix& value);
-    TsBool SetNearClip(const TsF32 value);
     TsBool UpdateShadowMatrix();
 
     TsMatrix GetLVMatrix();
@@ -73,4 +73,5 @@ private:
     TsMatrix m_lVPMatrix;
 
     TsF32  m_near;
+    TsF32  m_far;
 };
