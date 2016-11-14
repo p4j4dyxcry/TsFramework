@@ -89,7 +89,7 @@ XMVECTOR TsVector2::ToXMVECTOR()const
 FLOAT TsVector2::Length ()const
 {
     XMVECTOR vLength = XMVector2Length( ToXMVECTOR() );
-    return ( vLength.m128_f32[0] + vLength.m128_f32[1] );
+    return ( vLength.m128_f32[0] );
 }
 
 TsVector2& TsVector2::Normalize()
