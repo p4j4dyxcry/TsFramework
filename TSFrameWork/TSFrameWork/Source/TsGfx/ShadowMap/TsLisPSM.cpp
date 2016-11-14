@@ -257,7 +257,8 @@ TsBool TsComputeLisPSM::UpdateShadowMatrix()
     TsMatrix viewProj;
     viewProj = m_viewMatrix * m_viewProjectionMatrix;
     m_viewDir = TsVector3( m_viewMatrix._31 , m_viewMatrix._32 , m_viewMatrix._33 );
-    // Light Space Perspective Shadow Map
+
+    // Compute Light Space Perspective Shadow Map
     ComputeLisPSM();
     return TS_TRUE;
 }
@@ -287,7 +288,7 @@ TsBool TsComputeLisPSM::SetProjection(const TsMatrix& value )
     return TS_TRUE;
 }
 
-TsBool TsComputeLisPSM::SetEyeViewMatrix( const TsMatrix& value )
+TsBool TsComputeLisPSM::SetViewMatrix( const TsMatrix& value )
 {
     m_viewMatrix = value;
     return TS_TRUE;

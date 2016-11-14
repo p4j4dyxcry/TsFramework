@@ -15,7 +15,7 @@ public:
     TsComputeLisPSM();
 
     TsBool SetEyePos(const TsVector3& value);
-    TsBool SetEyeViewMatrix( const TsMatrix& viewMatrix );
+    TsBool SetViewMatrix( const TsMatrix& viewMatrix );
     TsBool SetLightDir(const TsVector3& value);
     TsBool SetProjection(const TsMatrix& value);
     TsBool UpdateShadowMatrix();
