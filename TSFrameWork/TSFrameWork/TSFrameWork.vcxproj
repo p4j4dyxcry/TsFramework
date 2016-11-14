@@ -128,7 +128,7 @@
     <ClInclude Include="Source\TsGfx\ShadowMap\TsLisPSM_LightSrcFace.h" />
     <ClInclude Include="Source\TsGfx\ShadowMap\TsLisPSM_ViewVolum.h" />
     <ClInclude Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.h" />
-    <ClCompile Include="Source\TsMath\TsAABB.cpp" />
+    <None Include="Source\TsMath\TsAABB.cpp" />
     <ClCompile Include="Source\TsMath\TsBone.cpp" />
     <ClCompile Include="Source\TsMath\TsCollision .cpp" />
     <ClCompile Include="Source\TsMath\TsColor.cpp" />
@@ -137,6 +137,7 @@
     <ClCompile Include="Source\TsMath\TsQuaternion.cpp" />
     <None Include="Source\TsMath\TsLine.cpp" />
     <ClCompile Include="Source\TsMath\TsSkeleton.cpp" />
+    <None Include="Source\TsMath\TsSphere.cpp" />
     <ClCompile Include="Source\TsMath\TsSphereMeshCreater.cpp" />
     <ClCompile Include="Source\TsMath\TsTransForm.cpp" />
     <ClCompile Include="Source\TsMath\TsVector2.cpp" />
@@ -241,6 +242,7 @@
     <ClInclude Include="Source\TsMath\TsQuaternion.h" />
     <ClInclude Include="Source\TsMath\TsLine.h" />
     <ClInclude Include="Source\TsMath\TsSkeleton.h" />
+    <ClInclude Include="Source\TsMath\TsSphere.h" />
     <ClInclude Include="Source\TsMath\TsSphereMeshCreater.h" />
     <ClInclude Include="Source\TsMath\TsTransForm.h" />
     <ClInclude Include="Source\TsMath\TsVector.h" />

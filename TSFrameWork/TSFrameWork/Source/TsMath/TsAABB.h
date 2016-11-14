@@ -9,6 +9,7 @@
 //=========================================================================
 //! TsAABB 
 //=========================================================================
+template< typename T>
 class TsAABB
 {
 public:
@@ -18,32 +19,34 @@ public:
 
     //! Constructor
     TsAABB();
-    TsAABB( const TsAABB& );
-    TsAABB( const TsVector3& min ,
-            const TsVector3& max );
+    TsAABB( const TsAABB<T>& );
+    TsAABB( const T& min ,
+            const T& max );
 
 
     //! Destructor
     virtual ~TsAABB();
 
-    TsBool SetMin( const TsVector3& );
-    TsBool SetMax( const TsVector3& );
-    TsAABB Transform( const TsMatrix& );
-    const TsVector3& GetMin()const;
-    const TsVector3& GetMax()const;
+    TsBool SetMin( const T& );
+    TsBool SetMax( const T& );
+    TsAABB<T> Transform( const TsMatrix& );
+    const T& GetMin()const;
+    const T& GetMax()const;
 
     //! operator
-    TsAABB operator * ( const TsMatrix& matrix )const;
-    TsAABB operator *= ( const TsMatrix& matrix );
-    TsAABB operator = ( const TsAABB& aabb );
-
-    TsBool Collision( const TsAABB& );
-    TsBool Collision( const TsVector3& );
+    TsAABB<T> operator * (const TsMatrix& matrix)const;
+    TsAABB<T> operator *= (const TsMatrix& matrix);
+    TsAABB<T> operator = ( const TsAABB<T>& aabb );
 
 private:
     //=========================================================================
     //! propery
     //=========================================================================
-    TsVector3 m_min;
-    TsVector3 m_max;
+    T m_min;
+    T m_max;
 };
+
+typedef TsAABB<TsVector2> TsAABB2D;
+typedef TsAABB<TsVector3> TsAABB3D;
+
+#include "TsAABB.cpp"

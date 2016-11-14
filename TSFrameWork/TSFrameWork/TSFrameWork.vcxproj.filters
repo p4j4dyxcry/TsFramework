@@ -423,9 +423,6 @@
     <ClCompile Include="Source\TsMath\TsSkeleton.cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsMath\TsAABB.cpp">
-      <Filter>ソース ファイル\TsMath\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsMath\TsCollision .cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
     </ClCompile>
@@ -746,6 +743,9 @@
     <ClInclude Include="Source\TsMath\TsCollision.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TsMath\TsSphere.h">
+      <Filter>ソース ファイル\TsMath\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Extern\xna\xnamathconvert.inl">
@@ -827,6 +827,12 @@
       <Filter>ソース ファイル\Resource\ShaderFlow</Filter>
     </None>
     <None Include="Source\TsMath\TsLine.cpp">
+      <Filter>ソース ファイル\TsMath\Source</Filter>
+    </None>
+    <None Include="Source\TsMath\TsSphere.cpp">
+      <Filter>ソース ファイル\TsMath\Source</Filter>
+    </None>
+    <None Include="Source\TsMath\TsAABB.cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
     </None>
   </ItemGroup>

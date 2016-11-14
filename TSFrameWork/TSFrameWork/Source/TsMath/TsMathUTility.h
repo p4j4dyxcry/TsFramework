@@ -237,29 +237,65 @@ inline TsF32 TsComputeTriangleArea(const TsVector3& v0 ,const TsVector3& v1 ,con
 }
 
 //! ２つのベクトルの成すCosΘを計算する
-inline TsF32 TsComputeCos(const TsVector3& v0,const TsVector3& v1)
+inline TsF32 TsComputeCos(const TsVector2& v0,
+                          const TsVector2& v1,
+                          TsBool useNormalization = TS_TRUE)
 {
-    return TsVector3::Dot(v0.Normalized(),v1.Normalized());
+    if (useNormalization)
+        return TsVector2::Dot(v0.Normalized(), v1.Normalized());
+    else
+        return TsVector2::Dot(v0, v1);
+}
+
+//! ２つのベクトルの成すCosΘを計算する
+inline TsF32 TsComputeCos(const TsVector3& v0,
+                          const TsVector3& v1,
+                          TsBool useNormalization = TS_TRUE)
+{
+    if (useNormalization)
+        return TsVector3::Dot(v0.Normalized(), v1.Normalized());
+    else
+        return TsVector3::Dot(v0, v1);
 }
 
 //! ２つのベクトルの成すSinΘを計算する
-inline TsF32 TsComputeSin(const TsVector2& v0, const TsVector2& v1)
+inline TsF32 TsVectorComputeSin( const TsVector2& v0, 
+                                 const TsVector2& v1,
+                                 TsBool useNormalization = TS_TRUE)
 {
     //! 外積からSinを求める
-    TsF32 v0Len = v0.Length();
-    TsF32 v1Len = v1.Length();
+    if (useNormalization)
+    {        
+        TsF32 v0Len = v0.Length();
+        TsF32 v1Len = v1.Length();
 
-    return TsVector2::Cross(v0, v1).Length() / (v0Len * v1Len);
+        return TsVector2::Cross(v0, v1).Length() / (v0Len * v1Len);
+    }
+    else
+    {
+        return TsVector2::Dot(v0, v1);
+    }
+
 }
 
 //! ２つのベクトルの成すSinΘを計算する
-inline TsF32 TsComputeSin(const TsVector3& v0,const TsVector3& v1)
+inline TsF32 TsComputeSin(const TsVector3& v0,
+                          const TsVector3& v1,
+                          TsBool useNormalization = TS_TRUE)
 {
     //! 外積からSinを求める
-    TsF32 v0Len = v0.Length();
-    TsF32 v1Len = v1.Length();
+    if (useNormalization)
+    {       
+        TsF32 v0Len = v0.Length();
+        TsF32 v1Len = v1.Length();
 
-    return TsVector3::Cross(v0, v1).Length() / (v0Len * v1Len);
+        return TsVector3::Cross(v0, v1).Length() / (v0Len * v1Len);
+    }
+    else
+    {
+        return TsVector3::Cross(v0, v1).Length();
+    }
+
 }
 
 //! ガウス関数

@@ -38,9 +38,12 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 {
     TSUT::TsLoggerInit();
 
-    auto m02 = TsMatrix::CreateRotate( TsQuaternion::CreateByEuler( 0 , 90.0f , 0 ) );
-    auto m01 = TsMatrix::CreateRotate( TsQuaternion::CreateByAngleAxis( TsVector3::front , TsRadian( 90.0f ) ) );
+    TsCircle s(TsVector2(0,0),20);
+    TsLine2D l(TsVector2(100, 0), TsVector2(90, 0));
+    TsVector2 v0, v1;
+    TsBool v = CollisionCircleAndRay(s, l,COLLISION_DEFAULT_TOLERANCE,&v0,&v1);
 
+     
     TsDirectioalLight dir;
 
 //    dir.LookAt(TsVector3::front * 100, TsVector3::back, TsVector3::up);

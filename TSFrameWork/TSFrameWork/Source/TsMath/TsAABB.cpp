@@ -1,40 +1,46 @@
-#include "../../TsAfx.h"
 
-
-TsAABB::TsAABB()
+template< typename T>
+TsAABB<T>::TsAABB()
 {
 
 }
-TsAABB::TsAABB( const TsVector3& min ,
-                const TsVector3& max )
+
+template< typename T>
+TsAABB<T>::TsAABB(const T& min,
+                  const T& max )
 {
     SetMin( min );
     SetMax( max );
 }
 
-TsAABB::TsAABB( const TsAABB & aabb)
+template< typename T>
+TsAABB<T>::TsAABB(const TsAABB<T> & aabb)
 {
     *this = aabb;
 }
 
-TsAABB::~TsAABB()
+template< typename T>
+TsAABB<T>::~TsAABB()
 {
 
 }
 
-TsBool TsAABB::SetMin( const TsVector3& v )
+template< typename T>
+TsBool TsAABB<T>::SetMin(const T& v)
 {
     m_min = v;
     return TS_TRUE;
 }
 
-TsBool TsAABB::SetMax( const TsVector3& v )
+template< typename T>
+TsBool TsAABB<T>::SetMax(const T& v)
 {
     m_max = v;
     return TS_TRUE;
 }
 
-TsAABB TsAABB::Transform( const TsMatrix& matrix )
+template< typename T>
+TsAABB<T> TsAABB<T>::Transform(const TsMatrix& matrix)
 {
     m_min *= matrix;
     m_max *= matrix;
@@ -42,28 +48,36 @@ TsAABB TsAABB::Transform( const TsMatrix& matrix )
     return *this;
 }
 
-const TsVector3& TsAABB::GetMin()const
+template< typename T>
+const T& TsAABB<T>::GetMin()const
 {
     return m_min;
 }
-const TsVector3& TsAABB::GetMax()const
+
+template< typename T>
+const T& TsAABB<T>::GetMax()const
 {
     return m_max;
 }
 
-TsAABB TsAABB::operator * ( const TsMatrix& matrix )const
+template< typename T>
+TsAABB<T> TsAABB<T>::operator * (const TsMatrix& matrix)const
 {
     TsAABB aabb = *this;
     return aabb.Transform( matrix );
 }
-TsAABB TsAABB::operator *= ( const TsMatrix& matrix )
+
+template< typename T>
+TsAABB<T> TsAABB<T>::operator *= (const TsMatrix& matrix)
 {
     return Transform(matrix);
 }
 
-TsAABB TsAABB::operator = ( const TsAABB& aabb )
+template< typename T>
+TsAABB<T> TsAABB<T>::operator = (const TsAABB<T>& aabb)
 {
     SetMin( aabb.m_min );
     SetMax( aabb.m_max );
     return *this;
 }
+
