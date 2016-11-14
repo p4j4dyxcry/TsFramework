@@ -156,3 +156,8 @@ TsVector4 TsVector4::Closs( TsVector4 v0 ,
 {
     return TsVector3( XMVector3Cross( v0.ToXMVECTOR() , v1.ToXMVECTOR() ) );
 }
+
+TsF32 TsVector4::Sum()const
+{
+    return x + y + z + w;
+}

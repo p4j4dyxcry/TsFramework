@@ -109,10 +109,13 @@ FLOAT TsVector2::Dot(	TsVector2 v0 ,
     return XMVector2Dot( v0.ToXMVECTOR() , v1.ToXMVECTOR() ).m128_f32[0];
 }
 
-TsVector2 TsVector2::Closs(	TsVector2 v0 ,
+TsVector2 TsVector2::Cross(	TsVector2 v0 ,
                             TsVector2 v1 )
 {
     return TsVector2 ( XMVector2Cross( v0.ToXMVECTOR() , v1.ToXMVECTOR() ) );
 }
 
-
+TsF32 TsVector2::Sum()const
+{
+    return x + y;
+}

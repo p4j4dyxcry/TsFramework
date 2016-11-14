@@ -57,11 +57,12 @@ public:
     TsVector2& Normalize();
     TsVector2  Normalized()const;
 
+    TsF32 Sum()const;
 
     static TsF32 Dot( TsVector2 v0 ,
                       TsVector2 v1 );
 
-    static TsVector2 Closs(	TsVector2 v0 ,
+    static TsVector2 Cross(	TsVector2 v0 ,
                             TsVector2 v1 );
 
     static const TsVector2 zero;
@@ -126,6 +127,7 @@ public:
     TsVector3& Normalize();
     TsVector3  Normalized()const;
 
+    TsF32 Sum()const;
 
     static TsF32 Dot( TsVector3 v0 ,
                       TsVector3 v1 );
@@ -191,6 +193,8 @@ public:
     TsF32 Length()const;
     TsVector4& Normalize();
     TsVector4  Normalized()const;
+
+    TsF32 Sum()const;
 
 
     static TsF32 Dot( TsVector4 v0 ,

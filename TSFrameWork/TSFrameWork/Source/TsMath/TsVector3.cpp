@@ -170,3 +170,7 @@ TsF32 TsVector3::CrossingAngle( TsVector3 v0 , TsVector3 v1 )
     return acos(c);
 }
 
+TsF32 TsVector3::Sum()const
+{
+    return x + y + z;
+}
