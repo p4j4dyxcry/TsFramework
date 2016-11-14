@@ -725,6 +725,12 @@
     <ClInclude Include="Source\TsGfx\Material\TsDefaultMaterial.h">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TsGfx\ShadowMap\TsLisPSM_LightSrcFace.h">
+      <Filter>ソース ファイル\TsGfx\Source\ShadowMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\ShadowMap\TsLisPSM_ViewVolum.h">
+      <Filter>ソース ファイル\TsGfx\Source\ShadowMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Extern\xna\xnamathconvert.inl">

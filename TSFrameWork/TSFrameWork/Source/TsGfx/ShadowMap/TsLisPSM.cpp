@@ -1,536 +1,12 @@
 #include "../../../TsAfx.h"
 #include "TsLisPSM.h"
+#include "TsLisPSM_LightSrcFace.h"
+#include "TsLisPSM_ViewVolum.h"
 
-class LightSrcFace
-{
-public:
-    void Init( const TsVector3& lightDir ,
-               const TsVector3& eyePos,
-               TsF32 sceneSize)
-    {
-        // 光源方向にある面を選択する。
-        // 任意の座標pを面に投影する計算において、投影が無限遠となることを避ける
-        // ために、光線と面に1度以上の傾きが無い場合には、その面は光線発生面とし
-        // ない。
-        TsVector3 vt;
-        vt = lightDir.Normalized();
-        const TsF32 th = sin( TsRadian( 1.0f ) );
-
-        TsVector3 minScene = TsVector3( -sceneSize , -sceneSize , -sceneSize );
-        TsVector3 maxScene = TsVector3( sceneSize , sceneSize , sceneSize );
-
-        // YZ平面
-        if( th < fabsf( vt.x ) )
-        {
-            if( 0.0f < vt.x )
-            {
-                m_vtNormal[m_numFace] = TsVector3( 1.0f , 0.0f , 0.0f );
-                m_vtPos[m_numFace] = TsVector3( minScene.x , 0.0f , 0.0f );
-            }
-            else
-            {
-                m_vtNormal[m_numFace] = TsVector3( -1.0f , 0.0f , 0.0f );
-                m_vtPos[m_numFace] = TsVector3( maxScene.x , 0.0f , 0.0f );
-            }
-            m_numFace++;
-        }
-
-        // XZ平面
-        if( th < fabsf( vt.y ) )
-        {
-            if( 0.0f < vt.y )
-            {
-                m_vtNormal[m_numFace] = TsVector3( 0.0f , 1.0f , 0.0f );
-                m_vtPos[m_numFace] = TsVector3( 0.0f , minScene.y , 0.0f );
-            }
-            else
-            {
-                m_vtNormal[m_numFace] = TsVector3( 0.0f , -1.0f , 0.0f );
-                m_vtPos[m_numFace] = TsVector3( 0.0f , maxScene.y , 0.0f );
-            }
-            m_numFace++;
-        }
-
-        // XY平面
-        if( th < fabsf( vt.z ) )
-        {
-            if( 0.0f < vt.z )
-            {
-                m_vtNormal[m_numFace] = TsVector3( 0.0f , 0.0f , 1.0f );
-                m_vtPos[m_numFace] = TsVector3( 0.0f , 0.0f , minScene.z );
-            }
-            else
-            {
-                m_vtNormal[m_numFace] = TsVector3( 0.0f , 0.0f , -1.0f );
-                m_vtPos[m_numFace] = TsVector3( 0.0f , 0.0f , maxScene.z );
-            }
-            m_numFace++;
-        }
-    }
-
-    void Transform( const TsMatrix& mtx )
-    {
-        TsVector3 temp;
-        for( TsInt i = 0; i < m_numFace; i++ )
-        {
-            m_vtNormal[i] = mtx.TransformNormal( m_vtNormal[i] );
-            m_vtPos[i] = mtx.TransformPoint( m_vtPos[i] );
-        }
-    }
-
-    TsVector3 Project( const TsVector3& vt )const
-    {
-        // 座標を-Y方向に投影して、最も近い面との交点を計算する。
-        TsF32 maxY = -FLT_MAX;
-        for( TsInt i = 0; i < m_numFace; i++ )
-        {
-            const TsVector3 &n = m_vtNormal[i];
-            const TsVector3 &o = m_vtPos[i];
-            TsF32 a = ( ( o.x - vt.x ) * n.x ) + ( ( o.z - vt.z ) * n.z );
-            TsF32 y = ( a / n.y ) + o.y;
-
-            if( maxY < y ) maxY = y;
-        }
-
-        return TsVector3( vt.x , maxY , vt.z );
-    }
-
-protected:
-
-    // ! 有効な光線発生面の数
-    // ! 最低1枚、最大3枚となる。
-    TsInt       m_numFace = 0;
-
-    // ! 光線発生面の向き
-    TsVector3   m_vtNormal[3];
-
-    // ! 光線発生面の位置
-    TsVector3   m_vtPos[3];
-
-    //! 平面の方程式のD
-    TsF32       m_planeD[3];
-};
-
-class ViewVolume
-{
-public:
-
-    ViewVolume(){}
-
-    //=========================================================================
-    //! Copy Constructor
-    //=========================================================================
-    ViewVolume(const ViewVolume& vv )
-    {
-        for( TsInt i = 0; i < m_numFace; i++ )
-        {
-            m_numVertices[i] = vv.m_numVertices[i];
-            for( TsInt v = 0; v < m_numVertices[i]; v++ )
-            {
-                m_vt[i][v] = vv.m_vt[i][v];
-            }
-        }
-        m_vtMin = vv.m_vtMin;
-        m_vtMax = vv.m_vtMax;
-    }
-
-    void Init( const TsMatrix& proj ,
-               const TsMatrix& view )
-    {
-        // フラスタムの角をワールド座標系で
-        TsVector3 viewFrustum[10];
-
-        TsMatrix invViewProj = ( view * proj ).Inversed();
-
-        // near clip と far clip を取得する
-        TsF32 n , f , nn, ff;
-        {
-            TsF32 a = proj._33;
-            TsF32 b = proj._43;
-            n = -b / fabsf( a );
-            f = b / ( 1.0f - fabsf( a ) );
-            nn = 0;
-            ff = f;
-        }
-
-        // w除算前の射影座標系からビュー座標系へ変換する行列を用いてフラスタムの
-        // 角の座標を求める。
-        // xとyは必ず視野錐の辺上にあるので(x/w)および(y/w)は奥行き(z)にかか
-        // わらず+-1.0になる。ただし(z/w)は mtxProjection の near と far に
-        // よるので、変数nnとffに計算しておく。
-        TsVector4 vt[] =
-        {
-            TsVector4( -n , n , nn , n ) ,	// 0:left-top-near
-            TsVector4( -n , -n , nn , n ) ,	// 1:left-bottom-near
-            TsVector4( n , -n , nn , n ) ,	// 2:right-bottom-near
-            TsVector4( n , n , nn , n ) ,	// 3:right-top-near
-            TsVector4( -f , f , ff , f ) ,	// 4:left-top-far
-            TsVector4( -f , -f , ff , f ) ,	// 5:left-bottom-far
-            TsVector4( f , -f , ff , f ) ,	// 6:right-bottom-far
-            TsVector4( f , f , ff , f ) ,	// 7:right-top-far
-            TsVector4( 0 , 0 , nn , n ) ,	// 8:vfNearCenter
-            TsVector4( 0 , 0 , ff , f ) ,	// 9:vfFarCenter
-        };
-
-        // w除算前のクリップ座標系(vt[])から戻り値の座標系への変換を計算する。
-        for( TsInt i = 0; i < 10; ++i )
-        {
-            TsVector4 temp = vt[i] * invViewProj;
-            viewFrustum[i] = temp;
-        }
-
-        // バウンダリボックスの作成
-        m_vtMin = m_vtMax = viewFrustum[0];
-        for( TsInt i = 1; i < 8; i++ )
-        {
-            m_vtMin = TsMin( m_vtMin , viewFrustum[i] );
-            m_vtMax = TsMax( m_vtMax , viewFrustum[i] );
-        }
-
-        // 視野錘の側面のポリゴンデータを作成
-        static const TsInt poli[m_numFace][4] =
-        {
-            { 0 , 4 , 7 , 3 } ,	// top
-            { 3 , 7 , 6 , 2 } ,	// right
-            { 2 , 6 , 5 , 1 } ,	// bottom
-            { 1 , 5 , 4 , 0 } ,	// left
-            { 0 , 3 , 2 , 1 } , // near
-            { 4 , 5 , 6 , 7 } , // far
-        };
-
-        for( TsInt i = 0; i < m_numFace; i++ )
-        {
-            for( TsInt j = 0; j < 4; j++ )
-            {
-                m_vt[i][j] = viewFrustum[poli[i][j]];
-            }
-            m_numVertices[i] = 4;
-        }
-    }
-
-    void Transform( const TsMatrix& mtx, TsBool divW )
-    {
-        m_vtMin = TsVector3( FLT_MAX , FLT_MAX , FLT_MAX );
-        m_vtMax = TsVector3( -FLT_MAX , -FLT_MAX , -FLT_MAX );
-
-        if( !divW )
-        {
-            // w除算不要のケース
-            for( TsInt i = 0; i < m_numFace; i++ )
-            {
-                for( TsInt v = 0; v < m_numVertices[i]; v++ )
-                {
-                    TsVector3 &vt = m_vt[i][v];
-
-                    vt = mtx.TransformPoint( vt );
-                    m_vtMin = TsMin( m_vtMin , vt);
-                    m_vtMax = TsMax( m_vtMax , vt);
-                }
-            }
-        }
-        else
-        {
-            // w除算を行う
-            for( TsInt i = 0; i < m_numFace; i++ )
-            {
-                for( TsInt v = 0; v < m_numVertices[i]; v++ )
-                {
-                    TsVector3 &vt = m_vt[i][v];
-
-                    vt = mtx.TransformCoord( vt );
-                    m_vtMin = TsMin( m_vtMin , vt );
-                    m_vtMax = TsMax( m_vtMax , vt );
-                }
-            }
-        }
-    }
-
-    //=========================================================================
-    //! Comment
-    //  ボリュームを光源発生面へ投影する
-    //  \param lightFace 光源発生面
-    //  \par 解説：
-    //  　バウンダリボックスは更新されないので注意。
-    //=========================================================================
-    void ProjectLightSrcFace( const LightSrcFace &lightFace )
-    {
-        for( TsInt i = 0; i < m_numFace; i++ )
-        {
-            for( TsInt v = 0; v < m_numVertices[i]; v++ )
-            {
-                m_vt[i][v] = lightFace.Project( m_vt[i][v] );
-            }
-        }
-    }
-
-    // バウンダリボックスの最小値を参照
-    const TsVector3 GetBBoxMin( void ) const { return m_vtMin; }
-
-    // バウンダリボックスの最大値を参照
-    const TsVector3 GetBBoxMax( void ) const { return m_vtMax; }
-
-    TsBool Clip( const TsVector3& minRange ,
-                 const TsVector3& maxRange ,
-                 TsUint flag )
-    {
-        TsBool into = false;
-
-        // 各ポリゴンごとにクリップを計算。
-        m_vtMin = TsVector3( FLT_MAX , FLT_MAX , FLT_MAX );
-        m_vtMax = TsVector3( -FLT_MAX , -FLT_MAX , -FLT_MAX );
-        for( TsInt i = 0; i < m_numFace; i++ )
-        {
-            TsVector3 vvc[m_maxVertices];
-            TsInt nv = ClipPolygon(
-                m_numVertices[i] , m_vt[i] , vvc , minRange , maxRange , flag );
-
-            into |= ( 0 < nv );
-
-            // 計算結果をm_vt[]に戻し、バウンダリボックスを更新。
-            for( TsInt v = 0; v < nv; v++ )
-            {
-                TsVector3 &vt = m_vt[i][v];
-                vt = vvc[v];
-                m_vtMin = TsMin( vt , m_vtMin );
-                m_vtMax = TsMax( vt , m_vtMax );
-            }
-            m_numVertices[i] = nv;
-        }
-
-        return into;
-    }
-
-protected:
-
-
-    TsInt ClipPolygon(
-        TsInt numVertex , const TsVector3 *polyPos ,
-        TsVector3 *clip ,
-        const TsVector3 &minRect , const TsVector3 &maxRect ,
-        TsUint mask )
-    {
-        // ポリゴンを±X、±Y、±Zの各面で順に切断していく。
-        // ポリゴンの頂点配列は面毎に
-        //  polyPos -> workBuffer[0] -> workBuffer[1] -> workBuffer[0] -> ...
-        // と代入され、切断による頂点数の変化は numVertex 変数に代入される。
-        TsVector3 workBuffer[2][16];
-        TsInt destBufferIndex = 0;
-        const TsVector3 *src = polyPos;
-        TsVector3 *dest = workBuffer[destBufferIndex];
-
-        // minXとmaxXでクリップ。
-        if( mask & 0x01 )
-        {
-            for( TsInt i = 0; i < 2; i++ )
-            {
-                const TsF32 x = ( i == 0 ) ? minRect.x : maxRect.x;
-                const TsF32 w = ( i == 0 ) ? +1.0f : -1.0f;
-                TsInt s = 0;
-                for( TsInt v = 0; v < numVertex; v++ )
-                {
-                    // 頂点がクリップラインより中にあれば、その頂点をそのまま採用する。
-                    if( 0.0f <= w * ( src[v].x - x ) )
-                    {
-                        dest[s++] = src[v];
-                    }
-                    // 辺がクリップラインをまたいでいれば、交点の座標を求めてクリップ
-                    // 頂点を挿入する。(中から外、外から中の向きは関係ない。)
-                    const TsInt vv = ( v + 1 ) % numVertex;
-                    if( ( src[v].x < x ) ^ ( src[vv].x < x ) )
-                    {
-                        const TsF32 t = ( x - src[v].x ) / ( src[vv].x - src[v].x );
-                        dest[s] = TsVector3( TsVector3( src[v] ) * ( 1.0f - t ) );
-                        dest[s++] += TsVector3( src[vv] ) * t;
-                    }
-                }
-                // もし代入された頂点がなければ、ポリゴンは完全にクリップアウトされた。
-                if( s == 0 ) return 0;
-                // バッファを入れ替えて続ける。
-                numVertex = s;
-                src = dest;
-                destBufferIndex = ( destBufferIndex + 1 ) % 2;
-                dest = workBuffer[destBufferIndex];
-            }
-        }
-
-        // minYとmaxYでクリップ。
-        if( mask & 0x02 )
-        {
-            for( TsInt i = 0; i < 2; i++ )
-            {
-                const TsF32 y = ( i == 0 ) ? minRect.y : maxRect.y;
-                const TsF32 w = ( i == 0 ) ? +1.0f : -1.0f;
-                TsInt s = 0;
-                for( TsInt v = 0; v < numVertex; v++ )
-                {
-                    // 頂点がクリップラインより中にあれば、その頂点をそのまま採用する。
-                    if( 0.0f <= w * ( src[v].y - y ) )
-                    {
-                        dest[s++] = src[v];
-                    }
-                    // 辺がクリップラインをまたいでいれば、交点の座標を求めてクリップ
-                    // 頂点を挿入する。(中から外、外から中の向きは関係ない。)
-                    const TsInt vv = ( v + 1 ) % numVertex;
-                    if( ( src[v].y < y ) ^ ( src[vv].y < y ) )
-                    {
-                        const TsF32 t = ( y - src[v].y ) / ( src[vv].y - src[v].y );
-                        dest[s] = TsVector3( ( 1.0f - t ) * TsVector3( src[v] ) );
-                        dest[s++] += t * TsVector3( src[vv] );
-                    }
-                }
-                // もし代入された頂点がなければ、ポリゴンは完全にクリップアウトされた。
-                if( s == 0 )
-                    return 0;
-                // バッファを入れ替えて続ける。
-                numVertex = s;
-                src = dest;
-                destBufferIndex = ( destBufferIndex + 1 ) % 2;
-                dest = workBuffer[destBufferIndex];
-            }
-        }
-
-        // minZとmaxZでクリップ。
-        if( mask & 0x04 )
-        {
-            for( TsInt i = 0; i < 2; i++ )
-            {
-                const TsF32 z = ( i == 0 ) ? minRect.z : maxRect.z;
-                const TsF32 w = ( i == 0 ) ? +1.0f : -1.0f;
-                TsInt s = 0;
-                for( TsInt v = 0; v < numVertex; v++ )
-                {
-                    // 頂点がクリップラインより中にあれば、その頂点をそのまま採用する。
-                    if( 0.0f <= w * ( src[v].z - z ) )
-                    {
-                        dest[s++] = src[v];
-                    }
-                    // 辺がクリップラインをまたいでいれば、交点の座標を求めてクリップ
-                    // 頂点を挿入する。(中から外、外から中の向きは関係ない。)
-                    const TsInt vv = ( v + 1 ) % numVertex;
-                    if( ( src[v].z < z ) ^ ( src[vv].z < z ) )
-                    {
-                        const TsF32 t = ( z - src[v].z ) / ( src[vv].z - src[v].z );
-                        dest[s] = TsVector3( ( 1.0f - t ) * TsVector3( src[v] ) );
-                        dest[s++] += t * TsVector3( src[vv] );
-                    }
-                }
-                // もし代入された頂点がなければ、ポリゴンは完全にクリップアウトされた。
-                if( s == 0 ) return 0;
-                // バッファを入れ替えて続ける。
-                numVertex = s;
-                src = dest;
-                destBufferIndex = ( destBufferIndex + 1 ) % 2;
-                dest = workBuffer[destBufferIndex];
-            }
-        }
-
-        // 結果をコピーして終了
-        for( TsInt v = 0; v < numVertex; v++ )
-        {
-            clip[v] = src[v];
-        }
-        return numVertex;
-    }
-
-    // 視野錘の側面のポリゴンで体積を表現
-    // 0:top / 1:right / 2:bottom / 3:left / 4:near / 5:far
-    static const TsInt m_numFace = 6;
-
-    // 側面毎の角数(頂点数)
-    TsInt m_numVertices[m_numFace];
-
-    // 座標バッファの最大サイズ
-    static const TsInt m_maxVertices = 16;
-
-    // 角の座標(最大8角形)
-    TsVector3 m_vt[m_numFace][m_maxVertices];
-
-    // バウンダリボックス
-    TsVector3 m_vtMin;
-    TsVector3 m_vtMax;
-};
-
-TsComputeLisPSM::PointList::PointList()
-{
-    m_list.reserve( 128 );
-}
-
-TsInt TsComputeLisPSM::PointList::GetSize()const
-{
-    return (TsInt)m_list.size();
-};
-TsBool TsComputeLisPSM::PointList::Add( TsVector3& value )
-{
-    m_list.push_back( value );
-    return TS_TRUE;
-}
-TsBool TsComputeLisPSM::PointList::Clear()
-{
-    m_list.clear();
-    return TS_TRUE;
-}
-TsBool TsComputeLisPSM::PointList::Transform( const TsMatrix & matrix )
-{
-    for each( auto var in  m_list )
-        var.TransformCood( matrix );
-    return TS_TRUE;
-}
-TsBool TsComputeLisPSM::PointList::ComputeAABB( TsVector3& min , TsVector3 & max )const
-{
-    if( GetSize() > 0 )
-    {
-        for each ( auto var in m_list )
-        {
-            min = TsMin( min , var );
-            max = TsMax( max , var );
-        }
-    }
-    else
-    {
-        return TS_FALSE;
-    }
-    return TS_TRUE;
-}
-
-TsComputeLisPSM::PointList& TsComputeLisPSM::PointList::operator =( PointList& value )
-{
-    m_list.clear();
-    for( TsInt i = 0; i < value.GetSize(); ++i )
-    {
-        Add( value[i] );
-    }
-    return ( *this );
-}
-
-TsVector3& TsComputeLisPSM::PointList::operator[]( TsInt index )
-{
-    return m_list[index];
-}
 TsComputeLisPSM::TsComputeLisPSM()
 {
     m_near = 0.1f;
-    m_pointList.Clear();
-}
-TsVector3 TsComputeLisPSM::ComputeUpVector( TsVector3& viewDir , TsVector3 lightDir )
-{
-    TsVector3 left = TsVector3::Cross( lightDir , viewDir );
-    TsVector3 up = TsVector3::Cross( left , lightDir );
-    return up.Normalized();
-}
-TsBool TsComputeLisPSM::ComputeShadowMap()
-{
-    TsVector3 max , min;
-    TsMatrix lightView = 
-        TsMatrix::CreateLookAt( m_eyePostion ,
-                                m_eyePostion + m_lightDir ,
-                                m_viewDir );
-    m_pointList.Transform( lightView );
 
-    m_pointList.ComputeAABB( min , max );
-
-    m_lightProjectionMatrix = GetUnitCubeClipMatrix( min , max );
-
-    return TS_TRUE;
 }
 
 TsBool TsComputeLisPSM::ComputeLisPSM()
@@ -555,9 +31,7 @@ TsBool TsComputeLisPSM::ComputeLisPSM()
         upVector = m_viewMatrix.TransformNormal( upVector );
         upVector.Normalize();
 
-        TsVector3 eyeVector 
-//            = TsVector3( m_viewMatrix._31 , m_viewMatrix._32 , m_viewMatrix._33 );
-              = TsVector3::front;
+        TsVector3 eyeVector = TsVector3::front;
         // 視線と光線のなす角のcosを求めておく。
         TsF32 cosGamma = TsVector3::Dot( upVector,eyeVector );
 
@@ -606,7 +80,7 @@ TsBool TsComputeLisPSM::ComputeLisPSM()
         // Z軸 : viewVector (LisPSM透視変換の奥行き方向)
         mtxViewLight = mtxLightView.Transposed();
     }
-    LightSrcFace lightSrcFace;
+    TsLisPSM_LightSrcFace lightSrcFace;
     {
         // ワールド座標系での光線方向をもとめる。
         TsVector3 vtLight;
@@ -622,7 +96,7 @@ TsBool TsComputeLisPSM::ComputeLisPSM()
 
     {
 
-        ViewVolume viewVolume;
+        TsLisPSM_ViewVolume viewVolume;
         {
             // 視野錘の角の座標をワールド座標系で取得
             viewVolume.Init( m_viewProjectionMatrix , m_viewMatrix );
@@ -648,7 +122,7 @@ TsBool TsComputeLisPSM::ComputeLisPSM()
         // 行う。これは根本的な解決ではない。
         TsF32 zn , zf;
         {
-            ViewVolume vv( viewVolume );
+            TsLisPSM_ViewVolume vv( viewVolume );
             vv.Transform( m_viewMatrix , TS_FALSE );
             zn = vv.GetBBoxMin().z;
             zf = vv.GetBBoxMax().z;
@@ -661,7 +135,7 @@ TsBool TsComputeLisPSM::ComputeLisPSM()
         // 光源座標系での視野錘のZ範囲を計算し、LisPSMの透視変換の原点までの
         // 距離を求める。
         TsF32 projNear , projFar;
-        ViewVolume lsViewVolume( viewVolume );
+        TsLisPSM_ViewVolume lsViewVolume( viewVolume );
         {
             // 視野錘を光源座標系に変換してZ範囲を取得。
             const TsMatrix mtx( m_viewMatrix * mtxViewLight );
@@ -703,7 +177,7 @@ TsBool TsComputeLisPSM::ComputeLisPSM()
         // Step.6
         // 視野錘の外から影を落とす可能性のある空間を考慮するために、視野錘を
         // 光線発生面に投影する。
-        ViewVolume lsExtViewVolume( lsViewVolume );
+        TsLisPSM_ViewVolume lsExtViewVolume( lsViewVolume );
         {
             lsExtViewVolume.ProjectLightSrcFace( lightSrcFace );
         }
@@ -782,83 +256,10 @@ TsBool TsComputeLisPSM::UpdateShadowMatrix()
 {
     TsMatrix viewProj;
     viewProj = m_viewMatrix * m_viewProjectionMatrix;
-
-    //ビューボリュームを求める
-    ComputeViewFrustum( viewProj );
-
+    m_viewDir = TsVector3( m_viewMatrix._31 , m_viewMatrix._32 , m_viewMatrix._33 );
     // Light Space Perspective Shadow Map
     ComputeLisPSM();
-
-    //左手座標系に変換
-    //TsMatrix scale = TsMatrix::CreateScale( 1.0f , 1.0f , -1.0f );
-    //m_lightProjectionMatrix = m_lightProjectionMatrix * scale;
-    //m_lVPMatrix = m_lightViewMatrix * m_lightProjectionMatrix;
-
     return TS_TRUE;
-}
-TsBool TsComputeLisPSM::ComputeViewFrustum( TsMatrix& viewProj )
-{
-    m_pointList.Clear();
-
-    //　立方体を作成
-    TsVector3 v[8];
-    v[0] = TsVector3( -1.0f , +1.0f , -1.0f );
-    v[1] = TsVector3( -1.0f , -1.0f , -1.0f );
-    v[2] = TsVector3( +1.0f , -1.0f , -1.0f );
-    v[3] = TsVector3( +1.0f , +1.0f , -1.0f );
-    v[4] = TsVector3( -1.0f , +1.0f , +1.0f );
-    v[5] = TsVector3( -1.0f , -1.0f , +1.0f );
-    v[6] = TsVector3( +1.0f , -1.0f , +1.0f );
-    v[7] = TsVector3( +1.0f , +1.0f , +1.0f );
-    for( TsInt i = 0; i<8; i++ )
-    {
-        m_pointList.Add( v[i] );
-    }
-
-    //　ビュー行列→射影行列の逆変換を行う行列を求める
-    TsMatrix invViewProj = viewProj.Inversed();
-
-    //　立方体に逆変換する行列をかけ、視錐台を求める
-    m_pointList.Transform( invViewProj );
-
-    return TS_TRUE;
-}
-
-TsMatrix TsComputeLisPSM::GetUnitCubeClipMatrix( TsVector3& min , TsVector3& max )
-{
-    TsMatrix result;
-
-    result._11 = 2.0f / ( max.x - min.x );
-    result._21 = 0.0f;
-    result._31 = 0.0f;
-    result._41 = -( max.x + min.x ) / ( max.x - min.x );
-
-    result._12 = 0.0f;
-    result._22 = 2.0f / ( max.y - min.y );
-    result._32 = 0.0f;
-    result._42 = -( max.y + min.y ) / ( max.y - min.y );
-
-    result._13 = 0.0f;
-    result._23 = 0.0f;
-    result._33 = 1.0f / ( max.z - min.z );
-    result._43 = -min.z / ( max.z - min.z );
-
-    result._14 = 0.0f;
-    result._24 = 0.0f;
-    result._34 = 0.0f;
-    result._44 = 1.0f;
-
-    return result;
-}
-TsMatrix TsComputeLisPSM::GetPerspective( TsF32 nearDist , TsF32 farDist )
-{
-    TsMatrix result;
-    result = TsMatrix::identity;
-    result._22 = farDist / ( farDist - nearDist );
-    result._24 = 1.0f;
-    result._42 = -farDist * nearDist / ( farDist - nearDist );
-    result._44 = 0.0f;
-    return result;
 }
 
 TsBool TsComputeLisPSM::SetEyePos(const TsVector3& value )
@@ -866,18 +267,14 @@ TsBool TsComputeLisPSM::SetEyePos(const TsVector3& value )
     m_eyePostion = value;
     return TS_TRUE;
 }
-TsBool TsComputeLisPSM::SetViewDir(const TsVector3& value )
-{
-    m_viewDir = value;
-    return TS_TRUE;
-}
+
 TsBool TsComputeLisPSM::SetLightDir(const TsVector3& value )
 {
     m_lightDir = value;
     return TS_TRUE;
 }
 
-TsBool TsComputeLisPSM::SetEyeProjection(const TsMatrix& value )
+TsBool TsComputeLisPSM::SetProjection(const TsMatrix& value )
 {
     m_viewProjectionMatrix = value;
 

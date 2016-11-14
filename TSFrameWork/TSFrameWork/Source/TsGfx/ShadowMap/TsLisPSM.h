@@ -16,9 +16,8 @@ public:
 
     TsBool SetEyePos(const TsVector3& value);
     TsBool SetEyeViewMatrix( const TsMatrix& viewMatrix );
-    TsBool SetViewDir(const TsVector3& value);
     TsBool SetLightDir(const TsVector3& value);
-    TsBool SetEyeProjection(const TsMatrix& value);
+    TsBool SetProjection(const TsMatrix& value);
     TsBool UpdateShadowMatrix();
 
     TsMatrix GetLVMatrix();
@@ -27,40 +26,13 @@ public:
 
 private:
     //----------------------------------------------------------
-    // Define
-    //----------------------------------------------------------
-    class PointList
-    {
-    private:
-        TsVector<TsVector3> m_list;
-    public:
-        PointList();
-        TsInt GetSize()const;
-        TsBool Add( TsVector3& value );
-        TsBool Clear();
-        TsBool Transform( const TsMatrix& matrix );
-        TsBool ComputeAABB( TsVector3& min , TsVector3& max )const;
-
-        PointList & operator = ( PointList& value );
-        TsVector3& operator[] ( TsInt index );
-    };
-
-    //----------------------------------------------------------
     // private method
     //----------------------------------------------------------
     TsBool ComputeLisPSM();
-    TsBool ComputeShadowMap();
-    TsBool ComputeViewFrustum(TsMatrix& viewProj);
-    TsVector3 ComputeUpVector(TsVector3& viewDir, TsVector3 lightDir);
-    TsMatrix GetUnitCubeClipMatrix(TsVector3& min, TsVector3& max);
-    TsMatrix GetPerspective(TsF32 nearDist, TsF32 farDist);
-
 
     //----------------------------------------------------------
     // propery
     //----------------------------------------------------------
-    PointList m_pointList;
-
     TsVector3 m_eyePostion;
     TsVector3 m_viewDir;
     TsVector3 m_lightDir;

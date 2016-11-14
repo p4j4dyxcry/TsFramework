@@ -125,6 +125,8 @@
     <ClInclude Include="Source\TsGfx\Shader\TsShaderReflection.h" />
     <ClInclude Include="Source\TsGfx\Shader\TsShaderUT.h" />
     <ClInclude Include="Source\TsGfx\ShadowMap\TsLisPSM.h" />
+    <ClInclude Include="Source\TsGfx\ShadowMap\TsLisPSM_LightSrcFace.h" />
+    <ClInclude Include="Source\TsGfx\ShadowMap\TsLisPSM_ViewVolum.h" />
     <ClInclude Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.h" />
     <ClCompile Include="Source\TsMath\TsBone.cpp" />
     <ClCompile Include="Source\TsMath\TsColor.cpp" />

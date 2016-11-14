@@ -84,7 +84,7 @@ TsBool TsLightSetCBuffer::UpdateCBuffer(TsDeviceContext* pDevContext)
                 TsCamera* pCamera = pDevContext->GetMainCamera();
                 lispsm.SetEyeViewMatrix( pCamera->GetViewMatrix() );
                 lispsm.SetEyePos(pCamera->GetWorldPosition());
-                lispsm.SetEyeProjection(pCamera->GetProjMatrix());
+                lispsm.SetProjection(pCamera->GetProjMatrix());
                 lispsm.SetViewDir( pCamera->GetZAxis() );
                 lispsm.SetLightDir(m_lightSetCBuffer.lightData[i].dir);
                 lispsm.UpdateShadowMatrix();
