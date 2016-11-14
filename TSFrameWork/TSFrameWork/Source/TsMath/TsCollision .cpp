@@ -7,6 +7,8 @@ template TsBool CollisionPointAndPoint(const TsVector3&, const TsVector3&, TsF32
 template TsBool CollisionPointAndPoint(const TsVector2&, const TsVector2&, TsF32);
 template TsBool CollisionLineAndPoint(const TsLine2D&, const TsVector2&, TsF32);
 template TsBool CollisionLineAndPoint(const TsLine3D&, const TsVector3&, TsF32);
+template TsBool CollisionRayAndPoint(const TsLine2D&, const TsVector2&, TsF32);
+template TsBool CollisionRayAndPoint(const TsLine3D&, const TsVector3&, TsF32);
 template TsBool CollisionLineAndLine(const TsLine2D&, const TsLine2D&, TsF32, TsVector2*);
 template TsBool CollisionLineAndLine(const TsLine3D&, const TsLine3D&, TsF32, TsVector3*);
 template TsBool CollisionSphereAndRay(const TsCircle&, const TsLine2D&, TsF32, TsVector2*, TsVector2*);
@@ -14,6 +16,11 @@ template TsBool CollisionSphereAndRay(const TsSphere3D&, const TsLine3D&, TsF32,
 template TsBool CollisionSphereAndLine(const TsCircle&, const TsLine2D&, TsF32);
 template TsBool CollisionSphereAndLine(const TsSphere3D&, const TsLine3D&, TsF32);
 
+template TsBool CollisionRaAndPlane(const TsVector2&, const TsLine2D&, TsF32);
+template TsBool CollisionRaAndPlane(const TsVector3&, const TsLine3D&, TsF32);
+
+template TsBool CollisionAABBAndAABB(const TsAABB2D&, const TsAABB2D&);
+template TsBool CollisionAABBAndAABB(const TsAABB3D&, const TsAABB3D&);
 
 //----------------------------------------------------------
 //! 点と点
@@ -27,6 +34,23 @@ inline TsBool CollisionPointAndPoint(const T& p0,   //点1
 {
     //２つ点の位置がほぼ等しいかどうか
     return fabs((p0 - p1).Length()) < tolerance;
+}
+
+//----------------------------------------------------------
+//! レイと点
+//  @ref 衝突点は点1と等しい
+//----------------------------------------------------------
+template< typename T>
+inline TsBool CollisionRayAndPoint( const TsLine<T>& ray,  //レイ
+                                    const T& point ,        //点1
+                                    // 誤差許容範囲
+                                    TsF32 tolerance)
+{
+    T pointToLineBegin = point - ray.GetBegin();
+    T lineVector = ray.GetVector();
+
+    // ２つのベクトルは平行？
+    return fabsf(T::Cross(pointToLineBegin, lineVector).Length()) < tolerance;
 }
 
 //----------------------------------------------------------
@@ -309,4 +333,55 @@ inline TsBool CollisionCircleAndLine(const TsCircle& circle,
                                      TsF32 tolerance)
 {
     return CollisionSphereAndLine(circle, line, tolerance);
+}
+
+
+//----------------------------------------------------------
+//! 平面とレイの衝突判定
+//  @param  normal      面のベクトル
+//  @param  ray         レイ
+//  @param  tolerance   誤差許容範囲  (optin)
+//----------------------------------------------------------
+template<typename T>
+inline TsBool CollisionRaAndPlane(const T& normal,
+                                  const TsLine<T>& ray,
+                                  //誤差許容範囲
+                                  TsF32 tolerance )
+{
+    return T::Dot(normal, ray.GetVector()) != 0;
+}
+
+
+//----------------------------------------------------------
+//! 線分と三角形
+//  @param  p0          頂点
+//  @param  p1          頂点
+//  @param  p2          頂点
+//  @param  line        線分
+//  @param  tolerance   誤差許容範囲  (optin)
+//  @param  pOut        交差点
+//----------------------------------------------------------
+TsBool CollisionLineAndTriangle(const TsVector3& p0,
+                                const TsVector3& p1,
+                                const TsVector3& p2,
+                                const TsLine3D& ray,
+                                //誤差許容範囲
+                                TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE,
+                                TsVector3* pOut = nullptr)
+
+{
+    //todo 
+    return TS_TRUE;
+}
+
+//----------------------------------------------------------
+//! AABB と　AABB
+//  @param  aabb0          AABB
+//  @param  aabb1          AABB
+//----------------------------------------------------------
+template<typename T>
+TsBool CollisionAABBAndAABB(const TsAABB<T>& aabb0,
+                            const TsAABB<T>& aabb1)
+{
+
 }
