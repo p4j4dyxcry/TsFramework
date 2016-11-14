@@ -43,7 +43,11 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsVector2 v0, v1;
     TsBool v = CollisionCircleAndRay(s, l,COLLISION_DEFAULT_TOLERANCE,&v0,&v1);
 
-     
+    TsAABB3D a,b;
+    a.SetMax(TsVector3(10, 10, 10));
+    a.SetMin(TsVector3(-10, -10, -10));
+    CollisionAABBAndAABB(a, b);
+
     TsDirectioalLight dir;
 
 //    dir.LookAt(TsVector3::front * 100, TsVector3::back, TsVector3::up);

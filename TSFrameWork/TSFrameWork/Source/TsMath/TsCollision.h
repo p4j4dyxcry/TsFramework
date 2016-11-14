@@ -172,31 +172,26 @@ TsBool CollisionLineAndTriangle(const TsVector3& p0,
 //  @param  aabb0          AABB
 //  @param  aabb1          AABB
 //----------------------------------------------------------
-template<> //2d
-TsBool CollisionAABBAndAABB( const TsAABB2D& a,
-                             const TsAABB2D& b)
-{
-    const TsVector2& aMin = a.GetMin();
-    const TsVector2& aMax = a.GetMax();
-    const TsVector2& bMin = b.GetMin();
-    const TsVector2& bMax = b.GetMax();
-    return aMin.x < bMax.x && bMin.x < aMax.x
-        && aMin.y < bMax.y && bMin.y < aMax.y;
-        
-}
-template<> //3d
-TsBool CollisionAABBAndAABB( const TsAABB3D& a,
-                             const TsAABB3D& b)
-{
-    const TsVector3& aMin = a.GetMin();
-    const TsVector3& aMax = a.GetMax();
-    const TsVector3& bMin = b.GetMin();
-    const TsVector3& bMax = b.GetMax();
-    return aMin.x < bMax.x && bMin.x < aMax.x
-        && aMin.y < bMax.y && bMin.y < aMax.y
-        && aMin.z < bMax.z && bMin.z < aMax.z;
-}
+template<typename T>
+TsBool CollisionAABBAndAABB(const TsAABB<T>& aabb0,
+                            const TsAABB<T>& aabb1);
+
+//----------------------------------------------------------
+//! AABB　と Ray
+//----------------------------------------------------------
+
+//----------------------------------------------------------
+//! AABB　と 線分
+//----------------------------------------------------------
 
 //----------------------------------------------------------
 //! OBB　と OBB
+//----------------------------------------------------------
+
+//----------------------------------------------------------
+//! OBB　と Ray
+//----------------------------------------------------------
+
+//----------------------------------------------------------
+//! OBB　と 線分
 //----------------------------------------------------------

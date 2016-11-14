@@ -19,9 +19,6 @@ template TsBool CollisionSphereAndLine(const TsSphere3D&, const TsLine3D&, TsF32
 template TsBool CollisionRaAndPlane(const TsVector2&, const TsLine2D&, TsF32);
 template TsBool CollisionRaAndPlane(const TsVector3&, const TsLine3D&, TsF32);
 
-template TsBool CollisionAABBAndAABB(const TsAABB2D&, const TsAABB2D&);
-template TsBool CollisionAABBAndAABB(const TsAABB3D&, const TsAABB3D&);
-
 //----------------------------------------------------------
 //! 点と点
 //  @ref 衝突点は点と等しい
@@ -366,8 +363,8 @@ TsBool CollisionLineAndTriangle(const TsVector3& p0,
                                 const TsVector3& p2,
                                 const TsLine3D& ray,
                                 //誤差許容範囲
-                                TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE,
-                                TsVector3* pOut = nullptr)
+                                TsF32 tolerance ,
+                                TsVector3* pOut )
 
 {
     //todo 
@@ -379,9 +376,27 @@ TsBool CollisionLineAndTriangle(const TsVector3& p0,
 //  @param  aabb0          AABB
 //  @param  aabb1          AABB
 //----------------------------------------------------------
-template<typename T>
-TsBool CollisionAABBAndAABB(const TsAABB<T>& aabb0,
-                            const TsAABB<T>& aabb1)
+template<> //2d
+TsBool CollisionAABBAndAABB( const TsAABB2D& a,
+                             const TsAABB2D& b)
 {
-
+    const TsVector2& aMin = a.GetMin();
+    const TsVector2& aMax = a.GetMax();
+    const TsVector2& bMin = b.GetMin();
+    const TsVector2& bMax = b.GetMax();
+    return aMin.x < bMax.x && bMin.x < aMax.x
+        && aMin.y < bMax.y && bMin.y < aMax.y;
+        
+}
+template<> //3d
+TsBool CollisionAABBAndAABB( const TsAABB3D& a,
+                             const TsAABB3D& b)
+{
+    const TsVector3& aMin = a.GetMin();
+    const TsVector3& aMax = a.GetMax();
+    const TsVector3& bMin = b.GetMin();
+    const TsVector3& bMax = b.GetMax();
+    return aMin.x < bMax.x && bMin.x < aMax.x
+        && aMin.y < bMax.y && bMin.y < aMax.y
+        && aMin.z < bMax.z && bMin.z < aMax.z;
 }
