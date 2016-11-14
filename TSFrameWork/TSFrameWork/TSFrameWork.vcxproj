@@ -128,11 +128,13 @@
     <ClInclude Include="Source\TsGfx\ShadowMap\TsLisPSM_LightSrcFace.h" />
     <ClInclude Include="Source\TsGfx\ShadowMap\TsLisPSM_ViewVolum.h" />
     <ClInclude Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.h" />
+    <ClCompile Include="Source\TsMath\TsAABB.cpp" />
     <ClCompile Include="Source\TsMath\TsBone.cpp" />
     <ClCompile Include="Source\TsMath\TsColor.cpp" />
     <ClCompile Include="Source\TsMath\TsMathUTility.cpp" />
     <ClCompile Include="Source\TsMath\TsMatrix.cpp" />
     <ClCompile Include="Source\TsMath\TsQuaternion.cpp" />
+    <None Include="Source\TsMath\TsLine.cpp" />
     <ClCompile Include="Source\TsMath\TsSkeleton.cpp" />
     <ClCompile Include="Source\TsMath\TsSphereMeshCreater.cpp" />
     <ClCompile Include="Source\TsMath\TsTransForm.cpp" />
@@ -228,12 +230,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\TsGfx\TsGfx.h" />
+    <ClInclude Include="Source\TsMath\TsAABB.h" />
     <ClInclude Include="Source\TsMath\TsBone.h" />
     <ClInclude Include="Source\TsMath\TsColor.h" />
     <ClInclude Include="Source\TsMath\TsMath.h" />
     <ClInclude Include="Source\TsMath\TsMathUTility.h" />
     <ClInclude Include="Source\TsMath\TsMatrix.h" />
     <ClInclude Include="Source\TsMath\TsQuaternion.h" />
+    <ClInclude Include="Source\TsMath\TsLine.h" />
     <ClInclude Include="Source\TsMath\TsSkeleton.h" />
     <ClInclude Include="Source\TsMath\TsSphereMeshCreater.h" />
     <ClInclude Include="Source\TsMath\TsTransForm.h" />

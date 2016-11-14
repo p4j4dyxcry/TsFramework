@@ -201,9 +201,6 @@
     <ClCompile Include="Source\TsGfx\Material\TsMaterial.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsMath\TsMathUTility.cpp">
-      <Filter>ソース ファイル\TsMath\Header</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsGfx\Light\TsLight.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Light</Filter>
     </ClCompile>
@@ -233,12 +230,6 @@
     </ClCompile>
     <ClCompile Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.cpp">
       <Filter>ソース ファイル\TsGfx\Source\ShadowMap</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsMath\TsSkeleton.cpp">
-      <Filter>ソース ファイル\TsMath\Header</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsMath\TsBone.cpp">
-      <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClCompile>
     <ClCompile Include="Source\TsMath\TsSphereMeshCreater.cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
@@ -422,6 +413,18 @@
     </ClCompile>
     <ClCompile Include="Source\TsGfx\Material\TsDefaultMaterial.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsMath\TsBone.cpp">
+      <Filter>ソース ファイル\TsMath\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsMath\TsMathUTility.cpp">
+      <Filter>ソース ファイル\TsMath\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsMath\TsSkeleton.cpp">
+      <Filter>ソース ファイル\TsMath\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsMath\TsAABB.cpp">
+      <Filter>ソース ファイル\TsMath\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -731,6 +734,12 @@
     <ClInclude Include="Source\TsGfx\ShadowMap\TsLisPSM_ViewVolum.h">
       <Filter>ソース ファイル\TsGfx\Source\ShadowMap</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TsMath\TsAABB.h">
+      <Filter>ソース ファイル\TsMath\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsMath\TsLine.h">
+      <Filter>ソース ファイル\TsMath\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Extern\xna\xnamathconvert.inl">
@@ -810,6 +819,9 @@
     </None>
     <None Include="Resource\ShaderFlow\shadow.ts_shaderflow">
       <Filter>ソース ファイル\Resource\ShaderFlow</Filter>
+    </None>
+    <None Include="Source\TsMath\TsLine.cpp">
+      <Filter>ソース ファイル\TsMath\Source</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
