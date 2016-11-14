@@ -11,3 +11,4 @@
 #include "TsSkeleton.h"
 #include "TsSphereMeshCreater.h"
 #include "TsMathUTility.h"
+#include "TsCollision.h"

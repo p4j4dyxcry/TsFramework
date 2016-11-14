@@ -130,6 +130,7 @@
     <ClInclude Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.h" />
     <ClCompile Include="Source\TsMath\TsAABB.cpp" />
     <ClCompile Include="Source\TsMath\TsBone.cpp" />
+    <ClCompile Include="Source\TsMath\TsCollision .cpp" />
     <ClCompile Include="Source\TsMath\TsColor.cpp" />
     <ClCompile Include="Source\TsMath\TsMathUTility.cpp" />
     <ClCompile Include="Source\TsMath\TsMatrix.cpp" />
@@ -232,6 +233,7 @@
     <ClInclude Include="Source\TsGfx\TsGfx.h" />
     <ClInclude Include="Source\TsMath\TsAABB.h" />
     <ClInclude Include="Source\TsMath\TsBone.h" />
+    <ClInclude Include="Source\TsMath\TsCollision.h" />
     <ClInclude Include="Source\TsMath\TsColor.h" />
     <ClInclude Include="Source\TsMath\TsMath.h" />
     <ClInclude Include="Source\TsMath\TsMathUTility.h" />
