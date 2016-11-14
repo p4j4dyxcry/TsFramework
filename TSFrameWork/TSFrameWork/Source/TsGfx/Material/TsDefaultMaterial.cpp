@@ -79,7 +79,7 @@ TsBool TsDefaultMatrial::LoadAlbedoTextureFromFile( TsDevice * pDev , const TsSt
 {
     m_pAlbedoTexture = LoadTextureFromFile( pDev , name );
 
-    TsBool useTexture = (TsBool)m_material.useDiffuseMap;
+    TsBool useTexture = m_material.useDiffuseMap > 0.0f;
     if( m_pAlbedoTexture )
     {
         m_material.useDiffuseMap = 1.0f;
@@ -97,7 +97,7 @@ TsBool TsDefaultMatrial::LoadNormalTextureFromFile( TsDevice * pDev , const TsSt
 {
     m_pNormalTexture = LoadTextureFromFile( pDev , name );
 
-    TsBool useTexture = ( TsBool )m_material.useNomalMap;
+    TsBool useTexture = m_material.useNomalMap > 0.0f;
     if( m_pNormalTexture )
     {
         m_material.useNomalMap = 1.0f;
@@ -115,7 +115,7 @@ TsBool TsDefaultMatrial::LoadSpeculerTextureFromFile( TsDevice * pDev , const Ts
 {
     m_pSpeclurTexture = LoadTextureFromFile( pDev , name );
 
-    TsBool useTexture = (TsBool)m_material.useSpeculerMap;
+    TsBool useTexture = m_material.useSpeculerMap > 0.0f;
     if( m_pSpeclurTexture )
     {
         m_material.useSpeculerMap = 1.0f;
