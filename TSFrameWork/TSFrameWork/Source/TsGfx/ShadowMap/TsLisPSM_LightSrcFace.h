@@ -11,7 +11,7 @@ class TsLisPSM_LightSrcFace
 public:
     void Init( const TsVector3& lightDir ,
                const TsVector3& eyePos ,
-               TsF32 sceneSize )
+               const TsAABB3D& sceneAABB )
     {
         // 光源方向にある面を選択する。
         // 任意の座標pを面に投影する計算において、投影が無限遠となることを避ける
@@ -21,8 +21,8 @@ public:
         vt = lightDir.Normalized();
         const TsF32 th = sin( TsRadian( 1.0f ) );
 
-        TsVector3 minScene = TsVector3( -sceneSize , -sceneSize , -sceneSize );
-        TsVector3 maxScene = TsVector3( sceneSize , sceneSize , sceneSize );
+        TsVector3 minScene = sceneAABB.GetMin();
+        TsVector3 maxScene = sceneAABB.GetMax();
 
         // YZ平面
         if( th < fabsf( vt.x ) )

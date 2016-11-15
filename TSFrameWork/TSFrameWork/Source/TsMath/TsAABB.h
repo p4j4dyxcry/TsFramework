@@ -49,4 +49,5 @@ private:
 typedef TsAABB<TsVector2> TsAABB2D;
 typedef TsAABB<TsVector3> TsAABB3D;
 
-#include "TsAABB.cpp"
+extern template class TsAABB<TsVector2>;
+extern template class TsAABB<TsVector3>;

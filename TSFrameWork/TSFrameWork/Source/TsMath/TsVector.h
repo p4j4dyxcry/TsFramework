@@ -42,6 +42,9 @@ public:
     TsVector2& operator*= ( TsF32 Float );
     TsVector2& operator/= ( TsF32 Float );
 
+    TsVector2  operator*  (const TsMatrix& matrix);
+    TsVector2& operator*= (const TsMatrix& matrix);
+
     TsBool operator==(const TsVector2& value )const;
     TsBool operator!=(const TsVector2& value )const;
     TsBool operator>=(const TsVector2& value )const;
@@ -49,7 +52,7 @@ public:
     TsBool operator>(const TsVector2& value )const;
     TsBool operator<(const TsVector2& value )const;
 
-    friend TsVector2 operator * ( TsF32 f , CONST class TsVector2& v );
+    friend TsVector2 operator * ( TsF32 f , const class TsVector2& v );
     TsVector2  operator- ( )const;
 
     XMVECTOR  ToXMVECTOR()const;

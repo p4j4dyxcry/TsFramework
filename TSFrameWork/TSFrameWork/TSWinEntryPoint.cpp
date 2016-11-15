@@ -38,16 +38,6 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 {
     TSUT::TsLoggerInit();
 
-    TsCircle s(TsVector2(0,0),20);
-    TsLine2D l(TsVector2(100, 0), TsVector2(90, 0));
-    TsVector2 v0, v1;
-    TsBool v = CollisionCircleAndRay(s, l,COLLISION_DEFAULT_TOLERANCE,&v0,&v1);
-
-    TsAABB3D a,b;
-    a.SetMax(TsVector3(10, 10, 10));
-    a.SetMin(TsVector3(-10, -10, -10));
-    CollisionAABBAndAABB(a, b);
-
     TsDirectioalLight dir;
 
 //    dir.LookAt(TsVector3::front * 100, TsVector3::back, TsVector3::up);
@@ -87,18 +77,18 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsMeshFactory factory;
 //     factory.LoadModelFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx","Test");
 //     factory.LoadModelFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
-     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
+//     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
 //     factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
-//       factory.LoadModelFromFile(pDev, "Face.fbx","Test");
-     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
+       factory.LoadModelFromFile(pDev, "Face.fbx","Test");
+//     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
 //     auto pAnim = factory.CreateBakeAnimation( "Resource/fbx/Unity-Chan/move_unity.fbx" );
 //     auto pAnim = factory.CreateBakeAnimation( "sd_anim.fbx" );
      TsMeshObject * pMesh = TsResourceManager::Find<TsMeshObject>("Test");
-     pAnim->BindTransform( pMesh->GetGeometry( 0 )->GetTransform()->GetRootTransform() );
+//     pAnim->BindTransform( pMesh->GetGeometry( 0 )->GetTransform()->GetRootTransform() );
 
      TsSkeleton* pSkeleton = pMesh->GetSkeleton();
 
-     pAnim->SetTargetSkeleton( pSkeleton );
+//     pAnim->SetTargetSkeleton( pSkeleton );
 
     for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++ i)   
          queue.Add(pMesh->GetGeometry(i));
@@ -140,7 +130,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
         }
         else {
             //render 
-            pAnim->Update();
+//            pAnim->Update();
             
             auto pBlendState = TsResourceManager::Find<TsBlendState>( "ALPHA_BLEND" );
             pDev->GetDC()->SetBlendState( pBlendState );

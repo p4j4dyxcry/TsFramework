@@ -76,6 +76,17 @@ TsBool TsVector2::operator<( const TsVector2& value )const
     return x < value.x && y < value.y;
 }
 
+TsVector2 TsVector2::operator* (const TsMatrix& matrix)
+{
+    return TsVector2(XMVector2Transform(ToXMVECTOR(),matrix.ToXMMATRIX()));
+}
+
+TsVector2& TsVector2::operator*= (const TsMatrix& matrix)
+{
+    return *this = *this * matrix;
+}
+
+
 TsVector2  TsVector2::operator - ( )const
 {
     return *this * -1;

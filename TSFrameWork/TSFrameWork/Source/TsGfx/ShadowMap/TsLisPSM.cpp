@@ -88,7 +88,7 @@ TsBool TsComputeLisPSM::ComputeLisPSM()
         vtLight = m_lightDir;
 
         // 光線発生面を計算する。
-        lightSrcFace.Init( m_lightDir , m_eyePostion , m_far );
+        lightSrcFace.Init( m_lightDir , m_eyePostion , m_sceneBoundingBox );
 
         // 光源座標系へ変換しておく。
         lightSrcFace.Transform( m_viewMatrix * mtxViewLight );
@@ -101,12 +101,9 @@ TsBool TsComputeLisPSM::ComputeLisPSM()
             // 視野錘の角の座標をワールド座標系で取得
             viewVolume.Init( m_viewProjectionMatrix , m_viewMatrix );
 
-            TsVector3 minScene = -TsVector3::one * m_far;
-            TsVector3 maxScene =  TsVector3::one * m_far;
-
             // クリップを計算。
             // 高さ(Y軸)範囲のみをクリップするようにする。
-            viewVolume.Clip( minScene , maxScene , 0x02 );
+            viewVolume.Clip( m_sceneBoundingBox , 0x02 );
         }
 
         // Step.3
@@ -288,21 +285,27 @@ TsBool TsComputeLisPSM::SetProjection(const TsMatrix& value )
     return TS_TRUE;
 }
 
+TsBool TsComputeLisPSM::SetSceneBoundingBox(const TsAABB3D& aabb)
+{
+    m_sceneBoundingBox = aabb;
+    return TS_TRUE;
+}
+
 TsBool TsComputeLisPSM::SetViewMatrix( const TsMatrix& value )
 {
     m_viewMatrix = value;
     return TS_TRUE;
 }
 
-TsMatrix TsComputeLisPSM::GetLVMatrix()
+TsMatrix TsComputeLisPSM::GetLVMatrix()const
 {
     return m_lightViewMatrix;
 }
-TsMatrix TsComputeLisPSM::GetLPMatrix()
+TsMatrix TsComputeLisPSM::GetLPMatrix()const
 {
     return m_lightProjectionMatrix;
 }
-TsMatrix TsComputeLisPSM::GetLVPMatrix()
+TsMatrix TsComputeLisPSM::GetLVPMatrix()const
 {
     return m_lVPMatrix;
 }

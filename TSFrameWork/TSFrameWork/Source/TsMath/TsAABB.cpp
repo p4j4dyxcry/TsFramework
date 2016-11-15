@@ -1,3 +1,9 @@
+#include "../../TsAfx.h"
+
+
+// 明示的テンプレートのインスタンス化
+template class TsAABB<TsVector2>;
+template class TsAABB<TsVector3>;
 
 template< typename T>
 TsAABB<T>::TsAABB()
@@ -16,7 +22,8 @@ TsAABB<T>::TsAABB(const T& min,
 template< typename T>
 TsAABB<T>::TsAABB(const TsAABB<T> & aabb)
 {
-    *this = aabb;
+    SetMin(aabb.m_min);
+    SetMax(aabb.m_max);
 }
 
 template< typename T>
@@ -80,4 +87,3 @@ TsAABB<T> TsAABB<T>::operator = (const TsAABB<T>& aabb)
     SetMax( aabb.m_max );
     return *this;
 }
-

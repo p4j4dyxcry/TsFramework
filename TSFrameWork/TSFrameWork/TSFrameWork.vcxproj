@@ -128,7 +128,7 @@
     <ClInclude Include="Source\TsGfx\ShadowMap\TsLisPSM_LightSrcFace.h" />
     <ClInclude Include="Source\TsGfx\ShadowMap\TsLisPSM_ViewVolum.h" />
     <ClInclude Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.h" />
-    <None Include="Source\TsMath\TsAABB.cpp" />
+    <ClCompile Include="Source\TsMath\TsAABB.cpp" />
     <ClCompile Include="Source\TsMath\TsBone.cpp" />
     <ClCompile Include="Source\TsMath\TsCollision .cpp" />
     <ClCompile Include="Source\TsMath\TsColor.cpp" />
@@ -385,6 +385,10 @@
     <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsDefferedShadingPS.hlsl">
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSShadowMapPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
     </FxCompile>

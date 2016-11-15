@@ -163,11 +163,12 @@ public:
     // バウンダリボックスの最大値を参照
     const TsVector3 GetBBoxMax( void ) const { return m_vtMax; }
 
-    TsBool Clip( const TsVector3& minRange ,
-                 const TsVector3& maxRange ,
-                 TsUint flag )
+    TsBool Clip(const TsAABB3D& sceneAABB,
+                      TsUint flag )
     {
         TsBool into = false;
+        const TsVector3& minRange = sceneAABB.GetMin();
+        const TsVector3& maxRange = sceneAABB.GetMax();
 
         // 各ポリゴンごとにクリップを計算。
         m_vtMin = TsVector3( FLT_MAX , FLT_MAX , FLT_MAX );
