@@ -16,8 +16,20 @@ template TsBool CollisionSphereAndRay(const TsSphere3D&, const TsLine3D&, TsF32,
 template TsBool CollisionSphereAndLine(const TsCircle&, const TsLine2D&, TsF32);
 template TsBool CollisionSphereAndLine(const TsSphere3D&, const TsLine3D&, TsF32);
 
-template TsBool CollisionRaAndPlane(const TsVector2&, const TsLine2D&, TsF32);
-template TsBool CollisionRaAndPlane(const TsVector3&, const TsLine3D&, TsF32);
+template TsBool CollisionSphereAndSphere(const TsSphere2D&,const TsSphere2D&);
+template TsBool CollisionSphereAndSphere(const TsSphere3D&, const TsSphere3D&);
+
+template TsBool CollisionSphereAndPoint(const TsCircle& , const TsVector2& point);
+template TsBool CollisionSphereAndPoint(const TsSphere3D& , const TsVector3& point);
+
+template TsBool CollisionRayAndPlane(const TsVector2&, const TsLine2D&, TsF32);
+template TsBool CollisionRayAndPlane(const TsVector3&, const TsLine3D&, TsF32);
+
+template TsBool CollisionAABBAndRay(const TsAABB2D&, const TsLine2D&, TsF32,TsVector2*);
+template TsBool CollisionAABBAndRay(const TsAABB3D&, const TsLine3D&, TsF32,TsVector3*);
+
+template TsBool CollisionAABBAndRay (const TsAABB2D& aabb,const TsSphere2D& sphere);
+template TsBool CollisionAABBAndRay(const TsAABB3D& aabb, const TsSphere3D& sphere);
 
 //----------------------------------------------------------
 //! 点と点
@@ -119,46 +131,41 @@ inline TsBool CollisionLineAndLine( const TsLine<T> &line0, // 線分1
 }
 
 //----------------------------------------------------------
+//! 円or球と点
+//  @return 衝突 true 
+//----------------------------------------------------------
+template< typename T>
+TsBool CollisionSphereAndPoint(const TsSphere<T>& sphere,
+                               const T& point)
+{
+    T&& center = sphere.GetCenter();
+    TsF32 r = sphere.GetRadius();
+    TsF32 value = 0;
+    TsInt sz = sizeof(T) / sizeof(TsF32);
+    for (TsInt i = 0; i < sz; ++i)
+        value += (point[i] - center[i]) * (point[i] - center[i]);
+
+    TsF32 r2 = r*r;
+
+    return value <= r2;
+}
+
+//----------------------------------------------------------
 //! 円と点
 //----------------------------------------------------------
-inline TsBool CollisionCircleAndPoint(const TsCircle& circle,
-                                      const TsVector2& point)
+inline TsBool CollisionSphere2DAndPoint(const TsCircle& circle,
+                                        const TsVector2& point)
 {
-    TsVector2&& center = circle.GetCenter();
-    TsF32     r      = circle.GetRadius();
-
-    TsF32 x  = (point.x - center.x) * 
-               (point.x - center.x);
-
-    TsF32 y  = (point.y - center.y) * 
-               (point.y - center.y);
-
-    TsF32 r2 = r * r;
-
-    return x + y <= r2;
+    return CollisionSphereAndPoint(circle,point);
 }
 
 //----------------------------------------------------------
 //! 円と円
 //----------------------------------------------------------
-inline TsBool CollisionCircleAndCircle(const TsCircle& c0,
+inline TsBool CollisionSphereAndSphere2D(const TsCircle& c0,
                                        const TsCircle& c1)
 {
-    TsVector2&& center0 = c0.GetCenter();
-    TsVector2&& center1 = c1.GetCenter();
-
-    TsF32 r0 = c0.GetRadius();
-    TsF32 r1 = c1.GetRadius();
-
-    TsF32 x = (center0.x - center1.x) *
-              (center0.x - center1.x);
-
-    TsF32 y = (center0.y - center1.y) *
-              (center0.y - center1.y);
-
-    TsF32 r2 = (r0 + r1) * (r0 + r1);
-
-    return x + y <= r2;
+    return CollisionSphereAndSphere(c0,c1);
 }
 
 //----------------------------------------------------------
@@ -218,7 +225,7 @@ inline TsBool CollisionSphereAndRay(const TsSphere<T>& sphere,
 //  @param  pOut2       遠景の衝突点を求める(option)
 //----------------------------------------------------------
 
-TsBool CollisionCircleAndRay( const TsCircle& circle,
+TsBool CollisionSphereAndRay2D( const TsCircle& circle,
                               const TsLine2D& line,
                               //誤差許容範囲
                               TsF32 tolerance ,
@@ -232,50 +239,44 @@ TsBool CollisionCircleAndRay( const TsCircle& circle,
 //! 球と点
 //  @return 衝突 true 
 //----------------------------------------------------------
-inline TsBool CollisionSphereAndPoint( const TsSphere3D& s0,
-                                       const TsVector3& p0)
+inline TsBool CollisionSphereAndPoint3D( const TsSphere3D& s0,
+                                         const TsVector3& p0)
 {
-    TsVector3&& c0 = s0.GetCenter();
-    TsF32       r = s0.GetRadius();
+    return CollisionSphereAndPoint(s0, p0);
+}
 
-    TsF32 x = (p0.x - c0.x) *
-              (p0.x - c0.x);
+//----------------------------------------------------------
+//! 円と円 or 球と球
+//  @return 衝突 true 
+//----------------------------------------------------------
+template< typename T>
+inline TsBool CollisionSphereAndSphere  (const TsSphere<T>& s0,
+                                         const TsSphere<T>& s1)
+{
+    T&& c0 = s0.GetCenter();
+    T&& c1 = s1.GetCenter();
 
-    TsF32 y = (p0.y - c0.y) *
-              (p0.y - c0.y);
+    TsInt sz = sizeof(T) / sizeof(TsF32);
 
-    TsF32 z = (p0.z - c0.z) *
-              (p0.z - c0.z);
+    TsF32       r0 = s0.GetRadius();
+    TsF32       r1 = s1.GetRadius();
 
-    TsF32 r2 = r * r;
+    TsF32 value = 0;
+    for (TsInt i = 0; i < sz; ++i)
+        value += (c0[i] - c1[i]) * (c0[i] - c1[i]);
 
-    return x + y + z <= r2;
+    TsF32 r2 = (r0 + r1) * (r0 + r1);
+
+    return value <= r2;
 }
 
 //----------------------------------------------------------
 //! 球と球
 //----------------------------------------------------------
-inline TsBool CollisionSphereAndSphere(const TsSphere3D& s0,
+inline TsBool CollisionSphereAndSphere3D(const TsSphere3D& s0,
                                        const TsSphere3D& s1)
 {
-    TsVector3&& c0 = s0.GetCenter();
-    TsVector3&& c1 = s1.GetCenter();
-    
-    TsF32       r0 = s0.GetRadius();
-    TsF32       r1 = s1.GetRadius();
-
-    TsF32 x = (c0.x - c1.x) *
-              (c0.x - c1.x);
-
-    TsF32 y = (c0.y - c1.y) *
-              (c0.y - c1.y);
-
-    TsF32 z = (c0.z - c1.z) *
-              (c0.z - c1.z);
-
-    TsF32 r2 = (r0 + r1) * (r0 + r1);
-
-    return x + y + z <= r2;
+    return CollisionSphereAndSphere(s0, s1);
 }
 
 
@@ -324,8 +325,8 @@ inline TsBool CollisionSphereAndLine( const TsSphere<T>& s,
 //  @param  line        線分
 //  @param  tolerance   誤差許容範囲  (optin)
 //----------------------------------------------------------
-inline TsBool CollisionCircleAndLine(const TsCircle& circle,
-                                     const TsLine2D& line,
+inline TsBool CollisionSphereAndLine2D(const TsCircle& circle,
+                                       const TsLine2D& line,
                                      //誤差許容範囲
                                      TsF32 tolerance)
 {
@@ -340,7 +341,7 @@ inline TsBool CollisionCircleAndLine(const TsCircle& circle,
 //  @param  tolerance   誤差許容範囲  (optin)
 //----------------------------------------------------------
 template<typename T>
-inline TsBool CollisionRaAndPlane(const T& normal,
+inline TsBool CollisionRayAndPlane(const T& normal,
                                   const TsLine<T>& ray,
                                   //誤差許容範囲
                                   TsF32 tolerance )
@@ -399,4 +400,98 @@ TsBool CollisionAABBAndAABB( const TsAABB3D& a,
     return aMin.x < bMax.x && bMin.x < aMax.x
         && aMin.y < bMax.y && bMin.y < aMax.y
         && aMin.z < bMax.z && bMin.z < aMax.z;
+}
+
+
+//----------------------------------------------------------
+//! AABB と　Ray
+//  @param  aabb           AABB
+//  @param  rayDir         レイ
+//  @prama  tolerance      誤差許容範囲
+//  @param  pOut           衝突点(option)
+//----------------------------------------------------------
+template<typename T>
+TsBool CollisionAABBAndRay (const TsAABB<T>& aabb,
+                            const TsLine<T>& ray,
+                            TsF32 tolerance,
+                            T * pOut )
+{
+    // ベクトルの次元に合わせた要素数の取得
+    // Vector2 -> 2
+    // Vector3 -> 3
+    TsInt sz = sizeof(T) / sizeof(TsF32);
+
+    const T& rayPos = ray.GetBegin();
+    const T& rayDir = ray.GetNormalizeVector();
+    const T& min = aabb.GetMin();
+    const T& max = aabb.GetMax();
+
+    TsF32 t = -FLT_MAX;
+    TsF32 t_max = FLT_MAX;
+
+    //! 交差判定
+    for (int i = 0; i < sz; ++i)
+    {
+        if ( fabsf(rayDir[i]) < tolerance)
+        {
+            if (rayPos[i] < min[i] || rayPos[i] >max[i])
+                return TS_FALSE; // 交差していない
+        }
+        else 
+        {
+            // スラブとの距離を算出
+            // t1が近スラブ、t2が遠スラブとの距離
+            TsF32 odd = 1.0f / rayDir[i];
+            TsF32 t1 = (min[i] - rayPos[i]) * odd;
+            TsF32 t2 = (max[i] - rayPos[i]) * odd;
+            if (t1 > t2) 
+            {
+                // swap
+                TsF32 tmp = t1; t1 = t2; t2 = tmp;
+            }
+
+            if (t1 > t)
+                t = t1;
+            if (t2 < t_max)
+                t_max = t2;
+
+            // スラブ交差チェック
+            if (t >= t_max)
+                return TS_FALSE;
+        }
+    }
+
+    // 衝突点を求める
+    if (pOut) 
+    {
+        *pOut = rayPos + t * rayDir;
+    }
+
+    return TS_TRUE;
+}
+
+//----------------------------------------------------------
+//! AABB　と 円or球
+//----------------------------------------------------------
+template<typename T>
+TsBool CollisionAABBAndRay(const TsAABB<T>& aabb,
+                           const TsSphere<T>& sphere)
+{
+    TsInt sz = sizeof(T) / sizeof(TsF32);
+
+    //次元による頂点数を求める
+    // 1次元 2 
+    // 2次元 4
+    // 3次元 8
+    // 4次元 16 ... etc
+    TsInt VertexCount = 1;
+    for (TsInt i = 0; i < sz; ++i)
+    {
+        VertexCount *= 2;
+    }
+
+
+    for (TsInt i = 0; i < VertexCount; ++i)
+    {
+    }
 }

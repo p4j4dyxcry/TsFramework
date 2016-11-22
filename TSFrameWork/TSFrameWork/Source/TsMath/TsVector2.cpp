@@ -92,6 +92,15 @@ TsVector2  TsVector2::operator - ( )const
     return *this * -1;
 }
 
+const TsF32& TsVector2::operator[](TsInt n)const
+{
+    return ((const float*)this)[n];
+}
+TsF32& TsVector2::operator[](TsInt n)
+{
+    return ((float*)this)[n];
+}
+
 XMVECTOR TsVector2::ToXMVECTOR()const
 {
     return XMLoadFloat2( this );

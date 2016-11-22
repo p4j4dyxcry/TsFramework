@@ -115,6 +115,15 @@ TsVector3  TsVector3::operator - ( )const
 {
     return *this * -1; 
 }
+
+const TsF32& TsVector3::operator[](TsInt n)const
+{
+    return ((const float*)this)[n];
+}
+TsF32& TsVector3::operator[](TsInt n)
+{
+    return ((float*)this)[n];
+}
 TsVector3& TsVector3::TransformCood( const TsMatrix& mat )
 {
     return 	*this = XMVector3TransformCoord( ToXMVECTOR() , mat.ToXMMATRIX() );

@@ -124,6 +124,15 @@ TsVector4  TsVector4::operator - ( )const
     return *this * -1;
 }
 
+const TsF32& TsVector4::operator[](TsInt n)const
+{
+    return ((const float*)this)[n];
+}
+TsF32& TsVector4::operator[](TsInt n)
+{
+    return ((float*)this)[n];
+}
+
 XMVECTOR TsVector4::ToXMVECTOR()const
 {
     return XMLoadFloat4( this );

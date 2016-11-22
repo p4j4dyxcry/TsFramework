@@ -52,6 +52,9 @@ public:
     TsBool operator>(const TsVector2& value )const;
     TsBool operator<(const TsVector2& value )const;
 
+    const TsF32& operator[](TsInt)const;
+    TsF32& operator[](TsInt);
+
     friend TsVector2 operator * ( TsF32 f , const class TsVector2& v );
     TsVector2  operator- ( )const;
 
@@ -123,6 +126,8 @@ public:
     TsBool operator>(const TsVector3& value )const;
     TsBool operator<(const TsVector3& value )const;
 
+    const TsF32& operator[](TsInt)const;
+    TsF32& operator[](TsInt);
 
     TsVector3& TransformCood(const TsMatrix& mat);
     XMVECTOR  ToXMVECTOR()const;
@@ -184,6 +189,9 @@ public:
 
     friend TsVector4 operator * ( TsF32 f , const class TsVector4& v );
     TsVector4  operator - ( )const;
+
+    const TsF32& operator[](TsInt)const;
+    TsF32& operator[](TsInt);
 
     TsBool operator==(const TsVector4& value )const;
     TsBool operator!=(const TsVector4& value )const;

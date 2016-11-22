@@ -40,7 +40,8 @@ protected:
 
 };
 
-typedef TsSphere<TsVector2> TsCircle;   //円
-typedef TsSphere<TsVector3> TsSphere3D;  //球
+typedef TsSphere<TsVector2> TsCircle;     //円
+typedef TsSphere<TsVector2> TsSphere2D;   //円
+typedef TsSphere<TsVector3> TsSphere3D;   //球
 
 #include "TsSphere.cpp"
