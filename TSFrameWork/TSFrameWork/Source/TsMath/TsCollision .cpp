@@ -803,10 +803,10 @@ TsBool CollisionOBBAndOBB   ( const TsOBB& obb0,
     TsVector3 scale1 = obb1.GetScale();
 
 
-    float R[3][3], AbsR[3][3];
-    for (int i = 0; i < 3; i++)
+    TsF32 R[3][3], AbsR[3][3];
+    for (TsInt i = 0; i < 3; i++)
     {
-        for (int j = 0; j < 3; j++)
+        for (TsInt j = 0; j < 3; j++)
         {
             R[i][j] = TsVector3::Dot(axis0[i], axis1[i]);
             AbsR[i][j] = fabsf(R[i][j]) + tolerance;
@@ -822,14 +822,14 @@ TsBool CollisionOBBAndOBB   ( const TsOBB& obb0,
     //Ž²L=A0, L=A1, L=A2”»’è
     TsF32 ra, rb;
 
-    for (int i = 0; i < 3; i++)
+    for (TsInt i = 0; i < 3; i++)
     {
         ra = scale0[i];
         rb = scale1[0] * AbsR[i][0] + scale1[1] * AbsR[i][1] + scale1[2] * AbsR[i][2];
         if (fabsf(t[i]) > ra + rb)return TS_FALSE;
     }
     //Ž²L=B0, L=B1, L=B2”»’è
-    for (int i = 0; i < 3; i++)
+    for (TsInt i = 0; i < 3; i++)
     {
         ra = scale0[0] * AbsR[0][i] + scale0[1] * AbsR[1][i] + scale0[2] * AbsR[2][i];
         rb = scale1[i];
