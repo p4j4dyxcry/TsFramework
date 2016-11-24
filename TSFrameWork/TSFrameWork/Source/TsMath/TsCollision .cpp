@@ -28,8 +28,11 @@ template TsBool CollisionRayAndPlane(const TsVector3&, const TsLine3D&, TsF32);
 template TsBool CollisionAABBAndRay(const TsAABB2D&, const TsLine2D&, TsF32,TsVector2*);
 template TsBool CollisionAABBAndRay(const TsAABB3D&, const TsLine3D&, TsF32,TsVector3*);
 
-template TsBool CollisionAABBAndRay (const TsAABB2D& aabb,const TsSphere2D& sphere);
-template TsBool CollisionAABBAndRay(const TsAABB3D& aabb, const TsSphere3D& sphere);
+template TsBool CollisionAABBAndSphere(const TsAABB2D& , const TsSphere2D& );
+template TsBool CollisionAABBAndSphere(const TsAABB3D& , const TsSphere3D& );
+
+template TsBool CollisionAABBAndAABB(const TsAABB2D&, const TsAABB2D&);
+template TsBool CollisionAABBAndAABB(const TsAABB3D&, const TsAABB3D&);
 
 //----------------------------------------------------------
 //! 点と点
@@ -362,13 +365,65 @@ inline TsBool CollisionRayAndPlane(const T& normal,
 TsBool CollisionLineAndTriangle(const TsVector3& p0,
                                 const TsVector3& p1,
                                 const TsVector3& p2,
-                                const TsLine3D& ray,
+                                const TsLine3D& line,
                                 //誤差許容範囲
                                 TsF32 tolerance ,
                                 TsVector3* pOut )
 
 {
-    //todo 
+    TsVector3 v0 = (p1 - p0).Normalized();
+    TsVector3 v1 = (p2 - p0).Normalized();
+
+    TsVector3 lineVector = line.GetNormalizeVector();
+
+    TsVector3 normal = TsVector3::Cross(v1, v0);
+
+    TsVector3 x = p0 - lineVector;
+
+    TsF32 dot0 = TsVector3::Dot(x, normal);
+    TsF32 dot1 = TsVector3::Dot(lineVector, normal);
+
+    TsF32 t = dot0 / dot1;
+
+    if (t < 0)
+        return TS_FALSE;
+    if (t > line.GetVector().Length())
+        return TS_FALSE;
+
+    TsVector3 p = line.GetBegin() + (lineVector * t);
+
+    TsVector3 d0, d1, cross;
+
+    // 1つ目の辺の中に納まっているか判定
+    {
+        d0 = p - p0;
+        d1 = p1 - p0;
+
+        cross = TsVector3::Cross(d0, d1);
+        if (TsVector3::Dot(cross, normal) < 0)
+            return TS_FALSE;
+    }
+
+    // 2つ目の辺の中に納まっているか判定
+    {
+        d0 = p - p1;
+        d1 = p2 - p1;
+
+        cross = TsVector3::Cross(d0, d1);
+        if (TsVector3::Dot(cross, normal) < 0)
+            return TS_FALSE;
+    }
+
+    // 3つ目の辺の中に納まっているか判定
+    {
+        d0 = p - p2;
+        d1 = p0 - p2;
+
+        cross = TsVector3::Cross(d0, d1);
+        if (TsVector3::Dot(cross, normal) < 0)
+            return TS_FALSE;
+    }
+
     return TS_TRUE;
 }
 
@@ -377,30 +432,57 @@ TsBool CollisionLineAndTriangle(const TsVector3& p0,
 //  @param  aabb0          AABB
 //  @param  aabb1          AABB
 //----------------------------------------------------------
-template<> //2d
-TsBool CollisionAABBAndAABB( const TsAABB2D& a,
-                             const TsAABB2D& b)
+template<typename T>
+TsBool CollisionAABBAndAABB(const TsAABB<T>& a,
+                            const TsAABB<T>& b)
 {
-    const TsVector2& aMin = a.GetMin();
-    const TsVector2& aMax = a.GetMax();
-    const TsVector2& bMin = b.GetMin();
-    const TsVector2& bMax = b.GetMax();
-    return aMin.x < bMax.x && bMin.x < aMax.x
-        && aMin.y < bMax.y && bMin.y < aMax.y;
-        
+    const T& aMin = a.GetMin();
+    const T& aMax = a.GetMax();
+    const T& bMin = b.GetMin();
+    const T& bMax = b.GetMax();
+
+    // 次元数を計算
+    TsInt sz = sizeof(T) / sizeof(TsF32);
+
+    for (TsInt i = 0; i < sz; ++i)
+    {
+        //! 次元が衝突しているか判定
+        //　次元は x -> y -> z -> w ...etc　と∞次元まで判定できる。
+        if ( aMin[i] > bMax[i] || bMin[i] > aMax[i] )
+            return TS_FALSE;
+    }
+    return TS_TRUE;
 }
-template<> //3d
-TsBool CollisionAABBAndAABB( const TsAABB3D& a,
-                             const TsAABB3D& b)
-{
-    const TsVector3& aMin = a.GetMin();
-    const TsVector3& aMax = a.GetMax();
-    const TsVector3& bMin = b.GetMin();
-    const TsVector3& bMax = b.GetMax();
-    return aMin.x < bMax.x && bMin.x < aMax.x
-        && aMin.y < bMax.y && bMin.y < aMax.y
-        && aMin.z < bMax.z && bMin.z < aMax.z;
-}
+
+//=====================================================
+// * 【↑】一つの関数で計算できるようにした
+//=====================================================
+//template<> //2d
+//TsBool CollisionAABBAndAABB( const TsAABB2D& a,
+//                             const TsAABB2D& b)
+//{
+//    //! メモ 2dと3dを一つの関数で行えるようにする？
+//    //　現状は
+//    const TsVector2& aMin = a.GetMin();
+//    const TsVector2& aMax = a.GetMax();
+//    const TsVector2& bMin = b.GetMin();
+//    const TsVector2& bMax = b.GetMax();
+//    return aMin.x < bMax.x && bMin.x < aMax.x
+//        && aMin.y < bMax.y && bMin.y < aMax.y;
+//        
+//}
+//template<> //3d
+//TsBool CollisionAABBAndAABB( const TsAABB3D& a,
+//                             const TsAABB3D& b)
+//{
+//    const TsVector3& aMin = a.GetMin();
+//    const TsVector3& aMax = a.GetMax();
+//    const TsVector3& bMin = b.GetMin();
+//    const TsVector3& bMax = b.GetMax();
+//    return aMin.x < bMax.x && bMin.x < aMax.x
+//        && aMin.y < bMax.y && bMin.y < aMax.y
+//        && aMin.z < bMax.z && bMin.z < aMax.z;
+//}
 
 
 //----------------------------------------------------------
@@ -471,27 +553,55 @@ TsBool CollisionAABBAndRay (const TsAABB<T>& aabb,
 }
 
 //----------------------------------------------------------
+//! AABB　と 線分
+//  @param  aabb           AABB
+//  @param  line           線分
+//  @prama  tolerance      誤差許容範囲
+//  @param  pOut           衝突点(option)
+//----------------------------------------------------------
+template<typename T>
+TsBool CollisionAABBAndLine(const TsAABB<T>& aabb,
+                            const TsSphere<T>& Line,
+                            TsF32 tolerance ,
+                            T * pOut)
+{
+    //衝突点t
+    T t;
+    // レイと線分のあたり判定を求める
+    TsBool bRayAndAABB = 
+        CollisionAABBAndRay(aabb, 
+                            Line, 
+                            tolerance, 
+                            &t);
+
+    // レイが衝突していなかったら衝突しない
+    if (bRayAndAABB == TS_FALSE)
+        return TS_FALSE;
+
+    // 衝突点と線分のあたり判定を求める
+    TsBool isLineAndPoint =
+        CollisionLineAndPoint(Line, t, tolerance);
+
+    if ( isLineAndPoint && pOut )
+        *pOut = t;
+
+    return isLineAndPoint;
+}
+
+//----------------------------------------------------------
 //! AABB　と 円or球
 //----------------------------------------------------------
 template<typename T>
-TsBool CollisionAABBAndRay(const TsAABB<T>& aabb,
-                           const TsSphere<T>& sphere)
+TsBool CollisionAABBAndSphere(const TsAABB<T>& aabb,
+                              const TsSphere<T>& sphere)
 {
-    TsInt sz = sizeof(T) / sizeof(TsF32);
+    TsVector<T>&& v = aabb.GetVertexList();
 
-    //次元による頂点数を求める
-    // 1次元 2 
-    // 2次元 4
-    // 3次元 8
-    // 4次元 16 ... etc
-    TsInt VertexCount = 1;
-    for (TsInt i = 0; i < sz; ++i)
+    for (auto it : v)
     {
-        VertexCount *= 2;
+        //全てのAABBの頂点と円or球のあたり判定を行う
+        if ( CollisionSphereAndPoint(sphere, it) )
+            return TS_TRUE;
     }
-
-
-    for (TsInt i = 0; i < VertexCount; ++i)
-    {
-    }
+    return TS_FALSE;
 }
