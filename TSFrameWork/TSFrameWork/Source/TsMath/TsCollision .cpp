@@ -722,6 +722,18 @@ TsBool CollisionOBBAndRay(const TsOBB& obb,
                           const TsLine3D& ray,
                           TsF32 tolerance )
 {
+    TsMatrix m = obb.GetRotate().ToMatrix();
+
+    TsVector3 axis[3] =
+    {
+        TsVector3(m._11, m._12, m._13), //xAxis
+        TsVector3(m._21, m._22, m._23), //yAxis
+        TsVector3(m._31, m._32, m._33)  //zAxis
+    };
+    TsVector3 scale = obb.GetScale();
+
+    //todo
+
     return TS_TRUE
 }
 
@@ -763,5 +775,17 @@ TsBool CollisionOBBAndRay   ( const TsOBB& obb,
 TsBool CollisionOBBAndOBB   ( const TsOBB& obb,
                               const TsOBB& line)
 {
+    TsMatrix m = obb.GetRotate().ToMatrix();
+
+    TsVector3 axis[3] =
+    {
+        TsVector3(m._11, m._12, m._13), //xAxis
+        TsVector3(m._21, m._22, m._23), //yAxis
+        TsVector3(m._31, m._32, m._33)  //zAxis
+    };
+    TsVector3 scale = obb.GetScale();
+
+    //todo
+
     return TS_TRUE;
 }

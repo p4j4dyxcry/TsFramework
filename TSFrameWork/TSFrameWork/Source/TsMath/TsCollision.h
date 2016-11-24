@@ -265,12 +265,17 @@ TsBool CollisionAABBAndLine(const TsAABB<T>& aabb,
 
 //----------------------------------------------------------
 //! AABB　と 点
+//  @param  aabb           AABB
+//  @param  point          点
+//  @prama  tolerance      誤差許容範囲
 //----------------------------------------------------------
 template<typename T>
 TsBool CollisionAABBAndPoint( const TsAABB<T>& aabb,
                               const T& point);
 //----------------------------------------------------------
 //! AABB　と 円or球
+//  @param  aabb           AABB
+//  @param  sphere         球
 //----------------------------------------------------------
 template<typename T>
 TsBool CollisionAABBAndSphere(const TsAABB<T>& aabb,
@@ -278,18 +283,26 @@ TsBool CollisionAABBAndSphere(const TsAABB<T>& aabb,
 
 //----------------------------------------------------------
 //! OBB　と 点
+//  @param  obb            OBB
+//  @param  pt             点
+//  @prama  tolerance      誤差許容範囲
 //----------------------------------------------------------
 TsBool CollisionOBBAndPoint (const TsOBB& obb,
                              const TsVector3& pt,
                              TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE);
 //----------------------------------------------------------
 //! OBB　と 球
+//  @param  obb            OBB
+//  @param  sphere         球
 //----------------------------------------------------------
 TsBool CollisionOBBAndSphere (const TsOBB& obb,
                               const TsSphere3D& sphere);
 
 //----------------------------------------------------------
 //! OBB　と Ray
+//  @param  obb            OBB
+//  @param  ray            レイ
+//  @prama  tolerance      誤差許容範囲
 //----------------------------------------------------------
 TsBool CollisionOBBAndRay   ( const TsOBB& obb,
                               const TsLine3D& ray,
@@ -297,6 +310,9 @@ TsBool CollisionOBBAndRay   ( const TsOBB& obb,
 
 //----------------------------------------------------------
 //! OBB　と 線分
+//  @param  obb            OBB
+//  @param  line           線分
+//  @prama  tolerance      誤差許容範囲
 //----------------------------------------------------------
 TsBool CollisionOBBAndRay   ( const TsOBB& obb,
                               const TsLine3D& line ,
@@ -304,6 +320,8 @@ TsBool CollisionOBBAndRay   ( const TsOBB& obb,
 
 //----------------------------------------------------------
 //! OBB　と OBB
+//  @param  obb            OBB 1
+//  @param  obb            OBB 2
 //----------------------------------------------------------
 TsBool CollisionOBBAndOBB   ( const TsOBB& obb,
                               const TsOBB& line);
