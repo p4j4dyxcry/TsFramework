@@ -134,6 +134,7 @@
     <ClCompile Include="Source\TsMath\TsColor.cpp" />
     <ClCompile Include="Source\TsMath\TsMathUTility.cpp" />
     <ClCompile Include="Source\TsMath\TsMatrix.cpp" />
+    <ClCompile Include="Source\TsMath\TsOBB.cpp" />
     <ClCompile Include="Source\TsMath\TsQuaternion.cpp" />
     <None Include="Source\TsMath\TsLine.cpp" />
     <ClCompile Include="Source\TsMath\TsSkeleton.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="Source\TsMath\TsMath.h" />
     <ClInclude Include="Source\TsMath\TsMathUTility.h" />
     <ClInclude Include="Source\TsMath\TsMatrix.h" />
+    <ClInclude Include="Source\TsMath\TsOBB.h" />
     <ClInclude Include="Source\TsMath\TsQuaternion.h" />
     <ClInclude Include="Source\TsMath\TsLine.h" />
     <ClInclude Include="Source\TsMath\TsSkeleton.h" />

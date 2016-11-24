@@ -8,6 +8,7 @@
 #include "TsLine.h"
 #include "TsSphere.h"
 #include "TsAABB.h"
+#include "TsOBB.h"
 #include "TsBone.h"
 #include "TsSkeleton.h"
 #include "TsSphereMeshCreater.h"

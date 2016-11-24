@@ -429,6 +429,9 @@
     <ClCompile Include="Source\TsMath\TsAABB.cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsMath\TsOBB.cpp">
+      <Filter>ソース ファイル\TsMath\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -747,6 +750,9 @@
       <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsMath\TsSphere.h">
+      <Filter>ソース ファイル\TsMath\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsMath\TsOBB.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClInclude>
   </ItemGroup>

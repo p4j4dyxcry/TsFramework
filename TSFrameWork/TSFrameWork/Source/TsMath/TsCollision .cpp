@@ -31,6 +31,9 @@ template TsBool CollisionAABBAndRay(const TsAABB3D&, const TsLine3D&, TsF32,TsVe
 template TsBool CollisionAABBAndSphere(const TsAABB2D& , const TsSphere2D& );
 template TsBool CollisionAABBAndSphere(const TsAABB3D& , const TsSphere3D& );
 
+template TsBool CollisionAABBAndPoint(const TsAABB2D&, const TsVector2&);
+template TsBool CollisionAABBAndPoint(const TsAABB3D&, const TsVector3&);
+
 template TsBool CollisionAABBAndAABB(const TsAABB2D&, const TsAABB2D&);
 template TsBool CollisionAABBAndAABB(const TsAABB3D&, const TsAABB3D&);
 
@@ -587,6 +590,28 @@ TsBool CollisionAABBAndLine(const TsAABB<T>& aabb,
 
     return isLineAndPoint;
 }
+//----------------------------------------------------------
+//! AABB　と 点
+//----------------------------------------------------------
+template<typename T>
+TsBool CollisionAABBAndPoint(const TsAABB<T>& aabb,
+                             const T& point)
+{
+    const T& aMin = aabb.GetMin();
+    const T& aMax = aabb.GetMax();
+
+    // 次元数を計算
+    TsInt sz = sizeof(T) / sizeof(TsF32);
+
+    for (TsInt i = 0; i < sz; ++i)
+    {
+        //! 次元が衝突しているか判定
+        //　次元は x -> y -> z -> w ...etc　と∞次元まで判定できる。
+        if (aMin[i] > point[i] || point[i] > aMax[i])
+            return TS_FALSE;
+    }
+    return TS_TRUE;
+}
 
 //----------------------------------------------------------
 //! AABB　と 円or球
@@ -604,4 +629,139 @@ TsBool CollisionAABBAndSphere(const TsAABB<T>& aabb,
             return TS_TRUE;
     }
     return TS_FALSE;
+}
+
+//----------------------------------------------------------
+//! OBB　と 点
+//----------------------------------------------------------
+TsBool CollisionOBBAndPoint(const TsOBB& obb,
+                            const TsVector3& pt,
+                            TsF32 tolerance )
+{
+    TsVector3 p = obb.GetCenter();
+    TsVector3 v = pt - p;
+
+    TsMatrix m = obb.GetRotate().ToMatrix();
+
+    TsVector3 axis[3] =
+    {
+        TsVector3(m._11, m._12, m._13), //xAxis
+        TsVector3(m._21, m._22, m._23), //yAxis
+        TsVector3(m._31, m._32, m._33)  //zAxis
+    };
+    TsVector3 scale = obb.GetScale();
+
+    //OBB と点の最接近点を求める
+    TsF32 f;
+    for (TsInt i = 0; i < 3; i++)
+    {
+        f = TsVector3::Dot(v, axis[i]);
+
+        if (f > scale[i])
+        {
+            f = scale[i];
+        }
+        if (f < -scale[i])
+        {
+            f = -scale[i];
+        }
+        p += f * axis[i];
+    }
+    TsVector3 d = p - pt;
+
+    //誤差許容範囲内なら衝突しているとする
+    return TsVector3::Dot(d, d) <= tolerance;
+}
+
+//----------------------------------------------------------
+//! OBB　と 球
+//----------------------------------------------------------
+TsBool CollisionOBBAndSphere(const TsOBB& obb,
+                             const TsSphere3D& sphere)
+{
+    TsVector3 p = obb.GetCenter();
+    TsVector3 v = sphere.GetCenter() - p;
+
+    TsMatrix m = obb.GetRotate().ToMatrix();
+
+    TsVector3 axis[3] =
+    {
+        TsVector3(m._11, m._12, m._13), //xAxis
+        TsVector3(m._21, m._22, m._23), //yAxis
+        TsVector3(m._31, m._32, m._33)  //zAxis
+    };
+    TsVector3 scale = obb.GetScale();
+
+    //OBB と点の最接近点を求める
+    TsF32 f;
+    for (TsInt i = 0; i < 3; i++)
+    {
+        f = TsVector3::Dot(v, axis[i]);
+
+        if (f > scale[i])
+        {
+            f = scale[i];
+        }
+        if (f < -scale[i])
+        {
+            f = -scale[i];
+        }
+        p += f * axis[i];
+    }
+    TsVector3 d = p - sphere.GetCenter();
+
+    TsF32 r = sphere.GetRadius();
+
+    return TsVector3::Dot(d, d) <= r*r;
+}
+
+//----------------------------------------------------------
+//! OBB　と Ray
+//----------------------------------------------------------
+TsBool CollisionOBBAndRay(const TsOBB& obb,
+                          const TsLine3D& ray,
+                          TsF32 tolerance )
+{
+    return TS_TRUE
+}
+
+//----------------------------------------------------------
+//! OBB　と 線分
+//----------------------------------------------------------
+TsBool CollisionOBBAndRay   ( const TsOBB& obb,
+                              const TsLine3D& line ,
+                              TsF32 tolerance )
+{
+    //TsVector3 m = (ray->org + ray->dir) * 0.5f;
+    //TsVector3 d = ray->dir - m;
+    //m = m - obb->c;
+    //m = D3DXVECTOR3(D3DXVec3Dot(&obb->u[0], &m), D3DXVec3Dot(&obb->u[1], &m), D3DXVec3Dot(&obb->u[2], &m));
+    //d = D3DXVECTOR3(D3DXVec3Dot(&obb->u[0], &d), D3DXVec3Dot(&obb->u[1], &d), D3DXVec3Dot(&obb->u[2], &d));
+
+    //float adx = fabsf(d.x);
+    //if (fabsf(m.x) > obb->e.x + adx) return 0;
+    //float ady = fabsf(d.y);
+    //if (fabsf(m.y) > obb->e.y + ady) return 0;
+    //float adz = fabsf(d.z);
+    //if (fabsf(m.z) > obb->e.z + adz) return 0;
+    //adx += EPSILON;
+    //ady += EPSILON;
+    //adz += EPSILON;
+
+    //if (fabsf(m.y * d.z - m.z * d.y) > obb->e.y * adz + obb->e.z * ady) return 0;
+    //if (fabsf(m.z * d.x - m.x * d.z) > obb->e.x * adz + obb->e.z * adx) return 0;
+    //if (fabsf(m.x * d.y - m.y * d.x) > obb->e.x * ady + obb->e.y * adx) return 0;
+
+    //return 1;
+
+    return TS_TRUE;
+}
+
+//----------------------------------------------------------
+//! OBB　と OBB
+//----------------------------------------------------------
+TsBool CollisionOBBAndOBB   ( const TsOBB& obb,
+                              const TsOBB& line)
+{
+    return TS_TRUE;
 }
