@@ -32,6 +32,9 @@ public:
     TsAABB<T> Transform( const TsMatrix& );
     const T& GetMin()const;
     const T& GetMax()const;
+    TsInt    GetVertexSize()const;
+    TsVector<T> GetVertexList()const;
+
 
     //! operator
     TsAABB<T> operator * (const TsMatrix& matrix)const;

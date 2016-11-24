@@ -49,8 +49,11 @@ TsBool TsAABB<T>::SetMax(const T& v)
 template< typename T>
 TsAABB<T> TsAABB<T>::Transform(const TsMatrix& matrix)
 {
-    m_min *= matrix;
-    m_max *= matrix;
+    T&& min = m_min * matrix;
+    T&& max = m_max * matrix;
+
+    m_min = TsMin<T>(min, max);
+    m_max = TsMin<T>(min, max);
 
     return *this;
 }
@@ -86,4 +89,39 @@ TsAABB<T> TsAABB<T>::operator = (const TsAABB<T>& aabb)
     SetMin( aabb.m_min );
     SetMax( aabb.m_max );
     return *this;
+}
+template< typename T>
+TsInt    TsAABB<T>::GetVertexSize()const
+{
+    return sizeof(T) / sizeof(TsF32);
+}
+TsVector<TsVector2> TsAABB<TsVector2>::GetVertexList()const
+{
+    TsVector<TsVector2> vector;
+    vector.resize(4);
+    
+    vector[0] = m_min;
+    vector[1] = m_min;  vector[1].x = m_max.x;
+    vector[2] = m_min;  vector[2].y = m_max.y;
+    vector[3] = m_max;
+
+    return vector;
+}
+
+TsVector<TsVector3> TsAABB<TsVector3>::GetVertexList()const
+{
+    TsVector<TsVector3> vector;
+    vector.resize(8);
+
+    vector[0] = m_min;
+    vector[1] = m_min;  vector[1].x = m_max.x;
+    vector[2] = m_min;  vector[2].y = m_max.y;
+    vector[3] = m_max;
+
+    vector[4] = vector[0] * TsVector3::back;
+    vector[5] = vector[1] * TsVector3::back;
+    vector[6] = vector[2] * TsVector3::back;
+    vector[7] = vector[3] * TsVector3::back;
+
+    return vector;
 }
