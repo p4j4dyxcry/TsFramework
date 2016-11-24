@@ -314,7 +314,7 @@ TsBool CollisionOBBAndRay   ( const TsOBB& obb,
 //  @param  line           線分
 //  @prama  tolerance      誤差許容範囲
 //----------------------------------------------------------
-TsBool CollisionOBBAndRay   ( const TsOBB& obb,
+TsBool CollisionOBBAndLine  ( const TsOBB& obb,
                               const TsLine3D& line ,
                               TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE);
 
@@ -324,4 +324,5 @@ TsBool CollisionOBBAndRay   ( const TsOBB& obb,
 //  @param  obb            OBB 2
 //----------------------------------------------------------
 TsBool CollisionOBBAndOBB   ( const TsOBB& obb,
-                              const TsOBB& line);
+                              const TsOBB& line,
+                              TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE);

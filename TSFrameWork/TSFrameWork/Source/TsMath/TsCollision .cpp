@@ -722,49 +722,55 @@ TsBool CollisionOBBAndRay(const TsOBB& obb,
                           const TsLine3D& ray,
                           TsF32 tolerance )
 {
-    TsMatrix m = obb.GetRotate().ToMatrix();
-
-    TsVector3 axis[3] =
-    {
-        TsVector3(m._11, m._12, m._13), //xAxis
-        TsVector3(m._21, m._22, m._23), //yAxis
-        TsVector3(m._31, m._32, m._33)  //zAxis
-    };
-    TsVector3 scale = obb.GetScale();
-
-    //todo
-
-    return TS_TRUE
+    return CollisionOBBAndLine(obb, ray, tolerance);
 }
 
 //----------------------------------------------------------
 //! OBBÅ@Ç∆ ê¸ï™
 //----------------------------------------------------------
-TsBool CollisionOBBAndRay   ( const TsOBB& obb,
+TsBool CollisionOBBAndLine ( const TsOBB& obb,
                               const TsLine3D& line ,
                               TsF32 tolerance )
 {
-    //TsVector3 m = (ray->org + ray->dir) * 0.5f;
-    //TsVector3 d = ray->dir - m;
-    //m = m - obb->c;
-    //m = D3DXVECTOR3(D3DXVec3Dot(&obb->u[0], &m), D3DXVec3Dot(&obb->u[1], &m), D3DXVec3Dot(&obb->u[2], &m));
-    //d = D3DXVECTOR3(D3DXVec3Dot(&obb->u[0], &d), D3DXVec3Dot(&obb->u[1], &d), D3DXVec3Dot(&obb->u[2], &d));
+    TsMatrix mat = obb.GetRotate().ToMatrix();
 
-    //float adx = fabsf(d.x);
-    //if (fabsf(m.x) > obb->e.x + adx) return 0;
-    //float ady = fabsf(d.y);
-    //if (fabsf(m.y) > obb->e.y + ady) return 0;
-    //float adz = fabsf(d.z);
-    //if (fabsf(m.z) > obb->e.z + adz) return 0;
-    //adx += EPSILON;
-    //ady += EPSILON;
-    //adz += EPSILON;
+    TsVector3 axis[3] =
+    {
+        TsVector3(mat._11, mat._12, mat._13), //xAxis
+        TsVector3(mat._21, mat._22, mat._23), //yAxis
+        TsVector3(mat._31, mat._32, mat._33)  //zAxis
+    };
+    TsVector3 scale = obb.GetScale();
 
-    //if (fabsf(m.y * d.z - m.z * d.y) > obb->e.y * adz + obb->e.z * ady) return 0;
-    //if (fabsf(m.z * d.x - m.x * d.z) > obb->e.x * adz + obb->e.z * adx) return 0;
-    //if (fabsf(m.x * d.y - m.y * d.x) > obb->e.x * ady + obb->e.y * adx) return 0;
+    TsVector3 m = (line.GetBegin() + line.GetEnd()) *0.5f;
+    TsVector3 d = line.GetEnd() - m;
+    m = m - obb.GetCenter();
 
-    //return 1;
+    TsVector3 mm;
+    TsVector3 dd;
+    for (TsInt i = 0; i < 3; ++i)
+    {
+        mm[i] = TsVector3::Dot(m, axis[i]);
+        dd[i] = TsVector3::Dot(d, axis[i]);
+    }
+
+    TsVector3 absm = TsAbs(mm);
+    TsVector3 absd = TsAbs(dd);
+    if (absm.x > scale.x + absd.x ||
+        absm.y > scale.y + absd.y ||
+        absm.z > scale.z + absd.z)
+    {
+        return TS_FALSE;
+    }
+
+    absd += TsVector3::one * tolerance;
+
+    if (fabsf(mm.y * dd.z - mm.z * dd.y) > scale.y * absd.z + scale.z * absd.y ||
+        fabsf(mm.z * dd.x - mm.x * dd.z) > scale.x * absd.z + scale.z * absd.x ||
+        fabsf(mm.x * dd.y - mm.y * dd.x) > scale.x * absd.y + scale.y * absd.x)
+    {
+        return TS_FALSE;
+    }
 
     return TS_TRUE;
 }
@@ -772,20 +778,108 @@ TsBool CollisionOBBAndRay   ( const TsOBB& obb,
 //----------------------------------------------------------
 //! OBBÅ@Ç∆ OBB
 //----------------------------------------------------------
-TsBool CollisionOBBAndOBB   ( const TsOBB& obb,
-                              const TsOBB& line)
+TsBool CollisionOBBAndOBB   ( const TsOBB& obb0,
+                              const TsOBB& obb1,
+                              TsF32 tolerance)
 {
-    TsMatrix m = obb.GetRotate().ToMatrix();
+    TsMatrix m0 = obb0.GetRotate().ToMatrix();
 
-    TsVector3 axis[3] =
+    TsVector3 axis0[3] =
     {
-        TsVector3(m._11, m._12, m._13), //xAxis
-        TsVector3(m._21, m._22, m._23), //yAxis
-        TsVector3(m._31, m._32, m._33)  //zAxis
+        TsVector3(m0._11, m0._12, m0._13), //xAxis
+        TsVector3(m0._21, m0._22, m0._23), //yAxis
+        TsVector3(m0._31, m0._32, m0._33)  //zAxis
     };
-    TsVector3 scale = obb.GetScale();
+    TsVector3 scale0 = obb0.GetScale();
 
-    //todo
+    TsMatrix m1 = obb1.GetRotate().ToMatrix();
+
+    TsVector3 axis1[3] =
+    {
+        TsVector3(m1._11, m1._12, m1._13), //xAxis
+        TsVector3(m1._21, m1._22, m1._23), //yAxis
+        TsVector3(m1._31, m1._32, m1._33)  //zAxis
+    };
+    TsVector3 scale1 = obb1.GetScale();
+
+
+    float R[3][3], AbsR[3][3];
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            R[i][j] = TsVector3::Dot(axis0[i], axis1[i]);
+            AbsR[i][j] = fabsf(R[i][j]) + tolerance;
+        }
+    }
+
+    TsVector3 t = obb0.GetCenter() - obb1.GetCenter();
+    t = TsVector3(
+        TsVector3::Dot(t, axis0[0]),
+        TsVector3::Dot(t, axis0[1]),
+        TsVector3::Dot(t, axis0[2]));
+
+    //é≤L=A0, L=A1, L=A2îªíË
+    TsF32 ra, rb;
+
+    for (int i = 0; i < 3; i++)
+    {
+        ra = scale0[i];
+        rb = scale1[0] * AbsR[i][0] + scale1[1] * AbsR[i][1] + scale1[2] * AbsR[i][2];
+        if (fabsf(t[i]) > ra + rb)return TS_FALSE;
+    }
+    //é≤L=B0, L=B1, L=B2îªíË
+    for (int i = 0; i < 3; i++)
+    {
+        ra = scale0[0] * AbsR[0][i] + scale0[1] * AbsR[1][i] + scale0[2] * AbsR[2][i];
+        rb = scale1[i];
+        if (fabsf(t[0] * R[0][i] + t[1] * R[1][i] + t[2] * R[2][i]) > ra + rb)return TS_FALSE;
+    }
+
+    //é≤L=A0 X B0îªíË
+    ra = scale0[1] * AbsR[2][0] + scale0[2] * AbsR[1][0];
+    rb = scale1[1] * AbsR[0][2] + scale1[2] * AbsR[0][1];
+    if (fabsf(t[2] * R[1][0] - t[1] * R[2][0]) > ra + rb)return TS_FALSE;
+
+    //é≤L=A0 X B1îªíË
+    ra = scale0[1] * AbsR[2][1] + scale0[2] * AbsR[1][1];
+    rb = scale1[0] * AbsR[0][2] + scale1[2] * AbsR[0][0];
+    if (fabsf(t[2] * R[1][1] - t[1] * R[2][1]) > ra + rb)return TS_FALSE;
+
+    //é≤L=A0 X B2îªíË
+    ra = scale0[1] * AbsR[2][2] + scale0[2] * AbsR[1][2];
+    rb = scale1[0] * AbsR[0][1] + scale1[1] * AbsR[0][0];
+    if (fabsf(t[2] * R[1][2] - t[1] * R[2][2]) > ra + rb)return TS_FALSE;
+
+    //é≤L=A1 X B0îªíË
+    ra = scale0[0] * AbsR[2][0] + scale0[2] * AbsR[0][0];
+    rb = scale1[1] * AbsR[1][2] + scale1[2] * AbsR[1][1];
+    if (fabsf(t[0] * R[2][0] - t[2] * R[0][0]) > ra + rb)return TS_FALSE;
+
+    //é≤L=A1 X B1îªíË
+    ra = scale0[0] * AbsR[2][1] + scale0[2] * AbsR[0][1];
+    rb = scale1[0] * AbsR[1][2] + scale1[2] * AbsR[1][0];
+    if (fabsf(t[0] * R[2][1] - t[2] * R[0][1]) > ra + rb)return TS_FALSE;
+
+    //é≤L=A1 X B2îªíË
+    ra = scale0[0] * AbsR[2][2] + scale0[2] * AbsR[0][2];
+    rb = scale1[0] * AbsR[1][1] + scale1[1] * AbsR[1][0];
+    if (fabsf(t[0] * R[2][2] - t[2] * R[0][2]) > ra + rb)return TS_FALSE;
+
+    //é≤L=A2 X B0îªíË
+    ra = scale0[0] * AbsR[1][0] + scale0[1] * AbsR[0][0];
+    rb = scale1[1] * AbsR[2][2] + scale1[2] * AbsR[2][1];
+    if (fabsf(t[1] * R[0][0] - t[0] * R[1][0]) > ra + rb)return TS_FALSE;
+
+    //é≤L=A2 X B1îªíË
+    ra = scale0[0] * AbsR[1][1] + scale0[1] * AbsR[0][1];
+    rb = scale1[0] * AbsR[2][2] + scale1[2] * AbsR[2][0];
+    if (fabsf(t[1] * R[0][1] - t[0] * R[1][1]) > ra + rb)return TS_FALSE;
+
+    //é≤L=A2 X B2îªíË
+    ra = scale0[0] * AbsR[1][2] + scale0[1] * AbsR[0][2];
+    rb = scale1[0] * AbsR[2][1] + scale1[1] * AbsR[2][0];
+    if (fabsf(t[1] * R[0][2] - t[0] * R[1][2]) > ra + rb)return TS_FALSE;
 
     return TS_TRUE;
 }

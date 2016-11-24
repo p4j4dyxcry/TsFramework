@@ -15,7 +15,7 @@ public:
     TsOBB(const TsVector3&      center      = TsVector3::zero,
           const TsVector3&      scale       = TsVector3::one,
           const TsQuaternion&   quaternion  = TsQuaternion::identity);
-    virtual ~TsOBB(){};
+    virtual ~TsOBB();
 
     const TsQuaternion& GetRotate()const;
     TsQuaternion& GetRotate();
