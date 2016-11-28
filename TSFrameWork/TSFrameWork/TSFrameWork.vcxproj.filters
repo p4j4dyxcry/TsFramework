@@ -835,6 +835,15 @@
     <None Include="Source\TsMath\TsSphere.cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
     </None>
+    <None Include="Resource\ShaderPackage\DrawShadow.ts_shaderPackage">
+      <Filter>ソース ファイル\Resource\ShaderPackage</Filter>
+    </None>
+    <None Include="Resource\ShaderFlow\shadowpost.ts_shaderflow">
+      <Filter>ソース ファイル\Resource\ShaderFlow</Filter>
+    </None>
+    <None Include="Resource\ShaderPackage\ShadowMap.ts_shaderPackage">
+      <Filter>ソース ファイル\Resource\ShaderPackage</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\TsGfx\hlsl\Forward\TsFWLambertVS.hlsl">

@@ -42,6 +42,7 @@ TsBool TsDefaultMatrial::ApplyMaterial( TsDeviceContext* pContext)
         pContext->SetTexture( SpecuerTextureRegister , m_pSpeclurTexture , TS_SHADER_TYPE::PIXEL_SHADER );
 
     pContext->SetSamplerState( TsResourceManager::Find<TsSamplerState>( "Default" ) , 0 );
+    pContext->SetSamplerState( TsResourceManager::Find<TsSamplerState>( "Shadow" ) , 3 );
     return TS_TRUE;
 }
 

@@ -130,47 +130,82 @@ TsBool TsResourceManager::InitializeBlendState( TsDevice* pDev )
 
 TsBool TsResourceManager::InitializeSampler( TsDevice * pDev )
 {
-    D3D11_SAMPLER_DESC desc;
-    desc.AddressU = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
-    desc.AddressV = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
-    desc.AddressW = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
+    //! Default Sampler    
+    {
+        D3D11_SAMPLER_DESC desc;
 
-    desc.BorderColor[0] = 
-    desc.BorderColor[1] =
-    desc.BorderColor[2] =
-    desc.BorderColor[3] = 0.0f;
+        desc.AddressU = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
+        desc.AddressV = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
+        desc.AddressW = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
 
-    desc.ComparisonFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_ALWAYS;
-
-    desc.Filter = D3D11_FILTER::D3D11_FILTER_ANISOTROPIC;
-    desc.MaxAnisotropy = 16;
-    desc.MinLOD = 0;
-    desc.MaxLOD = D3D11_FLOAT32_MAX;
-
-    desc.MipLODBias = 0;
-    std::pair<TS_HASH , TsSamplerState*> pair( TSUT::StringToHash("Default") , pDev->CreateSamplerState( desc ) );
-
-    desc.AddressU = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_MIRROR;
-    desc.AddressV = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_MIRROR;
-    desc.AddressW = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
-
-    desc.BorderColor[0] =
+        desc.BorderColor[0] =
         desc.BorderColor[1] =
         desc.BorderColor[2] =
         desc.BorderColor[3] = 0.0f;
 
-    desc.ComparisonFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_ALWAYS;
+        desc.ComparisonFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_ALWAYS;
 
-    desc.Filter = D3D11_FILTER::D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-    desc.MaxAnisotropy = 16;
-    desc.MinLOD = 0;
-    desc.MaxLOD = D3D11_FLOAT32_MAX;
+        desc.Filter = D3D11_FILTER::D3D11_FILTER_ANISOTROPIC;
+        desc.MaxAnisotropy = 16;
+        desc.MinLOD = 0;
+        desc.MaxLOD = D3D11_FLOAT32_MAX;
 
-    desc.MipLODBias = 0;
-    std::pair<TS_HASH, TsSamplerState*> pair2(TSUT::StringToHash("Cube"), pDev->CreateSamplerState(desc));
+        desc.MipLODBias = 0;
+        std::pair<TS_HASH , TsSamplerState*> pair( TSUT::StringToHash( "Default" ) , pDev->CreateSamplerState( desc ) );
 
+    }
 
-    m_samplerLibrary.insert(pair2);
+    //! Cube Map Sampler
+    {
+        D3D11_SAMPLER_DESC desc;
+
+        desc.AddressU = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_MIRROR;
+        desc.AddressV = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_MIRROR;
+        desc.AddressW = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
+
+        desc.BorderColor[0] =
+        desc.BorderColor[1] =
+        desc.BorderColor[2] =
+        desc.BorderColor[3] = 0.0f;
+
+        desc.ComparisonFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_ALWAYS;
+
+        desc.Filter = D3D11_FILTER::D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+        desc.MaxAnisotropy = 16;
+        desc.MinLOD = 0;
+        desc.MaxLOD = D3D11_FLOAT32_MAX;
+
+        desc.MipLODBias = 0;
+        std::pair<TS_HASH , TsSamplerState*> pair( TSUT::StringToHash( "Cube" ) , pDev->CreateSamplerState( desc ) );
+
+        m_samplerLibrary.insert( pair );
+    }
+
+    //! Shadow Sampler
+    {
+        D3D11_SAMPLER_DESC desc;
+        ZeroMemory( &desc , sizeof( desc ) );
+        desc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+        desc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+        desc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+
+        desc.BorderColor[0] = 1.0f;
+        desc.BorderColor[1] = 1.0f;
+        desc.BorderColor[2] = 1.0f;
+        desc.BorderColor[3] = 1.0f;
+
+        desc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
+        desc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
+        desc.MaxAnisotropy = 1;
+        desc.MipLODBias = 0;
+        desc.MinLOD = -FLT_MAX;
+        desc.MaxLOD = +FLT_MAX;
+
+        std::pair<TS_HASH , TsSamplerState*> pair( TSUT::StringToHash( "Shadow" ) , pDev->CreateSamplerState( desc ) );
+
+        m_samplerLibrary.insert( pair );
+    }
+
 
     return TS_TRUE;
 }

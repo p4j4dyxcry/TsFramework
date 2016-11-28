@@ -60,6 +60,10 @@ public:
     static TsMatrix CreateScale( FLOAT x , FLOAT y , FLOAT z );
     static TsMatrix CreateScale( const TsVector3& scale );
     static TsMatrix CreateLookAt( const TsVector3& eye , const TsVector3& at , const TsVector3& up  );
+    static TsMatrix CreateOrtho( TsF32 width ,TsF32 height,TsF32 _near,TsF32 _far)
+    {
+       return TsMatrix( XMMatrixOrthographicLH( width , height , _near , _far ));
+    }
 
     static const TsMatrix identity;
 

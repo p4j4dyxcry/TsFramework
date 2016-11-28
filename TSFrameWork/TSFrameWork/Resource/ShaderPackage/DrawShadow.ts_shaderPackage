@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+  <Name   Name ="DrawShadow"/>
+  <Vertex Shader = "TsSSDefaultVS"/>
+  <Pixel  Shader = "TsSSShadowMapPS"/>
+  <DepthStencil
+    ZEnable       ="false"
+    ZWriteEnable  ="false"
+    Func          ="LESS">
+  </DepthStencil>
+  <Rasterize
+    FillMode      ="SOLID"
+    CullMode      ="CCW"
+    AntiAlias     ="false">
+  </Rasterize>    
+  <BlendState
+    BlendMode      ="NONE">
+  </BlendState>   
+</root>

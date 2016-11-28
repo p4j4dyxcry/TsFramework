@@ -135,6 +135,11 @@
     <ClCompile Include="Source\TsMath\TsMathUTility.cpp" />
     <ClCompile Include="Source\TsMath\TsMatrix.cpp" />
     <ClCompile Include="Source\TsMath\TsQuaternion.cpp" />
+    <None Include="Resource\ShaderFlow\shadowpost.ts_shaderflow">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resource\ShaderPackage\DrawShadow.ts_shaderPackage" />
+    <None Include="Resource\ShaderPackage\ShadowMap.ts_shaderPackage" />
     <None Include="Source\TsMath\TsLine.cpp" />
     <ClCompile Include="Source\TsMath\TsSkeleton.cpp" />
     <None Include="Source\TsMath\TsSphere.cpp" />
@@ -317,12 +322,18 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
     </FxCompile>
     <None Include="Resource\RenderSystem\RenderSystem.ts_rs" />
-    <None Include="Resource\ShaderFlow\flow.ts_shaderflow" />
+    <None Include="Resource\ShaderFlow\flow.ts_shaderflow">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resource\ShaderFlow\lambert.ts_shaderflow" />
-    <None Include="Resource\ShaderFlow\postflow.ts_shaderflow" />
+    <None Include="Resource\ShaderFlow\postflow.ts_shaderflow">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resource\ShaderFlow\shadow.ts_shaderflow" />
     <None Include="Resource\ShaderFlow\skyTest.ts_shaderflow" />
-    <None Include="Resource\ShaderPackage\Add.ts_shaderPackage" />
+    <None Include="Resource\ShaderPackage\Add.ts_shaderPackage">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resource\ShaderPackage\Blend.ts_shaderPackage" />
     <None Include="Resource\ShaderPackage\GaussX.ts_shaderPackage" />
     <None Include="Resource\ShaderPackage\GaussY.ts_shaderPackage" />
@@ -391,6 +402,7 @@
     <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSShadowMapPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSAOPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>

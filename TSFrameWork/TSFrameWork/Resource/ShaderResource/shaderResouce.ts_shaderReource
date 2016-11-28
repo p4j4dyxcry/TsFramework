@@ -14,28 +14,35 @@
   <RenderTarget
     Name  ="Color"
     Type  ="Texture2D"
-    Format="FLOAT_R16G16B16A16"
+    Format="FLOAT_R32G32B32A32"
     Size ="-1 -1">            
   </RenderTarget>
 
   <RenderTarget
     Name  ="NormalDepth"
     Type  ="Texture2D"
-    Format="FLOAT_R16G16B16A16"
+    Format="FLOAT_R32G32B32A32"
+    Size ="-1 -1">            
+  </RenderTarget>  
+    
+  <RenderTarget
+    Name  ="ShadowMap"
+    Type  ="Texture2D"
+    Format="FLOAT_R32"
     Size ="-1 -1">            
   </RenderTarget>  
 
   <RenderTarget
     Name  ="ProjPos"
     Type  ="Texture2D"
-    Format="UNORM_R8G8B8A8"
+    Format="FLOAT_R32G32B32A32"
     Size ="-1 -1">            
   </RenderTarget>    
   
   <RenderTarget
     Name  ="UV"
     Type  ="Texture2D"
-    Format="UNORM_R8G8B8A8"
+    Format="FLOAT_R32G32B32A32"
     Size ="-1 -1">            
   </RenderTarget>
 

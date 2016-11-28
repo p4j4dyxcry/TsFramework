@@ -67,7 +67,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsLightSetCBuffer * pLightSetCB = TsNew(TsLightSetCBuffer);
     pLightSetCB->CreateLightSetCBuffer( pDev );
     TsDirectioalLight * pLight = TsNew(TsDirectioalLight);
-    pLight->SetLocalRotate( TsQuaternion::CreateByEuler( 0 , 45 , 45 ) );
+    pLight->SetLocalRotate( TsQuaternion::CreateByEuler( 0 , -45 , -45 ) );
     pLightSetCB->AddLight( pLight );
 
     //load mesh
@@ -77,9 +77,9 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsMeshFactory factory;
 //     factory.LoadModelFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx","Test");
 //     factory.LoadModelFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
-//     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
+     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
 //     factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
-       factory.LoadModelFromFile(pDev, "Face.fbx","Test");
+//       factory.LoadModelFromFile(pDev, "Face.fbx","Test");
 //     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
 //     auto pAnim = factory.CreateBakeAnimation( "Resource/fbx/Unity-Chan/move_unity.fbx" );
 //     auto pAnim = factory.CreateBakeAnimation( "sd_anim.fbx" );
@@ -89,7 +89,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
      TsSkeleton* pSkeleton = pMesh->GetSkeleton();
 
 //     pAnim->SetTargetSkeleton( pSkeleton );
-
+     pMesh->GetGeometry( 0 )->GetTransform()->GetRootTransform()->m_localScale = TsVector3::one * 0.1f;
     for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++ i)   
          queue.Add(pMesh->GetGeometry(i));
 
@@ -105,10 +105,10 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsCamera* pCamera = pDev->GetDC()->GetMainCamera();
 
 //    pCamera->SetLocalRotate( TsQuaternion::AngleAxis( TsVector3::up , TsRadian( 180.0f ) ) );
-    pCamera->SetLocalPosition(TsVector3(0,100,-400));
-    pCamera->SetLockAt( TsVector3( TsVector3( 0 , 100 , 0 ) ) );
+    pCamera->SetLocalPosition(TsVector3(0,1,-10));
+    pCamera->SetLockAt( TsVector3( TsVector3( 0 , 1 , 0 ) ) );
 
-    pCamera->SetNearAndFar(30, 300);
+    pCamera->SetNearAndFar(0.5, 50);
 
     pCamera->CreateCBuffer(pDev);
 

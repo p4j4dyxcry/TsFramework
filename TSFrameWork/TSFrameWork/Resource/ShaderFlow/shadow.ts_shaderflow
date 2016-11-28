@@ -6,7 +6,8 @@
       <Slot/>
     </Input>
     <Output>
-      <Slot Slot="Main"/>    	
+      <Slot Slot="Main"/>
+      <Slot Slot="ShadowMap"/>  
       <Depth Slot="Main"/>
     </Output>
   </Pass>
@@ -17,9 +18,34 @@
       <Slot/>
     </Input>
     <Output>
-        <Slot Slot="Main"/>
-        
+        <Slot Slot="ShadowMap"/>
         <Depth Slot="Main"/>
     </Output>
   </Pass>
+    
+  <Pass Name ="Clear">
+    <Input>
+      <Slot/>
+    </Input>
+    <Output>
+        <Slot Slot="Color"/>
+        <Slot Slot="NormalDepth"/>
+        <Slot Slot="UV"/>
+        <Depth Slot="Main"/>
+    </Output>
+  </Pass>
+    
+  <Pass Name ="pass1"
+        Shader ="GBuffer">
+    <Input>
+      <Slot/>
+    </Input>
+    <Output>
+      <Slot Slot="Color"/>
+      <Slot Slot="NormalDepth"/>
+      <Slot Slot="UV"/>      
+      <Depth Slot="Main"/>
+    </Output>
+  </Pass>    
+
 </FLow>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FLow>
+  <Pass Name ="pass2"
+        Shader ="DrawShadow">
+    <Input>
+        <Slot Slot="NormalDepth"/>
+        <Slot Slot="ShadowMap"/>
+    </Input>
+    <Output>
+        <Slot Slot="Main"/>
+        <Depth Slot="Main"/>
+    </Output>
+  </Pass>    
+</FLow>

@@ -4,5 +4,5 @@
   <Resource resource ="shaderResouce.ts_shaderReource"/>
   <PreRender flow=""/>
   <Render flow="shadow.ts_shaderflow"/>
-  <PostRender flow=""/>
+  <PostRender flow="shadowpost.ts_shaderflow"/>
 </RenderSystem>

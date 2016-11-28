@@ -5,7 +5,8 @@ struct PS_IN
     float4 pos		: SV_POSITION;
     float2 uv		: TEXCOORD0;
     float3 normal	: TEXCOORD1;
-    float4 worldPos : TEXCOORD2;
+    float4 projPos : TEXCOORD2;
+    float4 worldPos : TEXCOORD3;
 };
 
 PS_GBUFFER_OUTPUT_3 main( PS_IN input ,
@@ -27,10 +28,12 @@ PS_GBUFFER_OUTPUT_3 main( PS_IN input ,
         PackUnsigned( input.normal );
 
     // depth
-    output.data1.w = input.worldPos.z / input.worldPos.w;
+    output.data1.w = input.projPos.z / input.projPos.w;
 
     // world space uv
     output.data2 = float4(input.uv,0,1);
+
+    output.data2 = float4(input.worldPos.xyz,1);
 
     return output;
 }
