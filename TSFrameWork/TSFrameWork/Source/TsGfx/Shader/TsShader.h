@@ -55,7 +55,7 @@ typedef TsShader<ID3D11DomainShader>    TsDomainShader;
 typedef TsShader<ID3D11ComputeShader>   TsComputeShader;
 
 
-//template class TsShader<ID3D11VertexShader>;
+extern template class TsShader<ID3D11VertexShader>;
 extern template class TsShader<ID3D11PixelShader>;
 extern template class TsShader<ID3D11GeometryShader>;
 extern template class TsShader<ID3D11HullShader>;
