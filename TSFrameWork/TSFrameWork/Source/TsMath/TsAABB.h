@@ -41,10 +41,7 @@ public:
     TsAABB<T> operator *= (const TsMatrix& matrix);
     TsAABB<T> operator = ( const TsAABB<T>& aabb );
 
-    virtual eType GetType()const override
-    {
-        return Collider_AABB;
-    }
+    virtual eType GetType()const override;
 private:
     //=========================================================================
     //! propery

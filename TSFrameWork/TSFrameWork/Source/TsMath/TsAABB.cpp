@@ -125,3 +125,21 @@ TsVector<TsVector3> TsAABB<TsVector3>::GetVertexList()const
 
     return vector;
 }
+
+template<>
+TsCollider::eType TsAABB2D::GetType()const
+{
+    return TsCollider::Collider_AABB2D;
+}
+
+template<>
+TsCollider::eType TsAABB3D::GetType()const
+{
+    return TsCollider::Collider_AABB3D;
+}
+
+template<typename T>
+TsCollider::eType TsAABB<T>::GetType()const
+{
+    return TsCollider::Collider_Unknown;
+}
