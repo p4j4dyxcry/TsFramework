@@ -45,6 +45,7 @@ protected:
 //----------------------------------------------------------
 // Type Define
 //----------------------------------------------------------
+
 typedef TsShader<ID3D11VertexShader>    TsVertexShader;
 typedef TsShader<ID3D11PixelShader>     TsPixelShader;
 typedef TsShader<ID3D11GeometryShader>  TsGeometryShader;
@@ -53,5 +54,13 @@ typedef TsShader<ID3D11DomainShader>    TsDomainShader;
 
 typedef TsShader<ID3D11ComputeShader>   TsComputeShader;
 
+
+extern template class TsShader<ID3D11VertexShader>;
+extern template class TsShader<ID3D11PixelShader>;
+extern template class TsShader<ID3D11GeometryShader>;
+extern template class TsShader<ID3D11HullShader>;
+extern template class TsShader<ID3D11DomainShader>;
+
+extern template class TsShader<ID3D11ComputeShader>;
 // include inline template
-#include "TsShaderInl.cpp"
+//#include "TsShaderInl.cpp"

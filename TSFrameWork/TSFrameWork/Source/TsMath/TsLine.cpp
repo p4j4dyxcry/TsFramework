@@ -1,4 +1,13 @@
-//#include "../../TsAfx.h"
+#include "../../TsAfx.h"
+
+// 明示的テンプレートのインスタンス化
+template class TsLine<TsVector2>;
+template class TsLine<TsVector3>;
+template class TsLine<TsVector4>;
+
+template class TsRay<TsVector2>;
+template class TsRay<TsVector3>;
+template class TsRay<TsVector4>;
 
 //! Constructor
 template< typename T>
@@ -133,7 +142,7 @@ TsLine<T> operator / ( TsF32 f , const typename TsLine<T>& line )
 template< typename T>
 TsLine<T> TsLine<T>::operator - ( TsF32 )
 {
-    TeLine<T> temp;
+    TsLine<T> temp;
     return temp * -1;
 }
 
@@ -183,8 +192,45 @@ TsF32 TsLine<T>::Length()const
 }
 
 template< typename T>
-TsLine<T> TsLine<T>::Transform( const TsMatrix& )
+TsLine<T> TsLine<T>::Transform( const TsMatrix& matrix)
 {
-    //todo ２次元用、３次元用　４次元用の計算を入れないといけない
+    m_begin *= matrix;
+    m_end   *= matrix;
     return *this;
+}
+
+template<>
+TsCollider::eType TsLine2D::GetType()const
+{
+    return TsCollider::Collider_Line2D;
+}
+
+template<>
+TsCollider::eType TsLine3D::GetType()const
+{
+    return TsCollider::Collider_Line3D;
+}
+
+template<typename T>
+TsCollider::eType TsLine<T>::GetType()const
+{
+    return TsCollider::Collider_Unknown;
+}
+
+template<>
+TsCollider::eType TsRay2D::GetType()const
+{
+    return TsCollider::Collider_Ray2D;
+}
+
+template<>
+TsCollider::eType TsRay3D::GetType()const
+{
+    return TsCollider::Collider_Ray3D;
+}
+
+template<typename T>
+TsCollider::eType TsRay<T>::GetType()const
+{
+    return TsCollider::Collider_Unknown;
 }

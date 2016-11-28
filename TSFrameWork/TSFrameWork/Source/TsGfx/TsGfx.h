@@ -59,6 +59,7 @@
 #include "Geometry\TsSkinGeometryObject.h"
 #include "Geometry\TsScreenObject.h"
 #include "Geometry\TsPlaneObject.h"
+#include "Geometry\TsColliderRenderObject.h"
 
 #include "RenderSystem\TsDrawQueue.h"
 #include "RenderSystem\TsRenderPass.h"

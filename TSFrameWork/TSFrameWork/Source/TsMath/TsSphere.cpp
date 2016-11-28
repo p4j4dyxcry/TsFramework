@@ -1,3 +1,9 @@
+#include "../../TsAfx.h"
+
+// 明示的テンプレートのインスタンス化
+template class TsSphere<TsVector2>;
+template class TsSphere<TsVector3>;
+
 
 //----------------------------------------------------------
 // Constructor
@@ -78,4 +84,22 @@ template<typename T>
 TsF32 TsSphere<T>::GetRadius()const
 {
     return m_radius;
+}
+
+//template<typename T>
+//TsCollider::eType TsSphere<T>::GetType()const
+//{
+//    return TsCollider::GetType();
+//}
+
+template<>
+TsCollider::eType TsSphere<TsVector2>::GetType()const
+{
+    return TsCollider::Collider_TsCircle;
+}
+
+template<>
+TsCollider::eType TsSphere<TsVector3>::GetType()const
+{
+    return TsCollider::Collider_TsSphere;
 }

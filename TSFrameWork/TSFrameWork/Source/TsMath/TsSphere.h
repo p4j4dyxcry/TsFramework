@@ -7,7 +7,7 @@
 #pragma once
 
 template< typename T>
-class TsSphere
+class TsSphere : TsCollider
 {
 public:
     //----------------------------------------------------------
@@ -31,6 +31,9 @@ public:
     T GetCenter()const;
     TsF32 GetRadius()const;
 
+    virtual TsCollider::eType GetType()const override;
+
+
 protected:
     //----------------------------------------------------------
     // peropery
@@ -40,8 +43,9 @@ protected:
 
 };
 
+extern template class TsSphere<TsVector2>;
+extern template class TsSphere<TsVector3>;
+
 typedef TsSphere<TsVector2> TsCircle;     //円
 typedef TsSphere<TsVector2> TsSphere2D;   //円
 typedef TsSphere<TsVector3> TsSphere3D;   //球
-
-#include "TsSphere.cpp"
