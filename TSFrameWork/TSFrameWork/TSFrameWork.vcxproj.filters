@@ -429,6 +429,9 @@
     <ClCompile Include="Source\TsMath\TsOBB.cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsMath\TsTriangle.cpp">
+      <Filter>ソース ファイル\TsMath\Source</Filter>
+    </ClCompile>
     <ClCompile Include="Source\TsGfx\Geometry\TsColliderRenderObject.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
     </ClCompile>
@@ -436,9 +439,6 @@
       <Filter>ソース ファイル\TsMath\Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\TsMath\TsSphere.cpp">
-      <Filter>ソース ファイル\TsMath\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\TsMath\TsTriangle.cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -764,13 +764,13 @@
     <ClInclude Include="Source\TsMath\TsOBB.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TsMath\TsTriangle.h">
+      <Filter>ソース ファイル\TsMath\Header</Filter>
+    </ClInclude>
     <ClInclude Include="Source\TsGfx\Geometry\TsColliderRenderObject.h">
       <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsMath\TsCollider.h">
-      <Filter>ソース ファイル\TsMath\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsMath\TsTriangle.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClInclude>
   </ItemGroup>
@@ -852,9 +852,6 @@
     </None>
     <None Include="Resource\ShaderFlow\shadow.ts_shaderflow">
       <Filter>ソース ファイル\Resource\ShaderFlow</Filter>
-    </None>
-    <None Include="Source\TsGfx\Shader\TsShaderInl.cpp">
-      <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
     </None>
     <None Include="Resource\ShaderPackage\DrawShadow.ts_shaderPackage">
       <Filter>ソース ファイル\Resource\ShaderPackage</Filter>

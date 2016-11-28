@@ -33,6 +33,7 @@
     <ClCompile Include="Source\TsGfx\Core\TsDevice.cpp" />
     <ClCompile Include="Source\TsGfx\Core\TsDeviceContext.cpp" />
     <ClCompile Include="Source\TsGfx\Extlibs\TsDirectXTex.cpp" />
+    <ClCompile Include="Source\TsGfx\Geometry\TsColliderRenderObject.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsDrawObject.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsGeometryObject.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsMeshFactory.cpp" />
@@ -64,10 +65,6 @@
     <ClCompile Include="Source\TsGfx\ShaderResources\TsShaderResource.cpp" />
     <ClCompile Include="Source\TsGfx\Shader\TsShader.cpp" />
     <ClCompile Include="Source\TsGfx\Shader\TsShaderEffect.cpp" />
-    <ClCompile Include="Source\TsGfx\Shader\TsShaderInl.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="Source\TsGfx\Shader\TsShaderReflection.cpp" />
     <ClCompile Include="Source\TsGfx\ShadowMap\TsLisPSM.cpp" />
     <ClCompile Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.cpp" />
@@ -93,6 +90,7 @@
     <ClInclude Include="Source\TsGfx\Core\TsDeviceContext.h" />
     <ClInclude Include="Source\TsGfx\Core\TsDx11.h" />
     <ClInclude Include="Source\TsGfx\Extlibs\TsDirectXTex.h" />
+    <ClInclude Include="Source\TsGfx\Geometry\TsColliderRenderObject.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsDrawObject.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsGeometryObject.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsMeshFactory.h" />
@@ -134,17 +132,19 @@
     <ClCompile Include="Source\TsMath\TsColor.cpp" />
     <ClCompile Include="Source\TsMath\TsMathUTility.cpp" />
     <ClCompile Include="Source\TsMath\TsMatrix.cpp" />
+    <ClCompile Include="Source\TsMath\TsOBB.cpp" />
     <ClCompile Include="Source\TsMath\TsQuaternion.cpp" />
     <None Include="Resource\ShaderFlow\shadowpost.ts_shaderflow">
       <SubType>Designer</SubType>
     </None>
     <None Include="Resource\ShaderPackage\DrawShadow.ts_shaderPackage" />
     <None Include="Resource\ShaderPackage\ShadowMap.ts_shaderPackage" />
-    <None Include="Source\TsMath\TsLine.cpp" />
+    <ClCompile Include="Source\TsMath\TsLine.cpp" />
     <ClCompile Include="Source\TsMath\TsSkeleton.cpp" />
-    <None Include="Source\TsMath\TsSphere.cpp" />
+    <ClCompile Include="Source\TsMath\TsSphere.cpp" />
     <ClCompile Include="Source\TsMath\TsSphereMeshCreater.cpp" />
     <ClCompile Include="Source\TsMath\TsTransForm.cpp" />
+    <ClCompile Include="Source\TsMath\TsTriangle.cpp" />
     <ClCompile Include="Source\TsMath\TsVector2.cpp" />
     <ClCompile Include="Source\TsMath\TsVector3.cpp" />
     <ClCompile Include="Source\TsMath\TsVector4.cpp" />
@@ -239,17 +239,20 @@
     <ClInclude Include="Source\TsGfx\TsGfx.h" />
     <ClInclude Include="Source\TsMath\TsAABB.h" />
     <ClInclude Include="Source\TsMath\TsBone.h" />
+    <ClInclude Include="Source\TsMath\TsCollider.h" />
     <ClInclude Include="Source\TsMath\TsCollision.h" />
     <ClInclude Include="Source\TsMath\TsColor.h" />
     <ClInclude Include="Source\TsMath\TsMath.h" />
     <ClInclude Include="Source\TsMath\TsMathUTility.h" />
     <ClInclude Include="Source\TsMath\TsMatrix.h" />
+    <ClInclude Include="Source\TsMath\TsOBB.h" />
     <ClInclude Include="Source\TsMath\TsQuaternion.h" />
     <ClInclude Include="Source\TsMath\TsLine.h" />
     <ClInclude Include="Source\TsMath\TsSkeleton.h" />
     <ClInclude Include="Source\TsMath\TsSphere.h" />
     <ClInclude Include="Source\TsMath\TsSphereMeshCreater.h" />
     <ClInclude Include="Source\TsMath\TsTransForm.h" />
+    <ClInclude Include="Source\TsMath\TsTriangle.h" />
     <ClInclude Include="Source\TsMath\TsVector.h" />
     <ClInclude Include="Source\TsOS\TsWindowsUtility.h" />
     <ClInclude Include="Source\TsUT\Intarface\ITsHasTransform.h" />
