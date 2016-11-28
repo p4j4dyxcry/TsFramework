@@ -24,8 +24,8 @@ PS_GBUFFER_OUTPUT_3 main( PS_IN input ,
 
     // normal to 0 ~ 1
     output.data1.xyz = g_useNomalMap >0 ?
-        nomalMap.Sample( samp , input.uv ) :
-        PackUnsigned( input.normal );
+        nomalMap.Sample( samp , input.uv ).xyz :
+        PackUnsigned( input.normal ).xyz;
 
     // depth
     output.data1.w = input.projPos.z / input.projPos.w;

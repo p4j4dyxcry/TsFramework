@@ -71,7 +71,7 @@ float4 main( PS_SS_INPUT_UVx1 In ,
     for (int i = 0; i < SAMPLE_NUM; i++)
     {
         float3 ray = reflect(g_samples32[i].xyz, rand3 ) * radD;
-        float2 se = In.uv0 + sign(dot(ray, normal)) * ray * float2(1.0f, -1.0f);
+        float2 se = In.uv0 + sign(dot(ray, normal)) * ray.xy * float2(1.0f, -1.0f);
         set +=se;
         float4 occNormalDepth = NormalMap.Sample( samp,se );
         float3 occNormal = occNormalDepth.xyz * 2.0 -1.0f;
