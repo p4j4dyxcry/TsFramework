@@ -13,6 +13,8 @@ public:
         Collider_Ray,
         Collider_AABB,
         Collider_OBB,
+        Collider_TsCircle,
+        Collider_TsSphere,
         Collider_Unknown,
     };
 
