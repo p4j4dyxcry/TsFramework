@@ -2,7 +2,7 @@
 
 struct VS_OUT
 {
-    float4 pos		: POSITION;
+    float4 pos		: SV_POSITION;
     float2 uv		: TEXCOORD0;
     float3 normal	: TEXCOORD1;
     float4 worldPos : TEXCOORD2;
