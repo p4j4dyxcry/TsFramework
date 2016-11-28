@@ -6,7 +6,10 @@
 TsColliderRenderObject::TsColliderRenderObject() :
 m_pVertexBuffer(nullptr),
 m_transformCBuffer(nullptr),
-m_pMaterial(nullptr)
+m_pMaterial(nullptr),
+m_pCollider(nullptr),
+m_topology(D3D_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_POINTLIST),
+m_vertexCount(0)
 {
     //m_vertex[0].pos = TsVector3(-.5f, 0, .5f);
     //m_vertex[1].pos = TsVector3(.5f, 0, .5f);
@@ -40,14 +43,126 @@ TsColliderRenderObject::~TsColliderRenderObject()
 //=========================================================================
 TsBool TsColliderRenderObject::Create(TsDevice* pDev)
 {
-    //m_pVertexBuffer = pDev->CreateVertexBuffer(m_vertex, sizeof(m_vertex), sizeof(TsVertexSkin), 0);
-    //m_transformCBuffer = TsNew(TsTransformCBuffer);
+    if (m_transformCBuffer == nullptr)
+    {
+        m_transformCBuffer = TsNew(TsTransformCBuffer);
+        m_transformCBuffer->CreateTransformCBuffer(pDev);
+    }
 
-    //m_transformCBuffer->CreateTransformCBuffer(pDev);
-    //m_pMaterial = TsNew(TsDefaultMatrial);
-    //m_pMaterial->CreateMaterial(pDev);
-    //m_pMaterial->SetAmbient(TsFloat4(1, 1, 1, 1));
+    if (m_pMaterial == nullptr)
+    {
+        m_pMaterial = TsNew(TsDefaultMatrial);
+        m_pMaterial->CreateMaterial(pDev);
+        m_pMaterial->SetAmbient(TsFloat4(1, 1, 1, 1));
+    }
     return TS_TRUE;
+}
+
+//=========================================================================
+//! Create@Collider
+//=========================================================================
+TsBool TsColliderRenderObject::CreateRenderObject(TsDevice* pDev,
+                                                  TsCollider* pCollider)
+{
+    Create(pDev);
+
+    SetTopology(pCollider->GetType());
+
+    return TS_TRUE;
+}
+void TsColliderRenderObject::SetTopology(TsCollider::eType type)
+{
+    switch ( type )
+    {
+    case TsCollider::Collider_Line2D:
+    case TsCollider::Collider_Line3D:
+    case TsCollider::Collider_Ray2D:
+    case TsCollider::Collider_Ray3D:
+        m_topology = D3D_PRIMITIVE_TOPOLOGY_LINELIST;
+        break;
+    case TsCollider::Collider_AABB2D:
+    case TsCollider::Collider_AABB3D:
+    case TsCollider::Collider_OBB3D:
+    case TsCollider::Collider_TsSphere:
+    case TsCollider::Collider_TsCircle:
+        m_topology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+        break;
+    }
+}
+
+TsBool  TsColliderRenderObject::CreateVertexBuffer(TsDevice* pDev, TsCollider* pCollider)
+{
+    switch (pCollider->GetType())
+    {
+    case TsCollider::Collider_Line2D:
+    case TsCollider::Collider_Ray2D:
+        m_pVertex = CreateLineVertex((TsLine2D*)(pCollider));
+        break;
+    case TsCollider::Collider_Line3D:
+    case TsCollider::Collider_Ray3D:
+        m_pVertex = CreateLineVertex((TsLine3D*)(pCollider));
+        break;
+    case TsCollider::Collider_AABB2D:
+        break;
+
+    case TsCollider::Collider_AABB3D:
+    case TsCollider::Collider_OBB3D:
+        break;
+    case TsCollider::Collider_TsSphere:
+        m_pVertex = CreateSphereVertex();
+        break;        
+    case TsCollider::Collider_TsCircle:
+        break;
+    default:
+        return TS_FALSE;
+    }
+
+    return TS_TRUE;
+}
+
+template<typename T>
+TsVertexSkin* TsColliderRenderObject::CreateLineVertex( TsLine<T>* pLine )
+{
+    TsVertexSkin * pVertex;
+
+    m_vertexCount = 2;
+    pVertex = TsNew(TsVertexSkin[2]);
+    memset(m_pVertex, 0, sizeof(TsVertexSkin)* m_vertexCount);
+
+    TsF32 lineSize = sizeof(T) / sizeof(TsF32);
+    const T&  begin = pLine->GetBegin();
+    const T&  end = pLine->GetEnd();
+    for (TsUint i = 0; i < m_vertexCount; ++i)
+    {
+        m_pVertex[0].pos[i] = begin[i];
+        m_pVertex[1].pos[i] = end[i];
+    }
+
+    return pVertex;
+}
+
+TsVertexSkin* TsColliderRenderObject::CreateSphereVertex()
+{
+    TsVertexSkin * pVertex;
+    TsSphereMeshCreater creater;
+    creater.CreateSphere(8);
+    auto posList = creater.GetPositions();
+    auto nomList = creater.GetNomals();
+    auto index = creater.GetIndex();
+
+    m_vertexCount = index.size();
+    if (index.empty())
+        return nullptr;
+
+    pVertex = TsNew(TsVertexSkin[index.size()]);
+    memset(pVertex, 0, sizeof(TsVertexSkin)* m_vertexCount);
+    for (TsUint i = 0; i < m_vertexCount; ++i)
+    {
+        pVertex[i].pos = posList[index[i]];
+        pVertex[i].normal = posList[index[i]];
+    }
+
+    return pVertex;    
 }
 
 //=========================================================================
