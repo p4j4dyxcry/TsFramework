@@ -224,7 +224,7 @@ TsBool CollisionLineAndTriangle(const TsTriangle<T>&,
                                 const TsLine<T>& line,
                                 //誤差許容範囲
                                 TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE,
-                                TsVector3* pOut = nullptr);
+                                T* pOut = nullptr);
 
 
 //----------------------------------------------------------

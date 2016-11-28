@@ -25,8 +25,8 @@ template TsBool CollisionSphereAndPoint(const TsSphere3D& , const TsVector3& poi
 template TsBool CollisionRayAndPlane(const TsVector2&, const TsRay2D&, TsF32);
 template TsBool CollisionRayAndPlane(const TsVector3&, const TsRay3D&, TsF32);
 
-template TsBool CollisionLineAndTriangle(const TsTriangle2D&, TsLine2D, TsF32, TsVector2*);
-template TsBool CollisionLineAndTriangle(const TsTriangle3D&, TsLine3D, TsF32, TsVector3*);
+template TsBool CollisionLineAndTriangle(const TsTriangle2D&, const TsLine2D&, TsF32, TsVector2*);
+template TsBool CollisionLineAndTriangle( const TsTriangle3D& ,const TsLine3D& , TsF32 , TsVector3* );
 
 template TsBool CollisionAABBAndRay(const TsAABB2D&, const TsRay2D&, TsF32,TsVector2*);
 template TsBool CollisionAABBAndRay(const TsAABB3D&, const TsRay3D&, TsF32,TsVector3*);
@@ -371,21 +371,21 @@ inline TsBool CollisionRayAndPlane(const T& normal,
 //  @param  pOut        åç∑ì_
 //----------------------------------------------------------
 template<typename T>
-TsBool CollisionLineAndTriangle(const TsTriangle<T>& p0,
+TsBool CollisionLineAndTriangle(const TsTriangle<T>& triangle,
                                 const TsLine<T>& line,
                                 //åÎç∑ãñóeîÕàÕ
                                 TsF32 tolerance ,
                                 T* pOut )
 
 {
-    T&& v0 = (p1 - p0).Normalized();
-    T&& v1 = (p2 - p0).Normalized();
+    T&& v0 = ( triangle[1] - triangle[0] ).Normalized();
+    T&& v1 = ( triangle[2] - triangle[0] ).Normalized();
 
     T lineVector = line.GetNormalizeVector();
 
     T&& normal = T::Cross(v1, v0);
 
-    T&& x = p0 - lineVector;
+    T&& x = triangle[0] - lineVector;
 
     TsF32 dot0 = T::Dot(x, normal);
     TsF32 dot1 = T::Dot(lineVector, normal);
@@ -403,8 +403,8 @@ TsBool CollisionLineAndTriangle(const TsTriangle<T>& p0,
 
     // 1Ç¬ñ⁄ÇÃï”ÇÃíÜÇ…î[Ç‹Ç¡ÇƒÇ¢ÇÈÇ©îªíË
     {
-        d0 = p - p0;
-        d1 = p1 - p0;
+        d0 = p - triangle[0];
+        d1 = triangle[1] - triangle[0];
 
         cross = T::Cross(d0, d1);
         if (T::Dot(cross, normal) < 0)
@@ -413,8 +413,8 @@ TsBool CollisionLineAndTriangle(const TsTriangle<T>& p0,
 
     // 2Ç¬ñ⁄ÇÃï”ÇÃíÜÇ…î[Ç‹Ç¡ÇƒÇ¢ÇÈÇ©îªíË
     {
-        d0 = p - p1;
-        d1 = p2 - p1;
+        d0 = p - triangle[1];
+        d1 = triangle[2] - triangle[1];
 
         cross = T::Cross(d0, d1);
         if (T::Dot(cross, normal) < 0)
@@ -423,8 +423,8 @@ TsBool CollisionLineAndTriangle(const TsTriangle<T>& p0,
 
     // 3Ç¬ñ⁄ÇÃï”ÇÃíÜÇ…î[Ç‹Ç¡ÇƒÇ¢ÇÈÇ©îªíË
     {
-        d0 = p - p2;
-        d1 = p0 - p2;
+        d0 = p - triangle[2];
+        d1 = triangle[0] - triangle[2];
 
         cross = T::Cross(d0, d1);
         if (T::Dot(cross, normal) < 0)
