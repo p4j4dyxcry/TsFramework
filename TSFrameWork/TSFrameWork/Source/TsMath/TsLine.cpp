@@ -198,3 +198,39 @@ TsLine<T> TsLine<T>::Transform( const TsMatrix& matrix)
     m_end   *= matrix;
     return *this;
 }
+
+template<>
+TsCollider::eType TsLine2D::GetType()const
+{
+    return TsCollider::Collider_Line2D;
+}
+
+template<>
+TsCollider::eType TsLine3D::GetType()const
+{
+    return TsCollider::Collider_Line3D;
+}
+
+template<typename T>
+TsCollider::eType TsLine<T>::GetType()const
+{
+    return TsCollider::Collider_Unknown;
+}
+
+template<>
+TsCollider::eType TsRay2D::GetType()const
+{
+    return TsCollider::Collider_Ray2D;
+}
+
+template<>
+TsCollider::eType TsRay3D::GetType()const
+{
+    return TsCollider::Collider_Ray3D;
+}
+
+template<typename T>
+TsCollider::eType TsRay<T>::GetType()const
+{
+    return TsCollider::Collider_Unknown;
+}

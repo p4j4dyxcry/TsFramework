@@ -60,10 +60,7 @@ public:
 
     TsLine<T> Transform( const TsMatrix& );
 
-    virtual TsCollider::eType GetType()const override
-    {
-        return TsCollider::Collider_Line;
-    }
+    virtual TsCollider::eType GetType()const override;
 private:
     //=========================================================================
     //! propery
@@ -75,10 +72,7 @@ private:
 template<typename T>
 class TsRay :public TsLine<T>
 {
-    virtual TsCollider::eType GetType()const override
-    {
-        return TsCollider::Collider_Ray;
-    }
+    virtual TsCollider::eType GetType()const override;
 };
 
 typedef TsLine<TsVector2> TsLine2D;
