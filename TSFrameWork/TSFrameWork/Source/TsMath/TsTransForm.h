@@ -51,6 +51,7 @@ public:
     //! ワールド座標上の位置を祝する
     TsVector3 GetWorldPos();
 
+    //! ワールド座標上での回転クォータニオンを取得する
     TsQuaternion GetWorldRotate();
 
     //! ワールド空間でのスケールを取得する
@@ -60,7 +61,10 @@ public:
     //  親がいない場合はNULLが返る
     TsTransForm* GetParent()const;
 
+    //! 最初に見つかった親を取得する
     TsTransForm * GetFirstChild()const;
+
+    //! 兄弟ノードを取得する
     TsTransForm*  GetSubling()const;
 
     //! 親を設定する。このメソッドで設定されたTransformは
