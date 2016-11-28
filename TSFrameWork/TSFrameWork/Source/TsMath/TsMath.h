@@ -10,6 +10,7 @@
 #include "TsLine.h"
 #include "TsSphere.h"
 #include "TsAABB.h"
+#include "TsTriangle.h"
 #include "TsOBB.h"
 #include "TsBone.h"
 #include "TsSkeleton.h"

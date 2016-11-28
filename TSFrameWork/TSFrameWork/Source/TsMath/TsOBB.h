@@ -32,7 +32,7 @@ public:
 
     virtual eType GetType()const override
     {
-        return Collider_OBB;
+        return Collider_OBB3D;
     }
 
 protected:
