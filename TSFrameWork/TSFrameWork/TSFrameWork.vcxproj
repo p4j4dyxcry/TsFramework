@@ -65,10 +65,10 @@
     <ClCompile Include="Source\TsGfx\ShaderResources\TsShaderResource.cpp" />
     <ClCompile Include="Source\TsGfx\Shader\TsShader.cpp" />
     <ClCompile Include="Source\TsGfx\Shader\TsShaderEffect.cpp" />
-    <ClCompile Include="Source\TsGfx\Shader\TsShaderInl.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    <None Include="Source\TsGfx\Shader\TsShaderInl.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    </None>
     <ClCompile Include="Source\TsGfx\Shader\TsShaderReflection.cpp" />
     <ClCompile Include="Source\TsGfx\ShadowMap\TsLisPSM.cpp" />
     <ClCompile Include="Source\TsGfx\ShadowMap\TsShadowMapRenderer.cpp" />
@@ -140,7 +140,7 @@
     <ClCompile Include="Source\TsMath\TsQuaternion.cpp" />
     <ClCompile Include="Source\TsMath\TsLine.cpp" />
     <ClCompile Include="Source\TsMath\TsSkeleton.cpp" />
-    <None Include="Source\TsMath\TsSphere.cpp" />
+    <ClCompile Include="Source\TsMath\TsSphere.cpp" />
     <ClCompile Include="Source\TsMath\TsSphereMeshCreater.cpp" />
     <ClCompile Include="Source\TsMath\TsTransForm.cpp" />
     <ClCompile Include="Source\TsMath\TsVector2.cpp" />

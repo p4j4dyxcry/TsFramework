@@ -297,9 +297,6 @@
     <ClCompile Include="Source\TsGfx\Shader\TsShaderEffect.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsGfx\Shader\TsShaderInl.cpp">
-      <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsGfx\Shader\TsShaderReflection.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
     </ClCompile>
@@ -436,6 +433,9 @@
       <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
     </ClCompile>
     <ClCompile Include="Source\TsMath\TsLine.cpp">
+      <Filter>ソース ファイル\TsMath\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsMath\TsSphere.cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -847,8 +847,8 @@
     <None Include="Resource\ShaderFlow\shadow.ts_shaderflow">
       <Filter>ソース ファイル\Resource\ShaderFlow</Filter>
     </None>
-    <None Include="Source\TsMath\TsSphere.cpp">
-      <Filter>ソース ファイル\TsMath\Source</Filter>
+    <None Include="Source\TsGfx\Shader\TsShaderInl.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Shader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
