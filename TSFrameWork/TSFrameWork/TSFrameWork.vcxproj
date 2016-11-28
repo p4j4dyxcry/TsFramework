@@ -143,6 +143,7 @@
     <ClCompile Include="Source\TsMath\TsSphere.cpp" />
     <ClCompile Include="Source\TsMath\TsSphereMeshCreater.cpp" />
     <ClCompile Include="Source\TsMath\TsTransForm.cpp" />
+    <ClCompile Include="Source\TsMath\TsTriangle.cpp" />
     <ClCompile Include="Source\TsMath\TsVector2.cpp" />
     <ClCompile Include="Source\TsMath\TsVector3.cpp" />
     <ClCompile Include="Source\TsMath\TsVector4.cpp" />
@@ -250,6 +251,7 @@
     <ClInclude Include="Source\TsMath\TsSphere.h" />
     <ClInclude Include="Source\TsMath\TsSphereMeshCreater.h" />
     <ClInclude Include="Source\TsMath\TsTransForm.h" />
+    <ClInclude Include="Source\TsMath\TsTriangle.h" />
     <ClInclude Include="Source\TsMath\TsVector.h" />
     <ClInclude Include="Source\TsOS\TsWindowsUtility.h" />
     <ClInclude Include="Source\TsUT\Intarface\ITsHasTransform.h" />

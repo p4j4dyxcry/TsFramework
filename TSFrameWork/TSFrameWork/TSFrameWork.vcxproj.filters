@@ -438,6 +438,9 @@
     <ClCompile Include="Source\TsMath\TsSphere.cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsMath\TsTriangle.cpp">
+      <Filter>ソース ファイル\TsMath\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -765,6 +768,9 @@
       <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsMath\TsCollider.h">
+      <Filter>ソース ファイル\TsMath\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsMath\TsTriangle.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClInclude>
   </ItemGroup>
