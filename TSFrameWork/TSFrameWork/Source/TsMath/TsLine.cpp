@@ -1,4 +1,13 @@
-//#include "../../TsAfx.h"
+#include "../../TsAfx.h"
+
+// 明示的テンプレートのインスタンス化
+template class TsLine<TsVector2>;
+template class TsLine<TsVector3>;
+template class TsLine<TsVector4>;
+
+template class TsRay<TsVector2>;
+template class TsRay<TsVector3>;
+template class TsRay<TsVector4>;
 
 //! Constructor
 template< typename T>
@@ -133,7 +142,7 @@ TsLine<T> operator / ( TsF32 f , const typename TsLine<T>& line )
 template< typename T>
 TsLine<T> TsLine<T>::operator - ( TsF32 )
 {
-    TeLine<T> temp;
+    TsLine<T> temp;
     return temp * -1;
 }
 
@@ -183,8 +192,9 @@ TsF32 TsLine<T>::Length()const
 }
 
 template< typename T>
-TsLine<T> TsLine<T>::Transform( const TsMatrix& )
+TsLine<T> TsLine<T>::Transform( const TsMatrix& matrix)
 {
-    //todo ２次元用、３次元用　４次元用の計算を入れないといけない
+    m_begin *= matrix;
+    m_end   *= matrix;
     return *this;
 }

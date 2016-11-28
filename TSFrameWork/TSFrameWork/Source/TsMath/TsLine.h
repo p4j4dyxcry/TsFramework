@@ -10,7 +10,7 @@
 //! TsLine
 //=========================================================================
 template<typename T>
-class TsLine
+class TsLine :public TsCollider
 {
 public:
     //=========================================================================
@@ -60,6 +60,10 @@ public:
 
     TsLine<T> Transform( const TsMatrix& );
 
+    virtual TsCollider::eType GetType()const override
+    {
+        return TsCollider::Collider_Line;
+    }
 private:
     //=========================================================================
     //! propery
@@ -68,8 +72,27 @@ private:
     T m_end;
 };
 
+template<typename T>
+class TsRay :public TsLine<T>
+{
+    virtual TsCollider::eType GetType()const override
+    {
+        return TsCollider::Collider_Ray;
+    }
+};
+
 typedef TsLine<TsVector2> TsLine2D;
 typedef TsLine<TsVector3> TsLine3D;
 typedef TsLine<TsVector4> TsLine4D;
 
-#include "TsLine.cpp"
+typedef TsRay<TsVector2> TsRay2D;
+typedef TsRay<TsVector3> TsRay3D;
+typedef TsRay<TsVector4> TsRay4D;
+
+extern template class TsLine<TsVector2>;
+extern template class TsLine<TsVector3>;
+extern template class TsLine<TsVector4>;
+
+extern template class TsRay<TsVector2>;
+extern template class TsRay<TsVector3>;
+extern template class TsRay<TsVector4>;

@@ -33,6 +33,7 @@
     <ClCompile Include="Source\TsGfx\Core\TsDevice.cpp" />
     <ClCompile Include="Source\TsGfx\Core\TsDeviceContext.cpp" />
     <ClCompile Include="Source\TsGfx\Extlibs\TsDirectXTex.cpp" />
+    <ClCompile Include="Source\TsGfx\Geometry\TsColliderRenderObject.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsDrawObject.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsGeometryObject.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsMeshFactory.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="Source\TsGfx\Core\TsDeviceContext.h" />
     <ClInclude Include="Source\TsGfx\Core\TsDx11.h" />
     <ClInclude Include="Source\TsGfx\Extlibs\TsDirectXTex.h" />
+    <ClInclude Include="Source\TsGfx\Geometry\TsColliderRenderObject.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsDrawObject.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsGeometryObject.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsMeshFactory.h" />
@@ -136,7 +138,7 @@
     <ClCompile Include="Source\TsMath\TsMatrix.cpp" />
     <ClCompile Include="Source\TsMath\TsOBB.cpp" />
     <ClCompile Include="Source\TsMath\TsQuaternion.cpp" />
-    <None Include="Source\TsMath\TsLine.cpp" />
+    <ClCompile Include="Source\TsMath\TsLine.cpp" />
     <ClCompile Include="Source\TsMath\TsSkeleton.cpp" />
     <None Include="Source\TsMath\TsSphere.cpp" />
     <ClCompile Include="Source\TsMath\TsSphereMeshCreater.cpp" />
@@ -235,6 +237,7 @@
     <ClInclude Include="Source\TsGfx\TsGfx.h" />
     <ClInclude Include="Source\TsMath\TsAABB.h" />
     <ClInclude Include="Source\TsMath\TsBone.h" />
+    <ClInclude Include="Source\TsMath\TsCollider.h" />
     <ClInclude Include="Source\TsMath\TsCollision.h" />
     <ClInclude Include="Source\TsMath\TsColor.h" />
     <ClInclude Include="Source\TsMath\TsMath.h" />

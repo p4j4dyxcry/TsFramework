@@ -5,6 +5,8 @@
 #include "TsMatrix.h"
 #include "TsQuaternion.h"
 #include "TsTransForm.h"
+
+#include "TsCollider.h"
 #include "TsLine.h"
 #include "TsSphere.h"
 #include "TsAABB.h"

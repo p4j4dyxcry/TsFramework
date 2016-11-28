@@ -6,7 +6,7 @@
 //! © 2016 Yuki Tsuneyama
 #pragma once
 
-class TsOBB
+class TsOBB : TsCollider
 {
 public:
     //----------------------------------------------------------
@@ -29,6 +29,11 @@ public:
     TsBool SetCenter(const TsVector3&   );
     TsBool SetScale (const TsVector3&   );
     TsBool SetRotate(const TsQuaternion&);
+
+    virtual eType GetType()const override
+    {
+        return Collider_OBB;
+    }
 
 protected:
     //----------------------------------------------------------
