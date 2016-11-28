@@ -7,8 +7,8 @@ template TsBool CollisionPointAndPoint(const TsVector3&, const TsVector3&, TsF32
 template TsBool CollisionPointAndPoint(const TsVector2&, const TsVector2&, TsF32);
 template TsBool CollisionLineAndPoint(const TsLine2D&, const TsVector2&, TsF32);
 template TsBool CollisionLineAndPoint(const TsLine3D&, const TsVector3&, TsF32);
-template TsBool CollisionRayAndPoint(const TsLine2D&, const TsVector2&, TsF32);
-template TsBool CollisionRayAndPoint(const TsLine3D&, const TsVector3&, TsF32);
+template TsBool CollisionRayAndPoint(const TsRay2D&, const TsVector2&, TsF32);
+template TsBool CollisionRayAndPoint(const TsRay3D&, const TsVector3&, TsF32);
 template TsBool CollisionLineAndLine(const TsLine2D&, const TsLine2D&, TsF32, TsVector2*);
 template TsBool CollisionLineAndLine(const TsLine3D&, const TsLine3D&, TsF32, TsVector3*);
 template TsBool CollisionSphereAndRay(const TsCircle&, const TsLine2D&, TsF32, TsVector2*, TsVector2*);
@@ -22,11 +22,14 @@ template TsBool CollisionSphereAndSphere(const TsSphere3D&, const TsSphere3D&);
 template TsBool CollisionSphereAndPoint(const TsCircle& , const TsVector2& point);
 template TsBool CollisionSphereAndPoint(const TsSphere3D& , const TsVector3& point);
 
-template TsBool CollisionRayAndPlane(const TsVector2&, const TsLine2D&, TsF32);
-template TsBool CollisionRayAndPlane(const TsVector3&, const TsLine3D&, TsF32);
+template TsBool CollisionRayAndPlane(const TsVector2&, const TsRay2D&, TsF32);
+template TsBool CollisionRayAndPlane(const TsVector3&, const TsRay3D&, TsF32);
 
-template TsBool CollisionAABBAndRay(const TsAABB2D&, const TsLine2D&, TsF32,TsVector2*);
-template TsBool CollisionAABBAndRay(const TsAABB3D&, const TsLine3D&, TsF32,TsVector3*);
+template TsBool CollisionLineAndTriangle(const TsTriangle2D&, TsLine2D, TsF32, TsVector2*);
+template TsBool CollisionLineAndTriangle(const TsTriangle3D&, TsLine3D, TsF32, TsVector3*);
+
+template TsBool CollisionAABBAndRay(const TsAABB2D&, const TsRay2D&, TsF32,TsVector2*);
+template TsBool CollisionAABBAndRay(const TsAABB3D&, const TsRay3D&, TsF32,TsVector3*);
 
 template TsBool CollisionAABBAndSphere(const TsAABB2D& , const TsSphere2D& );
 template TsBool CollisionAABBAndSphere(const TsAABB3D& , const TsSphere3D& );
@@ -36,6 +39,8 @@ template TsBool CollisionAABBAndPoint(const TsAABB3D&, const TsVector3&);
 
 template TsBool CollisionAABBAndAABB(const TsAABB2D&, const TsAABB2D&);
 template TsBool CollisionAABBAndAABB(const TsAABB3D&, const TsAABB3D&);
+
+
 
 //----------------------------------------------------------
 //! 点と点
@@ -56,7 +61,7 @@ inline TsBool CollisionPointAndPoint(const T& p0,   //点1
 //  @ref 衝突点は点1と等しい
 //----------------------------------------------------------
 template< typename T>
-inline TsBool CollisionRayAndPoint( const TsLine<T>& ray,  //レイ
+inline TsBool CollisionRayAndPoint( const TsRay<T>& ray,  //レイ
                                     const T& point ,        //点1
                                     // 誤差許容範囲
                                     TsF32 tolerance)
@@ -232,7 +237,7 @@ inline TsBool CollisionSphereAndRay(const TsSphere<T>& sphere,
 //----------------------------------------------------------
 
 TsBool CollisionSphereAndRay2D( const TsCircle& circle,
-                              const TsLine2D& line,
+                              const TsRay2D& line,
                               //誤差許容範囲
                               TsF32 tolerance ,
                               TsVector2* pOut0,
@@ -348,7 +353,7 @@ inline TsBool CollisionSphereAndLine2D(const TsCircle& circle,
 //----------------------------------------------------------
 template<typename T>
 inline TsBool CollisionRayAndPlane(const T& normal,
-                                  const TsLine<T>& ray,
+                                   const TsRay<T>& ray,
                                   //誤差許容範囲
                                   TsF32 tolerance )
 {
@@ -365,26 +370,25 @@ inline TsBool CollisionRayAndPlane(const T& normal,
 //  @param  tolerance   誤差許容範囲  (optin)
 //  @param  pOut        交差点
 //----------------------------------------------------------
-TsBool CollisionLineAndTriangle(const TsVector3& p0,
-                                const TsVector3& p1,
-                                const TsVector3& p2,
-                                const TsLine3D& line,
+template<typename T>
+TsBool CollisionLineAndTriangle(const TsTriangle<T>& p0,
+                                const TsLine<T>& line,
                                 //誤差許容範囲
                                 TsF32 tolerance ,
-                                TsVector3* pOut )
+                                T* pOut )
 
 {
-    TsVector3 v0 = (p1 - p0).Normalized();
-    TsVector3 v1 = (p2 - p0).Normalized();
+    T&& v0 = (p1 - p0).Normalized();
+    T&& v1 = (p2 - p0).Normalized();
 
-    TsVector3 lineVector = line.GetNormalizeVector();
+    T lineVector = line.GetNormalizeVector();
 
-    TsVector3 normal = TsVector3::Cross(v1, v0);
+    T&& normal = T::Cross(v1, v0);
 
-    TsVector3 x = p0 - lineVector;
+    T&& x = p0 - lineVector;
 
-    TsF32 dot0 = TsVector3::Dot(x, normal);
-    TsF32 dot1 = TsVector3::Dot(lineVector, normal);
+    TsF32 dot0 = T::Dot(x, normal);
+    TsF32 dot1 = T::Dot(lineVector, normal);
 
     TsF32 t = dot0 / dot1;
 
@@ -393,17 +397,17 @@ TsBool CollisionLineAndTriangle(const TsVector3& p0,
     if (t > line.GetVector().Length())
         return TS_FALSE;
 
-    TsVector3 p = line.GetBegin() + (lineVector * t);
+    T&& p = line.GetBegin() + (lineVector * t);
 
-    TsVector3 d0, d1, cross;
+    T d0, d1, cross;
 
     // 1つ目の辺の中に納まっているか判定
     {
         d0 = p - p0;
         d1 = p1 - p0;
 
-        cross = TsVector3::Cross(d0, d1);
-        if (TsVector3::Dot(cross, normal) < 0)
+        cross = T::Cross(d0, d1);
+        if (T::Dot(cross, normal) < 0)
             return TS_FALSE;
     }
 
@@ -412,8 +416,8 @@ TsBool CollisionLineAndTriangle(const TsVector3& p0,
         d0 = p - p1;
         d1 = p2 - p1;
 
-        cross = TsVector3::Cross(d0, d1);
-        if (TsVector3::Dot(cross, normal) < 0)
+        cross = T::Cross(d0, d1);
+        if (T::Dot(cross, normal) < 0)
             return TS_FALSE;
     }
 
@@ -422,8 +426,8 @@ TsBool CollisionLineAndTriangle(const TsVector3& p0,
         d0 = p - p2;
         d1 = p0 - p2;
 
-        cross = TsVector3::Cross(d0, d1);
-        if (TsVector3::Dot(cross, normal) < 0)
+        cross = T::Cross(d0, d1);
+        if (T::Dot(cross, normal) < 0)
             return TS_FALSE;
     }
 
@@ -497,7 +501,7 @@ TsBool CollisionAABBAndAABB(const TsAABB<T>& a,
 //----------------------------------------------------------
 template<typename T>
 TsBool CollisionAABBAndRay (const TsAABB<T>& aabb,
-                            const TsLine<T>& ray,
+                            const TsRay<T>& ray,
                             TsF32 tolerance,
                             T * pOut )
 {
@@ -719,7 +723,7 @@ TsBool CollisionOBBAndSphere(const TsOBB& obb,
 //! OBB　と Ray
 //----------------------------------------------------------
 TsBool CollisionOBBAndRay(const TsOBB& obb,
-                          const TsLine3D& ray,
+                          const TsRay3D& ray,
                           TsF32 tolerance )
 {
     return CollisionOBBAndLine(obb, ray, tolerance);

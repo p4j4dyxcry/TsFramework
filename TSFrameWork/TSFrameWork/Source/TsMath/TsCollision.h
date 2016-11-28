@@ -19,18 +19,19 @@ static const TsF32 COLLISION_DEFAULT_TOLERANCE = FLT_EPSILON;
 //      : OBB   (回転を考慮した直方体(3D) ) 
 //      : Sphere(円(2D),球(3D) )
 //      : Line  (始点と終点がある線(線分) )
-//      : Ray   (始点は存在するが終点が存在しない無限線(線) )
+//      : Ray   (始点は存在するが終点が存在しない線 )
 //　@点と点(2D)             CollisionPointAndPoint()
-//  @線と点(2D)             CollisionRayAndPoint()
+//  @点とレイ(2D)           CollisionRayAndPoint()
 //  @線分と点(2D)           CollisionLineAndPoint()
 //  @線分と線分(2D)         CollisionLineAndLine()
 //  @円と点                 CollisionSphereAndPoint2D()
 //  @円と円                 CollisionSphereAndSphere2D()
-//  @円と線                 CollisionSphereAndRay2D()
+//  @円とレイ               CollisionSphereAndRay2D()
 //  @円と線分               CollisionSphereAndLine2D()
+//  @線分と三角形(2D)       CollisionLineAndTriangle() 
 //  @AABBと点 (2D)          CollisionAABBAndPoint()
 //  @AABBとAABB             CollisionAABBAndAABB()
-//  @AABBと線               CollisionAABBAndRay()
+//  @AABBとレイ             CollisionAABBAndRay()
 //  @AABBと線分             CollisionAABBAndLine()
 //  @AABBと円               CollisionAABBAndSphere()
 //
@@ -40,18 +41,18 @@ static const TsF32 COLLISION_DEFAULT_TOLERANCE = FLT_EPSILON;
 //  @線分と線分(3D)         CollisionLineAndLine()
 //  @球と点                 CollisionSphereAndPoint()
 //  @球と球                 CollisionSphereAndSphere()
-//  @球と線                 CollisionSphereAndRay()
+//  @球とレイ               CollisionSphereAndRay()
 //  @球と線分               CollisionSphereAndLine()
-//  @平面と線               CollisionRayAndPlane()
+//  @平面とレイ             CollisionRayAndPlane()
 //  @線分と三角形           CollisionLineAndTriangle() 
 //  @AABBと点               CollisionAABBAndPoint()
 //  @AABBとAABB             CollisionAABBAndAABB()
-//  @AABBと線               CollisionAABBAndRay()
+//  @AABBとレイ             CollisionAABBAndRay()
 //  @AABBと線分             CollisionAABBAndLine()
 //  @AABBと球               CollisionAABBAndSphere()
 //  @OBBと点                CollisionOBBAndPoint()
 //  @OBBと球                CollisionOBBAndSphere()
-//  @OBBと線                CollisionOBBAndRay()
+//  @OBBとレイ              CollisionOBBAndRay()
 //  @OBBと線分              CollisionOBBAndLine()
 //  @OBBとOBB               CollisionOBBAndOBB()
 //----------------------------------------------------------
@@ -72,7 +73,7 @@ TsBool CollisionPointAndPoint(const T& p0,   //点1
 //  @ref 衝突点は点と等しい
 //----------------------------------------------------------
 template< typename T>
-TsBool CollisionRayAndPoint( const TsLine<T>& ray,  //レイ
+TsBool CollisionRayAndPoint( const TsRay<T>& ray,  //レイ
                              const T& point ,        //点1
                              // 誤差許容範囲
                              TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE);
@@ -208,22 +209,19 @@ TsBool CollisionSphereAndLine2D(const TsCircle& circle,
 //----------------------------------------------------------
 template<typename T>
 TsBool CollisionRayAndPlane(const T& normal,
-                           const TsLine<T>& ray,
+                           const TsRay<T>& ray,
                            //誤差許容範囲
                            TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE);
 //----------------------------------------------------------
 //! 線分と三角形
-//  @param  p0          頂点
-//  @param  p1          頂点
-//  @param  p2          頂点
+//  @param  triangle    三角形
 //  @param  line        線分
 //  @param  tolerance   誤差許容範囲  (optin)
 //  @param  pOut        交差点
 //----------------------------------------------------------
-TsBool CollisionLineAndTriangle(const TsVector3& p0,
-                                const TsVector3& p1,
-                                const TsVector3& p2,
-                                const TsLine3D& line,
+template<typename T>
+TsBool CollisionLineAndTriangle(const TsTriangle<T>&,
+                                const TsLine<T>& line,
                                 //誤差許容範囲
                                 TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE,
                                 TsVector3* pOut = nullptr);
@@ -247,7 +245,7 @@ TsBool CollisionAABBAndAABB(const TsAABB<T>& aabb0,
 //----------------------------------------------------------
 template<typename T>
 TsBool CollisionAABBAndRay (const TsAABB<T>& aabb,
-                            const TsLine<T>& ray,
+                            const TsRay<T>& ray,
                             TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE,
                             T * pOut = nullptr );
 //----------------------------------------------------------
@@ -305,7 +303,7 @@ TsBool CollisionOBBAndSphere (const TsOBB& obb,
 //  @prama  tolerance      誤差許容範囲
 //----------------------------------------------------------
 TsBool CollisionOBBAndRay   ( const TsOBB& obb,
-                              const TsLine3D& ray,
+                              const TsRay3D& ray,
                               TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE);
 
 //----------------------------------------------------------
