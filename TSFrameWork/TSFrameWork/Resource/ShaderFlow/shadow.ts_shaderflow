@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FLow>
-  <Pass Name ="Clear">
+    <Pass Name ="Clear">
+        <Input>
+            <Slot/>
+        </Input>
+        <Output>
+            <Slot Slot="ShadowMap"/>
+            <Depth Slot="ShadowDepth"/>
+        </Output>
+    </Pass>
+
+    <Pass Name ="Clear">
     <Input>
       <Slot/>
     </Input>
     <Output>
-      <Slot Slot="Main"/>
       <Slot Slot="ShadowMap"/>  
       <Depth Slot="Main"/>
     </Output>
@@ -19,7 +28,7 @@
     </Input>
     <Output>
         <Slot Slot="ShadowMap"/>
-        <Depth Slot="Main"/>
+        <Depth Slot="ShadowDepth"/>
     </Output>
   </Pass>
     

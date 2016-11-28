@@ -29,10 +29,17 @@
     Name  ="ShadowMap"
     Type  ="Texture2D"
     Format="FLOAT_R32"
-    Size ="-1 -1">            
-  </RenderTarget>  
+    Size ="4096 4096">            
+  </RenderTarget>
 
-  <RenderTarget
+    <Depth
+      Name ="ShadowDepth"
+      Format ="UNORM_D24_UINT_S8"
+      Size="4096 4096">
+    </Depth>
+    
+    
+    <RenderTarget
     Name  ="ProjPos"
     Type  ="Texture2D"
     Format="FLOAT_R32G32B32A32"
