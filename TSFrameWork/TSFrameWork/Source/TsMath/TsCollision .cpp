@@ -28,6 +28,9 @@ template TsBool CollisionRayAndPlane(const TsVector3&, const TsRay3D&, TsF32);
 template TsBool CollisionLineAndTriangle(const TsTriangle2D&, const TsLine2D&, TsF32, TsVector2*);
 template TsBool CollisionLineAndTriangle( const TsTriangle3D& ,const TsLine3D& , TsF32 , TsVector3* );
 
+template TsBool CollisionTriangleAndTriangle(const TsTriangle2D&, const TsTriangle2D&, TsF32);
+template TsBool CollisionTriangleAndTriangle(const TsTriangle3D&, const TsTriangle3D&, TsF32);
+
 template TsBool CollisionAABBAndRay(const TsAABB2D&, const TsRay2D&, TsF32,TsVector2*);
 template TsBool CollisionAABBAndRay(const TsAABB3D&, const TsRay3D&, TsF32,TsVector3*);
 
@@ -432,6 +435,39 @@ TsBool CollisionLineAndTriangle(const TsTriangle<T>& triangle,
     }
 
     return TS_TRUE;
+}
+
+//----------------------------------------------------------
+//! 三角形と三角形
+//  @param  triangle0   三角形1
+//  @param  triangle1   三角形2
+//  @param  tolerance   誤差許容範囲  (optin)
+//  @param  pOut        交差点
+//----------------------------------------------------------
+template<typename T>
+TsBool CollisionTriangleAndTriangle(const TsTriangle<T>& triangle0,
+                                    const TsTriangle<T>& triangle1,
+                                    TsF32 tolerance)
+{
+    TsLine<T> line[3];
+
+    // Triangle Edge -> Line * 3
+    line[0].SetBegin(triangle1[0]);
+    line[1].SetBegin(triangle1[0]);
+    line[2].SetBegin(triangle1[1]);
+
+    line[0].SetEnd(triangle1[1]);
+    line[1].SetEnd(triangle1[2]);
+    line[2].SetEnd(triangle1[2]);
+
+    // Collision to Triangle And Line * 3
+    for (TsInt i = 0; i < 3; ++i)
+    {
+        if (CollisionLineAndTriangle(triangle0, line[i], tolerance))
+            return TS_TRUE;
+    }
+
+    return TS_FALSE;
 }
 
 //----------------------------------------------------------

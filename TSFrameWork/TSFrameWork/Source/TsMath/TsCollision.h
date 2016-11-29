@@ -226,6 +226,19 @@ TsBool CollisionLineAndTriangle(const TsTriangle<T>&,
                                 TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE,
                                 T* pOut = nullptr);
 
+//----------------------------------------------------------
+//! 三角形と三角形
+//  @param  triangle0   三角形1
+//  @param  triangle1   三角形2
+//  @param  tolerance   誤差許容範囲  (optin)
+//  @param  pOut        交差点
+//----------------------------------------------------------
+template<typename T>
+TsBool CollisionTriangleAndTriangle(const TsTriangle<T>& triangle0,
+                                    const TsTriangle<T>& triangle1,
+                                    //誤差許容範囲
+                                    TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE);
+
 
 //----------------------------------------------------------
 //! AABB と　AABB
