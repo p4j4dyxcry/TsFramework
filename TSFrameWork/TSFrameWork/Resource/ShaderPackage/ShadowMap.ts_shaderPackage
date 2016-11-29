@@ -13,5 +13,8 @@
     FillMode="SOLID"
     CullMode="CCW"
     AntiAlias="true">
-  </Rasterize>   
+  </Rasterize>  
+  <BlendState
+    BlendMode ="NONE">
+  </BlendState>      
 </root>

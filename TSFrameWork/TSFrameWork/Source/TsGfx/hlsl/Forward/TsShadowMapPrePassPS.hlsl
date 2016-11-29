@@ -5,5 +5,5 @@ float4 main(float4 pos		: SV_POSITION,
 {
     float z = worldPos.z / worldPos.w;
 
-    return z;
+    return float4(z,0,0,1);
 }

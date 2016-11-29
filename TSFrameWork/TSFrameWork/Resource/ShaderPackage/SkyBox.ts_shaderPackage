@@ -7,7 +7,7 @@
   <DepthStencil
     ZEnable="false"
     ZWriteEnable="false"
-	 　Func="LESS">
+    Func="LESS">
   </DepthStencil>
   <Rasterize
     FillMode="SOLID"
