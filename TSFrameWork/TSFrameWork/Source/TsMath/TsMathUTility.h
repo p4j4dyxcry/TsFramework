@@ -197,14 +197,8 @@ inline T TsQubicLerp( const T& a , const T&b , TsF32 t )
 
 //! 4つの制御点から成る曲線補間を行う
 template<typename T>
-inline T TsCalc4ControllPointCurve( const T& c0,
-                                    const T& c1,
-                                    const T& c2,
-                                    const T& c3,
-                                    TsF32 t0,
-                                    TsF32 t1,
-                                    TsF32 t2,
-                                    TsF32 t3)
+inline T TsCalc4ControllPointCurve( const T& c0,const T& c1, const T& c2,const T& c3,
+                                    TsF32 t0, TsF32 t1,TsF32 t2,TsF32 t3)
 {
     TsInt sz = sizeof(T) / sizeof(TsF32);
 
@@ -214,8 +208,7 @@ inline T TsCalc4ControllPointCurve( const T& c0,
         //次元を配列化する
         const TsF32 f[4] =
         {
-            c0[i], c1[i],
-            c2[i], c3[i]
+            c0[i], c1[i], c2[i], c3[i]
         };
         result[i] =
             t0 * f[0] +
