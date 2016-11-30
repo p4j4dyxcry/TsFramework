@@ -195,42 +195,62 @@ inline T TsQubicLerp( const T& a , const T&b , TsF32 t )
     return TsLerp( a , b , TsCubic( t ) );
 }
 
-//! beginPoint ～ endPoint を
-//  制御ベクトル　beginTanget,endTangetを用いて補完する
-//  ※【注意】制御ベクトルは大きさも考慮するので単位ベクトルではない
+//! 4つの制御点から成る曲線補間を行う
 template<typename T>
-T HermiteCurve( const T& beginPoint, const T& beginTangent,
-                const T& endPoint  , const T& endTangent,
-                TsF32 t)
+inline T TsCalc4ControllPointCurve( const T& c0,
+                                    const T& c1,
+                                    const T& c2,
+                                    const T& c3,
+                                    TsF32 t0,
+                                    TsF32 t1,
+                                    TsF32 t2,
+                                    TsF32 t3)
 {
-
-    TsF32 t2 = t*t;
-    TsF32 t3 = t*t*t;
-
     TsInt sz = sizeof(T) / sizeof(TsF32);
 
     T result;
-
     for (TsInt i = 0; i < sz; ++i)
     {
         //次元を配列化する
-        const TsF32& f[4] =
+        const TsF32 f[4] =
         {
-            beginPoint[i], beginTangent[i],
-            endPoint[i], endTangent[i]
+            c0[i], c1[i],
+            c2[i], c3[i]
         };
-        result[i] = (( 2 * f[0]) + f[1] - (2 * f[2]) + f[3]) * t3 +
-                    ((-3 * f[0]) - (2 * f[1]) + (3 * f[2]) - f[3]) * t2 + 
-                    ((f[1] * t)) 
-                      + f[0];
-                      
+        result[i] =
+            t0 * f[0] +
+            t1 * f[1] +
+            t2 * f[2] +
+            t3 * f[3] +
+
     }
     return result;
 }
 
+//! beginPoint ～ endPoint を
+//  制御ベクトル　beginTanget,endTangetを用いて補完する
+//  ※【注意】制御ベクトルは大きさも考慮するので単位ベクトルではない
+template<typename T>
+inline T TsHermiteCurve( const T& beginPoint, const T& beginTangent,
+                const T& endPoint  , const T& endTangent,
+                TsF32 t)
+{
+
+    TsF32 t0 = 2 * t*t*t - 3 * t*t + 1;
+    TsF32 t1 = -2 * t*t*t + 3 * t*t;
+    TsF32 t2 = t*t*t - 2 * t*t + t;
+    TsF32 t3 = t*t*t - t*t;
+
+    return TsCalc4ControllPointCurve(beginPoint,
+                                     endPoint,
+                                     beginTangent,
+                                     endTangent,
+                                     t0,t1,t2,t3);
+}
+
 //ベジェ曲線
 template<typename T>
-inline T BezierCurve(const T& beginPoint     , const T& endPoint,
+inline T TsBezierCurve(const T& beginPoint     , const T& endPoint,
                      const T& controlPoint0  , const T& controlPoint1,
                      TsF32 t)
 {
@@ -240,26 +260,30 @@ inline T BezierCurve(const T& beginPoint     , const T& endPoint,
     TsF32 t2 = 3 * t * inv_t * inv_t;
     TsF32 t3 = inv_t * inv_t * inv_t;
 
-    TsInt sz = sizeof(T) / sizeof(TsF32);
+    return TsCalc4ControllPointCurve(beginPoint,
+                                     controlPoint0,
+                                     controlPoint1,
+                                     endPoint,
+                                     t0,t1,t2,t3);
+}
 
-    T result;
+//B-スプライン曲線
+template<typename T>
+inline T TsBSplineCurve(const T& controlPoint0, const T& controlPoint1,
+                        const T& controlPoint2, const T& controlPoint3,
+                        TsF32 t)
+{
+    TsF32 inv_t = 1 - t;
+    TsF32 t0 = inv_t*inv_t*inv_t / 6.0f;
+    TsF32 t1 = (3 * t*t*t - 6 * t*t + 4) / 6.0f;
+    TsF32 t2 = (-3 * t*t*t + 3 * t*t + 3 * t + 1) / 6.0f;
+    TsF32 t3 = t*t*t / 6.0f;
 
-    for (TsInt i = 0; i < sz; ++i)
-    {
-        //次元を配列化する
-        const TsF32& f[4] =
-        {
-            beginPoint[i], controlPoint0[i],
-            controlPoint1[i], endPoint[i]
-        };
-        result[i] = 
-            t0 * f[0] +
-            t1 * f[1] +
-            t2 * f[2] +
-            t3 * f[3] +
-    }
-
-    return result;
+    return TsCalc4ControllPointCurve(controlPoint0,
+                                     controlPoint1,
+                                     controlPoint2,
+                                     controlPoint3,
+                                     t0,t1,t2,t3);
 
 }
 
