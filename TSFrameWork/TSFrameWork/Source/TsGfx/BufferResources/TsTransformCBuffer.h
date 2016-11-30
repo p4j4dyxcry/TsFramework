@@ -27,6 +27,7 @@ public:
     TsBool SetMatrixConvertOrder(MatrixConvertOrder order)
     {
         m_matrixConvertOrder = order;
+        return TS_TRUE;
     }
 protected:
     //----------------------------------------------------------

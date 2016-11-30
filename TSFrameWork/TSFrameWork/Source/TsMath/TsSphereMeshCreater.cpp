@@ -3,6 +3,12 @@
 TsBool TsSphereMeshCreater::CreateSphere(TsInt horizontalSlice,
                                          TsF32 rad)
 {
+    //----------------------------------------------------------
+    //※ todo
+    //
+    // ! 現状だと半球の面が裏返ってしまっている。
+    //  Zを反転させ、Indexを再度割り当て直せばいけそう・・・？
+    //
     if (horizontalSlice <= 2 || rad <= 0)
         return TS_FALSE;
 
@@ -16,15 +22,19 @@ TsBool TsSphereMeshCreater::CreateSphere(TsInt horizontalSlice,
     TsF32 pitchAngle    = TsRadian(180.0f / (TsF32)m_horizontalSlice);
     TsF32 rotAngle      = TsRadian(360.0f / (TsF32)m_verticalSlice);
 
+    //! 北極点と南極点の生成
     m_positions.push_back(TsVector3::up * rad);
     m_positions.push_back(TsVector3::down * rad);
+    m_normal.push_back(TsVector3::up);
+    m_normal.push_back(TsVector3::down);
 
     m_positions.reserve( m_verticalSlice * m_horizontalSlice );
     m_normal.reserve(m_verticalSlice * m_horizontalSlice);
     //! 頂点位置を計算する
     for (TsInt i = 1; i < m_verticalSlice; ++i)
     {
-        TsF32 xSin = abs( sin( pitchAngle * i ));
+        TsF32 xSin = 
+            sin( pitchAngle * i );
 
         for (TsInt j = 0; j < m_horizontalSlice; ++j)
         {
@@ -50,7 +60,7 @@ TsBool TsSphereMeshCreater::CreateSphere(TsInt horizontalSlice,
         for (TsInt j = 0; j<m_verticalSlice; ++j)
         {
             TsInt p0 = i * m_verticalSlice + j;
-            TsInt p1 = (j == m_verticalSlice - 1) ? i - m_verticalSlice : i;
+            TsInt p1 = (j == m_verticalSlice - 1) ? p0 - m_verticalSlice : p0;
 
             //! 面を構成する４点を二つの三角形面に分割する
 
@@ -67,6 +77,7 @@ TsBool TsSphereMeshCreater::CreateSphere(TsInt horizontalSlice,
                 m_index.push_back((p0 + 1) + fVert);
                 m_index.push_back((p0 + 1 - m_verticalSlice) + fVert);
             }
+
         }
     }
 
