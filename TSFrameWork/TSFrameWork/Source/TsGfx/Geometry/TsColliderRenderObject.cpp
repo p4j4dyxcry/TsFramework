@@ -53,7 +53,7 @@ TsBool TsColliderRenderObject::Create(TsDevice* pDev)
     {
         m_pMaterial = TsNew(TsDefaultMatrial);
         m_pMaterial->CreateMaterial(pDev);
-        m_pMaterial->SetAmbient(TsFloat4(1, 1, 1, 1));
+        m_pMaterial->SetColor(TsFloat4(1, 0, 0, 1));
     }
     return TS_TRUE;
 }
@@ -127,9 +127,9 @@ TsBool  TsColliderRenderObject::CreateVertexBuffer(TsDevice* pDev, TsCollider* p
     }
 
     m_pVertexBuffer = 
-        pDev->CreateVertexBuffer(&m_pVertex, 
-                                  sizeof(TsVertexSkin)* m_vertexCount, 
-                                  sizeof(TsVertexSkin));
+        pDev->CreateVertexBuffer(m_pVertex, 
+                                 sizeof(TsVertexSkin)* m_vertexCount, 
+                                 sizeof(TsVertexSkin));
 
     return TS_TRUE;
 }
@@ -199,6 +199,8 @@ TsBool  TsColliderRenderObject::CreateGeomtoricTransform(TsCollider* pCollider)
 
     //行列計算モードは Translate * Rotate * Scale に変更する
     m_transformCBuffer->SetMatrixConvertOrder(TsTransformCBuffer::MatrixConvertOrder::MTX_CVT_TRS);
+
+    return TS_TRUE;
 }
 
 template<typename T>
@@ -227,7 +229,7 @@ TsVertexSkin* TsColliderRenderObject::CreateSphereVertex()
     TsVertexSkin * pVertex;
     TsSphereMeshCreater creater;
 
-    TsInt div = 8;  //球の分割数
+    TsInt div = 32;  //球の分割数
 
     creater.CreateSphere(div);
     auto posList = creater.GetPositions();
@@ -294,7 +296,7 @@ TsVertexSkin* TsColliderRenderObject::CreateBoxVertex()
 
     pVertex = TsNew(TsVertexSkin[m_vertexCount]);
 
-    memset(m_pVertex, 0, sizeof(TsVertexSkin)* m_vertexCount);
+    memset(pVertex, 0, sizeof(TsVertexSkin)* m_vertexCount);
 
 
     TsVector3 left_up_back      = TsVector3(-0.5, 0.5, 0.5);
