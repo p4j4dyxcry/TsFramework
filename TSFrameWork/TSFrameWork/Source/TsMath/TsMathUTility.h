@@ -181,7 +181,7 @@ inline T TsEaseInLerp(const T& a, const T&b, TsF32 t)
     return TsLerp(a, b, TsEaseIn( t ));
 }
 
-//! 3次補完 ease - out
+//! 2次補完 ease - out
 template<typename T>
 inline T TsEaseOutLerp(const T& a, const T&b, TsF32 t)
 {
@@ -195,6 +195,9 @@ inline T TsQubicLerp( const T& a , const T&b , TsF32 t )
     return TsLerp( a , b , TsCubic( t ) );
 }
 
+//! beginPoint ～ endPoint を
+//  制御ベクトル　beginTanget,endTangetを用いて補完する
+//  ※【注意】制御ベクトルは大きさも考慮するので単位ベクトルではない
 template<typename T>
 T HermiteCurve( const T& beginPoint, const T& beginTangent,
                 const T& endPoint  , const T& endTangent,
@@ -223,6 +226,41 @@ T HermiteCurve( const T& beginPoint, const T& beginTangent,
                       
     }
     return result;
+}
+
+//ベジェ曲線
+template<typename T>
+inline T BezierCurve(const T& beginPoint     , const T& endPoint,
+                     const T& controlPoint0  , const T& controlPoint1,
+                     TsF32 t)
+{
+    TsF32 inv_t = 1 - t;
+    TsF32 t0 = t* t* t;
+    TsF32 t1 = 3 * t * t * inv_t;
+    TsF32 t2 = 3 * t * inv_t * inv_t;
+    TsF32 t3 = inv_t * inv_t * inv_t;
+
+    TsInt sz = sizeof(T) / sizeof(TsF32);
+
+    T result;
+
+    for (TsInt i = 0; i < sz; ++i)
+    {
+        //次元を配列化する
+        const TsF32& f[4] =
+        {
+            beginPoint[i], controlPoint0[i],
+            controlPoint1[i], endPoint[i]
+        };
+        result[i] = 
+            t0 * f[0] +
+            t1 * f[1] +
+            t2 * f[2] +
+            t3 * f[3] +
+    }
+
+    return result;
+
 }
 
 //絶対値計算
