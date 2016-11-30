@@ -31,11 +31,14 @@ protected:
 
     void    SetTopology(TsCollider::eType colliderType);
     TsBool  CreateVertexBuffer( TsDevice* pDev, TsCollider* );
+    TsBool  CreateGeomtoricTransform(TsCollider* pCollider);
 
     template<typename T>
     TsVertexSkin* CreateLineVertex( TsLine<T>* pLine );
+
     TsVertexSkin* CreateSphereVertex();
     TsVertexSkin* CreateBoxVertex();
+    TsVertexSkin* CreateBox2DVertex();
 
     //----------------------------------------------------------
     // peropery
@@ -43,6 +46,7 @@ protected:
     TsVertexBuffer*         m_pVertexBuffer;
     TsVertexSkin*           m_pVertex;
     TsTransformCBuffer*     m_transformCBuffer;
+    TsTransForm             m_geometoricTransform;
     TsDefaultMatrial*       m_pMaterial;
 
     TsCollider *            m_pCollider;    

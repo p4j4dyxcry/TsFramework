@@ -66,7 +66,14 @@ TsBool TsColliderRenderObject::CreateRenderObject(TsDevice* pDev,
 {
     Create(pDev);
 
+    //頂点の設定をする
     SetTopology(pCollider->GetType());
+
+    //頂点を作成する
+    CreateVertexBuffer(pDev, pCollider);
+
+    //コライダ用の姿勢を作成する
+    CreateGeomtoricTransform(pCollider);
 
     return TS_TRUE;
 }
@@ -103,21 +110,95 @@ TsBool  TsColliderRenderObject::CreateVertexBuffer(TsDevice* pDev, TsCollider* p
         m_pVertex = CreateLineVertex((TsLine3D*)(pCollider));
         break;
     case TsCollider::Collider_AABB2D:
+        m_pVertex = CreateBox2DVertex();
         break;
 
     case TsCollider::Collider_AABB3D:
     case TsCollider::Collider_OBB3D:
+        m_pVertex = CreateBoxVertex();
         break;
     case TsCollider::Collider_TsSphere:
+    case TsCollider::Collider_TsCircle:
         m_pVertex = CreateSphereVertex();
         break;        
-    case TsCollider::Collider_TsCircle:
-        break;
+
     default:
         return TS_FALSE;
     }
 
+    m_pVertexBuffer = 
+        pDev->CreateVertexBuffer(&m_pVertex, 
+                                  sizeof(TsVertexSkin)* m_vertexCount, 
+                                  sizeof(TsVertexSkin));
+
     return TS_TRUE;
+}
+
+TsBool  TsColliderRenderObject::CreateGeomtoricTransform(TsCollider* pCollider)
+{
+    //各形状をTransformに変換する
+    switch (pCollider->GetType())
+    {
+    case TsCollider::Collider_AABB2D:
+        {
+            TsAABB2D * pAABB2D = ((TsAABB2D*)(pCollider));
+            TsVector3 scale = pAABB2D->GetMax() - pAABB2D->GetMin();
+            TsVector3 translate = pAABB2D->GetCenter();
+            m_geometoricTransform.m_localScale = scale;
+            m_geometoricTransform.m_localPosition = translate;
+            break;
+
+        }
+    case TsCollider::Collider_AABB3D:
+        {
+            TsAABB3D * pAABB3D = ((TsAABB3D*)(pCollider));
+            TsVector3 scale = pAABB3D->GetMax() - pAABB3D->GetMin();
+            TsVector3 translate = pAABB3D->GetCenter();
+            m_geometoricTransform.m_localScale = scale;
+            m_geometoricTransform.m_localPosition = translate;
+            break;
+        }
+    case TsCollider::Collider_OBB3D:
+        {
+            TsOBB * pOBB = ((TsOBB*)(pCollider));
+            TsVector3 scale = pOBB->GetScale();
+            TsVector3 translate = pOBB->GetCenter();
+            TsQuaternion rotate = pOBB->GetRotate();
+
+            m_geometoricTransform.m_localScale = scale;
+            m_geometoricTransform.m_localPosition = translate;
+            m_geometoricTransform.m_localRotate = rotate;
+            break;
+        }
+    case TsCollider::Collider_TsSphere:
+        {
+            TsSphere3D * pSphere = ((TsSphere3D*)(pCollider));
+            TsF32 r = pSphere->GetRadius();
+            TsVector3 scale = TsVector3( r , r , r );
+            TsVector3 translate = pSphere->GetCenter();
+
+            m_geometoricTransform.m_localScale = scale;
+            m_geometoricTransform.m_localPosition = translate;
+            break;
+        }
+    case TsCollider::Collider_TsCircle:
+        {
+            TsSphere2D * pSphere = ((TsSphere2D*)(pCollider));
+            TsF32 r = pSphere->GetRadius();
+            TsVector3 scale = TsVector3( r , r , r );
+            TsVector3 translate = pSphere->GetCenter();
+
+            m_geometoricTransform.m_localScale = scale;
+            m_geometoricTransform.m_localPosition = translate;
+            break;
+        }
+    default:
+        break;
+    }
+    m_transformCBuffer->SetTransform(&m_geometoricTransform);
+
+    //行列計算モードは Translate * Rotate * Scale に変更する
+    m_transformCBuffer->SetMatrixConvertOrder(TsTransformCBuffer::MatrixConvertOrder::MTX_CVT_TRS);
 }
 
 template<typename T>
@@ -126,7 +207,7 @@ TsVertexSkin* TsColliderRenderObject::CreateLineVertex( TsLine<T>* pLine )
     TsVertexSkin * pVertex;
 
     m_vertexCount = 2;
-    pVertex = TsNew(TsVertexSkin[2]);
+    pVertex = TsNew(TsVertexSkin[m_vertexCount]);
     memset(m_pVertex, 0, sizeof(TsVertexSkin)* m_vertexCount);
 
     TsF32 lineSize = sizeof(T) / sizeof(TsF32);
@@ -145,7 +226,10 @@ TsVertexSkin* TsColliderRenderObject::CreateSphereVertex()
 {
     TsVertexSkin * pVertex;
     TsSphereMeshCreater creater;
-    creater.CreateSphere(8);
+
+    TsInt div = 8;  //球の分割数
+
+    creater.CreateSphere(div);
     auto posList = creater.GetPositions();
     auto nomList = creater.GetNomals();
     auto index = creater.GetIndex();
@@ -154,7 +238,7 @@ TsVertexSkin* TsColliderRenderObject::CreateSphereVertex()
     if (index.empty())
         return nullptr;
 
-    pVertex = TsNew(TsVertexSkin[index.size()]);
+    pVertex = TsNew(TsVertexSkin[m_vertexCount]);
     memset(pVertex, 0, sizeof(TsVertexSkin)* m_vertexCount);
     for (TsUint i = 0; i < m_vertexCount; ++i)
     {
@@ -165,6 +249,121 @@ TsVertexSkin* TsColliderRenderObject::CreateSphereVertex()
     return pVertex;    
 }
 
+TsVertexSkin* TsColliderRenderObject::CreateBox2DVertex()
+{
+    TsVertexSkin * pVertex = nullptr;
+
+    m_vertexCount = 12;
+
+    pVertex = TsNew(TsVertexSkin[m_vertexCount]);
+
+    memset(m_pVertex, 0, sizeof(TsVertexSkin)* m_vertexCount);
+
+    TsVector3 left_up = TsVector3(-0.5, 0.5, 0);
+    TsVector3 left_down = TsVector3(-0.5, -0.5, 0);
+    TsVector3 right_up = TsVector3(0.5, 0.5, 0);
+    TsVector3 right_down = TsVector3(0.5, -0.5, 0);
+
+    //前の面
+    pVertex[0].pos = left_up;
+    pVertex[1].pos = right_up;
+    pVertex[2].pos = left_down;
+
+    pVertex[3].pos = right_up;
+    pVertex[4].pos = left_down;
+    pVertex[5].pos = right_down;
+
+    //後ろの面
+    pVertex[6].pos = right_up;
+    pVertex[7].pos = left_up;
+    pVertex[8].pos = right_down;
+
+    pVertex[9].pos = left_up;
+    pVertex[10].pos = right_down;
+    pVertex[11].pos = left_down;
+
+
+    return pVertex;
+}
+
+TsVertexSkin* TsColliderRenderObject::CreateBoxVertex()
+{
+    TsVertexSkin * pVertex = nullptr;
+
+    m_vertexCount = 36;
+
+    pVertex = TsNew(TsVertexSkin[m_vertexCount]);
+
+    memset(m_pVertex, 0, sizeof(TsVertexSkin)* m_vertexCount);
+
+
+    TsVector3 left_up_back      = TsVector3(-0.5, 0.5, 0.5);
+    TsVector3 left_down_back    = TsVector3(-0.5,-0.5, 0.5);
+    TsVector3 left_up_front     = TsVector3(-0.5, 0.5,-0.5);
+    TsVector3 left_down_front   = TsVector3(-0.5,-0.5,-0.5);
+    TsVector3 right_up_back     = TsVector3( 0.5, 0.5, 0.5);
+    TsVector3 right_down_back   = TsVector3( 0.5,-0.5, 0.5);
+    TsVector3 right_up_front    = TsVector3( 0.5, 0.5,-0.5);
+    TsVector3 right_down_front  = TsVector3( 0.5,-0.5,-0.5);
+
+
+    //上の面
+    pVertex[0].pos = left_up_back;
+    pVertex[1].pos = right_up_back;
+    pVertex[2].pos = left_up_front;
+
+    pVertex[3].pos = right_up_back;
+    pVertex[4].pos = right_up_front;
+    pVertex[5].pos = left_up_front;
+
+    //下の面
+    pVertex[6].pos = right_down_back;
+    pVertex[7].pos = left_down_back;
+    pVertex[8].pos = left_down_front;
+
+    pVertex[9].pos = right_down_back;
+    pVertex[10].pos = left_down_front;
+    pVertex[11].pos = right_down_front;
+
+    //左の面
+    pVertex[12].pos = left_up_back;
+    pVertex[13].pos = left_up_front;
+    pVertex[14].pos = left_down_back;
+
+    pVertex[15].pos = left_up_front;
+    pVertex[16].pos = left_down_back;
+    pVertex[17].pos = left_down_front;
+
+    //右の面
+    pVertex[18].pos = right_up_front;
+    pVertex[19].pos = right_up_back;
+    pVertex[20].pos = right_down_front;
+
+    pVertex[21].pos = right_up_back;
+    pVertex[22].pos = right_down_front;
+    pVertex[23].pos = right_down_back;
+
+    //前の面
+    pVertex[24].pos = left_up_front;
+    pVertex[25].pos = right_up_front;
+    pVertex[26].pos = left_down_front;
+
+    pVertex[27].pos = right_up_front;
+    pVertex[28].pos = left_down_front;
+    pVertex[29].pos = right_down_front;
+
+    //後ろの面
+    pVertex[30].pos = right_up_back;
+    pVertex[31].pos = left_up_back;
+    pVertex[32].pos = right_down_back;
+
+    pVertex[33].pos = left_up_back;
+    pVertex[34].pos = right_down_back;
+    pVertex[35].pos = left_down_back;
+
+    return pVertex;
+}
+
 //=========================================================================
 //! Draw Call
 //=========================================================================
@@ -172,8 +371,8 @@ TsBool TsColliderRenderObject::Draw(TsDeviceContext* context)
 {
     if (m_pVertexBuffer)
     {
-        context->SetTopology(D3D_PRIMITIVE_TOPOLOGY::D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-        context->Draw(4, 0);
+        context->SetTopology(m_topology);
+        context->Draw(m_vertexCount, 0);
     }
     else
     {
@@ -247,9 +446,6 @@ TsBool TsColliderRenderObject::ApplyMaterial(TsDeviceContext* context)
 //=========================================================================
 TsBool TsColliderRenderObject::SetTransform(TsTransForm* pTransform)
 {
-    if (m_transformCBuffer)
-        m_transformCBuffer->SetTransform(pTransform);
-    else
-        return TS_FALSE;
+    m_geometoricTransform.SetParent(pTransform);
     return TS_TRUE;
 }
