@@ -152,32 +152,77 @@ inline TsTransForm TsLerp(const TsTransForm& a, const TsTransForm& b, TsF32 t)
 {
     TsTransForm result;
 
-    result.m_localPosition = TsLerp(a.m_localPosition, b.m_localPosition, t);
-    result.m_localScale = TsLerp(a.m_localScale, b.m_localScale, t);
-    result.m_localRotate = TsLerp(a.m_localRotate,b.m_localRotate,t);
+    result.m_localPosition  = TsLerp(a.m_localPosition, b.m_localPosition, t);
+    result.m_localScale     = TsLerp(a.m_localScale, b.m_localScale, t);
+    result.m_localRotate    = TsLerp(a.m_localRotate,b.m_localRotate,t);
 
     return result;
 }
 
+inline TsF32 TsEaseIn(TsF32 t)
+{
+    return t*(2 - t);
+}
+inline TsF32 TsEaseOut(TsF32 t)
+{
+    return t*t;
+}
+
+inline TsF32 TsCubic(TsF32 t)
+{
+    return t * t * (3.0f - 2.0f * t);
+}
+
+
 //! 2次補完 ease - in
 template<typename T>
-inline T TsEaseIn(const T& a, const T&b, TsF32 t)
+inline T TsEaseInLerp(const T& a, const T&b, TsF32 t)
 {
-    return TsLerp(a, b, t*(2 - t));
+    return TsLerp(a, b, TsEaseIn( t ));
 }
 
 //! 3次補完 ease - out
 template<typename T>
-inline T TsEaseOut(const T& a, const T&b, TsF32 t)
+inline T TsEaseOutLerp(const T& a, const T&b, TsF32 t)
 {
-    return TsLerp(a, b, t * t);
+    return TsLerp(a, b, TsEaseOut( t ));
 }
 
 //! a と b を t で3次補完する
 template<typename T>
-inline T TsQubic( const T& a , const T&b , TsF32 t )
+inline T TsQubicLerp( const T& a , const T&b , TsF32 t )
 {
-    return TsLerp( a , b , t * t * ( 3.0f - 2.0f * t ) );
+    return TsLerp( a , b , TsCubic( t ) );
+}
+
+template<typename T>
+T HermiteCurve( const T& beginPoint, const T& beginTangent,
+                const T& endPoint  , const T& endTangent,
+                TsF32 t)
+{
+
+    TsF32 t2 = t*t;
+    TsF32 t3 = t*t*t;
+
+    TsInt sz = sizeof(T) / sizeof(TsF32);
+
+    T result;
+
+    for (TsInt i = 0; i < sz; ++i)
+    {
+        //次元を配列化する
+        const TsF32& f[4] =
+        {
+            beginPoint[i], beginTangent[i],
+            endPoint[i], endTangent[i]
+        };
+        result[i] = (( 2 * f[0]) + f[1] - (2 * f[2]) + f[3]) * t3 +
+                    ((-3 * f[0]) - (2 * f[1]) + (3 * f[2]) - f[3]) * t2 + 
+                    ((f[1] * t)) 
+                      + f[0];
+                      
+    }
+    return result;
 }
 
 //絶対値計算
