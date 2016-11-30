@@ -210,15 +210,15 @@ TsVertexSkin* TsColliderRenderObject::CreateLineVertex( TsLine<T>* pLine )
 
     m_vertexCount = 2;
     pVertex = TsNew(TsVertexSkin[m_vertexCount]);
-    memset(m_pVertex, 0, sizeof(TsVertexSkin)* m_vertexCount);
+    memset(pVertex, 0, sizeof(TsVertexSkin)* m_vertexCount);
 
     TsF32 lineSize = sizeof(T) / sizeof(TsF32);
     const T&  begin = pLine->GetBegin();
     const T&  end = pLine->GetEnd();
     for (TsUint i = 0; i < m_vertexCount; ++i)
     {
-        m_pVertex[0].pos[i] = begin[i];
-        m_pVertex[1].pos[i] = end[i];
+        pVertex[0].pos[i] = begin[i];
+        pVertex[1].pos[i] = end[i];
     }
 
     return pVertex;
@@ -259,7 +259,7 @@ TsVertexSkin* TsColliderRenderObject::CreateBox2DVertex()
 
     pVertex = TsNew(TsVertexSkin[m_vertexCount]);
 
-    memset(m_pVertex, 0, sizeof(TsVertexSkin)* m_vertexCount);
+    memset(pVertex, 0, sizeof(TsVertexSkin)* m_vertexCount);
 
     TsVector3 left_up = TsVector3(-0.5, 0.5, 0);
     TsVector3 left_down = TsVector3(-0.5, -0.5, 0);
