@@ -8,7 +8,13 @@ TsBool TsTransformCBuffer::UpdateCBuffer( TsDeviceContext * pContext )
 {
     if( m_pTransform )
     {
-        TsMatrix&& mtxWorld = m_pTransform->ToWorldMatrix();
+        TsMatrix mtxWorld;
+
+        if (m_matrixConvertOrder == MatrixConvertOrder::MTX_CVT_SRT)
+            mtxWorld = m_pTransform->ToWorldMatrix();   // scale * translate * rotate
+        if (m_matrixConvertOrder == MatrixConvertOrder::MTX_CVT_TRS)
+            mtxWorld = m_pTransform->ToLocalTRSMatrix();// translate * rotate * scale
+
         if (m_matrixCash != mtxWorld)
         {
             m_matrixCBuffer.m_MtxWorld = mtxWorld.Transposed();

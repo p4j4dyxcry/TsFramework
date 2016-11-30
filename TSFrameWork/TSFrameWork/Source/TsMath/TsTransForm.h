@@ -43,9 +43,13 @@ public:
     //! TransformをWorldSpaceMatrixで取得する
     TsMatrix ToWorldMatrix();
 
+    //! WorldMatrixをTranslate * Rotate * Scaleで計算し取得する
+    TsMatrix ToWorldTRSMatrix();
+
     //! TransformをLocalSpaceMatrixで取得する
     TsMatrix ToLocalMatrix();
 
+    //! LocalMatrixをTranslate * Rotate * Scaleで計算し取得する
     TsMatrix ToLocalTRSMatrix();
 
     //! ワールド座標上の位置を祝する

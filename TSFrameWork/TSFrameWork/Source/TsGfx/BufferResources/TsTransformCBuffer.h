@@ -17,6 +17,17 @@ public:
     virtual TsBool ApplyCBuffer( TsDeviceContext * pContext) override;
     TsBool CreateTransformCBuffer( TsDevice* pDev );
     TsBool SetTransform( TsTransForm* pTransform );
+
+    enum MatrixConvertOrder
+    {
+        MTX_CVT_SRT,    // Scale * Rotate * Translate;
+        MTX_CVT_TRS,    // Trnaslate * Rotate * Scale;
+    };
+
+    TsBool SetMatrixConvertOrder(MatrixConvertOrder order)
+    {
+        m_matrixConvertOrder = order;
+    }
 protected:
     //----------------------------------------------------------
     // Define
@@ -32,4 +43,6 @@ protected:
     TsTransForm* m_pTransform;
     TsMatrix	 m_matrixCash;
     MatrixCBuffer m_matrixCBuffer;
+
+    MatrixConvertOrder m_matrixConvertOrder = MTX_CVT_SRT;
 };

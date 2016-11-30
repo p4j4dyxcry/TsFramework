@@ -116,6 +116,14 @@ TsMatrix TsTransForm::ToWorldMatrix()
         return ToLocalMatrix();
 }
 
+TsMatrix TsTransForm::ToWorldTRSMatrix()
+{
+    if (m_parent)
+        return ToLocalTRSMatrix() * m_parent->ToLocalTRSMatrix();
+    else
+        return ToLocalTRSMatrix();
+}
+
 TsTransForm* TsTransForm::GetParent()const
 {
     return m_parent;
