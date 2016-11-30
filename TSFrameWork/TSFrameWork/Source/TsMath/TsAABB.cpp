@@ -71,6 +71,12 @@ const T& TsAABB<T>::GetMax()const
 }
 
 template< typename T>
+T TsAABB<T>::GetCenter()const
+{
+    return (m_min + m_max)/2.0f;
+}
+
+template< typename T>
 TsAABB<T> TsAABB<T>::operator * (const TsMatrix& matrix)const
 {
     TsAABB aabb = *this;

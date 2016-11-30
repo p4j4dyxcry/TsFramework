@@ -32,6 +32,7 @@ public:
     TsAABB<T> Transform( const TsMatrix& );
     const T& GetMin()const;
     const T& GetMax()const;
+    T GetCenter()const;
     TsInt    GetVertexSize()const;
     TsVector<T> GetVertexList()const;
 
