@@ -3,12 +3,6 @@
 TsBool TsSphereMeshCreater::CreateSphere(TsInt horizontalSlice,
                                          TsF32 rad)
 {
-    //----------------------------------------------------------
-    //※ todo
-    //
-    // ! 現状だと半球の面が裏返ってしまっている。
-    //  Zを反転させ、Indexを再度割り当て直せばいけそう・・・？
-    //
     if (horizontalSlice <= 2 || rad <= 0)
         return TS_FALSE;
 
@@ -31,12 +25,12 @@ TsBool TsSphereMeshCreater::CreateSphere(TsInt horizontalSlice,
     m_positions.reserve( m_verticalSlice * m_horizontalSlice );
     m_normal.reserve(m_verticalSlice * m_horizontalSlice);
     //! 頂点位置を計算する
-    for (TsInt i = 1; i < m_verticalSlice; ++i)
+    for (TsInt i = 1; i < m_horizontalSlice; ++i)
     {
         TsF32 xSin = 
             sin( pitchAngle * i );
 
-        for (TsInt j = 0; j < m_horizontalSlice; ++j)
+        for (TsInt j = 0; j < m_verticalSlice; ++j)
         {
             TsVector3 vertex;
             
@@ -54,7 +48,7 @@ TsBool TsSphereMeshCreater::CreateSphere(TsInt horizontalSlice,
     }
 
     // 南極点と北極点を除いた面のインデックスを作成
-    TsInt fVert = 2;        //南極点と北極点の分Indexを進めるために。
+    TsInt fVert = 1;        //南極点と北極点の分Indexを進めるために。
     for (TsInt i = 1; i<m_horizontalSlice - 1; ++i)
     {
         for (TsInt j = 0; j<m_verticalSlice; ++j)
@@ -63,19 +57,25 @@ TsBool TsSphereMeshCreater::CreateSphere(TsInt horizontalSlice,
             TsInt p1 = (j == m_verticalSlice - 1) ? p0 - m_verticalSlice : p0;
 
             //! 面を構成する４点を二つの三角形面に分割する
-
+            TsInt index[4] =
+            {
+                (p0 + 1 - m_verticalSlice) + fVert ,
+                (p1 + 2 - m_verticalSlice) + fVert ,
+                (p1 + 2) + fVert ,
+                (p0 + 1) + fVert 
+            };
             // face 1
             {
-                m_index.push_back((p0 + 1 - m_verticalSlice) + fVert);
-                m_index.push_back((p1 + 2 - m_verticalSlice) + fVert);
-                m_index.push_back((p1 + 2) + fVert);
+                m_index.push_back(index[0]);
+                m_index.push_back(index[1]);
+                m_index.push_back(index[2]);
             }
 
             // face 2
             {
-                m_index.push_back((p1 + 2) + fVert);
-                m_index.push_back((p0 + 1) + fVert);
-                m_index.push_back((p0 + 1 - m_verticalSlice) + fVert);
+                m_index.push_back(index[0]);
+                m_index.push_back(index[2]);
+                m_index.push_back(index[3]);
             }
 
         }
@@ -92,16 +92,16 @@ TsBool TsSphereMeshCreater::CreateSphere(TsInt horizontalSlice,
 
         //北極点ポリゴン
         {
-            m_index.push_back(fVert - 1);
-            m_index.push_back((j + 2) + fVert);
-            m_index.push_back((i + 1) + fVert);
+            m_index.push_back((j + 2) + fVert );
+            m_index.push_back((i + 1) + fVert );
+            m_index.push_back(0);
         }
 
         //南極点ポリゴン
         {
-            m_index.push_back(fVert);
-            m_index.push_back((i + 1) + offLastVerts);
-            m_index.push_back((j + 2) + offLastVerts);
+            m_index.push_back(1);
+            m_index.push_back((i + 1) + offLastVerts );
+            m_index.push_back((j + 2) + offLastVerts );
         }
     }
 

@@ -244,7 +244,7 @@ TsVertexSkin* TsColliderRenderObject::CreateSphereVertex()
     TsVertexSkin * pVertex;
     TsSphereMeshCreater creater;
 
-    TsInt div = 32;  //‹…‚Ì•ªŠ„”
+    TsInt div = 6;  //‹…‚Ì•ªŠ„”
 
     creater.CreateSphere(div);
     auto posList = creater.GetPositions();

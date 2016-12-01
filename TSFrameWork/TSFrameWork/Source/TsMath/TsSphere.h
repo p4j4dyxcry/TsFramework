@@ -7,7 +7,7 @@
 #pragma once
 
 template< typename T>
-class TsSphere : TsCollider
+class TsSphere :public TsCollider
 {
 public:
     //----------------------------------------------------------
