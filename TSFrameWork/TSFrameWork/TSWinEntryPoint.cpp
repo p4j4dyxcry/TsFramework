@@ -100,7 +100,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     plane.SetTransform( &planeTransform );
     queue.Add(&plane);
 
-    TsAABB3D aabb(TsVector3(-15, -15, -15), TsVector3(15, 15, 15));
+    TsAABB3D aabb(TsVector3(-15, 0, -15), TsVector3(15, 30, 15));
     TsLine3D line(TsVector3(-15, -15, -15), TsVector3(15, 15, 15));
     TsOBB    obb;
     obb.SetScale(TsVector3(10, 5, 5));
@@ -108,6 +108,10 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     obb.SetCenter(TsVector3(15, 2.5f, 0));
     TsColliderRenderObject obbMesh;
     obbMesh.CreateRenderObject(pDev, &obb);
+
+    TsColliderRenderObject aabbMesh;
+    aabbMesh.CreateRenderObject(pDev, &aabb);
+    queue.Add(&aabbMesh);
 
     queue.Add(&obbMesh);
 
@@ -126,7 +130,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     pCamera->SetLocalPosition(TsVector3(0,4,-50));
     pCamera->SetLockAt( TsVector3( TsVector3( 0 , 4 , 0 ) ) );
 
-    pCamera->SetNearAndFar(4, 500);
+    pCamera->SetNearAndFar(4, 255);
 
     pCamera->CreateCBuffer(pDev);
 
@@ -156,45 +160,43 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 //            pAnim->Update();
             
             if (TsWINGetKey(VK_LEFT))
-                obbCenter.x--;
-
+            {
+                aabb.SetMin(aabb.GetMin() + TsVector3::left);
+                aabb.SetMax(aabb.GetMax() + TsVector3::left);
+            }
             if (TsWINGetKey(VK_RIGHT))
-                obbCenter.x++;
+            {
+                aabb.SetMin(aabb.GetMin() + TsVector3::right);
+                aabb.SetMax(aabb.GetMax() + TsVector3::right);
+            }
 
             if (TsWINGetKey(VK_UP))
-                obbCenter.z++;
+            {
+                aabb.SetMin(aabb.GetMin() + TsVector3::up);
+                aabb.SetMax(aabb.GetMax() + TsVector3::up);
+            }
             if (TsWINGetKey(VK_DOWN))
-                obbCenter.z--;
-
-            if (TsWINGetKey('A'))
-                obbEuler.y+=4;
-            if (TsWINGetKey('S'))
-                obbEuler.y-=4;
-
-            if (TsWINGetKey('Q'))
-                obbEuler.x += 4;
-
-            if (TsWINGetKey('W'))
-                obbEuler.x -= 4;
+            {
+                aabb.SetMin(aabb.GetMin() + TsVector3::down);
+                aabb.SetMax(aabb.GetMax() + TsVector3::down);
+            }
 
             if (TsWINGetKey('Z'))
-                obbEuler.z += 4;
-
-            if (TsWINGetKey('X'))
-                obbEuler.z -= 4;
-
+            {
+                obbEuler.y+=4;
+            }
             obb.SetCenter(obbCenter);
             obb.SetRotate(TsQuaternion::CreateByEuler(obbEuler));
 
-            if (CollisionOBBAndSphere(obb, sphere))
+            if (CollisionOBBAndAABB(obb, aabb))
             {
+                aabbMesh.SetColor(255, 0, 0, 1);
                 obbMesh.SetColor(1, 0, 0, 1);
-                sphereMesh.SetColor(1, 0, 0, 1);
             }
             else
             {
+                aabbMesh.SetColor(0, 1, 0, 1);
                 obbMesh.SetColor(0, 1, 0, 1);
-                sphereMesh.SetColor(0, 1, 0, 1);
             }
 
             auto pBlendState = TsResourceManager::Find<TsBlendState>( "ALPHA_BLEND" );
