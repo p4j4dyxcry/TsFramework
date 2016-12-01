@@ -17,6 +17,17 @@ TsBool TsBlendState::CreateBlendState( TsDevice* pDev ,TS_BLEND_MODE blendMode)
 
     // zero clear
     memset( &desc , 0 , sizeof( desc ) );
+    for (TsInt i = 1; i < 8; ++i)
+    {
+        desc.RenderTarget[i].BlendEnable = TS_FALSE;
+        desc.RenderTarget[i].SrcBlend = D3D11_BLEND_ONE;
+        desc.RenderTarget[i].DestBlend = D3D11_BLEND_ZERO;
+        desc.RenderTarget[i].BlendOp = D3D11_BLEND_OP_ADD;
+        desc.RenderTarget[i].SrcBlendAlpha = D3D11_BLEND_ONE;
+        desc.RenderTarget[i].DestBlendAlpha = D3D11_BLEND_ZERO;
+        desc.RenderTarget[i].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+        desc.RenderTarget[i].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+    }
 
     // アルファトゥカバレッジをマルチサンプリングテクニックとして使用するか
     desc.AlphaToCoverageEnable  = TS_FALSE;
@@ -29,7 +40,10 @@ TsBool TsBlendState::CreateBlendState( TsDevice* pDev ,TS_BLEND_MODE blendMode)
     if( blendMode == TS_BLEND_MODE::NONE )
         desc.RenderTarget[0].BlendEnable = TS_FALSE;
     else
+    {
         desc.RenderTarget[0].BlendEnable = TS_TRUE;
+        desc.IndependentBlendEnable = TS_TRUE;
+    }
 
     switch( blendMode )
     {
