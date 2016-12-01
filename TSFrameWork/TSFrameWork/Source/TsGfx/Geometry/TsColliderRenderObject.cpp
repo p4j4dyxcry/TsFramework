@@ -245,7 +245,7 @@ TsVertexSkin* TsColliderRenderObject::CreateSphereVertex()
     TsVertexSkin * pVertex;
     TsSphereMeshCreater creater;
 
-    TsInt div = 6;  //‹…‚Ì•ªŠ„”
+    TsInt div = 12;  //‹…‚Ì•ªŠ„”
 
     creater.CreateSphere(div);
     auto posList = creater.GetPositions();
@@ -261,7 +261,7 @@ TsVertexSkin* TsColliderRenderObject::CreateSphereVertex()
     for (TsUint i = 0; i < m_vertexCount; ++i)
     {
         pVertex[i].pos = posList[index[i]];
-        pVertex[i].normal = posList[index[i]];
+        pVertex[i].normal = nomList[index[i]];
     }
 
     return pVertex;    
@@ -330,6 +330,19 @@ TsVertexSkin* TsColliderRenderObject::CreateBoxVertex()
     TsVector3 right_up_front    = TsVector3( 0.5, 0.5,-0.5);
     TsVector3 right_down_front  = TsVector3( 0.5,-0.5,-0.5);
 
+    //–@ü‚ğİ’è‚·‚é
+    for (TsInt i = 0; i < 6; ++i)
+        pVertex[i].normal = TsVector3::up;
+    for (TsInt i = 0; i < 6; ++i)
+        pVertex[6+i].normal = TsVector3::down;
+    for (TsInt i = 0; i < 6; ++i)
+        pVertex[12+i].normal = TsVector3::left;
+    for (TsInt i = 0; i < 6; ++i)
+        pVertex[18+i].normal = TsVector3::right;
+    for (TsInt i = 0; i < 6; ++i)
+        pVertex[24+i].normal = TsVector3::front;
+    for (TsInt i = 0; i < 6; ++i)
+        pVertex[30 + i].normal = TsVector3::back;
 
     //ã‚Ì–Ê
     pVertex[0].pos = left_up_back;
