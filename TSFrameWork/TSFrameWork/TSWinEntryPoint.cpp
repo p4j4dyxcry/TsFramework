@@ -67,7 +67,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsLightSetCBuffer * pLightSetCB = TsNew(TsLightSetCBuffer);
     pLightSetCB->CreateLightSetCBuffer( pDev );
     TsDirectioalLight * pLight = TsNew(TsDirectioalLight);
-    pLight->SetLocalRotate( TsQuaternion::CreateByEuler( 0 , -45 , -45 ) );
+    pLight->SetLocalRotate( TsQuaternion::CreateByEuler( 0 , -15 , -15 ) );
     pLightSetCB->AddLight( pLight );
 
     //load mesh
@@ -172,13 +172,13 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 
             if (TsWINGetKey(VK_UP))
             {
-                aabb.SetMin(aabb.GetMin() + TsVector3::up);
-                aabb.SetMax(aabb.GetMax() + TsVector3::up);
+                aabb.SetMin(aabb.GetMin() + TsVector3::front);
+                aabb.SetMax(aabb.GetMax() + TsVector3::front);
             }
             if (TsWINGetKey(VK_DOWN))
             {
-                aabb.SetMin(aabb.GetMin() + TsVector3::down);
-                aabb.SetMax(aabb.GetMax() + TsVector3::down);
+                aabb.SetMin(aabb.GetMin() + TsVector3::back);
+                aabb.SetMax(aabb.GetMax() + TsVector3::back);
             }
 
             if (TsWINGetKey('Z'))
@@ -199,7 +199,10 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
                 obbMesh.SetColor(0, 1, 0, 1);
             }
 
-            auto pBlendState = TsResourceManager::Find<TsBlendState>( "ALPHA_BLEND" );
+            size_t z = sizeof(TsLightSetCBuffer::LightData) / sizeof(TsF32);
+
+            //auto pBlendState = TsResourceManager::Find<TsBlendState>("ALPHA_BLEND");
+            auto pBlendState = TsResourceManager::Find<TsBlendState>( "NONE" );
             pDev->GetDC()->SetBlendState( pBlendState );
             pDev->GetDC()->ApplyBlendState();
 

@@ -22,11 +22,14 @@ TsBool TsComputeLisPSM::ComputeLisPSM()
     // Z軸：シャドウマップの奥行き(縦)方向(viewVector)
     // T要素：ゼロ
     TsF32 sinGamma;
+
+    TsVector3 lightDir = -m_lightDir;
+
     TsMatrix mtxViewLight , mtxLightView;
     {
         // 光線方向ベクトルをビュー座標系へ変換してupVectorとする。
         // (light.directionは正規化されている。)
-        TsVector3 upVector = m_lightDir.Normalized();
+        TsVector3 upVector = lightDir.Normalized();
 
         upVector = m_viewMatrix.TransformNormal( upVector );
         upVector.Normalize();
@@ -85,10 +88,10 @@ TsBool TsComputeLisPSM::ComputeLisPSM()
         // ワールド座標系での光線方向をもとめる。
         TsVector3 vtLight;
 
-        vtLight = m_lightDir;
+        vtLight = lightDir;
 
         // 光線発生面を計算する。
-        lightSrcFace.Init( m_lightDir , m_eyePostion , m_sceneBoundingBox );
+        lightSrcFace.Init(lightDir, m_eyePostion, m_sceneBoundingBox);
 
         // 光源座標系へ変換しておく。
         lightSrcFace.Transform( m_viewMatrix * mtxViewLight );
@@ -258,9 +261,8 @@ TsBool TsComputeLisPSM::UpdateShadowMatrix()
     // Compute Light Space Perspective Shadow Map
     ComputeLisPSM();
 
-    //m_viewMatrix = TsMatrix::CreateLookAt( -m_lightDir *20 , TsVector3::zero , TsVector3::front );
-    //m_lightProjectionMatrix = TsMatrix::CreateOrtho( 1024/32, 1024/32, 3 , 50 );
-
+    m_viewMatrix = TsMatrix::CreateLookAt( m_lightDir *100 , TsVector3::zero , TsVector3::front );
+    m_lightProjectionMatrix = TsMatrix::CreateOrtho( 1024/4, 1024/4, 1 , 500 );
     m_lVPMatrix = m_viewMatrix * m_lightProjectionMatrix;
     return TS_TRUE;
 }

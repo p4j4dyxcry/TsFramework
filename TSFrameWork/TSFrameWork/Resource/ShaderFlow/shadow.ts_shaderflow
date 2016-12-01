@@ -16,19 +16,8 @@
       <Slot/>
     </Input>
     <Output>
-      <Slot Slot="ShadowMap"/>  
+      <Slot Slot="Main"/>  
       <Depth Slot="Main"/>
-    </Output>
-  </Pass>
-
-  <Pass Name ="pass0"
-        Shader ="ShadowMap">
-    <Input>
-      <Slot/>
-    </Input>
-    <Output>
-        <Slot Slot="ShadowMap"/>
-        <Depth Slot="ShadowDepth"/>
     </Output>
   </Pass>
     
@@ -42,8 +31,19 @@
         <Slot Slot="UV"/>
         <Depth Slot="Main"/>
     </Output>
+  </Pass>    
+
+  <Pass Name ="pass0"
+        Shader ="ShadowMap">
+    <Input>
+      <Slot/>
+    </Input>
+    <Output>
+        <Slot Slot="ShadowMap"/>
+        <Depth Slot="ShadowDepth"/>
+    </Output>
   </Pass>
-    
+        
   <Pass Name ="pass1"
         Shader ="GBuffer">
     <Input>

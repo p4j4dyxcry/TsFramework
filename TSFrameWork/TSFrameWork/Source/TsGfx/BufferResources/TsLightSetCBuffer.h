@@ -16,15 +16,15 @@ public:
 
     struct LightData
     {
-        TsMatrix            worldToShadowMatrix;    //directional Only
-        TsFloat4            color;
-        TsVector3           pos;
-        TsVector3           dir;
+      TsMatrix            worldToShadowMatrix;    //directional Only
+      TsFloat4            color;
+      TsVector4           pos;
+      TsVector4           dir;
 
-        TsUint              type;
-        TsF32               intensity;
-        TsF32               range;
-        TsF32               angle;
+      TsUint              type;
+      TsF32               intensity;
+      TsF32               range;
+      TsF32               angle;
     };
     struct LightCB
     {

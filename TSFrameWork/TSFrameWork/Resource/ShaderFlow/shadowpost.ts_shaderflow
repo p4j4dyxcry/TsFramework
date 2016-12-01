@@ -8,8 +8,18 @@
         <Slot Slot="ShadowMap"/>
     </Input>
     <Output>
-        <Slot Slot="Main"/>
-        <Depth Slot="Main"/>
+        <Slot Slot="Temp"/>
     </Output>
-  </Pass>    
+  </Pass> 
+    
+  <Pass Name ="Blend"
+        Shader ="Blend">
+    <Input>
+        <Slot Slot="Color"/>
+        <Slot Slot="Temp"/>
+    </Input>
+    <Output>
+        <Slot Slot="Main"/>
+    </Output>
+  </Pass>     
 </FLow>

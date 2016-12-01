@@ -12,7 +12,7 @@ float PCF8(Texture2D shadowMap,
     float  maxDepthSlope = max(abs(ddx(shadowUV.z)), abs(ddy(shadowUV.z)));
     
     float  shadowThreshold = 1.0f;      // シャドウにするかどうかの閾値です.
-    float  bias            = 0.0015f;     // 固定バイアスです.
+    float  bias            = 0.01f;     // 固定バイアスです.
     float  slopeScaledBias = 0.01f;     // 深度傾斜.
     float  depthBiasClamp  = 0.1f;      // バイアスクランプ値.
     
@@ -20,7 +20,7 @@ float PCF8(Texture2D shadowMap,
     shadowBias = min( shadowBias, depthBiasClamp );
     float cmp = (shadowUV.z - shadowBias);
 
-    float sampleScale = 4;
+    float sampleScale = 1.5f;
 
     //! texelのサイズを求める
     float2 n = 1.0f / GetTextureSize( shadowMap ) * sampleScale;
@@ -69,7 +69,7 @@ float PCF8(Texture2D shadowMap,
 
     s /= 9.0f;
 
-    return 1-s;
+    return s;
 }
 
 
@@ -99,5 +99,14 @@ float4 main( PS_SS_INPUT_UVx1 In ,
 
     float s = PCF8(ShadowMap, ShadowSmp, float3(shadowUV, shadowPos.z));
 
-    return float4( s,s,s, 1 );
+    float r = ShadowMap.Sample(linearSample, shadowUV.xy);
+    float g = ShadowMap.Sample(linearSample, In.uv0).r;
+    
+    s = lerp(0.5, 1, s);
+    float3 dir = g_LightData[0].dir.xyz ;
+    float d = max(dot((dir), normalize(normal)),0)*0.5+0.5;
+
+    d = min(d,s);
+
+    return float4(s,s,s, 1);
 }

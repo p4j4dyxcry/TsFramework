@@ -7,12 +7,12 @@
   <DepthStencil
     ZEnable="true"
     ZWriteEnable="true"
-	 Func="LESS">
+	Func="LESS">
   </DepthStencil>
   <Rasterize
     FillMode="SOLID"
     CullMode="CCW"
-    AntiAlias="true">
+    AntiAlias="false">
   </Rasterize>  
   <BlendState
     BlendMode ="NONE">
