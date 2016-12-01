@@ -668,6 +668,8 @@ TsBool CollisionAABBAndSphere(const TsAABB<T>& aabb,
     TsInt sz = sizeof(T) / sizeof(TsF32);
 
     TsF32 len = 0;
+
+    //ì_Ç∆AABBÇÃç≈íZãóó£ÇãÅÇﬂÇÈ
     for (TsInt i = 0; i < sz; ++i)
     {
         if (center[i] < min[i])
@@ -929,4 +931,18 @@ TsBool CollisionOBBAndOBB   ( const TsOBB& obb0,
     if (fabsf(t[1] * R[0][2] - t[0] * R[1][2]) > ra + rb)return TS_FALSE;
 
     return TS_TRUE;
+}
+
+//----------------------------------------------------------
+//! OBBÅ@Ç∆ AABB
+//----------------------------------------------------------
+TsBool CollisionOBBAndAABB  ( const TsOBB& obb,
+                              const TsAABB3D& aabb,
+                              TsF32 tolerance )
+{
+    TsOBB aabbToObb;
+    aabbToObb.SetCenter ( aabb.GetCenter() );
+    aabbToObb.SetScale  ( (aabb.GetMax() - aabb.GetMin()) /2.0f);
+
+    return CollisionOBBAndOBB(obb, aabbToObb, tolerance);
 }

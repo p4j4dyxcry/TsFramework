@@ -57,6 +57,7 @@ static const TsF32 COLLISION_DEFAULT_TOLERANCE = FLT_EPSILON;
 //  @OBBとレイ              CollisionOBBAndRay()
 //  @OBBと線分              CollisionOBBAndLine()
 //  @OBBとOBB               CollisionOBBAndOBB()
+//  @OBBとAABB              CollisionOBBAndAABB()
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -336,6 +337,15 @@ TsBool CollisionOBBAndLine  ( const TsOBB& obb,
 //  @param  obb            OBB 1
 //  @param  obb            OBB 2
 //----------------------------------------------------------
-TsBool CollisionOBBAndOBB   ( const TsOBB& obb,
-                              const TsOBB& line,
+TsBool CollisionOBBAndOBB   ( const TsOBB& obb0,
+                              const TsOBB& obb1,
+                              TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE);
+
+//----------------------------------------------------------
+//! OBB　と AABB
+//  @param  obb            OBB 
+//  @param  aabb           AABB 
+//----------------------------------------------------------
+TsBool CollisionOBBAndAABB  ( const TsOBB& obb,
+                              const TsAABB3D& aabb,
                               TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE);
