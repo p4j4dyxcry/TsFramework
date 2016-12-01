@@ -451,3 +451,17 @@ TsBool TsColliderRenderObject::SetTransform(TsTransForm* pTransform)
     m_geometoricTransform.SetParent(pTransform);
     return TS_TRUE;
 }
+
+TsBool TsColliderRenderObject::SetColor(TsF32 r, TsF32 g, TsF32 b, TsF32 a)
+{
+    return SetColor(TsFloat4(r, g, b, a));
+}
+TsBool TsColliderRenderObject::SetColor(const TsFloat4& color)
+{
+    m_pMaterial->SetColor(color);
+    return TS_TRUE;
+}
+TsBool TsColliderRenderObject::SetColor(const TsColor& color)
+{
+    return SetColor(color.m_color);
+}

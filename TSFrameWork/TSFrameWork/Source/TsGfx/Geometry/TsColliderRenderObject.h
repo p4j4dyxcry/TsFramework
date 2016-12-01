@@ -27,6 +27,11 @@ public:
 
     TsBool SetTransform(TsTransForm* pTransform);
     TsBool CreateRenderObject(TsDevice* pDev , TsCollider* pCollider);
+
+    TsBool SetColor(TsF32 r, TsF32 g, TsF32 b , TsF32 a);
+    TsBool SetColor(const TsFloat4& color);
+    TsBool SetColor(const TsColor& color);
+
 protected:
 
     void    SetTopology(TsCollider::eType colliderType);
