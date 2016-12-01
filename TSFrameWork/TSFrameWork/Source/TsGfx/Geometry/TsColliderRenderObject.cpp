@@ -64,6 +64,7 @@ TsBool TsColliderRenderObject::Create(TsDevice* pDev)
 TsBool TsColliderRenderObject::CreateRenderObject(TsDevice* pDev,
                                                   TsCollider* pCollider)
 {
+    m_pCollider = pCollider;
     Create(pDev);
 
     //’¸“_‚ÌÝ’è‚ð‚·‚é
@@ -174,7 +175,7 @@ TsBool  TsColliderRenderObject::CreateGeomtoricTransform(TsCollider* pCollider)
             TsVector3 translate = pOBB->GetCenter();
             TsQuaternion rotate = pOBB->GetRotate();
 
-            m_geometoricTransform.m_localScale = scale;
+            m_geometoricTransform.m_localScale = scale*2;
             m_geometoricTransform.m_localPosition = translate;
             m_geometoricTransform.m_localRotate = rotate;
             break;
@@ -421,6 +422,7 @@ TsBool TsColliderRenderObject::ApplyVertexBuffer(TsDeviceContext* context)
 //=========================================================================
 TsBool TsColliderRenderObject::UpdateTransform(TsDeviceContext* context)
 {
+    CreateGeomtoricTransform(m_pCollider);
     if (m_transformCBuffer)
         m_transformCBuffer->UpdateCBuffer(context);
     else
