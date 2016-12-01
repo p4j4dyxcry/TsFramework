@@ -77,9 +77,9 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsMeshFactory factory;
 //     factory.LoadModelFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx","Test");
 //     factory.LoadModelFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
-     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
+//     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
 //     factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
-//       factory.LoadModelFromFile(pDev, "Face.fbx","Test");
+       factory.LoadModelFromFile(pDev, "Face.fbx","Test");
 //     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
 //     auto pAnim = factory.CreateBakeAnimation( "Resource/fbx/Unity-Chan/move_unity.fbx" );
 //     auto pAnim = factory.CreateBakeAnimation( "sd_anim.fbx" );
@@ -90,25 +90,43 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 
 //     pAnim->SetTargetSkeleton( pSkeleton );
      pMesh->GetGeometry( 0 )->GetTransform()->GetRootTransform()->m_localScale = TsVector3::one * 0.1f;
-    for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++ i)   
-         queue.Add(pMesh->GetGeometry(i));
+//    for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++ i)   
+//         queue.Add(pMesh->GetGeometry(i));
 
     TsPlaneObject plane;
     TsTransForm planeTransform;
     planeTransform.m_localScale = TsVector3( 500 , 1 , 500 );
     plane.Create( pDev );
     plane.SetTransform( &planeTransform );
-    queue.Add( &plane );
+    queue.Add(&plane);
+
+    TsAABB3D aabb(TsVector3(-15, -15, -15), TsVector3(15, 15, 15));
+    TsLine3D line(TsVector3(-15, -15, -15), TsVector3(15, 15, 15));
+    TsOBB    obb;
+    obb.SetScale(TsVector3(10, 5, 5));
+    obb.SetRotate(TsQuaternion::CreateByEuler(45, 45, 0));
+    obb.SetCenter(TsVector3(15, 2.5f, 0));
+    TsColliderRenderObject obbMesh;
+    obbMesh.CreateRenderObject(pDev, &obb);
+
+    queue.Add(&obbMesh);
+
+    TsSphere3D sphere;
+    sphere.SetRadius(15);
+    TsColliderRenderObject sphereMesh;
+    sphereMesh.CreateRenderObject(pDev, &sphere);
+
+    queue.Add(&sphereMesh);
 
     rs.SetDrawQue( &queue );
 
     TsCamera* pCamera = pDev->GetDC()->GetMainCamera();
 
 //    pCamera->SetLocalRotate( TsQuaternion::AngleAxis( TsVector3::up , TsRadian( 180.0f ) ) );
-    pCamera->SetLocalPosition(TsVector3(0,1,-10));
-    pCamera->SetLockAt( TsVector3( TsVector3( 0 , 1 , 0 ) ) );
+    pCamera->SetLocalPosition(TsVector3(0,4,-50));
+    pCamera->SetLockAt( TsVector3( TsVector3( 0 , 4 , 0 ) ) );
 
-    pCamera->SetNearAndFar(0.5, 50);
+    pCamera->SetNearAndFar(4, 500);
 
     pCamera->CreateCBuffer(pDev);
 
@@ -119,6 +137,11 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 
     rs.SetDrawQue( &postQue , TsRenderSystem::TARGET_FLOW::POST_RENDERER );
     MSG msg;
+
+    TsVector3 obbCenter = TsVector3(15, 2.5f, 0);
+    TsVector3 obbEuler = TsVector3(45, 45, 0);
+
+
     while( true )
     {
         if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -132,6 +155,48 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
             //render 
 //            pAnim->Update();
             
+            if (TsWINGetKey(VK_LEFT))
+                obbCenter.x--;
+
+            if (TsWINGetKey(VK_RIGHT))
+                obbCenter.x++;
+
+            if (TsWINGetKey(VK_UP))
+                obbCenter.z++;
+            if (TsWINGetKey(VK_DOWN))
+                obbCenter.z--;
+
+            if (TsWINGetKey('A'))
+                obbEuler.y+=4;
+            if (TsWINGetKey('S'))
+                obbEuler.y-=4;
+
+            if (TsWINGetKey('Q'))
+                obbEuler.x += 4;
+
+            if (TsWINGetKey('W'))
+                obbEuler.x -= 4;
+
+            if (TsWINGetKey('Z'))
+                obbEuler.z += 4;
+
+            if (TsWINGetKey('X'))
+                obbEuler.z -= 4;
+
+            obb.SetCenter(obbCenter);
+            obb.SetRotate(TsQuaternion::CreateByEuler(obbEuler));
+
+            if (CollisionOBBAndSphere(obb, sphere))
+            {
+                obbMesh.SetColor(1, 0, 0, 1);
+                sphereMesh.SetColor(1, 0, 0, 1);
+            }
+            else
+            {
+                obbMesh.SetColor(0, 1, 0, 1);
+                sphereMesh.SetColor(0, 1, 0, 1);
+            }
+
             auto pBlendState = TsResourceManager::Find<TsBlendState>( "ALPHA_BLEND" );
             pDev->GetDC()->SetBlendState( pBlendState );
             pDev->GetDC()->ApplyBlendState();
