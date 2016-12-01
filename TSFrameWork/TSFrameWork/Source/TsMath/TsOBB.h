@@ -6,7 +6,7 @@
 //! © 2016 Yuki Tsuneyama
 #pragma once
 
-class TsOBB : TsCollider
+class TsOBB : public TsCollider
 {
 public:
     //----------------------------------------------------------

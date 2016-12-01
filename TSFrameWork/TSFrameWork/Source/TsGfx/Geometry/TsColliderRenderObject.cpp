@@ -198,7 +198,7 @@ TsBool  TsColliderRenderObject::CreateGeomtoricTransform(TsCollider* pCollider)
     m_transformCBuffer->SetTransform(&m_geometoricTransform);
 
     //行列計算モードは Translate * Rotate * Scale に変更する
-    m_transformCBuffer->SetMatrixConvertOrder(TsTransformCBuffer::MatrixConvertOrder::MTX_CVT_TRS);
+//    m_transformCBuffer->SetMatrixConvertOrder(TsTransformCBuffer::MatrixConvertOrder::MTX_CVT_TRS);
 
     return TS_TRUE;
 }
@@ -333,8 +333,8 @@ TsVertexSkin* TsColliderRenderObject::CreateBoxVertex()
     pVertex[14].pos = left_down_back;
 
     pVertex[15].pos = left_up_front;
-    pVertex[16].pos = left_down_back;
-    pVertex[17].pos = left_down_front;
+    pVertex[16].pos = left_down_front;
+    pVertex[17].pos = left_down_back;
 
     //右の面
     pVertex[18].pos = right_up_front;
@@ -342,8 +342,8 @@ TsVertexSkin* TsColliderRenderObject::CreateBoxVertex()
     pVertex[20].pos = right_down_front;
 
     pVertex[21].pos = right_up_back;
-    pVertex[22].pos = right_down_front;
-    pVertex[23].pos = right_down_back;
+    pVertex[22].pos = right_down_back;
+    pVertex[23].pos = right_down_front;
 
     //前の面
     pVertex[24].pos = left_up_front;
@@ -351,17 +351,17 @@ TsVertexSkin* TsColliderRenderObject::CreateBoxVertex()
     pVertex[26].pos = left_down_front;
 
     pVertex[27].pos = right_up_front;
-    pVertex[28].pos = left_down_front;
-    pVertex[29].pos = right_down_front;
-
+    pVertex[28].pos = right_down_front;
+    pVertex[29].pos = left_down_front;
     //後ろの面
     pVertex[30].pos = right_up_back;
     pVertex[31].pos = left_up_back;
     pVertex[32].pos = right_down_back;
 
     pVertex[33].pos = left_up_back;
-    pVertex[34].pos = right_down_back;
-    pVertex[35].pos = left_down_back;
+    pVertex[34].pos = left_down_back;
+    pVertex[35].pos = right_down_back;
+
 
     return pVertex;
 }
