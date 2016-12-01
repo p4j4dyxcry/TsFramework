@@ -35,6 +35,7 @@ public:
     T GetCenter()const;
     TsInt    GetVertexSize()const;
     TsVector<T> GetVertexList()const;
+    TsVector<TsLine<T>> GetEdgeList()const;
 
 
     //! operator

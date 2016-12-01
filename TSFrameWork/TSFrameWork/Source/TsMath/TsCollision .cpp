@@ -660,15 +660,22 @@ template<typename T>
 TsBool CollisionAABBAndSphere(const TsAABB<T>& aabb,
                               const TsSphere<T>& sphere)
 {
-    TsVector<T>&& v = aabb.GetVertexList();
+    const T& center = sphere.GetCenter();
+    const T& min = aabb.GetMin();
+    const T& max = aabb.GetMax();
+    TsF32 r = sphere.GetRadius();
 
-    for (auto it : v)
+    TsInt sz = sizeof(T) / sizeof(TsF32);
+
+    TsF32 len = 0;
+    for (TsInt i = 0; i < sz; ++i)
     {
-        //‘S‚Ä‚ÌAABB‚Ì’¸“_‚Æ‰~or‹…‚Ì‚ ‚½‚è”»’è‚ðs‚¤
-        if ( CollisionSphereAndPoint(sphere, it) )
-            return TS_TRUE;
+        if (center[i] < min[i])
+            len += (center[i] - min[i]) * (center[i] - min[i]);
+        if (center[i] > max[i])
+            len += (center[i] - max[i]) * (center[i] - max[i]);
     }
-    return TS_FALSE;
+    return len <= r*r;
 }
 
 //----------------------------------------------------------

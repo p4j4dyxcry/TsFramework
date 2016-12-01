@@ -122,12 +122,62 @@ TsVector<TsVector3> TsAABB<TsVector3>::GetVertexList()const
     vector[0] = m_min;
     vector[1] = m_min;  vector[1].x = m_max.x;
     vector[2] = m_min;  vector[2].y = m_max.y;
-    vector[3] = m_max;
+    vector[3] = m_min;  vector[3].z = m_max.z;
 
-    vector[4] = vector[0] * TsVector3::back;
-    vector[5] = vector[1] * TsVector3::back;
-    vector[6] = vector[2] * TsVector3::back;
-    vector[7] = vector[3] * TsVector3::back;
+    vector[4] = m_max;
+    vector[5] = m_max;   vector[5].x = m_min.x;
+    vector[6] = m_max;   vector[6].y = m_min.y;
+    vector[7] = m_max;   vector[7].z = m_min.z;
+
+    return vector;
+}
+
+TsVector<TsLine2D> TsAABB<TsVector2>::GetEdgeList()const
+{
+    TsVector<TsLine2D> vector;
+    auto&& pList = GetVertexList();
+
+    vector.resize(4);
+    vector[0].SetBegin(pList[0]);
+    vector[0].SetEnd(pList[1]);
+
+    vector[1].SetBegin(pList[1]);
+    vector[1].SetEnd(pList[2]);
+
+    vector[2].SetBegin(pList[2]);
+    vector[2].SetEnd(pList[3]);
+
+    vector[3].SetBegin(pList[3]);
+    vector[3].SetEnd(pList[0]);
+
+    return vector;
+}
+
+TsVector<TsLine3D> TsAABB<TsVector3>::GetEdgeList()const
+{
+    TsVector<TsLine3D> vector;
+    auto&& pList = GetVertexList();
+
+    vector.resize(6);
+
+    vector[0].SetBegin(pList[0]);
+    vector[0].SetEnd(pList[1]);
+
+    vector[1].SetBegin(pList[0]);
+    vector[1].SetEnd(pList[2]);
+
+    vector[2].SetBegin(pList[0]);
+    vector[2].SetEnd(pList[3]);
+
+
+    vector[3].SetBegin(pList[7]);
+    vector[3].SetEnd(pList[6]);
+
+    vector[4].SetBegin(pList[7]);
+    vector[4].SetEnd(pList[5]);
+
+    vector[5].SetBegin(pList[7]);
+    vector[5].SetEnd(pList[4]);
 
     return vector;
 }
