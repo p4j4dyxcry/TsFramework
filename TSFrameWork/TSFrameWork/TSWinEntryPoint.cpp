@@ -90,8 +90,8 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 
 //     pAnim->SetTargetSkeleton( pSkeleton );
      pMesh->GetGeometry( 0 )->GetTransform()->GetRootTransform()->m_localScale = TsVector3::one * 0.1f;
-//    for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++ i)   
-//         queue.Add(pMesh->GetGeometry(i));
+    for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++ i)   
+         queue.Add(pMesh->GetGeometry(i));
 
     TsPlaneObject plane;
     TsTransForm planeTransform;
