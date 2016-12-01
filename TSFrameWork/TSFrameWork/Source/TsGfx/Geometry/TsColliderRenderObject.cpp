@@ -53,7 +53,7 @@ TsBool TsColliderRenderObject::Create(TsDevice* pDev)
     {
         m_pMaterial = TsNew(TsDefaultMatrial);
         m_pMaterial->CreateMaterial(pDev);
-        m_pMaterial->SetColor(TsFloat4(1, 0, 0, 1));
+        m_pMaterial->SetColor(TsFloat4(0, 1, 0, 1));
     }
     return TS_TRUE;
 }
@@ -77,6 +77,9 @@ TsBool TsColliderRenderObject::CreateRenderObject(TsDevice* pDev,
 
     return TS_TRUE;
 }
+//=========================================================================
+//! 頂点トポロジの設定を行う
+//=========================================================================
 void TsColliderRenderObject::SetTopology(TsCollider::eType type)
 {
     switch ( type )
@@ -97,6 +100,9 @@ void TsColliderRenderObject::SetTopology(TsCollider::eType type)
     }
 }
 
+//----------------------------------------------------------
+//! 形状に合わせた頂点バッファの作成
+//----------------------------------------------------------
 TsBool  TsColliderRenderObject::CreateVertexBuffer(TsDevice* pDev, TsCollider* pCollider)
 {
     switch (pCollider->GetType())
@@ -134,6 +140,9 @@ TsBool  TsColliderRenderObject::CreateVertexBuffer(TsDevice* pDev, TsCollider* p
     return TS_TRUE;
 }
 
+//----------------------------------------------------------
+//! 形状の姿勢を作成する
+//----------------------------------------------------------
 TsBool  TsColliderRenderObject::CreateGeomtoricTransform(TsCollider* pCollider)
 {
     //各形状をTransformに変換する
@@ -203,6 +212,9 @@ TsBool  TsColliderRenderObject::CreateGeomtoricTransform(TsCollider* pCollider)
     return TS_TRUE;
 }
 
+//----------------------------------------------------------
+//! 線分メッシュを作成する
+//----------------------------------------------------------
 template<typename T>
 TsVertexSkin* TsColliderRenderObject::CreateLineVertex( TsLine<T>* pLine )
 {
@@ -224,6 +236,9 @@ TsVertexSkin* TsColliderRenderObject::CreateLineVertex( TsLine<T>* pLine )
     return pVertex;
 }
 
+//----------------------------------------------------------
+//! 球メッシュを作成する
+//----------------------------------------------------------
 TsVertexSkin* TsColliderRenderObject::CreateSphereVertex()
 {
     TsVertexSkin * pVertex;
@@ -251,6 +266,9 @@ TsVertexSkin* TsColliderRenderObject::CreateSphereVertex()
     return pVertex;    
 }
 
+//----------------------------------------------------------
+//! スプライトメッシュを作成する
+//----------------------------------------------------------
 TsVertexSkin* TsColliderRenderObject::CreateBox2DVertex()
 {
     TsVertexSkin * pVertex = nullptr;
@@ -288,6 +306,9 @@ TsVertexSkin* TsColliderRenderObject::CreateBox2DVertex()
     return pVertex;
 }
 
+//----------------------------------------------------------
+//! 立方体メッシュを作成する
+//----------------------------------------------------------
 TsVertexSkin* TsColliderRenderObject::CreateBoxVertex()
 {
     TsVertexSkin * pVertex = nullptr;
@@ -452,15 +473,26 @@ TsBool TsColliderRenderObject::SetTransform(TsTransForm* pTransform)
     return TS_TRUE;
 }
 
+//----------------------------------------------------------
+//! 色を設定する
+//----------------------------------------------------------
 TsBool TsColliderRenderObject::SetColor(TsF32 r, TsF32 g, TsF32 b, TsF32 a)
 {
     return SetColor(TsFloat4(r, g, b, a));
 }
+
+//----------------------------------------------------------
+//! 色を設定する
+//----------------------------------------------------------
 TsBool TsColliderRenderObject::SetColor(const TsFloat4& color)
 {
     m_pMaterial->SetColor(color);
     return TS_TRUE;
 }
+
+//----------------------------------------------------------
+//! 色を設定する
+//----------------------------------------------------------
 TsBool TsColliderRenderObject::SetColor(const TsColor& color)
 {
     return SetColor(color.m_color);
