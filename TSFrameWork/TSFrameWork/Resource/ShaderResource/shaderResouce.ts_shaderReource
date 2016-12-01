@@ -44,7 +44,31 @@
     Type  ="Texture2D"
     Format="FLOAT_R32G32B32A32"
     Size ="-1 -1">            
+  </RenderTarget>  
+    
+
+  <RenderTarget
+    Name  ="SSAO"
+    Type  ="Texture2D"
+    Format="FLOAT_R32G32B32A32"
+    Size ="-1 -1">            
+  </RenderTarget> 
+    
+    
+  <RenderTarget
+    Name  ="SSAO_Half"
+    Type  ="Texture2D"
+    Format="FLOAT_R32G32B32A32"
+    Size ="-1 -1">            
+  </RenderTarget>       
+    
+  <RenderTarget
+    Name  ="SSAO_Half2"
+    Type  ="Texture2D"
+    Format="FLOAT_R32G32B32A32"
+    Size ="-1 -1">            
   </RenderTarget>    
+ 
   
   <RenderTarget
     Name  ="UV"

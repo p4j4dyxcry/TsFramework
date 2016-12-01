@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FLow>
+  <Pass Name ="SSAO"
+    Shader ="SSAO">
+    <Input>
+      <Slot Slot ="NormalDepth"/>  
+    </Input>
+    <Output>
+      <Slot Slot="SSAO"/>
+    </Output>
+  </Pass> 
+    
+  <Pass Name ="GaussX"
+    Shader ="GaussX">
+    <Input>
+      <Slot Slot ="SSAO"/>  
+    </Input>
+    <Output>
+      <Slot Slot="SSAO_Half2"/>
+    </Output>
+  </Pass>
+
+  <Pass Name ="GaussY"
+    Shader ="GaussY">
+    <Input>
+      <Slot Slot ="SSAO_Half2"/>  
+    </Input>
+    <Output>
+      <Slot Slot ="SSAO_Half"/>
+    </Output>  
+  </Pass>    
+    
+  <Pass Name ="GaussX"
+    Shader ="GaussX">
+    <Input>
+      <Slot Slot ="SSAO_Half"/>  
+    </Input>
+    <Output>
+      <Slot Slot="SSAO_Half2"/>
+    </Output>
+  </Pass>
+
+  <Pass Name ="GaussY"
+    Shader ="GaussY">
+    <Input>
+      <Slot Slot ="SSAO_Half2"/>  
+    </Input>
+    <Output>
+      <Slot Slot ="SSAO_Half"/>
+    </Output>  
+  </Pass>      
+    
   <Pass Name ="GaussX"
     Shader ="GaussX">
     <Input>
@@ -42,9 +92,9 @@
   </Pass>   
 
   <Pass Name ="Add"
-    Shader ="Add">
+    Shader ="Blend">
     <Input>
-      <Slot Slot ="Color"/>
+      <Slot Slot ="SSAO_Half"/>
       <Slot Slot ="Temp1/4_2"/>
     </Input>
     <Output>

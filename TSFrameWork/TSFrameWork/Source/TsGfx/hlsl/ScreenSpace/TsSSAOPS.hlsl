@@ -47,7 +47,7 @@ static float3 g_samples32[32] =
 };
 static const int    SAMPLE_NUM = 16;
 static const float  INV_SAMPLE = 1.0f / (float)SAMPLE_NUM;
-static const float  g_radius = 2.0f;
+static const float  g_radius = 1.5f;
 
 float4 main( PS_SS_INPUT_UVx1 In ,
              Texture2D NormalMap : register( t0 ) ,
@@ -62,7 +62,7 @@ float4 main( PS_SS_INPUT_UVx1 In ,
     float3 rand3 = float3(random, Rand(float2(In.uv0.y, random)), Rand(float2(random, Rand(float2(random, In.uv0.y)))));
 
     float  depth  = normalDepth.w;
-    depth = DepthToLinear(depth);
+    depth = DepthToLinear(depth) ;
     float ao = 0;
     float radD = g_radius / depth;
     float2 se = 0;
@@ -76,17 +76,17 @@ float4 main( PS_SS_INPUT_UVx1 In ,
         float4 occNormalDepth = NormalMap.Sample( samp,se );
         float3 occNormal = occNormalDepth.xyz * 2.0 -1.0f;
         float  occDepth  = occNormalDepth.w;
-        occDepth = DepthToLinear(occDepth);
+        occDepth = DepthToLinear(occDepth) ;
         float depthDiff     = depth - occDepth;
         float normalDiff = (1.0f - dot(normalize(occNormal), normalize(normal)));
 
-        float falloff = 0.0000001f;
+        float falloff = 0.000001f;
         float strength = INV_SAMPLE;
         a += depthDiff;
         ao += step(falloff, depthDiff) * normalDiff * (1.0f - smoothstep(falloff, strength, depthDiff));
 
     }
-    float toStrength = 50.0f;
+    float toStrength = 6.0;
 
     ao = 1.0f - toStrength * ao * INV_SAMPLE;
 
