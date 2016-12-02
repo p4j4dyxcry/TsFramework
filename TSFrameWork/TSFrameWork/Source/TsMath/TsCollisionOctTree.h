@@ -30,7 +30,11 @@ public:
     {}
 
     //! コライダをセットする
-    TsBool SetCollider(TsCollider* pCollider){ m_pCollider = pCollider; }
+    TsBool SetCollider(TsCollider* pCollider)
+    {
+        m_pCollider = pCollider; 
+        return TS_TRUE;
+    }
 
     //! コライダを取得する
     TsCollider* GetCollider(){ return m_pCollider; }
@@ -108,10 +112,13 @@ public:
             TsCollisionTreeForCollider* tail = m_pHead->m_pPrev;
             tail->m_pNext = ptr;
             ptr->m_pNext = m_pHead;
+            ptr->m_pPrev = tail;
             m_pHead->m_pPrev = ptr;
         }
         return TS_TRUE;
     }
+    //! 先頭コライダの取得
+    TsCollisionTreeForCollider* GetHead(){ return m_pHead; }
 private:
     //----------------------------------------------------------
     // propery
@@ -135,11 +142,18 @@ public:
     //! 初期化
     TsBool Initalize(const TsAABB3D& aabb, TsInt div = 3);
 
-    //! モートン番号を取得する
-    //  モートン番号とは8分木空間をIndex化したときにO(1)で所属する
-    //  セルのインデックスを特定するアルゴリズム。
-    TsU64 GetMorton(const TsAABB3D& range);
+    //! コライダの登録
+    TsBool Register(const TsAABB3D& aabb, TsCollisionTreeForCollider* pCollider);
+
+    //! 引数のaabbと衝突する可能性のあるコライダ群を取得する
+    TsVector<TsCollider*> GetCollisionList(const TsAABB3D& aabb);
+
 protected:
+    //! モートンオーダーを取得する
+    //  モートンオーダーとは8分木空間をIndex化したときにO(1)で所属する
+    //  セルのインデックスをAABBから特定するアルゴリズム。
+    TsU64 GetMortonOrder(const TsAABB3D& range);
+
     //----------------------------------------------------------
     // peropery
     //----------------------------------------------------------

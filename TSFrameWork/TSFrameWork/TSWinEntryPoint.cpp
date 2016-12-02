@@ -145,6 +145,28 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsVector3 obbCenter = TsVector3(15, 2.5f, 0);
     TsVector3 obbEuler = TsVector3(45, 45, 0);
 
+    TsCollisionOctTree octTree;
+    TsVector<TsAABB3D*> aabbList;
+    TsVector<TsColliderRenderObject*> renderList;
+    octTree.Initalize(TsAABB3D(TsVector3(-300, -300, -300), TsVector3(300, 300, 300)), 3);
+
+    for (TsInt i = 0; i < 250; ++i)
+    {
+        TsCollisionTreeForCollider* col = TsNew(TsCollisionTreeForCollider);
+        TsAABB3D * aabb = TsNew(TsAABB3D);
+        aabb->SetMin(TsVector3((rand() % 50) - 25, (rand() % 50) - 25, (rand() % 50) - 25));
+        aabb->SetMax(aabb->GetMin() + TsVector3(5, 5, 5));
+        col->SetCollider(aabb);
+        octTree.Register(*aabb, col);
+        TsColliderRenderObject* render;
+        render = TsNew(TsColliderRenderObject);
+        render->CreateRenderObject(pDev, aabb);
+
+        aabbList.push_back(aabb);
+        renderList.push_back(render);
+        queue.Add(render);
+    }
+
 
     while( true )
     {
@@ -197,6 +219,21 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
             {
                 aabbMesh.SetColor(0, 1, 0, 1);
                 obbMesh.SetColor(0, 1, 0, 1);
+            }
+
+            for (TsInt i = 0; i < 250; ++i)
+            {
+                auto list = octTree.GetCollisionList( *aabbList[i] );
+
+                for (auto it : list)
+                {
+
+                    if (it != aabbList[i] && CollisionAABBAndAABB(*(TsAABB3D*)(it), *aabbList[i]))
+                    {
+                        renderList[i]->SetColor(1, 0, 0, 1);
+                    }
+                }
+
             }
 
             size_t z = sizeof(TsLightSetCBuffer::LightData) / sizeof(TsF32);

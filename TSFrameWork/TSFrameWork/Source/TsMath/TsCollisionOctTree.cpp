@@ -1,5 +1,5 @@
 #include "../../TsAfx.h"
-
+#include <functional>
 
 
 TsCollisionOctTree::TsCollisionOctTree()
@@ -30,7 +30,7 @@ TsBool TsCollisionOctTree::Initalize( const TsAABB3D& aabb,
 }
 
 // 座標から空間番号を算出
-TsU64 TsCollisionOctTree::GetMorton(const TsAABB3D& aabb)
+TsU64 TsCollisionOctTree::GetMortonOrder(const TsAABB3D& aabb)
 {
     static auto ComputePointElement = [this](const TsVector3& p,const TsVector3& unit)
     {
@@ -81,4 +81,54 @@ TsU64 TsCollisionOctTree::GetMorton(const TsAABB3D& aabb)
         return 0xffffffff;
 
     return spaceNum;
+}
+
+TsBool TsCollisionOctTree::Register(const TsAABB3D& aabb, TsCollisionTreeForCollider* pCollider)
+{
+    TsU64 mortonOrder = GetMortonOrder(aabb);
+
+    m_pCells[mortonOrder].Add(pCollider);
+
+    return TS_TRUE;
+}
+
+//! 引数のaabbと衝突する可能性のあるコライダ群を取得する
+TsVector<TsCollider*> TsCollisionOctTree::GetCollisionList(const TsAABB3D& aabb)
+{
+    TsVector<TsCollider*> result;
+
+    //とりあえず1024個分のメモリを取っておく
+    result.reserve(1024);
+
+    //その空間と子空間のコリジョンデータの収集を行う
+    std::function<void(TsU64)> CollectSubCellCollisionList = [&, this](TsU64 id)
+    {
+        auto head = m_pCells[id].GetHead();
+
+        if ( head!= nullptr )
+        {
+            result.push_back(head->GetCollider());
+
+            auto ptr = head->Next();
+
+            //! 循環リストの最後まで探索する
+            for (; ptr != head; ptr = ptr->Next())
+                result.push_back(ptr->GetCollider());
+        }
+
+        TsU64 nextID;
+        for (TsInt i = 0; i < 4; i++)
+        {
+            nextID = id * 4 + 1 + i;
+            if (nextID < m_cellNum)
+            {
+                CollectSubCellCollisionList(nextID);
+            }
+        }
+    };
+    TsU64 mortonOrder = GetMortonOrder(aabb);
+
+    CollectSubCellCollisionList(mortonOrder);
+
+    return result;
 }
