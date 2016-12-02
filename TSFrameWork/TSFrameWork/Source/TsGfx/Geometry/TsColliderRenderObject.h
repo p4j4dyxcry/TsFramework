@@ -57,4 +57,7 @@ protected:
     TsCollider *            m_pCollider;    
     D3D_PRIMITIVE_TOPOLOGY  m_topology;
     TsUint                  m_vertexCount;
+    TsBool                  m_useWireFrame;
+    TsRasterizerState*      m_pRasterState;
+    TsDepthStencilState*    m_pDepthStencilState;
 };

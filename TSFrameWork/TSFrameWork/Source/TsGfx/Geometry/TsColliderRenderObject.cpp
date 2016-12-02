@@ -9,7 +9,10 @@ m_transformCBuffer(nullptr),
 m_pMaterial(nullptr),
 m_pCollider(nullptr),
 m_topology(D3D_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_POINTLIST),
-m_vertexCount(0)
+m_vertexCount(0),
+m_pDepthStencilState(nullptr),
+m_pRasterState(nullptr),
+m_useWireFrame(TS_TRUE)
 {
     //m_vertex[0].pos = TsVector3(-.5f, 0, .5f);
     //m_vertex[1].pos = TsVector3(.5f, 0, .5f);
@@ -33,7 +36,6 @@ m_vertexCount(0)
 TsColliderRenderObject::~TsColliderRenderObject()
 {
     TsSafeDelete(m_pVertex);
-    TsSafeDelete(m_pVertex);
     TsSafeDelete(m_transformCBuffer);
     TsSafeDelete(m_pMaterial);
 }
@@ -55,6 +57,25 @@ TsBool TsColliderRenderObject::Create(TsDevice* pDev)
         m_pMaterial->CreateMaterial(pDev);
         m_pMaterial->SetColor(TsFloat4(0, 1, 0, 1));
     }
+
+    if (m_pRasterState == nullptr)
+    {
+        m_pRasterState = TsNew(TsRasterizerState);
+        m_pRasterState->SetAntiAliasMode(TS_TRUE);
+        m_pRasterState->SetCullMode(TS_CULL_MODE::NONE);
+        m_pRasterState->SetFillMode(TS_FILL_MODE::WIREFRAME);
+        m_pRasterState->CreateRasterizerState(pDev);
+    }
+
+    if (m_pDepthStencilState == nullptr)
+    {
+        m_pDepthStencilState = TsNew(TsDepthStencilState);
+        m_pDepthStencilState->SetDepthTestFunc(TS_COMPARISON_FUNC::LESS);
+        m_pDepthStencilState->SetZEnable(TS_TRUE);
+        m_pDepthStencilState->SetZWriteEnable(TS_TRUE);
+        m_pDepthStencilState->CreateDepthStencil(pDev);
+    }
+
     return TS_TRUE;
 }
 
@@ -245,7 +266,7 @@ TsVertexSkin* TsColliderRenderObject::CreateSphereVertex()
     TsVertexSkin * pVertex;
     TsSphereMeshCreater creater;
 
-    TsInt div = 12;  //‹…‚Ì•ªŠ„”
+    TsInt div = 6;  //‹…‚Ì•ªŠ„”
 
     creater.CreateSphere(div);
     auto posList = creater.GetPositions();
@@ -408,8 +429,29 @@ TsBool TsColliderRenderObject::Draw(TsDeviceContext* context)
 {
     if (m_pVertexBuffer)
     {
+        auto contextDSS = context->GetDepthStencilState();
+        auto contextRSS = context->GetRasterState();
+
+        if (m_useWireFrame)
+        {
+            context->SetDepthStencilState(m_pDepthStencilState);
+            context->SetRasterizerState(m_pRasterState);
+
+            context->ApplyDepthStencil();
+            context->ApplyRasterizer();
+        }
         context->SetTopology(m_topology);
         context->Draw(m_vertexCount, 0);
+
+        if (m_useWireFrame)
+        {
+            context->SetDepthStencilState(contextDSS);
+            context->SetRasterizerState(contextRSS);
+
+            context->ApplyDepthStencil();
+            context->ApplyRasterizer();
+        }
+
     }
     else
     {

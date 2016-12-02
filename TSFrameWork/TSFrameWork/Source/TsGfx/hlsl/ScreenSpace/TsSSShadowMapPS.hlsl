@@ -7,17 +7,7 @@ float PCF8(Texture2D shadowMap,
            SamplerComparisonState ShadowSmp ,
            float3 shadowUV)
 {
-
-    // 最大深度傾斜を求める.
-    float  maxDepthSlope = max(abs(ddx(shadowUV.z)), abs(ddy(shadowUV.z)));
-    
-    float  shadowThreshold = 1.0f;      // シャドウにするかどうかの閾値です.
-    float  bias            = 0.01f;     // 固定バイアスです.
-    float  slopeScaledBias = 0.01f;     // 深度傾斜.
-    float  depthBiasClamp  = 0.1f;      // バイアスクランプ値.
-    
-    float  shadowBias = bias + slopeScaledBias * maxDepthSlope;
-    shadowBias = min( shadowBias, depthBiasClamp );
+    float  shadowBias = 0.0008f;
     float cmp = (shadowUV.z - shadowBias);
 
     float sampleScale = 1.5f;

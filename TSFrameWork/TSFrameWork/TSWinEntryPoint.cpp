@@ -67,7 +67,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsLightSetCBuffer * pLightSetCB = TsNew(TsLightSetCBuffer);
     pLightSetCB->CreateLightSetCBuffer( pDev );
     TsDirectioalLight * pLight = TsNew(TsDirectioalLight);
-    pLight->SetLocalRotate( TsQuaternion::CreateByEuler( 0 , -15 , -15 ) );
+    pLight->SetLocalRotate( TsQuaternion::CreateByEuler( 0 , -75 , -75 ) );
     pLightSetCB->AddLight( pLight );
 
     //load mesh
