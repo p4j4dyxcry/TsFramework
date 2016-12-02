@@ -129,6 +129,8 @@
     <ClCompile Include="Source\TsMath\TsAABB.cpp" />
     <ClCompile Include="Source\TsMath\TsBone.cpp" />
     <ClCompile Include="Source\TsMath\TsCollision .cpp" />
+    <ClCompile Include="Source\TsMath\TsCollisionOctTree.cpp" />
+    <ClCompile Include="Source\TsMath\TsCollisionQuadTree.cpp" />
     <ClCompile Include="Source\TsMath\TsColor.cpp" />
     <ClCompile Include="Source\TsMath\TsMathUTility.cpp" />
     <ClCompile Include="Source\TsMath\TsMatrix.cpp" />
@@ -241,6 +243,8 @@
     <ClInclude Include="Source\TsMath\TsBone.h" />
     <ClInclude Include="Source\TsMath\TsCollider.h" />
     <ClInclude Include="Source\TsMath\TsCollision.h" />
+    <ClInclude Include="Source\TsMath\TsCollisionOctTree.h" />
+    <ClInclude Include="Source\TsMath\TsCollisionQuadTree.h" />
     <ClInclude Include="Source\TsMath\TsColor.h" />
     <ClInclude Include="Source\TsMath\TsMath.h" />
     <ClInclude Include="Source\TsMath\TsMathUTility.h" />

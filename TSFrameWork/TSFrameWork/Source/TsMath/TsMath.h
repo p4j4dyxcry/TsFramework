@@ -17,3 +17,5 @@
 #include "TsSphereMeshCreater.h"
 #include "TsMathUTility.h"
 #include "TsCollision.h"
+#include "TsCollisionQuadTree.h"
+#include "TsCollisionOctTree.h"
