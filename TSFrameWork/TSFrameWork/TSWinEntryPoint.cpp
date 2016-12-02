@@ -150,12 +150,12 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsVector<TsColliderRenderObject*> renderList;
     octTree.Initalize(TsAABB3D(TsVector3(-300, -300, -300), TsVector3(300, 300, 300)), 3);
 
-    for (TsInt i = 0; i < 250; ++i)
+    for (TsInt i = 0; i < 1024; ++i)
     {
         TsCollisionTreeForCollider* col = TsNew(TsCollisionTreeForCollider);
         TsAABB3D * aabb = TsNew(TsAABB3D);
-        aabb->SetMin(TsVector3((rand() % 50) - 25, (rand() % 50) - 25, (rand() % 50) - 25));
-        aabb->SetMax(aabb->GetMin() + TsVector3(5, 5, 5));
+        aabb->SetMin(TsVector3((rand() % 600) - 300, (rand() % 600) - 300, (rand() % 600) - 300));
+        aabb->SetMax(aabb->GetMin() + TsVector3(8, 8, 8));
         col->SetCollider(aabb);
         octTree.Register(*aabb, col);
         TsColliderRenderObject* render;
@@ -220,8 +220,8 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
                 aabbMesh.SetColor(0, 1, 0, 1);
                 obbMesh.SetColor(0, 1, 0, 1);
             }
-
-            for (TsInt i = 0; i < 250; ++i)
+            DWORD t = timeGetTime();
+            for (TsInt i = 0; i < 1024; ++i)
             {
                 auto list = octTree.GetCollisionList( *aabbList[i] );
 
@@ -233,8 +233,20 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
                         renderList[i]->SetColor(1, 0, 0, 1);
                     }
                 }
-
             }
+
+            TSUT::TsLog("8分木:%d ms　\n",timeGetTime()-t);
+            t = timeGetTime();
+            for (TsInt i = 0; i < 1024; ++i)
+            for (TsInt j = 0; j < 1024; ++j)
+            {
+                if (i == j)continue;
+                if (CollisionAABBAndAABB(*aabbList[j], *aabbList[i]))
+                {
+                    renderList[i]->SetColor(1, 0, 0, 1);
+                }
+            }
+            TSUT::TsLog("総当 :%d ms　\n", timeGetTime() - t);
 
             size_t z = sizeof(TsLightSetCBuffer::LightData) / sizeof(TsF32);
 
