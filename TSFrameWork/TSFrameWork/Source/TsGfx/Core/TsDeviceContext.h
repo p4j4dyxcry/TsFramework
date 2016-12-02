@@ -132,6 +132,18 @@ public:
     // @return True on Success
     TsBool SetBlendState( TsBlendState * pBlendState );
 
+    //! DepthStencilStateを取得する
+    const TsDepthStencilState* GetDepthStencilState()const{ return m_pDepthStencilState; };
+    TsDepthStencilState* GetDepthStencilState(){ return m_pDepthStencilState; }
+
+    //! BlendStateを取得する
+    const TsRasterizerState* GetRasterState()const{ return m_pRasterizerState; };
+    TsRasterizerState* GetRasterState(){ return m_pRasterizerState; }
+
+    //! BlendStateを取得する
+    const TsBlendState* GetBlendState()const{ return m_pBlendState; };
+    TsBlendState* GetBlendState(){ return m_pBlendState; }
+
     //=============================================
     // ! SetCBuffer
     // CBuffer をパイプラインにセットする
