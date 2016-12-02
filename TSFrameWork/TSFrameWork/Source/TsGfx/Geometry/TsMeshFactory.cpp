@@ -88,14 +88,22 @@ TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev,
 
             TSUT::TsFilePathAnalyzer ana = filename;
             
-            TsString filepath = ana.GetLocalDirectory() + loader.GetAlbedoTexturePath( i );
-            material->LoadAlbedoTextureFromFile( pDev , filepath );
+            if (loader.GetAlbedoTexturePath(i) != "")
+            {
+                TsString filepath = ana.GetLocalDirectory() + loader.GetAlbedoTexturePath(i);
+                material->LoadAlbedoTextureFromFile(pDev, filepath);
+            }
+            if (loader.GetNormalTexturePath(i) != "")
+            {
+                TsString filepath = ana.GetLocalDirectory() + loader.GetNormalTexturePath(i);
+                material->LoadNormalTextureFromFile(pDev, filepath);
+            }
 
-            filepath = ana.GetLocalDirectory() + loader.GetNormalTexturePath( i );
-            material->LoadNormalTextureFromFile( pDev , filepath );
-
-            filepath = ana.GetLocalDirectory() + loader.GetSpeculerTexturePath( i );
-            material->LoadSpeculerTextureFromFile( pDev , filepath );
+            if (loader.GetSpeculerTexturePath(i) != "")
+            {
+                TsString filepath = ana.GetLocalDirectory() + loader.GetSpeculerTexturePath(i);
+                material->LoadSpeculerTextureFromFile(pDev, filepath);
+            }
 
 
             TsInt id = mesh->GetIndexNum();

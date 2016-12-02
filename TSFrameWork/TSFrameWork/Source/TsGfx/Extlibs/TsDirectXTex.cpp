@@ -37,7 +37,7 @@ TsDirectXTex::Result TsDirectXTex::LoadFromFile( ID3D11Device* pDev , const TsCh
     }
     if( FAILED( hr ) )
     {
-        TSUT::TsLog( "Texture Load Error \n\t %ws \n" , filename );
+        TSUT::TsLog( "Texture Load Error \n\t \"%s\" \n" , filename );
         return result;
     }
 
@@ -49,7 +49,7 @@ TsDirectXTex::Result TsDirectXTex::LoadFromFile( ID3D11Device* pDev , const TsCh
                                    &result.pSrv );
     if( FAILED( hr ) )
     {
-        TSUT::TsLog( "Texture Load Error \n\t %ws \n" , filename );
+        TSUT::TsLog( "Texture Load Error \n\t \"%s\" \n" , filename );
         return result;
     }
     result.IsAlphaEnable = image.IsAlphaAllOpaque();
