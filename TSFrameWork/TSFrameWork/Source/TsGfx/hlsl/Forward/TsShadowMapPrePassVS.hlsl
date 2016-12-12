@@ -12,7 +12,7 @@ VS_OUT main(VS_SKIN_INPUT input)
     LightData lightData = g_LightData[0];
     float4x4 shadowMtx = lightData.worldToShadowMatrix;
 
-    output.worldPos = mul(ComputeSkinMesh(input), g_MtxWorld);
+    output.worldPos = ComputeWorldPos( input );
     output.pos = mul(output.worldPos, shadowMtx);
     output.worldPos = output.pos;
     return output;

@@ -176,6 +176,26 @@ public:
     // @return True on Success
     TsBool DrawIndex( TsInt index , TsInt startSlot = 0 , TsInt indexLocation = 0 );
 
+    //=============================================
+    // ! Draw Instance
+    // ジオメトリを頂点をGPUに転送する
+    // @return True on Success
+    TsBool DrawInstance( TsInt vtxNum , 
+                         TsInt instanceNum , 
+                         TsInt instanceLocation = 0 ,
+                         TsInt startSlot = 0 );
+
+    //=============================================
+    // ! DrawIndex Instance
+    // ジオメトリを頂点をGPUに転送する
+    // @return True on Success
+    TsBool DrawIndexInstance( TsInt index , 
+                              TsInt instanceNum , 
+                              TsInt instanceLocation = 0, 
+                              TsInt startSlot = 0 , 
+                              TsInt indexLocation = 0 );
+
+
     //! todo 未使用
     TsBool ResetDrawCallCount();
 

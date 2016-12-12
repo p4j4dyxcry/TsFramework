@@ -202,6 +202,22 @@ float3 ComputeSkinNormal( VS_SKIN_INPUT v )
     return pos;
 }
 
+float4 ComputeWorldPos( VS_SKIN_INPUT v )
+{
+    return mul( ComputeSkinMesh( v ) ,
+                v.instanceID > 0
+                ? g_MtxInstance[v.instanceID]
+                : g_MtxWorld );
+}
+
+float3 ComputeWorldNormal( VS_SKIN_INPUT v )
+{
+    return mul( ComputeSkinNormal( v ) ,
+                v.instanceID > 0
+                ? (float3x3)g_MtxInstance[v.instanceID]
+                : (float3x3)g_MtxWorld );
+}
+
 float4 DepthToWorldPos(float2 vTexCoord , float depth)
 {
     // Get x/w and y/w from the viewport position

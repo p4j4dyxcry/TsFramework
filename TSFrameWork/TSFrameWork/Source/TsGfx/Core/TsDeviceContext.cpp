@@ -376,7 +376,68 @@ TsBool TsDeviceContext::Draw( TsInt vtxNum , TsInt startSlot )
 
 TsBool TsDeviceContext::DrawIndex( TsInt index , TsInt startSlot  , TsInt indexLocation  )
 {
-    m_pDeviceContext->DrawIndexed( index , startSlot , indexLocation );
+    if( m_pDeviceContext == nullptr )
+        return TS_FALSE;
+
+    TsBool isActiveVSandPS = m_activeShaders[VS_IDX] & m_activeShaders[PS_IDX];
+
+    if( isActiveVSandPS )
+    {
+        m_pDeviceContext->DrawIndexed( index , startSlot,indexLocation );
+        m_drawCallCount++;
+    }
+    else
+    {
+        TsDebugLog( "Fail Draw Call Vertex Or PixelShader Is Null\n" );
+        return TS_FALSE;
+    }
+    return TS_TRUE;
+}
+
+TsBool TsDeviceContext::DrawInstance( TsInt vertexNum ,
+                                      TsInt instanceNum ,
+                                      TsInt instanceLocation ,
+                                      TsInt startSlot )
+{
+    if( m_pDeviceContext == nullptr )
+        return TS_FALSE;
+
+    TsBool isActiveVSandPS = m_activeShaders[VS_IDX] & m_activeShaders[PS_IDX];
+
+    if( isActiveVSandPS )
+    {
+        m_pDeviceContext->DrawInstanced( vertexNum , instanceNum , startSlot , instanceLocation );
+        m_drawCallCount++;
+    }
+    else
+    {
+        TsDebugLog( "Fail Draw Call Vertex Or PixelShader Is Null\n" );
+        return TS_FALSE;
+    }
+    return TS_TRUE;
+}
+
+TsBool TsDeviceContext::DrawIndexInstance( TsInt index , 
+                                           TsInt instanceNum ,
+                                           TsInt instanceLocation,
+                                           TsInt startSlot , 
+                                           TsInt indexLocation )
+{
+    if( m_pDeviceContext == nullptr )
+        return TS_FALSE;
+
+    TsBool isActiveVSandPS = m_activeShaders[VS_IDX] & m_activeShaders[PS_IDX];
+
+    if( isActiveVSandPS )
+    {
+        m_pDeviceContext->DrawIndexedInstanced( index , instanceNum , startSlot , indexLocation , instanceLocation );
+        m_drawCallCount++;
+    }
+    else
+    {
+        TsDebugLog( "Fail Draw Call Vertex Or PixelShader Is Null\n" );
+        return TS_FALSE;
+    }
     return TS_TRUE;
 }
 

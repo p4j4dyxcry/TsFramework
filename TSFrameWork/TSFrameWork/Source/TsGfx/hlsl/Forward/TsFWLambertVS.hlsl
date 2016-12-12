@@ -12,9 +12,9 @@ VS_OUT main( VS_SKIN_INPUT input )
 {
     VS_OUT output;
 
-    output.worldPos = mul( ComputeSkinMesh( input ) , g_MtxWorld );
+    output.worldPos = ComputeWorldPos( input );
     output.pos = mul(output.worldPos, g_MtxVP);
-    output.normal = mul( ComputeSkinNormal(input) , ( float3x3 )g_MtxWorld );
+    output.normal = ComputeWorldNormal( input );
     output.uv = input.uv;
     return output;
 }

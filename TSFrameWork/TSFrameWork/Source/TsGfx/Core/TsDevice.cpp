@@ -286,6 +286,7 @@ TsBool TsDevice::LoadDefaultShader()
 
 TsBool TsDevice::Flip( TsBool vSinc )
 {
+    m_deviceContext->ResetDrawCallCount();
     if( m_device && m_swapChain )
         m_swapChain->Present( vSinc , 0 );
     else

@@ -13,13 +13,13 @@ VS_OUT main( VS_SKIN_INPUT input )
 {
     VS_OUT output;
 
-    float4 worldPos = mul( ComputeSkinMesh( input ) , g_MtxWorld );
+    float4 worldPos = ComputeWorldPos( input );
 
     output.worldPos = worldPos;
     output.screenPos = mul( worldPos , g_MtxVP );
     output.pos = output.screenPos;
 
-    output.normal = mul( ComputeSkinNormal( input ) , ( float3x3 )g_MtxWorld );
+    output.normal = ComputeWorldNormal( input );
     output.uv = input.uv;
     return output;
 }
