@@ -66,7 +66,9 @@ TsBool TsRenderPass::Begin( TsDeviceContext* pDc )
 
     //! SetInputSlot
     for( TsInt i = 0; m_pInputSlot[i] != nullptr; ++i )
+    {
         pDc->SetTexture( i , m_pInputSlot[i] , TS_SHADER_TYPE::PIXEL_SHADER );
+    }
 
     //! Set Depth Stencil
     if( m_pDepthStencilState )

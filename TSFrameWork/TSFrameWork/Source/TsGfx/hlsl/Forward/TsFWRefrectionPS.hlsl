@@ -123,7 +123,7 @@ float4 main( float4 pos		: SV_POSITION ,
              float4 worldPos : TEXCOORD2 ,
              Texture2D albedo : register(TEX_REGISTER_ALBEDO),
              TextureCube skyMap : register(t0 ),
-             SamplerState samp : register( s0 ) ) : SV_TARGET
+             SamplerState samp : register( s4 ) ) : SV_TARGET
 {
     float3 dir = float3( -1 , -1 , -0.5 );
     dir = normalize( dir );
@@ -136,13 +136,13 @@ float4 main( float4 pos		: SV_POSITION ,
     d = saturate( d );
     d = d* 0.5f + 0.5f;
     //compute CameraVector
-    float3 eye = normalize( g_worldCameraPos.xyz - worldPos.xyz );
+    float3 eye = -normalize( float3( g_MtxView[0][2] , g_MtxView[1][2] , g_MtxView[2][2]) );
 
     //compute View And Camera HerfVector
     float3 VL = normalize( dir + eye );
 
     //fong
-    float s = pow( max( saturate( dot( normal , VL ) ) , 0 ) , 80.0f );
+    float s = pow( max( saturate( dot( normal , VL ) ) , 0 ) , 60.0f );
 
     float3 refVec = reflect(eye, normal);
 
@@ -153,21 +153,22 @@ float4 main( float4 pos		: SV_POSITION ,
     float  numMipMapLevel;
     skyMap.GetDimensions(0, size.x, size.y, numMipMapLevel);
 
-    float mipmapIndex = (g_fov)* (numMipMapLevel - 1.0f);
+    float mipmapIndex = (0.25)* (numMipMapLevel - 1.0f);
     float3 reflectDir = reflect(eye, normal);
-    reflectDir.z *= -1.0f;
+    //reflectDir.z *= -1.0f;
 
     float4 res = skyMap.SampleLevel(samp, reflectDir, mipmapIndex);
 
     //float3 res = PrefilterEnvMap(skyMap, samp, g_fov,refVec );
     //rimlight
-    float rim = pow( 1 - saturate( dot( eye , normal ) ) , 12.5f );
+    float rim = pow( 1 - saturate( dot( eye , normal ) ) , 30.5f );
 
     float4 result = ( d * color + s + rim );
         result = saturate( result );
+    result.a = color.a;
 
     float f = fresnel(eye, normal);    
 
-    float4 diff = SampleIrradianceMap_SH(normal) * (1-g_far);
-    return diff + res * color ;
+    float4 diff = SampleIrradianceMap_SH( normal ) * ( 1 );
+        return result;
 }

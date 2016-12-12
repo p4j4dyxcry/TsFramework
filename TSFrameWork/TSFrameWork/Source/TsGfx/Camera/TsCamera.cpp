@@ -29,35 +29,6 @@ TsBool TsCamera::UpdateForCBuffer(TsDevice* pDevice)
 {
     if (m_pViewCBuffer == nullptr)
         return TS_FALSE;
-
-    // ibl test code
-#if 0
-    static float r = 0;
-    static float m = 0;
-    if (GetAsyncKeyState(VK_LEFT))
-    {
-        r = r <= 0 ? 0 : r - 0.1f;
-    }
-    if (GetAsyncKeyState(VK_RIGHT))
-    {
-        r = r >= 1 ? 1 : r + 0.1f;
-    }
-
-    if (GetAsyncKeyState('Z'))
-    {
-        m = m <= 0 ? 0 : m - 0.1f;
-    }
-    if (GetAsyncKeyState('X'))
-    {
-        m = m >= 1 ? 1 : m + 0.1f;
-    }
-
-
-    m_pCBufferMemory->m_worldCameraPos = m_eye;
-    m_pCBufferMemory->m_near = m_near;
-    m_pCBufferMemory->m_far = m;
-    m_pCBufferMemory->m_fov = r;
-#endif
     TsVector3 p = GetWorldPosition();
     m_bufferResource.m_worldCameraPos = TsFloat4(p.x, p.y, p.z, 1);
     m_bufferResource.m_near = m_near;

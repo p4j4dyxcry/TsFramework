@@ -43,6 +43,7 @@ TsBool TsDefaultMatrial::ApplyMaterial( TsDeviceContext* pContext)
 
     pContext->SetSamplerState( TsResourceManager::Find<TsSamplerState>( "Default" ) , 0 );
     pContext->SetSamplerState( TsResourceManager::Find<TsSamplerState>( "Shadow" ) , 3 );
+    pContext->SetSamplerState( TsResourceManager::Find<TsSamplerState>( "Cube" ) , 4 );
     return TS_TRUE;
 }
 
