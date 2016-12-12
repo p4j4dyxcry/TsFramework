@@ -178,7 +178,6 @@ TsBool  TsColliderRenderObject::CreateGeomtoricTransform(TsCollider* pCollider)
             m_geometoricTransform.m_localScale = scale;
             m_geometoricTransform.m_localPosition = translate;
             break;
-
         }
     case TsCollider::Collider_AABB3D:
         {
@@ -266,7 +265,7 @@ TsVertexSkin* TsColliderRenderObject::CreateSphereVertex()
     TsVertexSkin * pVertex;
     TsSphereMeshCreater creater;
 
-    TsInt div = 6;  //‹…‚Ì•ªŠ„”
+    TsInt div = 10;  //‹…‚Ì•ªŠ„”
 
     creater.CreateSphere(div);
     auto posList = creater.GetPositions();

@@ -33,6 +33,7 @@
     <ClCompile Include="Source\TsGfx\Core\TsDevice.cpp" />
     <ClCompile Include="Source\TsGfx\Core\TsDeviceContext.cpp" />
     <ClCompile Include="Source\TsGfx\Extlibs\TsDirectXTex.cpp" />
+    <ClCompile Include="Source\TsGfx\Geometry\TsColliderRenderManager.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsColliderRenderObject.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsDrawObject.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsGeometryObject.cpp" />
@@ -90,6 +91,7 @@
     <ClInclude Include="Source\TsGfx\Core\TsDeviceContext.h" />
     <ClInclude Include="Source\TsGfx\Core\TsDx11.h" />
     <ClInclude Include="Source\TsGfx\Extlibs\TsDirectXTex.h" />
+    <ClInclude Include="Source\TsGfx\Geometry\TsColliderRenderManager.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsColliderRenderObject.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsDrawObject.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsGeometryObject.h" />
@@ -328,7 +330,9 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
     </FxCompile>
-    <None Include="Resource\RenderSystem\RenderSystem.ts_rs" />
+    <None Include="Resource\RenderSystem\RenderSystem.ts_rs">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resource\ShaderFlow\flow.ts_shaderflow">
       <SubType>Designer</SubType>
     </None>

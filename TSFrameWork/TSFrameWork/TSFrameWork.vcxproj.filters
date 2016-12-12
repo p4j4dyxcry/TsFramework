@@ -447,6 +447,9 @@
     <ClCompile Include="Source\TsMath\TsCollisionQuadTree.cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsGfx\Geometry\TsColliderRenderManager.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -784,6 +787,9 @@
     </ClInclude>
     <ClInclude Include="Source\TsMath\TsCollisionQuadTree.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\Geometry\TsColliderRenderManager.h">
+      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

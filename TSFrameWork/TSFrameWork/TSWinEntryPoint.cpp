@@ -75,11 +75,11 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     //queue.Add( pSkyBox );
 
     TsMeshFactory factory;
-//     factory.LoadModelFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx","Test");
+     factory.LoadModelFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx","Test");
 //     factory.LoadModelFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
 //     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
 //     factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
-       factory.LoadModelFromFile(pDev, "Face.fbx","Test");
+//       factory.LoadModelFromFile(pDev, "Face.fbx","Test");
 //     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
 //     auto pAnim = factory.CreateBakeAnimation( "Resource/fbx/Unity-Chan/move_unity.fbx" );
 //     auto pAnim = factory.CreateBakeAnimation( "sd_anim.fbx" );
@@ -111,25 +111,25 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 
     TsColliderRenderObject aabbMesh;
     aabbMesh.CreateRenderObject(pDev, &aabb);
-    queue.Add(&aabbMesh);
+    //queue.Add(&aabbMesh);
 
-    queue.Add(&obbMesh);
+    //queue.Add(&obbMesh);
 
     TsSphere3D sphere;
     sphere.SetRadius(15);
+    sphere.SetCenter( TsVector3::up * 15 );
     TsColliderRenderObject sphereMesh;
     sphereMesh.CreateRenderObject(pDev, &sphere);
 
-    queue.Add(&sphereMesh);
+    //queue.Add(&sphereMesh);
 
     rs.SetDrawQue( &queue );
 
     TsCamera* pCamera = pDev->GetDC()->GetMainCamera();
 
 //    pCamera->SetLocalRotate( TsQuaternion::AngleAxis( TsVector3::up , TsRadian( 180.0f ) ) );
-    pCamera->SetLocalPosition(TsVector3(0,4,-50));
-    pCamera->SetLockAt( TsVector3( TsVector3( 0 , 4 , 0 ) ) );
-
+    pCamera->SetLocalPosition(TsVector3(0,15,-50));
+    pCamera->SetLockAt( TsVector3( TsVector3( 0 , 15 , 0 ) ) );
     pCamera->SetNearAndFar(4, 255);
 
     pCamera->CreateCBuffer(pDev);
@@ -158,6 +158,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
         aabb->SetMax(aabb->GetMin() + TsVector3(8, 8, 8));
         col->SetCollider(aabb);
         octTree.Register(*aabb, col);
+        
         TsColliderRenderObject* render;
         render = TsNew(TsColliderRenderObject);
         render->CreateRenderObject(pDev, aabb);
@@ -220,10 +221,10 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
                 aabbMesh.SetColor(0, 1, 0, 1);
                 obbMesh.SetColor(0, 1, 0, 1);
             }
-            DWORD t = timeGetTime();
+            //DWORD t = timeGetTime();
             for (TsInt i = 0; i < 1024; ++i)
             {
-                auto list = octTree.GetCollisionList( *aabbList[i] );
+                auto&& list = octTree.GetCollisionList( *aabbList[i] );
 
                 for (auto it : list)
                 {
@@ -235,23 +236,10 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
                 }
             }
 
-            TSUT::TsLog("8分木:%d ms　\n",timeGetTime()-t);
-            t = timeGetTime();
-            for (TsInt i = 0; i < 1024; ++i)
-            for (TsInt j = 0; j < 1024; ++j)
-            {
-                if (i == j)continue;
-                if (CollisionAABBAndAABB(*aabbList[j], *aabbList[i]))
-                {
-                    renderList[i]->SetColor(1, 0, 0, 1);
-                }
-            }
-            TSUT::TsLog("総当 :%d ms　\n", timeGetTime() - t);
-
             size_t z = sizeof(TsLightSetCBuffer::LightData) / sizeof(TsF32);
 
-            //auto pBlendState = TsResourceManager::Find<TsBlendState>("ALPHA_BLEND");
-            auto pBlendState = TsResourceManager::Find<TsBlendState>( "NONE" );
+            auto pBlendState = TsResourceManager::Find<TsBlendState>("ALPHA_BLEND");
+            //auto pBlendState = TsResourceManager::Find<TsBlendState>( "NONE" );
             pDev->GetDC()->SetBlendState( pBlendState );
             pDev->GetDC()->ApplyBlendState();
 

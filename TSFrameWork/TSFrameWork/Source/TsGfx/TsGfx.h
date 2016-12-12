@@ -60,6 +60,7 @@
 #include "Geometry\TsScreenObject.h"
 #include "Geometry\TsPlaneObject.h"
 #include "Geometry\TsColliderRenderObject.h"
+#include "Geometry\TsColliderRenderManager.h"
 
 #include "RenderSystem\TsDrawQueue.h"
 #include "RenderSystem\TsRenderPass.h"
