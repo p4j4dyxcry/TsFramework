@@ -8,6 +8,7 @@
 #define CBUFFER_SKIN_REGISTER b1
 #define CBUFFER_LIGHT_SET_REGISTER b2
 #define CBUFFER_MATERIAL_REGISTER b3
+#define CBUFFER_INSTANCE_REGISTER b4
 #define CBUFFER_VIEW_REGISTER b7
 
 
@@ -20,6 +21,11 @@ cbuffer matrixs : register (CBUFFER_OBJ_MTX_REGISTER)
 cbuffer BoneMatrixs : register (CBUFFER_SKIN_REGISTER)
 {
     float4x4 g_BoneMatrix[512];
+}
+
+cbuffer matrixs : register ( CBUFFER_INSTANCE_REGISTER )
+{
+    float4x4 g_MtxInstance[1024];
 }
 
 cbuffer MaterialCB : register ( CBUFFER_MATERIAL_REGISTER )
@@ -88,6 +94,7 @@ struct VS_SKIN_INPUT
     float4 weight   : WEIGHT;
     uint4  boneIdx  : TEXCOORD1;
     float2 uv       : TEXCOORD0;
+    uint   instanceID: SV_InstanceID;
 };
 
 // Foward / Defferd / ScreenSpace
