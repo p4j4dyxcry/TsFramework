@@ -206,7 +206,7 @@ float4 ComputeWorldPos( VS_SKIN_INPUT v )
 {
     return mul( ComputeSkinMesh( v ) ,
                 v.instanceID > 0
-                ? g_MtxInstance[v.instanceID-1]
+                ? g_MtxInstance[v.instanceID]
                 : g_MtxWorld );
 }
 
@@ -214,7 +214,7 @@ float3 ComputeWorldNormal( VS_SKIN_INPUT v )
 {
     return mul( ComputeSkinNormal( v ) ,
                 v.instanceID > 0
-                ? (float3x3)g_MtxInstance[v.instanceID-1]
+                ? (float3x3)g_MtxInstance[v.instanceID]
                 : (float3x3)g_MtxWorld );
 }
 

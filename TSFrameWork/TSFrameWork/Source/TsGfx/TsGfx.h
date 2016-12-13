@@ -30,9 +30,11 @@
 #include "BufferResources\TsBuffer.h"
 #include "BufferResources\TsVertexBuffer.h"
 #include "BufferResources\TsIndexBuffer.h"
+#include "BufferResources\TsPrimitiveMeshCreater.h"
 #include "BufferResources\TsCBuffer.h"
 #include "BufferResources\TsTransformCBuffer.h"
 #include "BufferResources\TsBoneCBuffer.h"
+#include "BufferResources\TsInstanceCBuffer.h"
 
 #include "ShaderResources\TsSamplerState.h"
 #include "ShaderResources\TsTexture.h"

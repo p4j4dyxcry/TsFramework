@@ -19,6 +19,7 @@ public:
         Collider_TsCircle,
         Collider_TsSphere,
         Collider_Unknown,
+        Collider_Num,
     };
 
     virtual eType GetType()const

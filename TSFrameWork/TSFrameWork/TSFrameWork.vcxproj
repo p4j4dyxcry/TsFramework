@@ -25,7 +25,9 @@
     <ClCompile Include="Source\TsGfx\BufferResources\TsBoneCBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\BufferResources\TsCBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\BufferResources\TsCommonCBuffer.cpp" />
+    <ClCompile Include="Source\TsGfx\BufferResources\TsInstanceCBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\BufferResources\TsLightSetCBuffer.cpp" />
+    <ClCompile Include="Source\TsGfx\BufferResources\TsPrimitiveMeshCreater.cpp" />
     <ClCompile Include="Source\TsGfx\BufferResources\TsTransformCBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\BufferResources\TsVertexBuffer.cpp" />
     <ClCompile Include="Source\TsGfx\Camera\TsCamera.cpp" />
@@ -81,7 +83,9 @@
     <ClInclude Include="Source\TsGfx\BufferResources\TsCBuffer.h" />
     <ClInclude Include="Source\TsGfx\BufferResources\TsCommonCBuffer.h" />
     <ClInclude Include="Source\TsGfx\BufferResources\TsIndexBuffer.h" />
+    <ClInclude Include="Source\TsGfx\BufferResources\TsInstanceCBuffer.h" />
     <ClInclude Include="Source\TsGfx\BufferResources\TsLightSetCBuffer.h" />
+    <ClInclude Include="Source\TsGfx\BufferResources\TsPrimitiveMeshCreater.h" />
     <ClInclude Include="Source\TsGfx\BufferResources\TsTransformCBuffer.h" />
     <ClInclude Include="Source\TsGfx\BufferResources\TsVertex.h" />
     <ClInclude Include="Source\TsGfx\BufferResources\TsVertexBuffer.h" />

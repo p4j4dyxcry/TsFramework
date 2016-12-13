@@ -9,7 +9,7 @@
 //=========================================================================
 //! TsPlaneGeometry 
 //=========================================================================
-class TsColliderRenderManager
+class TsColliderRenderManager :public TsDrawObject
 {
 public:
     //=========================================================================
@@ -22,33 +22,68 @@ public:
     //! Destructor
     virtual ~TsColliderRenderManager();
 
-    TsBool  AddGeometory( const TsCollider& collider ,
-                          TsTransForm* pParent = nullptr);
+    TsBool Initialize(TsDevice* pDev);
 
+    TsBool  AddGeometory( TsCollider* pCollider,
+                          TsTransForm* pParent = nullptr,
+                          TsInt materialIndex = 0);
+    TsBool RemoveGeometory(const TsCollider* pCollider);
+
+    const TsTransForm * FindTransform(TsCollider *)const;
+
+    TsBool ChangeMaterial(TsCollider* pCollider,
+                          TsInt materialIndex);
+
+    TsBool CreateMaterial( TsDevice * pDev, TsColor color );
+
+    virtual TsBool Draw(TsDeviceContext* pDC)override;
 private:
+    static const TsInt MAX_OBJECT = 8192;
     //=========================================================================
     //! propery
     //=========================================================================
 
-    TsColliderRenderObject* m_pSphereGeometory;
-    TsColliderRenderObject* m_pCircleGeometory;
+    // Transform専用超簡易アロケータ
+    class TransformAllocator
+    {
+    public:
+        //! Constructor
+        TransformAllocator();
 
-    TsColliderRenderObject* m_pBoxGeometory;
-    TsColliderRenderObject* m_pSpriteGeometory;
+        //! メモリ確保
+        TsTransForm* Malloc();
+
+        //! メモリ解放
+        void Free(TsTransForm* ptr);
+    private:
+        TsTransForm memory[MAX_OBJECT];
+        TsBool      usingFlag[MAX_OBJECT];
+    };
+
+    TransformAllocator m_allocator;
+
+    TsVector<TsDefaultMatrial*> m_materialList;
+    TsMap<TsCollider::eType, TsVertexBuffer*> m_geometyMap;
 
     TsVector<TsColliderRenderObject*> m_pLine2DGeometory;
     TsVector<TsColliderRenderObject*> m_pLine3DGeometory;
 
-    TsVector<TsTransForm*>   m_spheres;
-    TsVector<TsTransForm*>   m_cirles;
+    struct Geometory
+    {
+        TsTransForm* pTransform;
+        TsCollider*  pCollider;
+    };
 
-    TsVector<TsTransForm*>   m_AABB2Ds;
-    TsVector<TsTransForm*>   m_AABB3Ds;
+    struct MaterialType
+    {
+        TsVector<Geometory> m_geometorys;
+    };
 
-    TsVector<TsTransForm*>   m_OBBs;
+    struct GeometoryType
+    {
+        TsVector<MaterialType> m_materials;
+    };
 
-    TsVector<TsTransForm*>   m_Line2Ds;
-    TsVector<TsTransForm*>   m_Line3Ds;
-
-    TsVertexShader *     m_pinstancingVertexShader;
+    GeometoryType m_geometoris[TsCollider::eType::Collider_Num];
+    TsInstanceCBuffer* m_pInstanceCB;
 };

@@ -450,6 +450,12 @@
     <ClCompile Include="Source\TsGfx\Geometry\TsColliderRenderManager.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsGfx\BufferResources\TsInstanceCBuffer.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\BufferResources\TsPrimitiveMeshCreater.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -790,6 +796,12 @@
     </ClInclude>
     <ClInclude Include="Source\TsGfx\Geometry\TsColliderRenderManager.h">
       <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\BufferResources\TsInstanceCBuffer.h">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsGfx\BufferResources\TsPrimitiveMeshCreater.h">
+      <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
