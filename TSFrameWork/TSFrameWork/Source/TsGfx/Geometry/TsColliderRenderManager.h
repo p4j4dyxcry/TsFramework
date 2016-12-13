@@ -38,35 +38,11 @@ public:
 
     virtual TsBool Draw(TsDeviceContext* pDC)override;
 private:
+    
+    //----------------------------------------------------------
+    // Define
+    //----------------------------------------------------------
     static const TsInt MAX_OBJECT = 8192;
-    //=========================================================================
-    //! propery
-    //=========================================================================
-
-    // Transform専用超簡易アロケータ
-    class TransformAllocator
-    {
-    public:
-        //! Constructor
-        TransformAllocator();
-
-        //! メモリ確保
-        TsTransForm* Malloc();
-
-        //! メモリ解放
-        void Free(TsTransForm* ptr);
-    private:
-        TsTransForm memory[MAX_OBJECT];
-        TsBool      usingFlag[MAX_OBJECT];
-    };
-
-    TransformAllocator m_allocator;
-
-    TsVector<TsDefaultMatrial*> m_materialList;
-    TsMap<TsCollider::eType, TsVertexBuffer*> m_geometyMap;
-
-    TsVector<TsColliderRenderObject*> m_pLine2DGeometory;
-    TsVector<TsColliderRenderObject*> m_pLine3DGeometory;
 
     struct Geometory
     {
@@ -83,6 +59,36 @@ private:
     {
         TsVector<MaterialType> m_materials;
     };
+
+    //----------------------------------------------------------
+    //! Transform専用　簡易アロケーター
+    //----------------------------------------------------------
+    class TransformAllocator
+    {
+    public:
+        //! Constructor
+        TransformAllocator();
+
+        //! メモリ確保
+        TsTransForm* Malloc();
+
+        //! メモリ解放
+        void Free(TsTransForm* ptr);
+    private:
+        TsTransForm memory[MAX_OBJECT];
+        TsBool      usingFlag[MAX_OBJECT];
+    };
+
+    //=========================================================================
+    //! propery
+    //=========================================================================
+    TransformAllocator m_allocator;
+
+    TsVector<TsDefaultMatrial*> m_materialList;
+    TsMap<TsCollider::eType, TsVertexBuffer*> m_geometyMap;
+
+    TsVector<TsColliderRenderObject*> m_pLine2DGeometory;
+    TsVector<TsColliderRenderObject*> m_pLine3DGeometory;
 
     GeometoryType m_geometoris[TsCollider::eType::Collider_Num];
     TsInstanceCBuffer* m_pInstanceCB;

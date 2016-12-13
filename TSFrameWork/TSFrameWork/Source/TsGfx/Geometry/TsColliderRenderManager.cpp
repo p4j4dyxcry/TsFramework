@@ -1,10 +1,16 @@
 #include "../TsGfx.h"
 
+//----------------------------------------------------------
+//! コンストラクタ
+//----------------------------------------------------------
 TsColliderRenderManager::TransformAllocator::TransformAllocator()
 {
     memset(usingFlag, 0, sizeof(TsBool) * MAX_OBJECT);
 }
 
+//----------------------------------------------------------
+//! メモリの確保
+//----------------------------------------------------------
 TsTransForm* TsColliderRenderManager::TransformAllocator::Malloc()
 {
     //! メモリ空きを探す。
@@ -24,7 +30,9 @@ TsTransForm* TsColliderRenderManager::TransformAllocator::Malloc()
     }
 }
 
-//! メモリ解放
+//----------------------------------------------------------
+//! メモリの解放
+//----------------------------------------------------------
 void TsColliderRenderManager::TransformAllocator::Free(TsTransForm* ptr)
 {
     ptr->~TsTransForm();
@@ -32,13 +40,18 @@ void TsColliderRenderManager::TransformAllocator::Free(TsTransForm* ptr)
     usingFlag[ptrDiff] = TS_FALSE;
 }
 
-
+//----------------------------------------------------------
+//! コンストラクタ
+//----------------------------------------------------------
 TsColliderRenderManager::TsColliderRenderManager()
 {
     m_pLine2DGeometory.reserve(1024);
     m_pLine3DGeometory.reserve(1024);
 }
 
+//----------------------------------------------------------
+//! デストラクタ
+//----------------------------------------------------------
 TsColliderRenderManager::~TsColliderRenderManager()
 {
     for (auto p : m_materialList)
@@ -48,6 +61,9 @@ TsColliderRenderManager::~TsColliderRenderManager()
     TsSafeDelete(m_pInstanceCB);
 }
 
+//----------------------------------------------------------
+//! 初期化
+//----------------------------------------------------------
 TsBool TsColliderRenderManager::Initialize(TsDevice* pDev)
 {
     TsPrimitiveMeshCreater creater;
@@ -118,6 +134,9 @@ TsBool TsColliderRenderManager::Initialize(TsDevice* pDev)
     return TS_TRUE;
 }
 
+//----------------------------------------------------------
+//! ジオメトリを追加
+//----------------------------------------------------------
 TsBool TsColliderRenderManager::AddGeometory(TsCollider* pCollider,
                                              TsTransForm* pParent,
                                              TsInt materialIndex )
@@ -139,6 +158,9 @@ TsBool TsColliderRenderManager::AddGeometory(TsCollider* pCollider,
     return TS_TRUE;
 }
 
+//----------------------------------------------------------
+//! マテリアルを追加
+//----------------------------------------------------------
 TsBool TsColliderRenderManager::CreateMaterial(TsDevice* pDev, TsColor color)
 {
     TsDefaultMatrial * m = TsNew(TsDefaultMatrial);
@@ -153,6 +175,9 @@ TsBool TsColliderRenderManager::CreateMaterial(TsDevice* pDev, TsColor color)
     return TS_TRUE;
 }
 
+//----------------------------------------------------------
+//! ジオメトリを削除
+//----------------------------------------------------------
 TsBool TsColliderRenderManager::RemoveGeometory( const TsCollider* pCollider )
 {
     auto& m = m_geometoris[pCollider->GetType()].m_materials;
@@ -170,6 +195,9 @@ TsBool TsColliderRenderManager::RemoveGeometory( const TsCollider* pCollider )
     return TS_FALSE;
 }
 
+//----------------------------------------------------------
+//! Transformを取得
+//----------------------------------------------------------
 const TsTransForm * TsColliderRenderManager::FindTransform(TsCollider * pCollider)const
 {
     auto& m = m_geometoris[pCollider->GetType()].m_materials;
@@ -186,6 +214,9 @@ const TsTransForm * TsColliderRenderManager::FindTransform(TsCollider * pCollide
     return nullptr;
 }
 
+//----------------------------------------------------------
+//! materialを変更
+//----------------------------------------------------------
 TsBool TsColliderRenderManager::ChangeMaterial(TsCollider * pCollider, TsInt materialIndex)
 {
     const TsTransForm * pTransform = FindTransform(pCollider);
@@ -199,6 +230,9 @@ TsBool TsColliderRenderManager::ChangeMaterial(TsCollider * pCollider, TsInt mat
 
 }
 
+//----------------------------------------------------------
+//! 描画
+//----------------------------------------------------------
 TsBool TsColliderRenderManager::Draw(TsDeviceContext* pDC)
 {
     //! UpdateCBuffer
@@ -233,7 +267,6 @@ TsBool TsColliderRenderManager::Draw(TsDeviceContext* pDC)
             {
                 pDC->SetTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
                 pDC->SetVertexBuffer(it.second);
-//                pDC->Draw(it.second->GetBufferSize() / sizeof(TsVertexSkin));
                 pDC->DrawInstance(it.second->GetVertexCount(), m.m_geometorys.size());
             }
         }
