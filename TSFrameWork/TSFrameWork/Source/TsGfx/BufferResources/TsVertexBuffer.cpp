@@ -24,3 +24,8 @@ TsUint TsVertexBuffer::GetOffset()const
 {
     return m_offset;
 }
+
+TsUint TsVertexBuffer::GetVertexCount()const
+{
+    return GetBufferSize() / m_stride;
+}

@@ -234,7 +234,7 @@ TsBool TsColliderRenderManager::Draw(TsDeviceContext* pDC)
                 pDC->SetTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
                 pDC->SetVertexBuffer(it.second);
 //                pDC->Draw(it.second->GetBufferSize() / sizeof(TsVertexSkin));
-                pDC->DrawInstance(it.second->GetBufferSize() / sizeof(TsVertexSkin), m.m_geometorys.size());
+                pDC->DrawInstance(it.second->GetVertexCount(), m.m_geometorys.size());
             }
         }
     }

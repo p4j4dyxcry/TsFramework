@@ -14,6 +14,7 @@ public:
     TsBool SetOffset( TsUint offset );
     TsUint GetStride()const ;
     TsUint GetOffset()const;
+    TsUint GetVertexCount()const;
 private:
     TsUint m_stride;
     TsUint m_offset;
