@@ -35,7 +35,6 @@ protected:
     struct MatrixCBuffer
     {
         TsMatrix m_MtxWorld;
-        TsMatrix m_MtxInvWorld;
     };
     //----------------------------------------------------------
     // propery

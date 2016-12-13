@@ -67,7 +67,7 @@ TsColliderRenderManager::~TsColliderRenderManager()
 TsBool TsColliderRenderManager::Initialize(TsDevice* pDev)
 {
     TsPrimitiveMeshCreater creater;
-
+    (void)creater;
     //! AABB2D
     {
         TsVertexSkin* pSkin = nullptr;

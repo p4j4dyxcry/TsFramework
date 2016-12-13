@@ -36,11 +36,10 @@ enum TS_SHADER_INDEX
 
 enum TS_CBUFFER_REGISTER 
 {
-    ObjectMatrixCB = 0,
+    InstanceCB = 0,
     SkinBoneCB = 1,       // used Vertex Shader
     LightSetCB = 2,
     MaterialCB = 3,   // used Pixel Shader;
-    InstanceCB = 4,
     ViewCB = 7,
 };
 

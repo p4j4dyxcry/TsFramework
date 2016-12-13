@@ -88,9 +88,6 @@ float4 main( PS_SS_INPUT_UVx1 In ,
     shadowUV.y = ( 1.0f - shadowUV.y ) * 0.5f;
 
     float s = PCF8(ShadowMap, ShadowSmp, float3(shadowUV, shadowPos.z));
-
-    float r = ShadowMap.Sample(linearSample, shadowUV.xy);
-    float g = ShadowMap.Sample(linearSample, In.uv0).r;
     
     s = lerp(0.5, 1, s);
     float3 dir = g_LightData[0].dir.xyz ;

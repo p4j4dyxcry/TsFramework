@@ -18,7 +18,6 @@ TsBool TsTransformCBuffer::UpdateCBuffer( TsDeviceContext * pContext )
         if (m_matrixCash != mtxWorld)
         {
             m_matrixCBuffer.m_MtxWorld = mtxWorld.Transposed();
-            m_matrixCBuffer.m_MtxInvWorld = mtxWorld.Inversed().Transposed();
 
             ChangedCBuffer(pContext, &m_matrixCBuffer);
             m_matrixCash = mtxWorld;
@@ -35,7 +34,7 @@ TsBool TsTransformCBuffer::UpdateCBuffer( TsDeviceContext * pContext )
 
 TsBool TsTransformCBuffer::CreateTransformCBuffer( TsDevice* pDev )
 {
-    CreateCBuffer(pDev, &m_matrixCBuffer, TS_CBUFFER_REGISTER::ObjectMatrixCB, TS_SHADER_TYPE::VERTEX_SHADER);
+    CreateCBuffer(pDev, &m_matrixCBuffer, TS_CBUFFER_REGISTER::InstanceCB, TS_SHADER_TYPE::VERTEX_SHADER);
 
     return TS_TRUE;
 }

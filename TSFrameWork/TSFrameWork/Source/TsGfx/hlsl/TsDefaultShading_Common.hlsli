@@ -3,20 +3,11 @@
 #define TEX_REGISTER_NORMAL     t9
 #define TEX_REGISTER_SPECULER   t10
 
-
-#define CBUFFER_OBJ_MTX_REGISTER  b0
+#define CBUFFER_INSTANCE_REGISTER b0
 #define CBUFFER_SKIN_REGISTER b1
 #define CBUFFER_LIGHT_SET_REGISTER b2
 #define CBUFFER_MATERIAL_REGISTER b3
-#define CBUFFER_INSTANCE_REGISTER b4
 #define CBUFFER_VIEW_REGISTER b7
-
-
-cbuffer matrixs : register (CBUFFER_OBJ_MTX_REGISTER)
-{
-    float4x4 g_MtxWorld;
-    float4x4 g_MtxInvWorld;
-}
 
 cbuffer BoneMatrixs : register (CBUFFER_SKIN_REGISTER)
 {
@@ -27,6 +18,8 @@ cbuffer matrixs : register ( CBUFFER_INSTANCE_REGISTER )
 {
     float4x4 g_MtxInstance[1024];
 }
+//古いコードと互換性を残すため
+#define g_MtxWorld g_MtxInstance[0]
 
 cbuffer MaterialCB : register ( CBUFFER_MATERIAL_REGISTER )
 {
@@ -204,18 +197,12 @@ float3 ComputeSkinNormal( VS_SKIN_INPUT v )
 
 float4 ComputeWorldPos( VS_SKIN_INPUT v )
 {
-    return mul( ComputeSkinMesh( v ) ,
-                v.instanceID > 0
-                ? g_MtxInstance[v.instanceID]
-                : g_MtxWorld );
+    return mul( ComputeSkinMesh( v ) ,g_MtxInstance[v.instanceID]);
 }
 
 float3 ComputeWorldNormal( VS_SKIN_INPUT v )
 {
-    return mul( ComputeSkinNormal( v ) ,
-                v.instanceID > 0
-                ? (float3x3)g_MtxInstance[v.instanceID]
-                : (float3x3)g_MtxWorld );
+    return mul( ComputeSkinNormal( v ) ,(float3x3)g_MtxInstance[v.instanceID] );
 }
 
 float4 DepthToWorldPos(float2 vTexCoord , float depth)
