@@ -33,6 +33,13 @@ public:
 
     virtual TsCollider::eType GetType()const override;
 
+    virtual TsMatrix GetGeometoricMatrix()const override
+    {
+        TsVector3 scale = TsVector3::one * m_radius;
+        TsVector3 translate = GetCenter();
+
+        return TsMatrix::CreateScale(scale) * TsMatrix::CreateTranslate(translate);
+    }
 
 protected:
     //----------------------------------------------------------

@@ -25,4 +25,8 @@ public:
     {
         return Collider_Unknown;
     }
+    virtual TsMatrix GetGeometoricMatrix()const
+    {
+        return TsMatrix::identity;
+    }
 };

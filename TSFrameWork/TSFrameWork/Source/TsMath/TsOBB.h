@@ -34,6 +34,14 @@ public:
     {
         return Collider_OBB3D;
     }
+    virtual TsMatrix GetGeometoricMatrix()const override
+    {
+        TsVector3 scale = GetScale() * 2;
+        TsVector3 translate = GetCenter();
+        TsQuaternion rotate = GetRotate();
+
+        return TsMatrix(translate, rotate, scale);
+    }
 
 protected:
     //----------------------------------------------------------

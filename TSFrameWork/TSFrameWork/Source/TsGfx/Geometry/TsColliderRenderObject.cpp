@@ -14,20 +14,7 @@ m_pDepthStencilState(nullptr),
 m_pRasterState(nullptr),
 m_useWireFrame(TS_TRUE)
 {
-    //m_vertex[0].pos = TsVector3(-.5f, 0, .5f);
-    //m_vertex[1].pos = TsVector3(.5f, 0, .5f);
-    //m_vertex[2].pos = TsVector3(-.5f, 0, -.5f);
-    //m_vertex[3].pos = TsVector3(.5f, 0, -.5f);
 
-    //for (TsInt i = 0; i < 4; ++i)
-    //{
-    //    m_vertex[i].boneIndex = TsInt4(0, 0, 0, 0);
-    //    m_vertex[i].weight = TsVector4::zero;
-    //    m_vertex[i].normal = TsVector3::up;
-
-    //    // x0y0 x1y0 x0y1 x1y1 
-    //    m_vertex[i].uv = TsVector2((TsF32)(i % 2), (TsF32)(i / 2));
-    //}
 }
 
 //=========================================================================
@@ -112,11 +99,7 @@ void TsColliderRenderObject::SetTopology(TsCollider::eType type)
     case TsCollider::Collider_Ray3D:
         m_topology = D3D_PRIMITIVE_TOPOLOGY_LINELIST;
         break;
-    case TsCollider::Collider_AABB2D:
-    case TsCollider::Collider_AABB3D:
-    case TsCollider::Collider_OBB3D:
-    case TsCollider::Collider_TsSphere:
-    case TsCollider::Collider_TsCircle:
+    default:
         m_topology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
         break;
     }
@@ -167,64 +150,7 @@ TsBool  TsColliderRenderObject::CreateVertexBuffer(TsDevice* pDev, TsCollider* p
 //----------------------------------------------------------
 TsBool  TsColliderRenderObject::CreateGeomtoricTransform(TsCollider* pCollider)
 {
-    //各形状をTransformに変換する
-    switch (pCollider->GetType())
-    {
-    case TsCollider::Collider_AABB2D:
-        {
-            TsAABB2D * pAABB2D = ((TsAABB2D*)(pCollider));
-            TsVector3 scale = pAABB2D->GetMax() - pAABB2D->GetMin();
-            TsVector3 translate = pAABB2D->GetCenter();
-            m_geometoricTransform.m_localScale = scale;
-            m_geometoricTransform.m_localPosition = translate;
-            break;
-        }
-    case TsCollider::Collider_AABB3D:
-        {
-            TsAABB3D * pAABB3D = ((TsAABB3D*)(pCollider));
-            TsVector3 scale = pAABB3D->GetMax() - pAABB3D->GetMin();
-            TsVector3 translate = pAABB3D->GetCenter();
-            m_geometoricTransform.m_localScale = scale;
-            m_geometoricTransform.m_localPosition = translate;
-            break;
-        }
-    case TsCollider::Collider_OBB3D:
-        {
-            TsOBB * pOBB = ((TsOBB*)(pCollider));
-            TsVector3 scale = pOBB->GetScale();
-            TsVector3 translate = pOBB->GetCenter();
-            TsQuaternion rotate = pOBB->GetRotate();
-
-            m_geometoricTransform.m_localScale = scale*2;
-            m_geometoricTransform.m_localPosition = translate;
-            m_geometoricTransform.m_localRotate = rotate;
-            break;
-        }
-    case TsCollider::Collider_TsSphere:
-        {
-            TsSphere3D * pSphere = ((TsSphere3D*)(pCollider));
-            TsF32 r = pSphere->GetRadius();
-            TsVector3 scale = TsVector3( r , r , r );
-            TsVector3 translate = pSphere->GetCenter();
-
-            m_geometoricTransform.m_localScale = scale;
-            m_geometoricTransform.m_localPosition = translate;
-            break;
-        }
-    case TsCollider::Collider_TsCircle:
-        {
-            TsSphere2D * pSphere = ((TsSphere2D*)(pCollider));
-            TsF32 r = pSphere->GetRadius();
-            TsVector3 scale = TsVector3( r , r , r );
-            TsVector3 translate = pSphere->GetCenter();
-
-            m_geometoricTransform.m_localScale = scale;
-            m_geometoricTransform.m_localPosition = translate;
-            break;
-        }
-    default:
-        break;
-    }
+    m_geometoricTransform = pCollider->GetGeometoricMatrix();
     m_transformCBuffer->SetTransform(&m_geometoricTransform);
 
     //行列計算モードは Translate * Rotate * Scale に変更する
@@ -239,7 +165,7 @@ TsBool  TsColliderRenderObject::CreateGeomtoricTransform(TsCollider* pCollider)
 template<typename T>
 TsVertexSkin* TsColliderRenderObject::CreateLineVertex( TsLine<T>* pLine )
 {
-    TsVertexSkin * pVertex;
+    TsVertexSkin * pVertex = nullptr; 
 
     m_vertexCount = 2;
     pVertex = TsNew(TsVertexSkin[m_vertexCount]);
@@ -262,27 +188,8 @@ TsVertexSkin* TsColliderRenderObject::CreateLineVertex( TsLine<T>* pLine )
 //----------------------------------------------------------
 TsVertexSkin* TsColliderRenderObject::CreateSphereVertex()
 {
-    TsVertexSkin * pVertex;
-    TsSphereMeshCreater creater;
-
-    TsInt div = 10;  //球の分割数
-
-    creater.CreateSphere(div);
-    auto posList = creater.GetPositions();
-    auto nomList = creater.GetNomals();
-    auto index = creater.GetIndex();
-
-    m_vertexCount = index.size();
-    if (index.empty())
-        return nullptr;
-
-    pVertex = TsNew(TsVertexSkin[m_vertexCount]);
-    memset(pVertex, 0, sizeof(TsVertexSkin)* m_vertexCount);
-    for (TsUint i = 0; i < m_vertexCount; ++i)
-    {
-        pVertex[i].pos = posList[index[i]];
-        pVertex[i].normal = nomList[index[i]];
-    }
+    TsVertexSkin * pVertex = nullptr;
+    TsPrimitiveMeshCreater::GenerateSphere(&pVertex, (TsInt&)m_vertexCount,10);
 
     return pVertex;    
 }
@@ -294,35 +201,7 @@ TsVertexSkin* TsColliderRenderObject::CreateBox2DVertex()
 {
     TsVertexSkin * pVertex = nullptr;
 
-    m_vertexCount = 12;
-
-    pVertex = TsNew(TsVertexSkin[m_vertexCount]);
-
-    memset(pVertex, 0, sizeof(TsVertexSkin)* m_vertexCount);
-
-    TsVector3 left_up = TsVector3(-0.5, 0.5, 0);
-    TsVector3 left_down = TsVector3(-0.5, -0.5, 0);
-    TsVector3 right_up = TsVector3(0.5, 0.5, 0);
-    TsVector3 right_down = TsVector3(0.5, -0.5, 0);
-
-    //前の面
-    pVertex[0].pos = left_up;
-    pVertex[1].pos = right_up;
-    pVertex[2].pos = left_down;
-
-    pVertex[3].pos = right_up;
-    pVertex[4].pos = left_down;
-    pVertex[5].pos = right_down;
-
-    //後ろの面
-    pVertex[6].pos = right_up;
-    pVertex[7].pos = left_up;
-    pVertex[8].pos = right_down;
-
-    pVertex[9].pos = left_up;
-    pVertex[10].pos = right_down;
-    pVertex[11].pos = left_down;
-
+    TsPrimitiveMeshCreater::GenerateSprite(&pVertex, (TsInt&)m_vertexCount,TS_CULL_MODE::NONE);
 
     return pVertex;
 }
@@ -334,89 +213,7 @@ TsVertexSkin* TsColliderRenderObject::CreateBoxVertex()
 {
     TsVertexSkin * pVertex = nullptr;
 
-    m_vertexCount = 36;
-
-    pVertex = TsNew(TsVertexSkin[m_vertexCount]);
-
-    memset(pVertex, 0, sizeof(TsVertexSkin)* m_vertexCount);
-
-
-    TsVector3 left_up_back      = TsVector3(-0.5, 0.5, 0.5);
-    TsVector3 left_down_back    = TsVector3(-0.5,-0.5, 0.5);
-    TsVector3 left_up_front     = TsVector3(-0.5, 0.5,-0.5);
-    TsVector3 left_down_front   = TsVector3(-0.5,-0.5,-0.5);
-    TsVector3 right_up_back     = TsVector3( 0.5, 0.5, 0.5);
-    TsVector3 right_down_back   = TsVector3( 0.5,-0.5, 0.5);
-    TsVector3 right_up_front    = TsVector3( 0.5, 0.5,-0.5);
-    TsVector3 right_down_front  = TsVector3( 0.5,-0.5,-0.5);
-
-    //法線を設定する
-    for (TsInt i = 0; i < 6; ++i)
-        pVertex[i].normal = TsVector3::up;
-    for (TsInt i = 0; i < 6; ++i)
-        pVertex[6+i].normal = TsVector3::down;
-    for (TsInt i = 0; i < 6; ++i)
-        pVertex[12+i].normal = TsVector3::left;
-    for (TsInt i = 0; i < 6; ++i)
-        pVertex[18+i].normal = TsVector3::right;
-    for (TsInt i = 0; i < 6; ++i)
-        pVertex[24+i].normal = TsVector3::front;
-    for (TsInt i = 0; i < 6; ++i)
-        pVertex[30 + i].normal = TsVector3::back;
-
-    //上の面
-    pVertex[0].pos = left_up_back;
-    pVertex[1].pos = right_up_back;
-    pVertex[2].pos = left_up_front;
-
-    pVertex[3].pos = right_up_back;
-    pVertex[4].pos = right_up_front;
-    pVertex[5].pos = left_up_front;
-
-    //下の面
-    pVertex[6].pos = right_down_back;
-    pVertex[7].pos = left_down_back;
-    pVertex[8].pos = left_down_front;
-
-    pVertex[9].pos = right_down_back;
-    pVertex[10].pos = left_down_front;
-    pVertex[11].pos = right_down_front;
-
-    //左の面
-    pVertex[12].pos = left_up_back;
-    pVertex[13].pos = left_up_front;
-    pVertex[14].pos = left_down_back;
-
-    pVertex[15].pos = left_up_front;
-    pVertex[16].pos = left_down_front;
-    pVertex[17].pos = left_down_back;
-
-    //右の面
-    pVertex[18].pos = right_up_front;
-    pVertex[19].pos = right_up_back;
-    pVertex[20].pos = right_down_front;
-
-    pVertex[21].pos = right_up_back;
-    pVertex[22].pos = right_down_back;
-    pVertex[23].pos = right_down_front;
-
-    //前の面
-    pVertex[24].pos = left_up_front;
-    pVertex[25].pos = right_up_front;
-    pVertex[26].pos = left_down_front;
-
-    pVertex[27].pos = right_up_front;
-    pVertex[28].pos = right_down_front;
-    pVertex[29].pos = left_down_front;
-    //後ろの面
-    pVertex[30].pos = right_up_back;
-    pVertex[31].pos = left_up_back;
-    pVertex[32].pos = right_down_back;
-
-    pVertex[33].pos = left_up_back;
-    pVertex[34].pos = left_down_back;
-    pVertex[35].pos = right_down_back;
-
+    TsPrimitiveMeshCreater::GenerateBox3D(&pVertex, (TsInt&)m_vertexCount);
 
     return pVertex;
 }

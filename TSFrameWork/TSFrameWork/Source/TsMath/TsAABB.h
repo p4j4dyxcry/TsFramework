@@ -37,13 +37,13 @@ public:
     TsVector<T> GetVertexList()const;
     TsVector<TsLine<T>> GetEdgeList()const;
 
-
     //! operator
     TsAABB<T> operator * (const TsMatrix& matrix)const;
     TsAABB<T> operator *= (const TsMatrix& matrix);
     TsAABB<T> operator = ( const TsAABB<T>& aabb );
 
     virtual eType GetType()const override;
+    virtual TsMatrix GetGeometoricMatrix()const override;
 private:
     //=========================================================================
     //! propery

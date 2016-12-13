@@ -182,6 +182,14 @@ TsVector<TsLine3D> TsAABB<TsVector3>::GetEdgeList()const
     return vector;
 }
 
+template<typename T>
+TsMatrix TsAABB<T>::GetGeometoricMatrix()const
+{
+    TsVector3 scale = GetMax() - GetMin();
+    TsVector3 translate = GetCenter();
+    return TsMatrix::CreateScale(scale) * TsMatrix::CreateTranslate(translate);
+}
+
 template<>
 TsCollider::eType TsAABB2D::GetType()const
 {
@@ -199,3 +207,4 @@ TsCollider::eType TsAABB<T>::GetType()const
 {
     return TsCollider::Collider_Unknown;
 }
+
