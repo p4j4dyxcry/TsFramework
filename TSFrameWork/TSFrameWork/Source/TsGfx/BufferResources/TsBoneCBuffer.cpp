@@ -13,17 +13,10 @@ TsBool TsBoneCBuffer::UpdateCBuffer( TsDeviceContext * pContext )
     for each( auto pBone in boneList )
         m_boneCBuffer.bone[pBone->GetBoneID()] = pBone->GetBoneMatrix().Transposed();
 
-    pContext->ChangeCBuffer( this , &m_boneCBuffer , sizeof( m_boneCBuffer ) );
+    ChangedCBuffer(pContext, &m_boneCBuffer);
     return TS_TRUE;
 }
-TsBool TsBoneCBuffer::ApplyCBuffer( TsDeviceContext * pContext )
-{
-    if (m_pSkeleton == nullptr)
-        return TS_FALSE;
 
-    pContext->SetCBuffer( this );
-    return TS_TRUE;
-}
 TsBool TsBoneCBuffer::SetSkeleton( TsSkeleton* pSkeleton )
 {
     m_pSkeleton = pSkeleton;
@@ -38,17 +31,7 @@ TsBool TsBoneCBuffer::SetWorldTransform( TsTransForm * pTransform)
 
 TsBool TsBoneCBuffer::CreateBoneCBuffer( TsDevice * pDev )
 {
-    size_t sz = sizeof( m_boneCBuffer );
-
-    ID3D11Buffer* buffer = pDev->CreateBuffer( &m_boneCBuffer ,
-                                               sz ,
-                                               D3D11_CPU_ACCESS_WRITE ,
-                                               D3D11_BIND_CONSTANT_BUFFER );
-
-
-    SetD3DBufferAndSize( buffer , sz );
-    SetRegisterIndex( TS_CBUFFER_REGISTER::SkinBoneCB );
-    BindShaderType( TS_SHADER_TYPE::VERTEX_SHADER );
+    CreateCBuffer(pDev, &m_boneCBuffer, SkinBoneCB, VERTEX_SHADER);
 
     return TS_TRUE;
 }

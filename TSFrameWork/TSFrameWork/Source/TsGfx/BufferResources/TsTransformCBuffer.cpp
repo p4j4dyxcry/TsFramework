@@ -20,7 +20,7 @@ TsBool TsTransformCBuffer::UpdateCBuffer( TsDeviceContext * pContext )
             m_matrixCBuffer.m_MtxWorld = mtxWorld.Transposed();
             m_matrixCBuffer.m_MtxInvWorld = mtxWorld.Inversed().Transposed();
 
-            pContext->ChangeCBuffer(this, &m_matrixCBuffer, sizeof(m_matrixCBuffer));
+            ChangedCBuffer(pContext, &m_matrixCBuffer);
             m_matrixCash = mtxWorld;
         }		
     }
@@ -32,24 +32,10 @@ TsBool TsTransformCBuffer::UpdateCBuffer( TsDeviceContext * pContext )
     return TS_TRUE;
 
 }
-TsBool TsTransformCBuffer::ApplyCBuffer( TsDeviceContext * pContext )
-{
-    pContext->SetCBuffer( this );
-    return TS_TRUE;
-}
+
 TsBool TsTransformCBuffer::CreateTransformCBuffer( TsDevice* pDev )
 {
-    size_t sz = sizeof( m_matrixCBuffer );
-
-    ID3D11Buffer* buffer = pDev->CreateBuffer( &m_matrixCBuffer ,
-                                                sz ,
-                                                D3D11_CPU_ACCESS_WRITE ,
-                                                D3D11_BIND_CONSTANT_BUFFER );
-
-
-    SetD3DBufferAndSize( buffer , sz );
-    SetRegisterIndex( TS_CBUFFER_REGISTER::ObjectMatrixCB );
-    BindShaderType( TS_SHADER_TYPE::VERTEX_SHADER );
+    CreateCBuffer(pDev, &m_matrixCBuffer, TS_CBUFFER_REGISTER::ObjectMatrixCB, TS_SHADER_TYPE::VERTEX_SHADER);
 
     return TS_TRUE;
 }

@@ -13,30 +13,11 @@ TsLightSetCBuffer::~TsLightSetCBuffer()
 
 TsBool TsLightSetCBuffer::CreateLightSetCBuffer( TsDevice* pDev )
 {
-    size_t sz = sizeof( m_lightSetCBuffer );
-
-    ID3D11Buffer* buffer = pDev->CreateBuffer( &m_lightSetCBuffer ,
-                                               sz ,
-                                               D3D11_CPU_ACCESS_WRITE ,
-                                               D3D11_BIND_CONSTANT_BUFFER );
-
-
-    SetD3DBufferAndSize( buffer , sz );
-    SetRegisterIndex( TS_CBUFFER_REGISTER::LightSetCB );
-    BindShaderType( ( TS_SHADER_TYPE )( TS_SHADER_TYPE::VERTEX_SHADER |
-        TS_SHADER_TYPE::PIXEL_SHADER ) );
+    CreateCBuffer(pDev, &m_lightSetCBuffer, TS_CBUFFER_REGISTER::LightSetCB, TS_SHADER_TYPE::VP_SHADER );
 
     return TS_TRUE;
 }
 
-TsBool TsLightSetCBuffer::ApplyCBuffer(TsDeviceContext* pDevContext)
-{
-    if (pDevContext)
-        pDevContext->SetCBuffer(this);
-    else
-        return TS_FALSE;
-    return TS_TRUE;
-}
 TsBool TsLightSetCBuffer::UpdateCBuffer(TsDeviceContext* pDevContext)
 {
     TsBool isUpdate = m_isUpdate;
@@ -93,7 +74,7 @@ TsBool TsLightSetCBuffer::UpdateCBuffer(TsDeviceContext* pDevContext)
             else
                 m_lightSetCBuffer.lightData[i].worldToShadowMatrix = TsMatrix::identity;
         }
-        pDevContext->ChangeCBuffer( this , &m_lightSetCBuffer , sizeof( m_lightSetCBuffer ) );
+        ChangedCBuffer(pDevContext, &m_lightSetCBuffer);
     }
     m_isUpdate = TS_FALSE;
     return TS_TRUE;

@@ -45,7 +45,6 @@ public:
     virtual ~TsLightSetCBuffer();
 
     TsBool CreateLightSetCBuffer( TsDevice* pDev );
-    virtual TsBool ApplyCBuffer( TsDeviceContext* pDevContext )override;
     virtual TsBool UpdateCBuffer( TsDeviceContext* pDevContext )override;
 protected:
     LightCB m_lightSetCBuffer;              //  Constant Buffer

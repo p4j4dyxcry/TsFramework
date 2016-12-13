@@ -14,7 +14,6 @@ public:
     //----------------------------------------------------------
     TsTransformCBuffer();
     virtual TsBool UpdateCBuffer( TsDeviceContext * pContext ) override;
-    virtual TsBool ApplyCBuffer( TsDeviceContext * pContext) override;
     TsBool CreateTransformCBuffer( TsDevice* pDev );
     TsBool SetTransform( TsTransForm* pTransform );
 

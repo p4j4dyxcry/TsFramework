@@ -16,7 +16,6 @@ public:
     // public method
     //----------------------------------------------------------
     virtual TsBool UpdateCBuffer( TsDeviceContext * pContext ) override;
-    virtual TsBool ApplyCBuffer( TsDeviceContext * pContext ) override;
     TsBool SetSkeleton( TsSkeleton* pTransform );
     TsBool SetWorldTransform( TsTransForm* pTransform );
 
