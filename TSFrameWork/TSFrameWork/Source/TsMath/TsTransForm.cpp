@@ -159,6 +159,13 @@ TsQuaternion TsTransForm::GetWorldRotate()
 
 TsBool TsTransForm::SetParent(__inout TsTransForm* parent)
 {
+    if (parent == nullptr)
+    {
+        RemoveOfParantChild();
+        m_parent = nullptr;
+        return TS_TRUE;
+    }
+
     //既に親がいる場合はその親との関係を清算し、新しい親と関係を構築する必要がある。
     if( m_parent )
     {		
