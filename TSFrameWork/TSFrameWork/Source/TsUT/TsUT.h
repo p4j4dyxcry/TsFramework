@@ -38,5 +38,7 @@
 #include "Loader\hdr\TsHDRTextureAnalizer.h"
 #include "Loader\Mqo\TsMqoLoader.h"
 #include "Loader\x\TsXLoader.h"
+#include "Loader\stl\TsSTLLoader.h"
+#include "Loader\obj\TsObjLoader.h"
 
 #pragma comment(lib,"winmm.lib")

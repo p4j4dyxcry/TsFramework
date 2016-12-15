@@ -147,7 +147,7 @@ TsBool TsResourceManager::InitializeSampler( TsDevice * pDev )
 
         desc.Filter = D3D11_FILTER::D3D11_FILTER_ANISOTROPIC;
         desc.MaxAnisotropy = 16;
-        desc.MinLOD = 0;
+        desc.MinLOD = 0; //! Default Sampler    
         desc.MaxLOD = D3D11_FLOAT32_MAX;
 
         desc.MipLODBias = 0;

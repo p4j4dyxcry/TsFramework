@@ -139,12 +139,6 @@
     <Filter Include="ソース ファイル\TsUT\Loader\Xml">
       <UniqueIdentifier>{9e2a7f6c-69ae-412b-b177-e054e2bb3306}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\TsUT\Loader\HDRTexture">
-      <UniqueIdentifier>{0024eae8-70bf-44c4-bc34-5736c7612e35}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\TsUT\Loader\virtual">
-      <UniqueIdentifier>{d50eccbf-2d82-4029-87d0-b53d9190a455}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\TsUT\Loader\Mqo">
       <UniqueIdentifier>{b4f566b0-ebc1-4447-bf6f-d14688632ef2}</UniqueIdentifier>
     </Filter>
@@ -162,6 +156,18 @@
     </Filter>
     <Filter Include="ソース ファイル\Resource\ShaderResource">
       <UniqueIdentifier>{c8ea68eb-a20c-4557-ae6f-8735241c86c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TsUT\Loader\obj">
+      <UniqueIdentifier>{c8e5823c-0ec9-4bb2-9be1-9d7100adac29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TsUT\Loader\stl">
+      <UniqueIdentifier>{033891e1-6e3e-4db1-8a9f-0747e756407f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TsUT\Loader\hdr">
+      <UniqueIdentifier>{0024eae8-70bf-44c4-bc34-5736c7612e35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TsUT\Loader\base">
+      <UniqueIdentifier>{d50eccbf-2d82-4029-87d0-b53d9190a455}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -337,13 +343,13 @@
       <Filter>ソース ファイル\TsUT\Loader\Dae</Filter>
     </ClCompile>
     <ClCompile Include="Source\TsUT\Loader\hdr\TsHDRTextureAnalizer.cpp">
-      <Filter>ソース ファイル\TsUT\Loader\HDRTexture</Filter>
+      <Filter>ソース ファイル\TsUT\Loader\hdr</Filter>
     </ClCompile>
     <ClCompile Include="Source\TsUT\Loader\Mqo\TsMqoLoader.cpp">
       <Filter>ソース ファイル\TsUT\Loader\Mqo</Filter>
     </ClCompile>
     <ClCompile Include="Source\TsUT\Loader\virtual\TsMeshLoader.cpp">
-      <Filter>ソース ファイル\TsUT\Loader\virtual</Filter>
+      <Filter>ソース ファイル\TsUT\Loader\base</Filter>
     </ClCompile>
     <ClCompile Include="Source\TsUT\Loader\x\TsXLoader.cpp">
       <Filter>ソース ファイル\TsUT\Loader\X</Filter>
@@ -455,6 +461,12 @@
     </ClCompile>
     <ClCompile Include="Source\TsGfx\BufferResources\TsPrimitiveMeshCreater.cpp">
       <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\Loader\stl\TsSTLLoader.cpp">
+      <Filter>ソース ファイル\TsUT\Loader\stl</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\Loader\obj\TsObjLoader.cpp">
+      <Filter>ソース ファイル\TsUT\Loader\obj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -690,13 +702,13 @@
       <Filter>ソース ファイル\TsUT\Loader\Dae</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsUT\Loader\hdr\TsHDRTextureAnalizer.h">
-      <Filter>ソース ファイル\TsUT\Loader\HDRTexture</Filter>
+      <Filter>ソース ファイル\TsUT\Loader\hdr</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsUT\Loader\Mqo\TsMqoLoader.h">
       <Filter>ソース ファイル\TsUT\Loader\Mqo</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsUT\Loader\virtual\TsMeshLoader.h">
-      <Filter>ソース ファイル\TsUT\Loader\virtual</Filter>
+      <Filter>ソース ファイル\TsUT\Loader\base</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsUT\Loader\x\TsXLoader.h">
       <Filter>ソース ファイル\TsUT\Loader\X</Filter>
@@ -802,6 +814,12 @@
     </ClInclude>
     <ClInclude Include="Source\TsGfx\BufferResources\TsPrimitiveMeshCreater.h">
       <Filter>ソース ファイル\TsGfx\Source\BufferResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\Loader\stl\TsSTLLoader.h">
+      <Filter>ソース ファイル\TsUT\Loader\stl</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\Loader\obj\TsObjLoader.h">
+      <Filter>ソース ファイル\TsUT\Loader\obj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
