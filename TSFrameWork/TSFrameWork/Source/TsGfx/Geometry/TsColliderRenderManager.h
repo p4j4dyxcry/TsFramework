@@ -92,4 +92,8 @@ private:
 
     GeometoryType m_geometoris[TsCollider::eType::Collider_Num];
     TsInstanceCBuffer* m_pInstanceCB;
+
+    TsRasterizerState   * m_pRasterState;
+    TsDepthStencilState * m_pDepthStencilState;
+    TsBool                m_useWireFrame;
 };

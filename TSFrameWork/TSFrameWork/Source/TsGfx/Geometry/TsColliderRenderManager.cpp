@@ -44,6 +44,9 @@ void TsColliderRenderManager::TransformAllocator::Free(TsTransForm* ptr)
 //! コンストラクタ
 //----------------------------------------------------------
 TsColliderRenderManager::TsColliderRenderManager()
+:m_useWireFrame( TS_TRUE ) ,
+m_pDepthStencilState(nullptr),
+m_pRasterState(nullptr)
 {
     m_pLine2DGeometory.reserve(1024);
     m_pLine3DGeometory.reserve(1024);
@@ -59,6 +62,10 @@ TsColliderRenderManager::~TsColliderRenderManager()
     for (auto p : m_geometyMap)
         TsSafeDelete(p.second);
     TsSafeDelete(m_pInstanceCB);
+
+ //   TsSafeDelete( m_pRasterState );
+ //   TsSafeDelete( m_pDepthStencilState );
+
 }
 
 //----------------------------------------------------------
@@ -77,7 +84,7 @@ TsBool TsColliderRenderManager::Initialize(TsDevice* pDev)
         TsVertexBuffer* pVB = pDev->CreateVertexBuffer(pSkin, sz*sizeof(TsVertexSkin), sizeof(TsVertexSkin));
             
 
-        tstl::pair<TsCollider::eType, TsVertexBuffer*> pair;
+        std::pair<TsCollider::eType, TsVertexBuffer*> pair;
         pair.first = TsCollider::eType::Collider_AABB2D;
         pair.second = pVB;
         m_geometyMap.insert(pair);
@@ -91,7 +98,7 @@ TsBool TsColliderRenderManager::Initialize(TsDevice* pDev)
 
         TsVertexBuffer* pVB = pDev->CreateVertexBuffer(pSkin, sz*sizeof(TsVertexSkin), sizeof(TsVertexSkin));
 
-        tstl::pair<TsCollider::eType, TsVertexBuffer*> pair;
+        std::pair<TsCollider::eType, TsVertexBuffer*> pair;
         pair.first = TsCollider::eType::Collider_AABB3D;
         pair.second = pVB;
         m_geometyMap.insert(pair);
@@ -105,7 +112,7 @@ TsBool TsColliderRenderManager::Initialize(TsDevice* pDev)
 
         TsVertexBuffer* pVB = pDev->CreateVertexBuffer(pSkin, sz*sizeof(TsVertexSkin), sizeof(TsVertexSkin));
 
-        tstl::pair<TsCollider::eType, TsVertexBuffer*> pair;
+        std::pair<TsCollider::eType, TsVertexBuffer*> pair;
         pair.first = TsCollider::eType::Collider_OBB3D;
         pair.second = pVB;
         m_geometyMap.insert(pair);
@@ -119,7 +126,7 @@ TsBool TsColliderRenderManager::Initialize(TsDevice* pDev)
 
         TsVertexBuffer* pVB = pDev->CreateVertexBuffer(pSkin, sz*sizeof(TsVertexSkin), sizeof(TsVertexSkin));
 
-        tstl::pair<TsCollider::eType, TsVertexBuffer*> pair;
+        std::pair<TsCollider::eType, TsVertexBuffer*> pair;
         pair.first = TsCollider::eType::Collider_TsSphere;
         pair.second = pVB;
         m_geometyMap.insert(pair);
@@ -130,6 +137,24 @@ TsBool TsColliderRenderManager::Initialize(TsDevice* pDev)
 
     CreateMaterial(pDev, TsColor::Green);
     CreateMaterial(pDev, TsColor::Red);
+
+    if( m_pRasterState == nullptr )
+    {
+        m_pRasterState = TsNew( TsRasterizerState );
+        m_pRasterState->SetAntiAliasMode( TS_TRUE );
+        m_pRasterState->SetCullMode( TS_CULL_MODE::NONE );
+        m_pRasterState->SetFillMode( TS_FILL_MODE::WIREFRAME );
+        m_pRasterState->CreateRasterizerState( pDev );
+    }
+
+    if( m_pDepthStencilState == nullptr )
+    {
+        m_pDepthStencilState = TsNew( TsDepthStencilState );
+        m_pDepthStencilState->SetDepthTestFunc( TS_COMPARISON_FUNC::LESS );
+        m_pDepthStencilState->SetZEnable( TS_TRUE );
+        m_pDepthStencilState->SetZWriteEnable( TS_TRUE );
+        m_pDepthStencilState->CreateDepthStencil( pDev );
+    }
 
     return TS_TRUE;
 }
@@ -235,6 +260,18 @@ TsBool TsColliderRenderManager::ChangeMaterial(TsCollider * pCollider, TsInt mat
 //----------------------------------------------------------
 TsBool TsColliderRenderManager::Draw(TsDeviceContext* pDC)
 {
+    auto contextDSS = pDC->GetDepthStencilState();
+    auto contextRSS = pDC->GetRasterState();
+
+    if( m_useWireFrame )
+    {
+        pDC->SetDepthStencilState( m_pDepthStencilState );
+        pDC->SetRasterizerState( m_pRasterState );
+
+        pDC->ApplyDepthStencil();
+        pDC->ApplyRasterizer();
+    }
+
     //! UpdateCBuffer
     auto UpdateInstanceCB = [this](MaterialType& m)
     {
@@ -271,5 +308,15 @@ TsBool TsColliderRenderManager::Draw(TsDeviceContext* pDC)
             }
         }
     }
+
+    if( m_useWireFrame )
+    {
+        pDC->SetDepthStencilState( contextDSS );
+        pDC->SetRasterizerState( contextRSS );
+
+        pDC->ApplyDepthStencil();
+        pDC->ApplyRasterizer();
+    }
+
     return TS_TRUE;
 };
