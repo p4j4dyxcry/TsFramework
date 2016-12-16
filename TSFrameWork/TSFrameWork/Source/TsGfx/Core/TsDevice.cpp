@@ -26,8 +26,7 @@ TsBool TsDevice::CreateDevice( HWND hWnd , TsInt width , TsInt height )
 
     //リフレッシュレートの取得
     TsUint2 refreshRato;
-    TsBool result = GetRefreshRato( refreshRato , width , height );
-    if( result == TS_FALSE ) return result;
+    GetRefreshRato( refreshRato , width , height );
 
     TS_SWAP_CHAIN_DESC swapChainDesc( hWnd , width , height , refreshRato );
 
