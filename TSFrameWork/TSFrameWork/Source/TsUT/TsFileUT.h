@@ -37,6 +37,12 @@ namespace TSUT
 
 		//! フルディレクトリを取得する
 		TsString GetFullDirectory();
+
+        //! 名前を変更する
+        TsBool ReName(const TsString& newName);
+
+        //! 拡張子を変更する
+        TsBool ReExtencion( const TsString& extencion );
 	protected:
 		TsString m_filePath;		//ローカルのファイルパス
 		TsString m_fullPath;		//フルパス

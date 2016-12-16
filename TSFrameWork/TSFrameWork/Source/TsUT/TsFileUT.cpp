@@ -75,6 +75,20 @@ TsString TsFilePathAnalyzer::GetFullDirectory()
     return m_fullDirectory;
 }
 
+
+//! 名前を変更する
+TsBool TsFilePathAnalyzer::ReName(const TsString& newName)
+{
+    return Analize(newName);
+}
+
+//! 拡張子を変更する
+TsBool TsFilePathAnalyzer::ReExtencion(const TsString& extencion)
+{
+    auto index = m_fullPath.rfind('.');
+    return Analize(m_fullPath.substr(0, index) + extencion);
+}
+
 TsFileDirectory::TsFileDirectory( TsString directory ):
 m_searchSubFolder(TS_TRUE)
 {
