@@ -14,12 +14,28 @@ struct TsObjTextureOP
     TsFloat2 texResolution;
     TsBool   clamp = TS_FALSE;
     TsF32    bumpParam = 1;
-
 };
+
+struct TsObjMaterialUse
+{
+    TsBool useAmbient  = TS_FALSE;
+    TsBool useDiffuse  = TS_FALSE;
+    TsBool useSpecluer = TS_FALSE;
+    TsBool usePower = TS_FALSE;
+    TsBool useAlpha = TS_FALSE;
+    TsBool useLum = TS_FALSE;
+    TsBool useSharpness = TS_FALSE;
+    TsBool useNi = TS_FALSE;
+    TsBool useNs = TS_FALSE;
+    TsBool useTf = TS_FALSE;
+};
+
 // obj material
 struct TsObjMaterial
 {
     TsString name;
+    TsString dir;
+    TsObjMaterialUse usingMaterialParam;
 
     TsFloat3 ambient;  // Ka ambient
     TsFloat3 diffuse;  // Kd diffuse
@@ -85,6 +101,8 @@ protected:
 
     TsBool LoadObj(const char* filename);
     TsBool LoadMtl(const char* filename);
+
+    TsBool SaveMaterial(const char* filename);
 
     TsVector<TsObjMaterial> m_materialList;
     TsVector<TsVector3>     m_posList;

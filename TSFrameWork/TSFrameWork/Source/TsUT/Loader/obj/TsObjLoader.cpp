@@ -23,20 +23,182 @@ void*  TsOBJLoader::GetVertexBuffer(TsInt index)
 {
     return 0;
 }
-size_t GetVertexStride()
+size_t TsOBJLoader::GetVertexStride()
 {
     return 0;
 }
 
+TsBool TsOBJLoader::SaveMaterial(const char* filename)
+{
+    std::ofstream ofs(filename);
+
+    auto WriteFloat1 = [](std::ofstream& ofs, const char* head, TsF32 param)
+    {
+        ofs << head << " " << param << std::endl;
+    };
+
+    auto WriteFloat3 = [](std::ofstream& ofs, const char* head, TsFloat3& param)
+    {
+        ofs << head << " " << param.x << 
+                       " " << param.y << 
+                       " " << param.z << std::endl;
+    };
+
+    auto WritePath = [](std::ofstream& ofs, const char* head, TsString& param)
+    {
+        if (param.size() > 0)
+            ofs << head << " " << param << std::endl;
+    };
+
+    for (TsInt i = 0; i < m_materialList.size(); ++i)
+    {
+        TsObjMaterial& m = m_materialList[i];
+        TsObjMaterialUse& op= m.usingMaterialParam;
+
+        ofs << "newmtl" << " " << m.name << std::endl;
+
+        if (op.useDiffuse)
+            WriteFloat3(ofs, "Kd", m.diffuse);
+
+        if (op.useAmbient)
+            WriteFloat3(ofs, "Ka", m.ambient);
+
+        if (op.useSpecluer)
+            WriteFloat3(ofs, "Ks", m.specluer);
+
+        if (op.usePower)
+            WriteFloat1(ofs, "Ns", m.power);
+
+        if (op.useAlpha)
+            WriteFloat1(ofs, "d", m.alpha );
+
+        if (op.useLum)
+            WriteFloat1(ofs, "illum", m.lum);
+
+        if (op.useTf)
+            WriteFloat3(ofs, "Tf", m.Tf);
+
+        if (op.useNi)
+            WriteFloat1(ofs, "Ni", m.Ni);
+
+        WritePath(ofs, "map_Kd", m.diffuseMap);
+        WritePath(ofs, "map_Ka", m.ambientMap);
+        WritePath(ofs, "map_Ks", m.specluerMap);
+        WritePath(ofs, "map_Ns", m.hightLightMap);
+        WritePath(ofs, "map_Bump", m.bumpMap);
+        WritePath(ofs, "map_d", m.alphaMap);
+    }
+    return TS_TRUE;
+}
+
 TsBool TsOBJLoader::SaveFile(const char* filename)
 {
-    //todo
+    TsDebugLog("Save obj ->%s \n", filename);
+
+    std::ofstream ofs( filename );
+
+    auto WriteFloat2 = [](std::ofstream& ofs, const char* head, TsVector2& param)
+    {
+        ofs << head << " " << param.x << 
+                       " " << param.y << std::endl;
+    };
+
+    auto WriteFloat3 = [](std::ofstream& ofs, const char* head, TsVector3& param)
+    {
+        ofs << head << " " << param.x << 
+                       " " << param.y << 
+                       " " << param.z << std::endl;
+    };
+
+    TSUT::TsFilePathAnalyzer analizer(filename);
+    TSUT::TsFilePathAnalyzer materialAnalizer(filename);
+    materialAnalizer.ReExtencion(".mtl");
+
+    TsBool usingMaterial = m_materialList.size() > 0;
+
+    if ( usingMaterial )
+    {
+        ofs << "mtllib" << " " << materialAnalizer.GetFileName() << std::endl;
+        SaveMaterial(materialAnalizer.GetFullPath().c_str());
+    }
+
+    for (auto v : m_posList)
+        WriteFloat3(ofs, "v", v);
+
+    for (auto vn : m_normalList)
+        WriteFloat3(ofs, "vn", vn);
+
+    for (auto vt : m_texcoordList)
+        WriteFloat2(ofs, "vt", vt);
+
+    TsByte flag = 0;
+    flag |= m_posList.size() > 0 ? 1 : 0;
+    flag |= m_normalList.size() > 0 ? 2 : 0;
+    flag |= m_texcoordList.size() > 0 ? 4 : 0;
+    TsString currentMaterial = "";
+
+    for (auto f : m_faceList)
+    {
+        if (currentMaterial != f.material_name)
+        {
+            ofs << "usemtl" << " " << f.material_name << std::endl;
+            currentMaterial = f.material_name;
+        }
+        ofs << "f" << " ";
+        if (flag == 0x07)
+        {
+            ofs << f.idx_pos.x      << "/"
+                << f.idx_texcoord.x << "/"
+                << f.idx_normal.x   << "/" << " "
+
+                << f.idx_pos.y      << "/"
+                << f.idx_texcoord.y << "/"
+                << f.idx_normal.y   << "/" << " "
+
+                << f.idx_pos.z      << "/"
+                << f.idx_texcoord.z << "/"
+                << f.idx_normal.z   <<  std::endl;
+        }
+
+        if (flag == 0x03)
+        {
+            ofs << f.idx_pos.x      << "/"
+                << f.idx_normal.x   << " "
+
+                << f.idx_pos.y      << "/"
+                << f.idx_normal.y   << " "
+
+                << f.idx_pos.z      << "/"
+                << f.idx_normal.z   <<  std::endl;
+        }
+
+        if (flag == 0x05)
+        {
+            ofs << f.idx_pos.x      << "/"
+                << f.idx_texcoord.x << " "
+
+                << f.idx_pos.y      << "/"
+                << f.idx_texcoord.y << " "
+
+                << f.idx_pos.z      << "/"
+                << f.idx_texcoord.z <<  std::endl;
+        }
+
+        if (flag == 1)
+        {
+            ofs << f.idx_pos.x << " "
+                << f.idx_pos.y << " "
+                << f.idx_pos.z << std::endl;
+        }
+
+    }
+
     return 1;
 }
 
 TsBool TsOBJLoader::LoadObj(const char* filename)
 {
-    TsDebugLog("Load obj ->%s", filename);
+    TsDebugLog("Load obj ->%s \n", filename);
     std::ifstream ifs(filename);
 
     if (ifs.fail())
@@ -124,7 +286,7 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
         //------------------------------------------------------------
         // vertex texcoord
         //------------------------------------------------------------
-        if (ReadVec2(buf, "vn ", tempUV))
+        if (ReadVec2(buf, "vt ", tempUV))
         {
             m_texcoordList.push_back(tempUV);
             flag |= USE_UV;
@@ -145,7 +307,7 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
         //------------------------------------------------------------
         if (buf.find("usemtl ") == 0)
         {
-            currentMaterial = buf.substr(8);
+            currentMaterial = buf.substr(7);
             continue;
         }
 
@@ -274,20 +436,21 @@ TsBool TsOBJLoader::LoadMtl(const char* filename)
 {
     std::ifstream ifs(filename);
 
-    TsDebugLog("Load mtl ->%s", filename);
+    TsDebugLog("Load mtl ->%s \n", filename);
 
     if (ifs.is_open() == false)
     {
         OutputDebugString("ObjLoader::Load Mtl File Open Error");
         return false;
     }
+    TSUT::TsFilePathAnalyzer analizer(filename);
 
     auto ReadFloat1 = [](const TsString& source, const char* element, TsF32& result)
     {
         TsInt strPos = TsString::npos;
         strPos = source.find(element);
         TsInt elementSize = TsString(element).size();
-        if (strPos != TsString::npos)
+        if (strPos == 0)
         {
             sscanf_s(source.substr(strPos + elementSize).c_str(),
                 "%f",&result);
@@ -301,7 +464,7 @@ TsBool TsOBJLoader::LoadMtl(const char* filename)
         TsInt strPos = TsString::npos;
         strPos = source.find(element);
         TsInt elementSize = TsString(element).size();
-        if (strPos != TsString::npos)
+        if (strPos == 0)
         {
             sscanf_s(source.substr(strPos + elementSize).c_str(),
                 "%f %f %f",
@@ -313,7 +476,7 @@ TsBool TsOBJLoader::LoadMtl(const char* filename)
         return TS_FALSE;
     };
 
-    auto ReadTexPath = [](const TsString& source, const char* element, TsString& result)
+    auto ReadTexPath = [&](const TsString& source, const char* element, TsString& result)
     {
         TsInt strPos = TsString::npos;
         strPos = source.find(element);
@@ -326,7 +489,7 @@ TsBool TsOBJLoader::LoadMtl(const char* filename)
         return TS_FALSE;
     };
 
-    TSUT::TsFilePathAnalyzer analizer(filename);
+   
 
     TsString buf;
 
@@ -341,68 +504,122 @@ TsBool TsOBJLoader::LoadMtl(const char* filename)
         //------------------------------------------------------------
         // Material
         //------------------------------------------------------------
-        if (buf.find("newmtl"))
+        if (buf.find("newmtl") != TsString::npos)
         {
             TsObjMaterial temp;
             temp.name = buf.substr(7);
+            temp.dir = analizer.GetLocalDirectory();
 
             //------------------------------------------------------------
             // Load Material Parameters
             //------------------------------------------------------------
             while (ifs.eof() == false &&
-                buf[0] != '\n')
+                buf != "")
             {
                 std::getline(ifs, buf);
                 // diffuse
-                ReadFloat3(buf, "Kd ", temp.diffuse);
+                if (ReadFloat3(buf, "Kd ", temp.diffuse))
+                {
+                    temp.usingMaterialParam.useDiffuse = TS_TRUE;
+                    continue;
+                }
 
                 // ambient
-                ReadFloat3(buf, "Ka ", temp.ambient);
+                if( ReadFloat3(buf, "Ka ", temp.ambient))
+                {
+                    temp.usingMaterialParam.useAmbient = TS_TRUE;
+                    continue;
+                }
 
                 // speculer
-                ReadFloat3(buf, "Ks ", temp.specluer);
+                if (ReadFloat3(buf, "Ks ", temp.specluer))
+                {
+                    temp.usingMaterialParam.useSpecluer = TS_TRUE;
+                    continue;
+                }
 
                 // seculerPower
-                ReadFloat1(buf, "Ns ", temp.power);
+                if( ReadFloat1(buf, "Ns ", temp.power))
+                {
+                    temp.usingMaterialParam.usePower = TS_TRUE;
+                    continue;
+                }
 
                 // alpha
                 {
-                    ReadFloat1(buf, "d ", temp.alpha);
-
+                    if (ReadFloat1(buf, "d ", temp.alpha))
+                    {
+                        temp.usingMaterialParam.useAlpha = TS_TRUE;
+                        continue;
+                    }
                     // is revers alpha ?
-                    if (ReadFloat1(buf, "Tr ", temp.alpha))
+                    else if (ReadFloat1(buf, "Tr ", temp.alpha))
                     {
                         temp.alpha = 1 - temp.alpha;
+                        temp.usingMaterialParam.useAlpha = TS_TRUE;
+                        continue;
                     }
                 }
 
                 // Tf ?
-                ReadFloat3(buf, "Tf ", temp.Tf);
+                if (ReadFloat3(buf, "Tf ", temp.Tf))
+                {
+                    temp.usingMaterialParam.useTf = TS_TRUE;
+                    continue;
+                }
 
                 // Ni ?
-                ReadFloat1(buf, "Tf ", temp.Ni);
-
+                if (ReadFloat1(buf, "Ni ", temp.Ni))
+                {
+                    temp.usingMaterialParam.useNi = TS_TRUE;
+                    continue;
+                }
                 // lumminus 
-                ReadFloat1(buf, "illum ", temp.lum);
+                if (ReadFloat1(buf, "illum ", temp.lum))
+                {
+                    temp.usingMaterialParam.useLum = TS_TRUE;
+                    continue;
+                }
 
                 // diffuse texture
-                ReadTexPath(buf, "map_Kd ", temp.diffuseMap);
+                if (ReadTexPath(buf, "map_Kd ", temp.diffuseMap))
+                {
+                    continue;
+                }
 
                 // ambient texture
-                ReadTexPath(buf, "map_Ka ", temp.ambientMap);
-
+                if( ReadTexPath(buf, "map_Ka ", temp.ambientMap))
+                {
+                    continue;
+                }
                 // speculer texture
-                ReadTexPath(buf, "map_Ks ", temp.specluerMap);
+                if (ReadTexPath(buf, "map_Ks ", temp.specluerMap))
+                {
+                    continue;
+                }
 
                 // hight light texture
-                ReadTexPath(buf, "map_Ns ", temp.hightLightMap);
+                if (ReadTexPath(buf, "map_Ns ", temp.hightLightMap))
+                {
+                    continue;
+                }
 
                 // normal texture
-                ReadTexPath(buf, "map_Bump ", temp.bumpMap);
-                ReadTexPath(buf, "Bump ", temp.bumpMap);
+                if (ReadTexPath(buf, "map_Bump ", temp.bumpMap))
+                {
+                    continue;
+                }
+                
+                if (ReadTexPath(buf, "Bump ", temp.bumpMap))
+                {
+                    continue;
+                }
 
                 // hight light texture
-                ReadTexPath(buf, "map_d ", temp.alphaMap);
+               if( ReadTexPath(buf, "map_d ", temp.alphaMap))
+                {
+                    continue;
+                }
 
             }// End while
             m_materialList.push_back(temp);
