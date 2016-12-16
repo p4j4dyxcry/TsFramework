@@ -16,7 +16,12 @@ public:
     TsInt GetBoneIndex()const;
     TsBool SetBoneIndex( TsInt index );
     TsBool ComputeBindPose();
-    TsBool SetBindPose( FbxMatrix );
+    TsBool SetBindPose( TsMatrix& );
+    TsBool SetMatrix(TsMatrix& m)
+    {
+        *m_pTransform = m;
+        return TS_TRUE;
+    }
     TsMatrix GetBindPoseMatrix();
 
 protected:

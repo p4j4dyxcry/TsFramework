@@ -7,8 +7,6 @@ TsBool TsBoneCBuffer::UpdateCBuffer( TsDeviceContext * pContext )
     if( m_pSkeleton == nullptr )
         return TS_FALSE;
 
-   //m_pSkeleton->UpdateSkeleton();
-
     TsVector<TsBone*>& boneList = m_pSkeleton->GetBoneList();
     for each( auto pBone in boneList )
         m_boneCBuffer.bone[pBone->GetBoneID()] = pBone->GetBoneMatrix().Transposed();

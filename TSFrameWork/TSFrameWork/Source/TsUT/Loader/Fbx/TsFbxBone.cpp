@@ -19,14 +19,23 @@ TsInt TsFbxBone::GetBoneIndex()const
     return m_boneIndex;
 }
 
-TsBool TsFbxBone::SetBindPose( FbxMatrix baseposeMatrix )
+TsBool TsFbxBone::SetBindPose( TsMatrix& baseposeMatrix )
 {
+    m_bindPoseMatrixList.resize( 1 );
+    m_bindPoseMatrixList[0] = baseposeMatrix;
 
     return TS_TRUE;
 }
 
 TsMatrix TsFbxBone::GetBindPoseMatrix()
 {
+    if (m_bindPoseMatrixList.empty() )
+    {
+        m_bindPoseMatrixList.resize(1);
+//        m_bindPoseMatrixList[0] = m_pTransform->ToWorldMatrix();
+        m_bindPoseMatrixList[0] = TsMatrix::identity;
+    }
+
     return m_bindPoseMatrixList[0];
 }
 
@@ -64,8 +73,8 @@ TsBool TsFbxBone::ComputeBindPose()
     m_bindPoseMatrixList.resize( 1 );
     m_bindPoseMatrixList[0] = m;
 #else
-    m_bindPoseMatrixList.resize( 1 );
-    m_bindPoseMatrixList[0] = m_pTransform->ToWorldMatrix();
+//    m_bindPoseMatrixList.resize( 1 );
+//    m_bindPoseMatrixList[0] = m_pTransform->ToWorldMatrix();
 #endif
 
     //((TsBoneTransForm*)(m_pTransform))->SetBasePoseInv(m_bindPoseMatrixList[0]);

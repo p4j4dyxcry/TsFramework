@@ -21,6 +21,7 @@ TsBool TsSkeleton::AddBone( TsTransForm* pTransform ,
     pBone->m_pTransform = pTransform;
     pBone->SetBoneID( boneID );
     pBone->m_RootBone = pRootBone;
+    pBone->ComputeBoneMatrix();
     m_boneList.push_back( pBone );
     return TS_TRUE;
 }

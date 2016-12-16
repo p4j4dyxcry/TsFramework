@@ -637,11 +637,32 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
 
             FbxCluster *pCluster = pFbxSkin->GetCluster(clusterIndex);
             auto m0 = pBone->GetFbxNode()->EvaluateGlobalTransform();
-            FbxAMatrix m1;
             auto m2 = pBone->GetFbxNode()->EvaluateLocalTransform();
-            FbxAMatrix m3;
-            pCluster->GetTransformLinkMatrix( m1 );
-            pCluster->GetTransformMatrix( m3 );
+
+
+            FbxAMatrix fbx_transformLink;
+            FbxAMatrix fbx_transform;
+            
+            pCluster->GetTransformLinkMatrix(fbx_transformLink);
+            pCluster->GetTransformMatrix(fbx_transform);
+
+            TsTransForm local = FbxMatrixToTsMatrix(fbx_transformLink);
+            TsTransForm global = FbxMatrixToTsMatrix(fbx_transform);
+
+            local.m_localPosition.x *= -1;
+            local.m_localRotate.x *= -1;
+            local.m_localRotate.w *= -1;
+
+            global.m_localPosition.x *= -1;
+            global.m_localRotate.x *= -1;
+            global.m_localRotate.w *= -1;
+            
+            TsMatrix inv = global.ToWorldMatrix().Inversed();
+            TsMatrix bindPose = local.ToWorldMatrix();
+
+            bindPose = bindPose * inv;
+
+            pBone->SetBindPose(bindPose);
 
             TsInt numPointsInfluencing = pCluster->GetControlPointIndicesCount();
 
@@ -730,6 +751,7 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
             boneWeightList[i].y /= totalWeight;
             boneWeightList[i].z /= totalWeight;
             boneWeightList[i].w /= totalWeight;
+            *m_pTransform = TsMatrix::identity;
         } // End if
     } // End for
 

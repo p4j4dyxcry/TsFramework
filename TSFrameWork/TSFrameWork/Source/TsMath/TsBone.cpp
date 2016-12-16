@@ -41,6 +41,7 @@ TsBool TsBone::SetBindPoseMatrix( const TsMatrix& bindPoseMatrix )
 {
     m_bindPoseMatrix = bindPoseMatrix;
     m_invBindPoseMatrix = m_bindPoseMatrix.Inversed();
+
     return TS_TRUE;
 }
 TsBool TsBone::SetBoneID( TsInt id )
