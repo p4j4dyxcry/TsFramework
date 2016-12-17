@@ -751,7 +751,6 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
             boneWeightList[i].y /= totalWeight;
             boneWeightList[i].z /= totalWeight;
             boneWeightList[i].w /= totalWeight;
-            *m_pTransform = TsMatrix::identity;
         } // End if
     } // End for
 
