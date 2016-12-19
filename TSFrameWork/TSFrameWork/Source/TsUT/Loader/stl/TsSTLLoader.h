@@ -10,27 +10,22 @@ struct TsStlFace
 };
 #pragma pack()
 
-class TsStlLoader : public TsMeshLoader
+class TsStlLoader : public Ts3DModelLoader
 {
 public:
     TsStlLoader();
     virtual ~TsStlLoader();
-    TsBool LoadFromFile(const TsString& filename, TsLoadOption& option = TsLoadOption())override;
-    TsBool LoadFromMemory(void * memory, size_t sz)override;
-    virtual TsInt  GetMeshNum() override;
-    virtual TsInt  GetVertexSize(TsInt index) override;
-    virtual void*  GetVertexBuffer(TsInt index) override;
-    virtual size_t GetVertexStride() override;
+    TsBool LoadFile( const TsChar* filename )override;
 
-    TsBool SaveBinary(const char* filename);
-    TsBool SaveAscii(const char* filename);
+    TsBool SaveBinary( const TsChar* filename );
+    TsBool SaveAscii( const TsChar* filename );
 
 protected:
     TsStlFace* m_faceList;
     TsUint      m_size;
     
-    TsBool LoadFromAscii(const char * filename);
-    TsBool LoadFromBinary(const char * filename);
+    TsBool LoadFromAscii( const TsChar * filename );
+    TsBool LoadFromBinary( const TsChar * filename );
 
-    TsBool IsBinary(const char* filename, TsInt loopNum = 256);
+    TsBool IsBinary( const TsChar* filename , TsInt loopNum = 256 );
 };

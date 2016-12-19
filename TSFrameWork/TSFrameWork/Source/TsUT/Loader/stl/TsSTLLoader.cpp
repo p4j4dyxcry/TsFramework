@@ -3,54 +3,20 @@
 TsStlLoader::TsStlLoader(){}
 TsStlLoader:: ~TsStlLoader(){}
 
-TsBool TsStlLoader::LoadFromFile(const TsString& filename, TsLoadOption& option)
+TsBool TsStlLoader::LoadFile(const TsChar* filename)
 {
     TsBool result = TS_FALSE;
-    (void)option;
 
-    if (IsBinary(filename.c_str()))
-    {
-        return LoadFromBinary(filename.c_str());
-    }
-
+    if (IsBinary(filename))
+        return LoadFromBinary(filename);
     else
-    {
-        return  LoadFromAscii(filename.c_str());
-    }
-
-}
-TsBool TsStlLoader::LoadFromMemory(void * memory, size_t sz)
-{
-    //todo
-    return TS_FALSE;
-}
-
-TsInt  TsStlLoader::GetMeshNum()
-{
-    //todo
-    return 1;
-}
-TsInt  TsStlLoader::GetVertexSize(TsInt index)
-{
-    //todo
-    return 0;
-}
-
-void*  TsStlLoader::GetVertexBuffer(TsInt index)
-{
-    //todo
-    return 0;
-}
-size_t TsStlLoader::GetVertexStride()
-{
-    //todo
-    return 0;
+        return  LoadFromAscii(filename);
 }
 
 //----------------------------------------------------------
 //! バイナリ形式でstlファイルを保存する
 //----------------------------------------------------------
-TsBool TsStlLoader::SaveBinary(const char* filename)
+TsBool TsStlLoader::SaveBinary(const TsChar* filename)
 {
     std::ofstream ofs(filename,std::ios::binary);
 
@@ -71,7 +37,7 @@ TsBool TsStlLoader::SaveBinary(const char* filename)
 //----------------------------------------------------------
 //! バイナリ形式のstlファイルを読み込む
 //----------------------------------------------------------
-TsBool TsStlLoader::LoadFromBinary(const char * filename)
+TsBool TsStlLoader::LoadFromBinary( const TsChar * filename )
 {
     std::ifstream ifs(filename, std::ios::binary);
 
@@ -102,7 +68,7 @@ TsBool TsStlLoader::LoadFromBinary(const char * filename)
 //----------------------------------------------------------
 //! Asciiコードでstlファイルを保存する
 //----------------------------------------------------------
-TsBool TsStlLoader::SaveAscii(const char* filename)
+TsBool TsStlLoader::SaveAscii( const TsChar* filename )
 {
     std::ofstream ofs(filename);
 
@@ -140,7 +106,7 @@ TsBool TsStlLoader::SaveAscii(const char* filename)
 //----------------------------------------------------------
 //! Asciiコードのstlファイルを読み込む
 //----------------------------------------------------------
-TsBool TsStlLoader::LoadFromAscii(const char * filename)
+TsBool TsStlLoader::LoadFromAscii( const TsChar * filename )
 {
     std::ifstream ifs(filename);
 
@@ -207,7 +173,7 @@ TsBool TsStlLoader::LoadFromAscii(const char * filename)
 //----------------------------------------------------------
 //! stlファイルがバイナリか調べる
 //----------------------------------------------------------
-TsBool TsStlLoader::IsBinary(const char* filename,TsInt nByte)
+TsBool TsStlLoader::IsBinary( const TsChar* filename , TsInt nByte )
 {
  
     std::ifstream ifs(filename, std::ios::binary);

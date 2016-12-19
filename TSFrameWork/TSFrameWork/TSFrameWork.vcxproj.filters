@@ -468,6 +468,9 @@
     <ClCompile Include="Source\TsUT\Loader\obj\TsObjLoader.cpp">
       <Filter>ソース ファイル\TsUT\Loader\obj</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsUT\Loader\Base\Ts3DModelFileLoader.cpp">
+      <Filter>ソース ファイル\TsUT\Loader\base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -820,6 +823,9 @@
     </ClInclude>
     <ClInclude Include="Source\TsUT\Loader\obj\TsObjLoader.h">
       <Filter>ソース ファイル\TsUT\Loader\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\Loader\Base\Ts3DModelFileLoader.h">
+      <Filter>ソース ファイル\TsUT\Loader\base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

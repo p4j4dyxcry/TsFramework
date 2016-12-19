@@ -158,6 +158,7 @@
     <ClCompile Include="Source\TsMath\TsVector4.cpp" />
     <ClCompile Include="Source\TsOS\TsWindowsUtility.cpp" />
     <ClCompile Include="Source\TsUT\Intarface\ITsHasTransform.cpp" />
+    <ClCompile Include="Source\TsUT\Loader\Base\Ts3DModelFileLoader.cpp" />
     <ClCompile Include="Source\TsUT\Loader\dae\TsColladaLoader.cpp" />
     <ClCompile Include="Source\TsUT\Loader\Fbx\TsFbxAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -269,6 +270,7 @@
     <ClInclude Include="Source\TsOS\TsWindowsUtility.h" />
     <ClInclude Include="Source\TsUT\Intarface\ITsHasTransform.h" />
     <ClInclude Include="Source\TsUT\Intarface\ITsStaticNameObjectList.h" />
+    <ClInclude Include="Source\TsUT\Loader\Base\Ts3DModelFileLoader.h" />
     <ClInclude Include="Source\TsUT\Loader\dae\TsColladaLoader.h" />
     <ClInclude Include="Source\TsUT\Loader\Fbx\TsFbxAfx.h" />
     <ClInclude Include="Source\TsUT\Loader\Fbx\TsFbxAnimation.h" />
