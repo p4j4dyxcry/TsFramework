@@ -63,6 +63,8 @@
 #include "Geometry\TsPlaneObject.h"
 #include "Geometry\TsColliderRenderObject.h"
 #include "Geometry\TsColliderRenderManager.h"
+#include "Geometry\Ts3DMeshConverter.h"
+
 
 #include "RenderSystem\TsDrawQueue.h"
 #include "RenderSystem\TsRenderPass.h"

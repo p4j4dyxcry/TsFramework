@@ -170,4 +170,22 @@ namespace TSUT
 		return h;
 	}
 
+    // 大文字へ変換する
+    inline TsString StringToUpper(const TsString& str)
+    {
+        TsString result;
+        for (auto c : str)
+            result += toupper(c);
+        return result;
+    }
+
+    // 小文字へ変換する
+    inline TsString StringToLower(const TsString& str)
+    {
+        TsString result;
+        for (auto c : str)
+            result += tolower(c);
+        return result;
+    }
+
 }

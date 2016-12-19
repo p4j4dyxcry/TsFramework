@@ -44,6 +44,12 @@ public:
 
     virtual eType GetType()const override;
     virtual TsMatrix GetGeometoricMatrix()const override;
+
+    inline void AddPoint(const T& point)
+    {
+        m_min = TsMin<T>(point, m_min);
+        m_max = TsMax<T>(point, m_max);
+    }
 private:
     //=========================================================================
     //! propery

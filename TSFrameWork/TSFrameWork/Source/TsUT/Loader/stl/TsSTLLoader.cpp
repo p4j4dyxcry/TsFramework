@@ -5,12 +5,26 @@ TsStlLoader:: ~TsStlLoader(){}
 
 TsBool TsStlLoader::LoadFile(const TsChar* filename)
 {
-    TsBool result = TS_FALSE;
+    m_filename = filename;
 
     if (IsBinary(filename))
         return LoadFromBinary(filename);
     else
         return  LoadFromAscii(filename);
+}
+
+TsBool TsStlLoader::SaveFile(const TsChar* filename)
+{
+
+    if (m_isBinarySave)
+        return SaveBinary(filename);
+    else
+        return SaveAscii(filename);
+}
+
+void TsStlLoader::SetBinarySaveFlag(TsBool flag)
+{
+    m_isBinarySave = flag;
 }
 
 //----------------------------------------------------------
@@ -28,8 +42,8 @@ TsBool TsStlLoader::SaveBinary(const TsChar* filename)
     ofs.write(header, sizeof(header));
 
     TsUint s = sizeof(TsStlFace);
-    ofs.write((TsChar*)&m_size, sizeof(UINT));
-    ofs.write((TsChar*)m_faceList, sizeof(TsStlFace) * m_size);
+    ofs.write((TsChar*)&m_faceSize, sizeof(UINT));
+    ofs.write((TsChar*)m_faceList, sizeof(TsStlFace) * m_faceSize);
 
     return TS_TRUE;
 }
@@ -48,19 +62,19 @@ TsBool TsStlLoader::LoadFromBinary( const TsChar * filename )
 
     ifs.read(header, sizeof(header));
 
-    ifs.read((TsChar*)&m_size, sizeof(TsUint));
+    ifs.read((TsChar*)&m_faceSize, sizeof(TsUint));
 
-    if (m_size > 0)
+    if (m_faceSize > 0)
     {
         TsSafeDelete(m_faceList);
-        m_faceList = TsNew(TsStlFace[m_size]);
+        m_faceList = TsNew(TsStlFace[m_faceSize]);
     }
     else
     {
         return TS_FALSE;
     }
 
-    ifs.read((TsChar*)m_faceList, sizeof(TsStlFace) * m_size);
+    ifs.read((TsChar*)m_faceList, sizeof(TsStlFace) * m_faceSize);
 
     return true;
 }
@@ -77,7 +91,7 @@ TsBool TsStlLoader::SaveAscii( const TsChar* filename )
 
     // ヘッダ
     ofs << "solid TsFramework stl Ascii Format" << std::endl;
-    for (TsUint i = 0; i < m_size; ++i)
+    for (TsUint i = 0; i < m_faceSize; ++i)
     {
         TsStlFace& f = m_faceList[i];
 
@@ -88,7 +102,7 @@ TsBool TsStlLoader::SaveAscii( const TsChar* filename )
 
         ofs << "outer loop" << std::endl;
 
-        for (int i = 0; i < 3; ++i)
+        for (TsUint i = 0; i < 3; ++i)
         {
             ofs << "vertex" << " "
                 << f.pos[i].x << " "
@@ -114,7 +128,7 @@ TsBool TsStlLoader::LoadFromAscii( const TsChar * filename )
         return TS_FALSE;
 
     // Streamからベクトルを読み込む関数オブジェクト
-    auto ReadVector3 = [](TsString& source ,const char * element, TsVector3& v )
+    auto ReadVector3 = [](TsString& source ,const TsChar * element, TsVector3& v )
     {
         TsInt strPos = TsString::npos;
         strPos = source.find(element);
@@ -155,16 +169,16 @@ TsBool TsStlLoader::LoadFromAscii( const TsChar * filename )
             faceList.push_back(tempFace);
         }
     }
-    m_size = faceList.size();
-    if (m_size == 0)
+    m_faceSize = faceList.size();
+    if (m_faceSize == 0)
     {
         TsSafeDelete(m_faceList);
         return TS_FALSE;
     }
 
     TsSafeDelete(m_faceList);
-    m_faceList = TsNew(TsStlFace[m_size]);
-    memcpy(m_faceList, &faceList[0], sizeof(TsStlFace) * m_size);
+    m_faceList = TsNew(TsStlFace[m_faceSize]);
+    memcpy(m_faceList, &faceList[0], sizeof(TsStlFace) * m_faceSize);
 
     return TS_TRUE;
 
@@ -181,9 +195,9 @@ TsBool TsStlLoader::IsBinary( const TsChar* filename , TsInt nByte )
     if (ifs.fail())
         return TS_FALSE;
 
-    int 	c;
+    TsInt 	c;
     // nバイト探索しバイナリコードが見つかればバイナリとする
-    for (int i = 0; i < nByte; ++i)
+    for (TsInt i = 0; i < nByte; ++i)
     {
         c = ifs.get();
 
@@ -197,4 +211,51 @@ TsBool TsStlLoader::IsBinary( const TsChar* filename , TsInt nByte )
     }
 
     return TS_FALSE;
+}
+
+TsBool TsStlLoader::CreateCommonData()
+{
+    m_pMeshs = TsNew(TsCommon3DMesh);
+
+    TSUT::TsFilePathAnalyzer analizer( m_filename );
+    analizer.ReExtencion("");
+
+    m_pMeshs[0].m_name = analizer.GetFileName();
+
+    m_pMeshs[0].m_posCount = m_faceSize * 3;
+    m_pMeshs[0].m_pPositions = TsNew(TsVector3[m_faceSize * 3]);
+
+    m_pMeshs[0].m_normalCount = m_faceSize * 3;
+    m_pMeshs[0].m_pNormals = TsNew(TsVector3[m_faceSize * 3]);
+
+    for (TsUint i = 0; i < m_faceSize; ++i)
+    for (TsUint j = 0; j < 3; ++j)
+    {
+        TsUint index        = (i * 3) + ( j );      //インデックス
+        TsUint invIndex     = (2 - j);              //右手系 -> 左手系の　面変換用
+
+        TsVector3 & p = m_pMeshs[0].m_pPositions[index];
+        p = m_faceList[i].pos[invIndex];
+        p.x *= -1;
+
+        TsVector3 & n = m_pMeshs[0].m_pNormals[index];
+        n = m_faceList[i].normal;
+        n.x *= -1;
+
+        //! AABBの作成
+        m_pMeshs[0].m_aabb.AddPoint(p);
+    }
+
+    m_pMeshs[0].m_pTransoform = TsNew(TsTransForm);
+
+    m_pMaterials = TsNew( TsCommon3DMaterial );
+    m_pMaterials[0].m_name = "material:" + analizer.GetFileName();
+
+    m_pMeshs[0].m_pMaterialRef = &m_pMaterials[0];
+
+    m_meshCount = 1;
+    m_materialCount = 1;
+
+    return TS_TRUE;
+
 }

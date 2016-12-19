@@ -7,7 +7,7 @@
 #pragma once
 
 
-class TsCommon3DMaterial
+struct TsCommon3DMaterial
 {
     TsString m_name;
     TsFloat3 m_diffuse;
@@ -15,22 +15,75 @@ class TsCommon3DMaterial
     TsFloat3 m_specluer;
     TsF32    m_power;
     TsF32    m_alpha;
+
+    TsString m_albedoTexture;
+    TsString m_normalTexture;
+    TsString m_specluerTexture;
+    TsString m_specluerPowerTexture;
+
+
+    TsCommon3DMaterial()
+       : m_power(0),
+         m_alpha(1.0f),
+         m_diffuse(1,1,1)
+    {
+    
+    };
 };
 
-class TsCommon3DMesh
+struct TsCommon3DMesh
 {
-    TsString      m_name;
-    TsVector3   * m_pPositions;
-    TsVector3   * m_pNormals;
-    TsVector2   * m_pTexcoords;
-    TsVector3   * m_pBinormals;
-    TsVector3   * m_pTangents;
-    TsFloat3    * m_pColors;
-    TsFloat4    * m_pBoneIndex;
-    TsVector4   * m_pWeights;
-    TsUint      * m_pIndex;
-    TsTransForm * m_pTransoform;
-    TsCommon3DMaterial* m_materialRefName;
+    TsString            m_name;
+    TsVector3         * m_pPositions;
+    TsVector3         * m_pNormals;
+    TsVector2         * m_pTexcoords;
+    TsVector3         * m_pBinormals;
+    TsVector3         * m_pTangents;
+    TsFloat3          * m_pColors;
+    TsInt4            * m_pBoneIndex;
+    TsVector4         * m_pWeights;
+    TsUint            * m_pIndex;
+    TsTransForm       * m_pTransoform;
+    TsCommon3DMaterial* m_pMaterialRef;
+
+    TsAABB3D      m_aabb;
+
+    TsUint m_posCount;
+    TsUint m_normalCount;
+    TsUint m_texcoordCount;
+    TsUint m_binormalCount;
+    TsUint m_tangentCount;
+    TsUint m_colorCount;
+    TsUint m_boneIndexCount;
+    TsUint m_weightCount;
+    TsUint m_indexCount;
+
+    TsCommon3DMesh()
+    {
+        m_pPositions = nullptr;
+        m_pNormals = nullptr;
+        m_pTexcoords = nullptr;
+        m_pBinormals = nullptr;
+        m_pTangents = nullptr;
+        m_pColors = nullptr;
+        m_pBoneIndex = nullptr;
+        m_pWeights = nullptr;
+        m_pIndex = nullptr;
+        m_pTransoform = nullptr;
+        m_pMaterialRef = nullptr;
+
+        m_posCount = 0;
+        m_normalCount = 0;
+        m_texcoordCount = 0;
+        m_binormalCount = 0;
+        m_tangentCount = 0;
+        m_colorCount = 0;
+        m_boneIndexCount = 0;
+        m_weightCount = 0;
+        m_indexCount = 0;
+
+    }
+
 };
 
 //=========================================================================
@@ -52,11 +105,54 @@ public:
     virtual TsBool LoadFile( const TsChar*filename );
     virtual TsBool SaveFile( const TsChar*filename );
 
-    virtual TsUint GetMeshData( TsCommon3DMesh* pOut );
-    virtual TsUint GetMaterialData( TsCommon3DMaterial * pOut );
-    virtual TsUint GetSkeletonData( TsSkeleton* pOut );
-    virtual TsUint GetTransformData( TsTransForm* );
-private:
+    //----------------------------------------------------------
+    //! メッシュ配列を取得
+    // @param
+    // out     pOut メッシュの先頭ポインタ
+    // return メッシュの数
+    //----------------------------------------------------------
+    virtual TsCommon3DMesh* GetMeshData()const;
+
+    //----------------------------------------------------------
+    //! マテリアル配列を取得
+    // @param
+    // out     pOut メッシュの先頭ポインタ
+    // return メッシュの数
+    //----------------------------------------------------------
+    virtual TsCommon3DMaterial* GetMaterialData()const;
+
+    //----------------------------------------------------------
+    //! スケルトン配列を取得
+    // @param
+    // out     pOut メッシュの先頭ポインタ
+    // return メッシュの数
+    //----------------------------------------------------------
+    virtual TsSkeleton* GetSkeletonData()const;
+
+    //----------------------------------------------------------
+    //! RootTransformを取得
+    // @param
+    // out     pOut メッシュの先頭ポインタ
+    // return メッシュの数
+    //----------------------------------------------------------
+    virtual TsTransForm* GetRootTransformData()const;
+
+    TsUint GetMeshCount()const
+    {
+        return m_meshCount;
+    }
+
+    TsUint GetMaterialCount()const
+    {
+        return m_materialCount;
+    }
+
+    virtual TsBool CreateCommonData()
+    {
+        return TS_FALSE;
+    }
+
+protected:
     //=========================================================================
     //! propery
     //=========================================================================
@@ -65,5 +161,6 @@ private:
     TsCommon3DMaterial*     m_pMaterials;
     TsSkeleton*             m_pSkeleton;
     TsTransForm*            m_pTransform;
-    
+    TsUint                  m_meshCount;
+    TsUint                  m_materialCount;    
 };

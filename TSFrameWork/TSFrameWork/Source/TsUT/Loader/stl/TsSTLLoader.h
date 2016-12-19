@@ -16,16 +16,24 @@ public:
     TsStlLoader();
     virtual ~TsStlLoader();
     TsBool LoadFile( const TsChar* filename )override;
+    TsBool SaveFile( const TsChar* filename)override;
 
-    TsBool SaveBinary( const TsChar* filename );
-    TsBool SaveAscii( const TsChar* filename );
+    void SetBinarySaveFlag(TsBool flag);
+
+    TsBool CreateCommonData()override;
 
 protected:
+    TsBool     m_isBinarySave;
     TsStlFace* m_faceList;
-    TsUint      m_size;
-    
+    TsUint      m_faceSize;
+    TsString m_filename;
+
     TsBool LoadFromAscii( const TsChar * filename );
     TsBool LoadFromBinary( const TsChar * filename );
 
+    TsBool SaveBinary(const TsChar* filename);
+    TsBool SaveAscii(const TsChar* filename);
+
     TsBool IsBinary( const TsChar* filename , TsInt loopNum = 256 );
+    
 };

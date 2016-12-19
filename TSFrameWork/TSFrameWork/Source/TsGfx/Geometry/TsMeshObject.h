@@ -12,6 +12,8 @@ public:
     //--------------------------------------------------
     //! public method
     //--------------------------------------------------
+    TsBool AddMaterial(TsMaterial* pGeometry);
+    TsBool AddTransform(TsTransForm* pTransform);
     TsBool AddGeometry(TsGeometryObject* pGeometry);
     TsGeometryObject* GetGeometry( TsInt index );
     TsInt GetGeometryCount();
@@ -23,5 +25,7 @@ protected:
     //! propery
     //--------------------------------------------------
     TsVector<TsGeometryObject*> m_pGeometryList;
+    TsVector<TsTransForm*>      m_pTransformsList;
+
     TsSkeleton*                 m_pSkeleton;
 };

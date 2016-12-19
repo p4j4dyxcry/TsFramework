@@ -28,6 +28,7 @@ TsTransForm* TsColliderRenderManager::TransformAllocator::Malloc()
         }
         ++index;
     }
+    return TS_FALSE;
 }
 
 //----------------------------------------------------------

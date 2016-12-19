@@ -24,6 +24,15 @@ struct TsVertexSkin
     TsVector4 weight;
     TsInt4	  boneIndex;
     TsVector2 uv;
+
+    TsBool operator == (const TsVertexSkin& v)
+    {
+        return pos       == v.pos    &&
+               normal    == v.normal &&
+               weight    == v.weight &&
+               boneIndex == v.boneIndex &&
+               uv        == v.uv;
+    }
 };
 
 struct TSVertexScreenSpace

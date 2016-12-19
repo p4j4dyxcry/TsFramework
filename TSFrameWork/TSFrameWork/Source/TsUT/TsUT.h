@@ -16,6 +16,7 @@
 #include <stack>
 #include <list>
 #include <typeinfo>
+#include <ctype.h>
 
 #include "TsType.h"
 #include "TsArrayType.h"

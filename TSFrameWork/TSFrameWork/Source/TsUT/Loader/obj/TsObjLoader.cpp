@@ -50,7 +50,7 @@ TsBool TsOBJLoader::SaveMaterial(const char* filename)
             ofs << head << " " << param << std::endl;
     };
 
-    for (TsInt i = 0; i < m_materialList.size(); ++i)
+    for (TsUint i = 0; i < m_materialList.size(); ++i)
     {
         TsObjMaterial& m = m_materialList[i];
         TsObjMaterialUse& op= m.usingMaterialParam;
