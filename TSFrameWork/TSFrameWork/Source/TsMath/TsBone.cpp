@@ -54,3 +54,13 @@ const TsMatrix& TsBone::GetBoneMatrix()const
 {
     return m_boneMatrix;
 }
+
+
+const TsMatrix& TsBone::GetBindPoseMatrix()const
+{
+    return m_bindPoseMatrix;
+}
+const TsMatrix& TsBone::GetInvBindPoseMatrix()const
+{
+    return m_invBindPoseMatrix;
+}

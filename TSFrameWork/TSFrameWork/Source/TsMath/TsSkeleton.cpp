@@ -13,14 +13,12 @@ TsSkeleton::~TsSkeleton()
 
 TsBool TsSkeleton::AddBone( TsTransForm* pTransform ,
                             TsInt boneID ,
-                            const TsMatrix& bindPoseMatrix ,
-                            TsTransForm* pRootBone )
+                            const TsMatrix& bindPoseMatrix )
 {
     TsBone* pBone = TsNew( TsBone );
     pBone->SetBindPoseMatrix( bindPoseMatrix );
     pBone->m_pTransform = pTransform;
     pBone->SetBoneID( boneID );
-    pBone->m_RootBone = pRootBone;
     pBone->ComputeBoneMatrix();
     m_boneList.push_back( pBone );
     return TS_TRUE;
