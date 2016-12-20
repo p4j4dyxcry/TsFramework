@@ -177,8 +177,10 @@ ID3D11Buffer* TsDevice::CreateBuffer( __in void * pData ,
 
     D3D11_USAGE Usage = D3D11_USAGE_DEFAULT;
 
-    if( cpuAct )
+    if( cpuAct == D3D11_CPU_ACCESS_WRITE )
         Usage = D3D11_USAGE_DYNAMIC;
+    else if (cpuAct == D3D11_CPU_ACCESS_READ)
+        Usage = D3D11_USAGE_STAGING;
     else
         Usage = D3D11_USAGE_DEFAULT;
 
@@ -234,7 +236,7 @@ TsIndexBuffer* TsDevice::CreateIndexBuffer( __in void * pData ,
                                             __in size_t size )const
 {
     ID3D11Buffer* pBuffer = CreateBuffer( pData , size ,
-                                          D3D11_CPU_ACCESS_READ ,
+                                          D3D11_CPU_ACCESS_WRITE ,
                                           D3D11_BIND_INDEX_BUFFER );
     TsIndexBuffer * pIB = TsNew( TsIndexBuffer() );
     pIB->SetD3DBufferAndSize( pBuffer , size );
