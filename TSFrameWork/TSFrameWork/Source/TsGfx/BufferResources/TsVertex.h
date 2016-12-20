@@ -25,7 +25,7 @@ struct TsVertexSkin
     TsInt4	  boneIndex;
     TsVector2 uv;
 
-    TsBool operator == (const TsVertexSkin& v)
+    TsBool operator == (const TsVertexSkin& v)const
     {
         return pos       == v.pos    &&
                normal    == v.normal &&
