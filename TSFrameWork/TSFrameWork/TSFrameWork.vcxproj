@@ -159,6 +159,12 @@
     <ClCompile Include="Source\TsMath\TsVector3.cpp" />
     <ClCompile Include="Source\TsMath\TsVector4.cpp" />
     <ClCompile Include="Source\TsOS\TsWindowsUtility.cpp" />
+    <ClCompile Include="Source\TsUT\Binalizer\Ts3DModelBinalizer.cpp" />
+    <ClCompile Include="Source\TsUT\Binalizer\TsBinalizerBase.cpp" />
+    <ClCompile Include="Source\TsUT\Binalizer\TsGeometoryBinalizer.cpp" />
+    <ClCompile Include="Source\TsUT\Binalizer\TsMaterialBinalizer.cpp" />
+    <ClCompile Include="Source\TsUT\Binalizer\TsSkeletonBinalizer.cpp" />
+    <ClCompile Include="Source\TsUT\Binalizer\TsTransformBinalizer.cpp" />
     <ClCompile Include="Source\TsUT\Intarface\ITsHasTransform.cpp" />
     <ClCompile Include="Source\TsUT\Loader\Base\Ts3DModelFileLoader.cpp" />
     <ClCompile Include="Source\TsUT\Loader\dae\TsColladaLoader.cpp" />
@@ -270,6 +276,12 @@
     <ClInclude Include="Source\TsMath\TsTriangle.h" />
     <ClInclude Include="Source\TsMath\TsVector.h" />
     <ClInclude Include="Source\TsOS\TsWindowsUtility.h" />
+    <ClInclude Include="Source\TsUT\Binalizer\Ts3DModelBinalizer.h" />
+    <ClInclude Include="Source\TsUT\Binalizer\TsBinalizerBase.h" />
+    <ClInclude Include="Source\TsUT\Binalizer\TsMaterialBinalizer.h" />
+    <ClInclude Include="Source\TsUT\Binalizer\TsGeometoryBinalizer.h" />
+    <ClInclude Include="Source\TsUT\Binalizer\TsSkeletonBinalizer.h" />
+    <ClInclude Include="Source\TsUT\Binalizer\TsTransformBinalizer.h" />
     <ClInclude Include="Source\TsUT\Intarface\ITsHasTransform.h" />
     <ClInclude Include="Source\TsUT\Intarface\ITsStaticNameObjectList.h" />
     <ClInclude Include="Source\TsUT\Loader\Base\Ts3DModelFileLoader.h" />

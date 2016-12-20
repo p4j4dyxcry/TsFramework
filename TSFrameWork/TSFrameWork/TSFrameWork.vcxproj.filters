@@ -169,6 +169,9 @@
     <Filter Include="ソース ファイル\TsUT\Loader\base">
       <UniqueIdentifier>{d50eccbf-2d82-4029-87d0-b53d9190a455}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\TsUT\TsBinalizer">
+      <UniqueIdentifier>{7beb1d13-30cc-4f15-839b-ee220a916e37}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TSWinEntryPoint.cpp">
@@ -473,6 +476,24 @@
     </ClCompile>
     <ClCompile Include="Source\TsGfx\Geometry\Ts3DMeshConverter.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\Binalizer\TsTransformBinalizer.cpp">
+      <Filter>ソース ファイル\TsUT\TsBinalizer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\Binalizer\TsBinalizerBase.cpp">
+      <Filter>ソース ファイル\TsUT\TsBinalizer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\Binalizer\TsMaterialBinalizer.cpp">
+      <Filter>ソース ファイル\TsUT\TsBinalizer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\Binalizer\Ts3DModelBinalizer.cpp">
+      <Filter>ソース ファイル\TsUT\TsBinalizer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\Binalizer\TsGeometoryBinalizer.cpp">
+      <Filter>ソース ファイル\TsUT\TsBinalizer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\Binalizer\TsSkeletonBinalizer.cpp">
+      <Filter>ソース ファイル\TsUT\TsBinalizer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -832,6 +853,24 @@
     </ClInclude>
     <ClInclude Include="Source\TsGfx\Geometry\Ts3DMeshConverter.h">
       <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\Binalizer\TsTransformBinalizer.h">
+      <Filter>ソース ファイル\TsUT\TsBinalizer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\Binalizer\TsBinalizerBase.h">
+      <Filter>ソース ファイル\TsUT\TsBinalizer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\Binalizer\TsMaterialBinalizer.h">
+      <Filter>ソース ファイル\TsUT\TsBinalizer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\Binalizer\TsSkeletonBinalizer.h">
+      <Filter>ソース ファイル\TsUT\TsBinalizer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\Binalizer\Ts3DModelBinalizer.h">
+      <Filter>ソース ファイル\TsUT\TsBinalizer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\Binalizer\TsGeometoryBinalizer.h">
+      <Filter>ソース ファイル\TsUT\TsBinalizer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
