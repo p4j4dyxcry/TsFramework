@@ -5,7 +5,7 @@
 //! © 2016 Yuki Tsuneyama
 #pragma once
 
-class TsDefaultMatrial : public TsMaterial
+class TsDefaultMaterial : public TsMaterial
 {
 public:
     //=========================================================================
@@ -31,8 +31,8 @@ public:
     //=========================================================================
     //! public method
     //=========================================================================
-    TsDefaultMatrial();
-    virtual ~TsDefaultMatrial();
+    TsDefaultMaterial();
+    virtual ~TsDefaultMaterial();
 
     virtual TsBool ApplyMaterial( TsDeviceContext* ) override;
     virtual TsBool CreateMaterial( TsDevice* ) override;
@@ -59,9 +59,9 @@ public:
     TsTexture* GetSpeculerTexture()const;
 
     TsFloat4 GetColor()const;
-    TsFloat4 GetSetAmbient()const;
+    TsFloat4 GetAmbient()const;
     TsFloat3 GetEmissive()const;
-    TsFloat3 Getpeculer()const;
+    TsFloat3 GetSpecluer()const;
     TsF32 GetSpeculerPower()const;
     TsF32 GetMataric()const;
     TsF32 GetRoughness()const;

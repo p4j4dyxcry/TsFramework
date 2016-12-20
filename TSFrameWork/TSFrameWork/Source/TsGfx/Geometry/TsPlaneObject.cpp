@@ -43,7 +43,7 @@ TsBool TsPlaneObject::Create( TsDevice* pDev )
     m_transformCBuffer = TsNew( TsTransformCBuffer );
 
     m_transformCBuffer->CreateTransformCBuffer( pDev );
-    m_pMaterial = TsNew( TsDefaultMatrial );
+    m_pMaterial = TsNew( TsDefaultMaterial );
     m_pMaterial->CreateMaterial( pDev );
     m_pMaterial->SetAmbient( TsFloat4( 1 , 1 , 1 , 1 ) );
     return TS_TRUE;

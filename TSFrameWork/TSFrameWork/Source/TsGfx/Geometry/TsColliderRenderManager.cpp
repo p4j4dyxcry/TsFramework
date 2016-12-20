@@ -189,7 +189,7 @@ TsBool TsColliderRenderManager::AddGeometory(TsCollider* pCollider,
 //----------------------------------------------------------
 TsBool TsColliderRenderManager::CreateMaterial(TsDevice* pDev, TsColor color)
 {
-    TsDefaultMatrial * m = TsNew(TsDefaultMatrial);
+    TsDefaultMaterial * m = TsNew(TsDefaultMaterial);
     m->CreateMaterial(pDev);
     m->SetColor(color.m_color);
 

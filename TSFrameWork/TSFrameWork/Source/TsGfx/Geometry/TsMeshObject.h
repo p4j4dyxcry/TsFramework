@@ -19,13 +19,12 @@ public:
     TsInt GetGeometryCount();
     TsSkeleton*                 GetSkeleton(){ return m_pSkeleton; }
     TsBool  SetSkeleton(TsSkeleton* pSkeleton);
-
 protected:
     //--------------------------------------------------
     //! propery
     //--------------------------------------------------
     TsVector<TsGeometryObject*> m_pGeometryList;
     TsVector<TsTransForm*>      m_pTransformsList;
-
+    TsVector<TsDefaultMaterial*>m_pMaterials;
     TsSkeleton*                 m_pSkeleton;
 };

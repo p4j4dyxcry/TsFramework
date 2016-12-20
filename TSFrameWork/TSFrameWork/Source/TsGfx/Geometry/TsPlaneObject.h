@@ -39,5 +39,5 @@ private:
     TsVertexBuffer*         m_vertexBuffer;
     TsVertexSkin            m_vertex[4];
     TsTransformCBuffer*     m_transformCBuffer;
-    TsDefaultMatrial*       m_pMaterial;
+    TsDefaultMaterial*       m_pMaterial;
 };

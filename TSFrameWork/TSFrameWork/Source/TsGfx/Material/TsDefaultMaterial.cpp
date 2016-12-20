@@ -1,6 +1,6 @@
 #include "../../../TsAfx.h"
 
-TsDefaultMatrial::TsDefaultMatrial() 
+TsDefaultMaterial::TsDefaultMaterial() 
 {
     m_material.diffuse = TsFloat4( 1 , 1 , 1 , 1 );
     m_material.specluar = TsFloat4( 1 , 1 , 1 , 0 );
@@ -14,11 +14,11 @@ TsDefaultMatrial::TsDefaultMatrial()
     m_material.useSpeculerMap = 0;
 };
 
-TsDefaultMatrial::~TsDefaultMatrial()
+TsDefaultMaterial::~TsDefaultMaterial()
 {
 };
 
-TsBool TsDefaultMatrial::CreateMaterial( TsDevice* pDev )
+TsBool TsDefaultMaterial::CreateMaterial( TsDevice* pDev )
 {
     ID3D11Buffer* buffer = pDev->CreateBuffer( &m_material , sizeof( m_material ) , D3D11_CPU_ACCESS_WRITE , D3D11_BIND_CONSTANT_BUFFER );
     this->SetD3DBufferAndSize( buffer , sizeof( m_material ) );
@@ -28,7 +28,7 @@ TsBool TsDefaultMatrial::CreateMaterial( TsDevice* pDev )
     return TS_TRUE;
 }
 
-TsBool TsDefaultMatrial::ApplyMaterial( TsDeviceContext* pContext)
+TsBool TsDefaultMaterial::ApplyMaterial( TsDeviceContext* pContext)
 {
     pContext->SetCBuffer( this );
 
@@ -47,7 +47,7 @@ TsBool TsDefaultMatrial::ApplyMaterial( TsDeviceContext* pContext)
     return TS_TRUE;
 }
 
-TsBool TsDefaultMatrial::UpdateMaterial( TsDeviceContext* pContext )
+TsBool TsDefaultMaterial::UpdateMaterial( TsDeviceContext* pContext )
 {
     if( m_isUpdate )
         pContext->ChangeCBuffer( this , &m_material , GetBufferSize() );
@@ -55,7 +55,7 @@ TsBool TsDefaultMatrial::UpdateMaterial( TsDeviceContext* pContext )
     return TS_TRUE;
 }
 
-TsTexture* TsDefaultMatrial::LoadTextureFromFile( TsDevice* pDev ,const TsString& name)
+TsTexture* TsDefaultMaterial::LoadTextureFromFile( TsDevice* pDev ,const TsString& name)
 {
     TsTexture * pTex = nullptr;
     pTex = TsResourceManager::Find<TsTexture>( name );
@@ -77,7 +77,7 @@ TsTexture* TsDefaultMatrial::LoadTextureFromFile( TsDevice* pDev ,const TsString
     return pTex;
 }
 
-TsBool TsDefaultMatrial::LoadAlbedoTextureFromFile( TsDevice * pDev , const TsString& name )
+TsBool TsDefaultMaterial::LoadAlbedoTextureFromFile( TsDevice * pDev , const TsString& name )
 {
     m_pAlbedoTexture = LoadTextureFromFile( pDev , name );
 
@@ -95,7 +95,7 @@ TsBool TsDefaultMatrial::LoadAlbedoTextureFromFile( TsDevice * pDev , const TsSt
     return TS_TRUE;
 }
 
-TsBool TsDefaultMatrial::LoadNormalTextureFromFile( TsDevice * pDev , const TsString& name )
+TsBool TsDefaultMaterial::LoadNormalTextureFromFile( TsDevice * pDev , const TsString& name )
 {
     m_pNormalTexture = LoadTextureFromFile( pDev , name );
 
@@ -113,7 +113,7 @@ TsBool TsDefaultMatrial::LoadNormalTextureFromFile( TsDevice * pDev , const TsSt
     return TS_TRUE;
 }
 
-TsBool TsDefaultMatrial::LoadSpeculerTextureFromFile( TsDevice * pDev , const TsString& name )
+TsBool TsDefaultMaterial::LoadSpeculerTextureFromFile( TsDevice * pDev , const TsString& name )
 {
     m_pSpeclurTexture = LoadTextureFromFile( pDev , name );
 
@@ -131,20 +131,20 @@ TsBool TsDefaultMatrial::LoadSpeculerTextureFromFile( TsDevice * pDev , const Ts
     return TS_TRUE;
 }
 
-TsBool TsDefaultMatrial::SetAlbedoTexture( TsTexture* pTex )
+TsBool TsDefaultMaterial::SetAlbedoTexture( TsTexture* pTex )
 {
     m_pAlbedoTexture = pTex;
     m_isUpdate = TS_TRUE;
     return TS_TRUE;
 }
-TsBool TsDefaultMatrial::SetNormalTexture( TsTexture* pTex )
+TsBool TsDefaultMaterial::SetNormalTexture( TsTexture* pTex )
 {
     m_pNormalTexture = pTex;
     m_isUpdate = TS_TRUE;
     return TS_TRUE;
 
 }
-TsBool TsDefaultMatrial::SetSpeculerTexture( TsTexture* pTex )
+TsBool TsDefaultMaterial::SetSpeculerTexture( TsTexture* pTex )
 {
     m_pSpeclurTexture = pTex;
     m_isUpdate = TS_TRUE;
@@ -152,19 +152,19 @@ TsBool TsDefaultMatrial::SetSpeculerTexture( TsTexture* pTex )
 
 }
 
-TsBool TsDefaultMatrial::SetColor( const TsFloat4& color )
+TsBool TsDefaultMaterial::SetColor( const TsFloat4& color )
 {
     m_material.diffuse = color;
     m_isUpdate = TS_TRUE;
     return TS_TRUE;
 }
-TsBool TsDefaultMatrial::SetAmbient( const TsFloat4& color )
+TsBool TsDefaultMaterial::SetAmbient( const TsFloat4& color )
 {
     m_material.ambient = color;
     m_isUpdate = TS_TRUE;
     return TS_TRUE;
 }
-TsBool TsDefaultMatrial::SetEmissive( const TsFloat3& color )
+TsBool TsDefaultMaterial::SetEmissive( const TsFloat3& color )
 {
     m_material.emissive[0] = color[0];
     m_material.emissive[1] = color[1];
@@ -172,7 +172,7 @@ TsBool TsDefaultMatrial::SetEmissive( const TsFloat3& color )
     m_isUpdate = TS_TRUE;
     return TS_TRUE;
 }
-TsBool TsDefaultMatrial::SetSpeculer( const TsFloat3& color )
+TsBool TsDefaultMaterial::SetSpeculer( const TsFloat3& color )
 {
     m_material.specluar[0] = color[0];
     m_material.specluar[1] = color[1];
@@ -180,64 +180,64 @@ TsBool TsDefaultMatrial::SetSpeculer( const TsFloat3& color )
     m_isUpdate = TS_TRUE;
     return TS_TRUE;
 }
-TsBool TsDefaultMatrial::SetSpeculerPower( TsF32 power)
+TsBool TsDefaultMaterial::SetSpeculerPower( TsF32 power)
 {
     m_material.specluar[3] = power;
     m_isUpdate = TS_TRUE;
     return TS_TRUE;
 }
-TsBool TsDefaultMatrial::SetMataric( TsF32 mataric )
+TsBool TsDefaultMaterial::SetMataric( TsF32 mataric )
 {
     m_material.mataric = mataric;
     m_isUpdate = TS_TRUE;
     return TS_TRUE;
 }
-TsBool TsDefaultMatrial::SetRoughness( TsF32 roughness )
+TsBool TsDefaultMaterial::SetRoughness( TsF32 roughness )
 {
     m_material.roughness = roughness;
     m_isUpdate = TS_TRUE;
     return TS_TRUE;
 }
 
-TsTexture* TsDefaultMatrial::GetAlbedoTexture()const
+TsTexture* TsDefaultMaterial::GetAlbedoTexture()const
 {
     return m_pAlbedoTexture;
 }
-TsTexture* TsDefaultMatrial::GetNormalTexture()const
+TsTexture* TsDefaultMaterial::GetNormalTexture()const
 {
     return m_pNormalTexture;
 }
-TsTexture* TsDefaultMatrial::GetSpeculerTexture()const
+TsTexture* TsDefaultMaterial::GetSpeculerTexture()const
 {
     return m_pSpeclurTexture;
 }
 
-TsFloat4 TsDefaultMatrial::GetColor()const
+TsFloat4 TsDefaultMaterial::GetColor()const
 {
     return m_material.diffuse;
 }
-TsFloat4 TsDefaultMatrial::GetSetAmbient()const
+TsFloat4 TsDefaultMaterial::GetAmbient()const
 {
     return m_material.ambient;
 }
-TsFloat3 TsDefaultMatrial::GetEmissive()const
+TsFloat3 TsDefaultMaterial::GetEmissive()const
 {
     return m_material.emissive;
 }
-TsFloat3 TsDefaultMatrial::Getpeculer()const
+TsFloat3 TsDefaultMaterial::GetSpecluer()const
 {
     TsFloat4 c = m_material.specluar;
     return TsFloat3( c.x , c.y , c.z );
 }
-TsF32 TsDefaultMatrial::GetSpeculerPower()const
+TsF32 TsDefaultMaterial::GetSpeculerPower()const
 {
     return m_material.specluar.w;
 }
-TsF32 TsDefaultMatrial::GetMataric()const
+TsF32 TsDefaultMaterial::GetMataric()const
 {
     return m_material.mataric;
 }
-TsF32 TsDefaultMatrial::GetRoughness()const
+TsF32 TsDefaultMaterial::GetRoughness()const
 {
     return m_material.roughness;
 }

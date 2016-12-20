@@ -42,7 +42,7 @@ TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev,
             TsVertexElement * mesh = TsNew( TsVertexElement );
             mesh->m_vertexBuffer = buffer;
 
-            TsDefaultMatrial* material = TsNew( TsDefaultMatrial );
+            TsDefaultMaterial* material = TsNew( TsDefaultMaterial );
             material->CreateMaterial( pDev );
             TsString path = loader.GetTexturePass( i );
             material->LoadAlbedoTextureFromFile( pDev ,path);
@@ -83,7 +83,7 @@ TsBool TsMeshFactory::LoadModelFromFile(TsDevice* pDev,
             TsVertexElement * mesh = TsNew( TsVertexElement );
             mesh->m_vertexBuffer = buffer;
             mesh->m_indexBuffer = indexBuffer;
-            TsDefaultMatrial* material = TsNew( TsDefaultMatrial );
+            TsDefaultMaterial* material = TsNew( TsDefaultMaterial );
             material->CreateMaterial( pDev );
 
             TSUT::TsFilePathAnalyzer ana = filename;

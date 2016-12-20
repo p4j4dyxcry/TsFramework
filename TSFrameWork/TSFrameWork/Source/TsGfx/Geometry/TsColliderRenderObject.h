@@ -52,7 +52,7 @@ protected:
     TsVertexSkin*           m_pVertex;
     TsTransformCBuffer*     m_transformCBuffer;
     TsTransForm             m_geometoricTransform;
-    TsDefaultMatrial*       m_pMaterial;
+    TsDefaultMaterial*       m_pMaterial;
 
     TsCollider *            m_pCollider;    
     D3D_PRIMITIVE_TOPOLOGY  m_topology;

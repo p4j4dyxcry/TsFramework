@@ -84,7 +84,7 @@ private:
     //=========================================================================
     TransformAllocator m_allocator;
 
-    TsVector<TsDefaultMatrial*> m_materialList;
+    TsVector<TsDefaultMaterial*> m_materialList;
     TsMap<TsCollider::eType, TsVertexBuffer*> m_geometyMap;
 
     TsVector<TsColliderRenderObject*> m_pLine2DGeometory;

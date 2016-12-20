@@ -145,7 +145,7 @@ TsMaterial *  Ts3DMeshConverter::ConvertMaterial(TsDevice* pDev,
                                                  const TsChar * filename, 
                                                  TsCommon3DMaterial* pCommonMat)
 {
-    TsDefaultMatrial* pMat = TsNew(TsDefaultMatrial);
+    TsDefaultMaterial* pMat = TsNew(TsDefaultMaterial);
 
     pMat->CreateMaterial(pDev);
 

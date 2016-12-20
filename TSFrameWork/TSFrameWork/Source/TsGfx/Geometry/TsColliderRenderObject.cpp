@@ -40,7 +40,7 @@ TsBool TsColliderRenderObject::Create(TsDevice* pDev)
 
     if (m_pMaterial == nullptr)
     {
-        m_pMaterial = TsNew(TsDefaultMatrial);
+        m_pMaterial = TsNew(TsDefaultMaterial);
         m_pMaterial->CreateMaterial(pDev);
         m_pMaterial->SetColor(TsFloat4(0, 1, 0, 1));
     }
