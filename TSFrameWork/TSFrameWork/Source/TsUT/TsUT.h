@@ -43,6 +43,7 @@
 #include "Loader\stl\TsSTLLoader.h"
 #include "Loader\obj\TsObjLoader.h"
 
+#include "Binalizer\TsBinalizerBase.h"
 #include "Binalizer\Ts3DModelBinalizer.h"
 
 #pragma comment(lib,"winmm.lib")
