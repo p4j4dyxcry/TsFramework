@@ -7,9 +7,33 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
 
     TSUT::TsFilePathAnalyzer analizer(filename);
 
+
     TsMap<void*, TsMaterial*> pMateriaMap;
 
+    struct Hash
+    {
+        std::size_t operator()( const TsVertexSkin& key ) const
+        {
+            return key.pos.x * 2.1245f +
+                key.pos.y * 4.215f +
+                key.pos.z * 3.1415f +
+                key.uv.x  * 50.25f +
+                key.uv.y  * 2048.5f +
+                key.normal.x * 32.5f +
+                key.normal.y * 12.2f +
+                key.weight.x * 15.5f +
+                key.weight.y * 62.5f +
+                key.weight.z * 85.1f +
+                key.weight.w * 55.0f +
+                key.boneIndex.x * 5 +
+                key.boneIndex.y * 25 +
+                key.boneIndex.z * 125 +
+                key.boneIndex.w * 565;
+        }
+    };
+
     TsVector<TsVertexSkin> VertexList;
+    TsMap<TsVertexSkin , TsUint , Hash> hashMap;
     TsVector<TsUint>       indexList;
 
     auto pLoader = ExtencionToModelLoader( analizer.GetExtension().c_str() );
@@ -57,16 +81,18 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
 
                     TsVertexSkin&& vertex = ConvertVertx(&m, idx);
 
-                    auto it = tstl::find(VertexList.begin(), VertexList.end(), vertex);
+                    auto it = hashMap.find( vertex );
 
-                    if (it == VertexList.end())
+                    if( it == hashMap.end() )
                     {
+                        TsUint index = VertexList.size();
+                        hashMap.insert( std::pair<TsVertexSkin , TsUint>( vertex , index ) );
                         indexList.push_back(VertexList.size());
                         VertexList.push_back(vertex);
                     }
                     else
                     {
-                        indexList.push_back(tstl::distance(VertexList.begin(), it));
+                        indexList.push_back(it->second);
                     }
                 }
             }
