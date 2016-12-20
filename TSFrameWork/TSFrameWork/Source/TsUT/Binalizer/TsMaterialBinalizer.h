@@ -43,9 +43,15 @@ public:
     TsBool Binalize(std::ofstream& ofs, TsDefaultMaterial* pData,TsUint count);
     TsBool Decode( TsDevice* pDev, std::ifstream& ifs, TsBool readHeader = TS_FALSE);
 
-    TsDefaultMaterial* GetMaterials()const;
+    TsDefaultMaterial* GetMaterials()const
+    {
+        return m_pMaterials;
+    }
 
-    TsUint GetMaterialCount()const;
+    TsUint GetMaterialCount()const
+    {
+        return m_materialNum;
+    }
 
 protected:
     //----------------------------------------------------------
