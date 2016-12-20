@@ -333,7 +333,7 @@ void* TsDeviceContext::Map(TsBuffer* pBuffer, D3D11_MAP mapType)
     HRESULT hr = m_pDeviceContext->Map(pBuffer->GetBuffer(), 0, mapType, 0, &mappedResource);
     if (hr != S_OK)
     {
-        TsDebugLogError("Gpuリソースへの書き込みに失敗\n");
+        TsDebugLogError("Gpuリソースへのアクセスに失敗\n");
         return nullptr;
     }
 
