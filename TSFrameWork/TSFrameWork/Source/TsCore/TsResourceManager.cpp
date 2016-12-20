@@ -63,7 +63,7 @@ T* TsResourceManager_Find( TsMap<TS_HASH , T*>& map ,
 template<typename T>
 static TsBool TsResourceManager::RegisterResource( T* pObject , const TsString& name )
 {
-    TsDebugLog( "ResouceManagerへの追加失敗。型\"%s\"はサポートされていません。\n" , typeid( T ).name() );
+    TsDebugLogError("ResouceManagerへの追加失敗。型\"%s\"はサポートされていません。\n", typeid(T).name());
     ( void )pObject;
     ( void )name;
     return TS_FALSE;

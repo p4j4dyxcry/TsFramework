@@ -22,7 +22,7 @@ TsBool TsMqoLoader::LoadFromFile( const TsString& filename , TsLoadOption& optio
 
     if( ifs.fail() )
     {
-        TsDebugLog( "Load Mqo Fail \n\t file %s \n",filename.c_str() );
+        TsDebugLogError("Load Mqo Fail \n\t file %s \n", filename.c_str());
         return TS_FALSE;
     }
     

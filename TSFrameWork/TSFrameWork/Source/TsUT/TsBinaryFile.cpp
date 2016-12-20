@@ -47,7 +47,7 @@ TsBool TsBinary::Load( TsString fileName )
 
     if( ifs.fail() )
     {
-        TsDebugLog( "Load Fail \n\t %s\n" , fileName.c_str() );
+        TsDebugLogError("Load Fail \n\t %s\n", fileName.c_str());
         return TS_FALSE;
     }
     TsInt begin = static_cast<TsInt>( ifs.tellg() );

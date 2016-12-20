@@ -41,7 +41,7 @@ public:
     {
         if (sizeof(T) % sizeof(TsF32) != 0)
         {
-            TsDebugLog("Error ConstantBufferのサイズは16Byteアライメントで作成してください。");
+            TsDebugLogError("Error ConstantBufferのサイズは16Byteアライメントで作成してください。");
             return TS_FALSE;
         }
 

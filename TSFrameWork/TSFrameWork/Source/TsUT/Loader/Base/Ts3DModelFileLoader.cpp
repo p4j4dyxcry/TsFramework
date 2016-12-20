@@ -18,12 +18,14 @@ Ts3DModelLoader::~Ts3DModelLoader()
 TsBool Ts3DModelLoader::LoadFile( const TsChar * filename )
 {
     SetName( filename );
+    TsDebugLog("Load \n\t\"file = %s\"\n",filename);
 
     return TS_TRUE;
 }
 
 TsBool Ts3DModelLoader::SaveFile( const TsChar * filename )
 {
+    TsDebugLog("Save \n\t\"file = %s\"\n", filename);
     return TS_FALSE;
 }
 

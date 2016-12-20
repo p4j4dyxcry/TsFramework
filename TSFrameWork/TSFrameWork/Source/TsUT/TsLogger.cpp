@@ -100,6 +100,11 @@ TsBool TSUT::TsLoggerInit( TsBool showConsole		/*= TS_TRUE*/  ,
     return TS_TRUE;
 }
 
+void TSUT::TsConsoleColor(TS_CONSOLE_COLOR color)
+{
+    SetConsoleTextAttribute(g_hTsLoggerOutput, (WORD)color);
+}
+
 //======================================
 // ! TSUT::TsLog()
 //======================================

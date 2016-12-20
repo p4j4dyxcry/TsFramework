@@ -65,7 +65,7 @@ TsBool TsHDRTextureAnalizer::ReadHeader()
     }
     else
     {
-        TsDebugLog( "HDRフォーマットエラー\n" );
+        TsDebugLogError("HDRフォーマットエラー\n");
         return TS_FALSE;
     }
 

@@ -27,4 +27,25 @@ namespace TSUT
     // TsLoggerInit()がコールされていない場合は何も出力しません。
     // @pram	printf()と同じ形式
     void TsLog( const char * fmt , ... );
+
+    enum class TS_CONSOLE_COLOR
+    {
+        BLACK       =  0x00 ,
+        DARK_BLUE   =  0x01 ,
+        DARK_GREEN  =  0x02 ,
+        DARK_CYAN   =  0x03 ,
+        DARK_RED    =  0x04 ,
+        DARK_VIOLET =  0x05 ,
+        DARK_YELLOW =  0x06 ,
+        GRAY        =  0x07 ,
+        LIGHT_GRAY  =  0x08 ,
+        BLUE        =  0x09 ,
+        GREEN       =  0x0a ,
+        CYAN        =  0x0b ,
+        RED         =  0x0c ,
+        VIOLET      =  0x0d ,
+        YELLOW      =  0x0e ,
+        WHITE       =  0x0f 
+    };
+    void TsConsoleColor(TS_CONSOLE_COLOR);
 };

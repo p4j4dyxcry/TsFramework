@@ -24,7 +24,7 @@ TsDrawObject* TsDrawQueue::FindGeometoryByName( TsString name )
     for( auto it : m_drawObjList )
         if( hash == it->GetHashCode() )
             return it;
-    TsDebugLog( "Find Fail\n" );
+    TsDebugLogError("Find Fail\n");
     return nullptr;
 }
 
@@ -45,7 +45,7 @@ TsBool TsDrawQueue::Remove( TsDrawObject * obj )
             return TS_TRUE;
         }
     }
-    TsDebugLog( "Remove Fail\n" );
+    TsDebugLogError("Remove Fail\n");
     return TS_FALSE;
 }
 

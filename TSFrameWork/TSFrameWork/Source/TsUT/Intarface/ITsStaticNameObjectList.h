@@ -41,7 +41,7 @@ public:
                 return var;
             }
         }
-        TsDebugLog( "StaticNameObjectList Fail Find Name Object List \n\t name = \"%s\"\n" , name.c_str() );
+        TsDebugLogError("Find faild \n\t name = \"%s\"\n", name.c_str());
         return nullptr;
     }
 
@@ -61,7 +61,7 @@ private:
     //!リストにオブジェクトを追加する
     static TsBool AddObject(T* object)
     {
-        TsDebugLog("StaticNameObjectList Add Name Object List \n\t name = \"%s\" \n\t hash = %x\n", object->GetName().c_str(), object->GetHashCode());
+//        TsDebugLog("StaticNameObjectList Add Name Object List \n\t name = \"%s\" \n\t hash = %x\n", object->GetName().c_str(), object->GetHashCode());
         m_objectList.push_back(object);
 
         return TS_TRUE;

@@ -338,7 +338,7 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
             //------------------------------------------------------------
             if (indexCount != 3)
             {
-                TsDebugLog("対応していない面の形式です。");
+                TsDebugLogError("対応していない面の形式です。");
                 return TS_FALSE;
             }
 
@@ -358,7 +358,7 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
                     &f.idx_texcoord[2],
                     &f.idx_normal[2]) != 9)
                 {
-                    TsDebugLog("対応していない面の形式です。");
+                    TsDebugLogError("対応していない面の形式です。");
                     return TS_FALSE;
                 }
                 m_faceList.push_back(f);
@@ -398,7 +398,7 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
                     &f.idx_pos[2],
                     &f.idx_texcoord[2]) != 6)
                 {
-                    TsDebugLog("対応していない面の形式です。");
+                    TsDebugLogError("対応していない面の形式です。");
                     return TS_FALSE;
 
                 }
@@ -416,7 +416,7 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
                     &f.idx_pos[1],
                     &f.idx_pos[2]) != 3)
                 {
-                    TsDebugLog("対応していない面の形式です。");
+                    TsDebugLogError("対応していない面の形式です。");
                     return TS_FALSE;
                 }
                 m_faceList.push_back(f);
@@ -424,7 +424,7 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
             }
             else
             {
-                TsDebugLog("対応していない面の形式です。");
+                TsDebugLogError("対応していない面の形式です。");
                 return TS_FALSE;
             }
         }

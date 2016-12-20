@@ -71,14 +71,14 @@ TsBool TsShader<T>::CompileFromFile(
         &error);
     if (error)
     {
-        TsDebugLog("File Read Error -> \"%ls\"\nCompile Error \n%s\n",
+        TsDebugLogError("File Read Error -> \"%ls\"\nCompile Error \n%s\n",
             filename, (TsChar*)error->GetBufferPointer());
         return TS_FALSE;
     }
 
     if (pBlob == nullptr)
     {
-        TsDebugLog("File Read Error -> \"%ls\"\n", filename);
+        TsDebugLogError("File Read Error -> \"%ls\"\n", filename);
         return TS_FALSE;
     }
 
@@ -212,7 +212,7 @@ TsBool TsVertexShader::CreateInputLayout(ID3D11Device* pDev)
         IID_ID3D11ShaderReflection,
         (void**)&pVertexShaderReflection)))
     {
-        TsDebugLog("D3DReflect\n");
+        TsDebugLogError("Reflect Error\n");
         return TS_FALSE;
     }
 
@@ -302,7 +302,7 @@ TsBool TsVertexShader::CreateInputLayout(ID3D11Device* pDev)
     TsSafeRelease(pVertexShaderReflection);
     if (FAILED(hr))
     {
-        TsDebugLog("D3D11Device->CreateInputLayout Error\n");
+        TsDebugLogError("D3D11Device->CreateInputLayout Error\n");
         return TS_FALSE;
     }
     return TS_TRUE;

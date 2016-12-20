@@ -362,7 +362,7 @@ namespace TSShaderUT
         if (fmt == "U_NORM_B4G4R4A4")
             return DXGI_FORMAT_B4G4R4A4_UNORM;
 
-        TsDebugLog("未対応のフォーマット\n")
+        TsDebugLogError("未対応のフォーマットが指定されました。\n")
             return DXGI_FORMAT_BC7_UNORM_SRGB;
     }
 

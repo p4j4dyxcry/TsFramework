@@ -370,7 +370,7 @@ TsBool TsXML::SaveXml( const TsString& filename )
 {
     if (m_docment.SaveFile(filename.c_str(), TS_TRUE) != tinyxml2::XMLError::XML_SUCCESS)
     {
-        TsDebugLog("%s.xmlファイルの書き出しに失敗\n",filename.c_str());
+        TsDebugLogError("%s.xmlファイルの書き出しに失敗\n", filename.c_str());
         return TS_FALSE;
     }
     return TS_TRUE;

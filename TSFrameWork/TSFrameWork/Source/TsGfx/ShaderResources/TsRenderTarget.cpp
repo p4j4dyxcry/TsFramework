@@ -4,7 +4,7 @@
 #define RTV_CREATE_ERR_TO_RETURN	\
     if( FAILED( hr ) )\
         {\
-        TsDebugLog( "Create RenderTarget Failed \n" );\
+        TsDebugLogError( "Create RenderTarget Failed \n" );\
         return TS_FALSE;\
         }
 

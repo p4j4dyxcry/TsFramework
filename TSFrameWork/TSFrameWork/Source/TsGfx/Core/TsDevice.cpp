@@ -205,7 +205,7 @@ ID3D11Buffer* TsDevice::CreateBuffer( __in void * pData ,
 
     if( FAILED( hr ) )
     {
-        TsDebugLog( "Create Buffer Error\n" );
+        TsDebugLogError("Create Buffer Error\n");
         return nullptr;
     }
 
@@ -221,7 +221,7 @@ TsCBuffer* TsDevice::CreateCBuffer(__in void * pData ,
                                           D3D11_BIND_CONSTANT_BUFFER );
     if (pBuffer == nullptr)
     {
-        TsDebugLog("Create Buffer Error\n");
+        TsDebugLogError("Create Buffer Error\n");
         return nullptr;
     }
     TsCBuffer * pCBuffer = TsNew( TsCBuffer() );

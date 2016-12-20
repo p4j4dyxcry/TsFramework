@@ -5,6 +5,7 @@ TsStlLoader:: ~TsStlLoader(){}
 
 TsBool TsStlLoader::LoadFile(const TsChar* filename)
 {
+    Ts3DModelLoader::LoadFile(filename);
     m_filename = filename;
 
     if (IsBinary(filename))
@@ -15,6 +16,7 @@ TsBool TsStlLoader::LoadFile(const TsChar* filename)
 
 TsBool TsStlLoader::SaveFile(const TsChar* filename)
 {
+    Ts3DModelLoader::SaveFile(filename);
 
     if (m_isBinarySave)
         return SaveBinary(filename);

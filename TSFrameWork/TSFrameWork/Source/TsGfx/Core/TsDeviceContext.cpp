@@ -178,7 +178,7 @@ TsBool TsDeviceContext::SetShader( TsShaderEffect* se )
     if( ( m_activeShaders[VS_IDX] &&
           m_activeShaders[PS_IDX] ) == TS_FALSE )
     {
-        TsDebugLog( "VertexShader OR PixelShader = null\n" );
+        TsDebugLogError("VertexShader OR PixelShader = null\n");
         return TS_FALSE;
     }
     m_bindShaderEffect = se;
@@ -193,7 +193,7 @@ TsBool TsDeviceContext::SetRT( TsInt index , TsRenderTarget* view )
 
     if( ( unsigned )index > MAX_RTs )
     {
-        TsDebugLog( "Out Of Range\n" );
+        TsDebugLogError("Out Of Range\n");
         return TS_FALSE;
     }
     m_renderTarget[index] = view;
@@ -226,7 +226,7 @@ TsBool TsDeviceContext::ApplyRenderTargets()
 
     if( rtNum == 0 )
     {
-        TsDebugLog( "RenderTargets = null\n" );
+        TsDebugLogError("RenderTargets = null\n");
         return TS_FALSE;
     }
 
@@ -315,7 +315,7 @@ TsBool TsDeviceContext::SetCBuffer(const TsCBuffer * cbuffer )
 
     if( shaderType == TS_SHADER_TYPE::UNKNOWN_SHADER )
     {
-        TsDebugLog( "Set CBuffer Error.\n" );
+        TsDebugLogError("Set CBuffer Error.\n");
         return TS_FALSE;
     }
     return TS_TRUE;
@@ -346,7 +346,7 @@ TsBool TsDeviceContext::ChangeCBuffer( TsCBuffer * cbuffer , void * pData , size
     }
     else
     {
-        TsDebugLog( "Gpuリソースへの書き込みに失敗\n" );
+        TsDebugLogError("Gpuリソースへの書き込みに失敗\n");
         return TS_FALSE;
     }
 
@@ -368,7 +368,7 @@ TsBool TsDeviceContext::Draw( TsInt vtxNum , TsInt startSlot )
     }
     else
     {
-        TsDebugLog( "Fail Draw Call Vertex Or PixelShader Is Null\n" );
+        TsDebugLogError("Fail Draw Call Vertex Or PixelShader Is Null\n");
         return TS_FALSE;
     }
     return TS_TRUE;
@@ -388,7 +388,7 @@ TsBool TsDeviceContext::DrawIndex( TsInt index , TsInt startSlot  , TsInt indexL
     }
     else
     {
-        TsDebugLog( "Fail Draw Call Vertex Or PixelShader Is Null\n" );
+        TsDebugLogError("Fail Draw Call Vertex Or PixelShader Is Null\n");
         return TS_FALSE;
     }
     return TS_TRUE;
@@ -411,7 +411,7 @@ TsBool TsDeviceContext::DrawInstance( TsInt vertexNum ,
     }
     else
     {
-        TsDebugLog( "Fail Draw Call Vertex Or PixelShader Is Null\n" );
+        TsDebugLogError("Fail Draw Call Vertex Or PixelShader Is Null\n");
         return TS_FALSE;
     }
     return TS_TRUE;
@@ -435,7 +435,7 @@ TsBool TsDeviceContext::DrawIndexInstance( TsInt index ,
     }
     else
     {
-        TsDebugLog( "Fail Draw Call Vertex Or PixelShader Is Null\n" );
+        TsDebugLogError("Fail Draw Call Vertex Or PixelShader Is Null\n");
         return TS_FALSE;
     }
     return TS_TRUE;
