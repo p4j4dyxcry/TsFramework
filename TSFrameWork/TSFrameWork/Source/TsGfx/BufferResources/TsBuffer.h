@@ -9,8 +9,15 @@
 class TsBuffer : public TsNameObject
 {
 public:
-    TsBuffer() :m_buffer( nullptr ),m_bufferSize(0){};
-    virtual ~TsBuffer(){ TsSafeRelease( m_buffer ); }
+    TsBuffer() :
+        m_buffer( nullptr ),
+        m_originData(nullptr),
+        m_bufferSize(0){};
+    virtual ~TsBuffer()
+    {
+        TsSafeDelete(m_originData);
+        TsSafeRelease( m_buffer ); 
+    }
 
     //=============================================
     // ! GetBuffer
@@ -30,10 +37,22 @@ public:
         return TRUE; 
     };
 
+    TsBool SetOriginData(void* pOriginData)
+    {
+        m_originData = pOriginData;
+        return TS_TRUE;
+    }
+
+    void* GetOriginData()
+    {
+        return m_originData;
+    }
+
     //! Get Size
     TsUint GetBufferSize()const{ return m_bufferSize; }
 
 private:
     ID3D11Buffer* m_buffer;
+    void*         m_originData;
     TsUint		  m_bufferSize;
 };
