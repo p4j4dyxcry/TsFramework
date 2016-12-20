@@ -12,19 +12,22 @@ public:
     //--------------------------------------------------
     //! public method
     //--------------------------------------------------
-    TsBool AddMaterial(TsMaterial* pGeometry);
-    TsBool AddTransform(TsTransForm* pTransform);
     TsBool AddGeometry(TsGeometryObject* pGeometry);
-    TsGeometryObject* GetGeometry( TsInt index );
-    TsInt GetGeometryCount();
+    TsGeometryObject* GetGeometry( TsInt index )const;
+    TsInt GetGeometryCount()const;
     TsSkeleton*                 GetSkeleton(){ return m_pSkeleton; }
     TsBool  SetSkeleton(TsSkeleton* pSkeleton);
+
+    TsVector<TsDefaultMaterial*> GetMaterials()const;
+
+    TsTransForm* GetRootTransform()const;
+
+
 protected:
     //--------------------------------------------------
     //! propery
     //--------------------------------------------------
     TsVector<TsGeometryObject*> m_pGeometryList;
-    TsVector<TsTransForm*>      m_pTransformsList;
-    TsVector<TsDefaultMaterial*>m_pMaterials;
+    TsTransForm*                m_pRootTransform;
     TsSkeleton*                 m_pSkeleton;
 };
