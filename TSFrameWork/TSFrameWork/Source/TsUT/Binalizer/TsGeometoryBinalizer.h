@@ -13,13 +13,15 @@ public:
     // public method
     //----------------------------------------------------------
     TsGeometoryBinalizer();
+#pragma pack(1)
     struct CommonRef
     {
         TsChar name[128];
         TsChar matName[128];
         TsU64  transformPtr;
+        TsAABB3D aabb;
     };
-
+#pragma pack()
     TsBool Binalize(TsDevice* pDev,
                     std::ofstream& ofs, 
                     const TsGeometryObject* pData,

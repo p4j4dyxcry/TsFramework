@@ -65,7 +65,7 @@ TsBool TsGeometoryBinalizer::Binalize(TsDevice* pDev,
         strcpy_s(ref.name, pData->GetName().c_str());
         strcpy_s(ref.matName, pMaterial->GetName().c_str());
         ref.transformPtr = (TsU64)pTransform;
-
+        ref.aabb = pData->GetAABB();
         ofs.write((TsChar*)&ref, sizeof(ref));
         TsSafeDelete(pVertexArray);
         TsSafeDelete(pIndexArray);
@@ -140,19 +140,17 @@ TsBool TsGeometoryBinalizer::Decode(TsDevice* pDev,
         {
             auto p = TsNew(TsSkinGeometryObject);
             p->CreateGeometryObject(pDev, pElement, m);
-            TsTransForm* pTransform = pTransformBinalizer->FindByBinalyPtr(ref.transformPtr);
-            p->SetTransform(pTransform);
             p->SetSkeleton(pSkeletonBinalizer->GetSkeleton());
-
             m_pGeometoryObject[geoIndex] = p;
         }
         else
         {
             m_pGeometoryObject[geoIndex] = TsNew(TsGeometryObject);
             m_pGeometoryObject[geoIndex]->CreateGeometryObject(pDev, pElement, m);
-            TsTransForm* pTransform = pTransformBinalizer->FindByBinalyPtr(ref.transformPtr);
-            m_pGeometoryObject[geoIndex]->SetTransform(pTransform);
         }
+        TsTransForm* pTransform = pTransformBinalizer->FindByBinalyPtr( ref.transformPtr );
+        m_pGeometoryObject[geoIndex]->SetTransform( pTransform );
+        m_pGeometoryObject[geoIndex]->SetAABB( ref.aabb );
     }
 
     return TS_TRUE;

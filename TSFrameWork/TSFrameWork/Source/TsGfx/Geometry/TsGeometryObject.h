@@ -55,6 +55,17 @@ public:
     {
         return m_material;
     }
+
+    const TsAABB3D& GetAABB()const
+    {
+        return m_aabb;
+    }
+
+    TsBool SetAABB( const TsAABB3D& aabb)
+    {
+        m_aabb = aabb;
+        return TS_TRUE;
+    }
 private:
 
     //! propery
@@ -62,4 +73,5 @@ private:
     TsVertexElement*        m_mesh;
     TsMaterial*             m_material;
     TsTransformCBuffer*     m_transformCBuffer;
+    TsAABB3D m_aabb;
 };
