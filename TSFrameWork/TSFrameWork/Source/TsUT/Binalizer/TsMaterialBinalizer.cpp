@@ -10,7 +10,7 @@ TsMaterialBinalizer::TsMaterialBinalizer()
 
 }
 
-TsBool TsMaterialBinalizer::Binalize(std::ofstream& ofs, TsDefaultMaterial* pData , TsUint count)
+TsBool TsMaterialBinalizer::Binalize(std::ofstream& ofs, TsDefaultMaterial** pData , TsUint count)
 {
     if (pData == nullptr)
         return TS_FALSE;
@@ -26,7 +26,7 @@ TsBool TsMaterialBinalizer::Binalize(std::ofstream& ofs, TsDefaultMaterial* pDat
 
     for (TsUint i = 0; i < count; ++i)
     {
-        TsDefaultMaterial& om = pData[i];
+        TsDefaultMaterial& om = *pData[i];
         MaterialCommon cm;
         memset(&cm, 0, sizeof(cm));
         cm.diffuse = om.GetColor();
@@ -69,6 +69,8 @@ TsBool TsMaterialBinalizer::Decode(TsDevice* pDev, std::ifstream& ifs, TsBool re
         TsDefaultMaterial& mat = m_pMaterials[i];
         MaterialCommon& common = pCommon[i];
         mat.CreateMaterial(pDev);
+
+        mat.SetName(common.name);
         mat.SetColor( common.diffuse );
         mat.SetAmbient(common.ambient);
         mat.SetEmissive(common.emissive);

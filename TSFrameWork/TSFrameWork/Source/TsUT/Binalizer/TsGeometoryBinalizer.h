@@ -22,7 +22,8 @@ public:
 
     TsBool Binalize(TsDevice* pDev,
                     std::ofstream& ofs, 
-                    TsGeometryObject* pData);
+                    const TsGeometryObject* pData,
+                    TsUint count);
     TsBool Decode(TsDevice* pDev,
                   std::ifstream& ifs,
                   TsTransformBinalizer* pTransformBinalizer,
@@ -30,14 +31,20 @@ public:
                   TsSkeletonBinalizer * pSkeletonBinalizer,
                   TsBool readHeader = TS_FALSE);
 
-    TsGeometryObject* GetGeometry()const
+    TsGeometryObject** GetGeometry()const
     {
         return m_pGeometoryObject;
+    }
+
+    TsUint GetGeometoryCount()const
+    {
+        return m_geometoryCount;
     }
     
 protected:
     //----------------------------------------------------------
     // peropery
     //----------------------------------------------------------
-    TsGeometryObject* m_pGeometoryObject;
+    TsGeometryObject** m_pGeometoryObject;
+    TsUint            m_geometoryCount;
 };

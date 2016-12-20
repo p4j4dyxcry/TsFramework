@@ -40,7 +40,7 @@ public:
 
     TsMaterialBinalizer();
 
-    TsBool Binalize(std::ofstream& ofs, TsDefaultMaterial* pData,TsUint count);
+    TsBool Binalize(std::ofstream& ofs, TsDefaultMaterial** pData,TsUint count);
     TsBool Decode( TsDevice* pDev, std::ifstream& ifs, TsBool readHeader = TS_FALSE);
 
     TsDefaultMaterial* GetMaterials()const
