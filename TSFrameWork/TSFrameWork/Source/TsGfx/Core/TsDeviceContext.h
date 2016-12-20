@@ -13,6 +13,7 @@ class TsDepthStencilView;
 class TsBlendState;
 class TsTexture;
 class TsShaderEffect;
+class TsBuffer;
 class TsCBuffer;
 class TsViewport;
 class TsCamera;
@@ -155,6 +156,10 @@ public:
     // CBuffer の更新をロックし更新する
     // @return True on Success
     TsBool ChangeCBuffer(TsCBuffer * cbuffer, void * pData, size_t sz);
+
+    void* Map(TsBuffer* pBuffer,D3D11_MAP mapType);
+
+    TsBool UnMap(TsBuffer* pBuffer);
 
     //=============================================
     // ! SetAndChangeCBuffer

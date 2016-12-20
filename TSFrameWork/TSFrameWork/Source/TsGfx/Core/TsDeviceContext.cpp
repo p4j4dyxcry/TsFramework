@@ -321,6 +321,32 @@ TsBool TsDeviceContext::SetCBuffer(const TsCBuffer * cbuffer )
     return TS_TRUE;
 }
 
+void* TsDeviceContext::Map(TsBuffer* pBuffer, D3D11_MAP mapType)
+{
+    ID3D11Buffer* buffer = pBuffer->GetBuffer();
+
+    if (buffer == nullptr)
+        return TS_FALSE;
+
+    D3D11_MAPPED_SUBRESOURCE mappedResource;
+
+    HRESULT hr = m_pDeviceContext->Map(pBuffer->GetBuffer(), 0, mapType, 0, &mappedResource);
+    if (hr != S_OK)
+    {
+        TsDebugLogError("GpuƒŠƒ\[ƒX‚Ö‚Ì‘‚«ž‚Ý‚ÉŽ¸”s\n");
+        return nullptr;
+    }
+
+    return mappedResource.pData;
+}
+
+TsBool TsDeviceContext::UnMap(TsBuffer* pBuffer)
+{
+    m_pDeviceContext->Unmap(pBuffer->GetBuffer(), 0);
+
+    return TS_TRUE;
+}
+
 //! Change CBuffer
 TsBool TsDeviceContext::ChangeCBuffer( TsCBuffer * cbuffer , void * pData , size_t sz )
 {
