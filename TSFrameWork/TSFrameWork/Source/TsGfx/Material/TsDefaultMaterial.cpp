@@ -12,6 +12,10 @@ TsDefaultMaterial::TsDefaultMaterial()
     m_material.useDiffuseMap = 0;
     m_material.useNomalMap = 0;
     m_material.useSpeculerMap = 0;
+
+    m_pAlbedoTexture = nullptr;
+    m_pNormalTexture = nullptr;
+    m_pSpeclurTexture = nullptr;
 };
 
 TsDefaultMaterial::~TsDefaultMaterial()
