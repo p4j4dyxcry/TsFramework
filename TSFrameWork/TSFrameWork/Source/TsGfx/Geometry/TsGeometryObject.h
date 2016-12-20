@@ -22,7 +22,7 @@ public:
     // @param in pMesh      Vertex Elements.
     // @param in pMaterial  Material
     virtual TsBool CreateGeometryObject( TsDevice* pDev ,
-                                         TsVertexElement * pMesh ,
+                                         TsVertexElement * pVertexElement ,
                                          TsMaterial* pMaterial );
 
     //! public Override Methods
@@ -47,6 +47,14 @@ public:
 
     virtual TsMatrix GetWorldMatrix()const;
     virtual TsMatrix GetLocalMatrix()const;
+    TsVertexElement* GetVertexElement()const
+    {
+        return m_mesh;
+    }
+    TsMaterial* GetMaterial()const
+    {
+        return m_material;
+    }
 private:
 
     //! propery

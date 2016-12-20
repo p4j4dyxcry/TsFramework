@@ -25,6 +25,19 @@ public:
 	TsInt  GetIndexNum();
 	TsVertexBuffer* GetVertexBuffer(  )const;
 	TsIndexBuffer* GetIndexBuffer(  )const;
+
+    TsBool SetVertexBuffer(TsVertexBuffer* pVertexBuffer)
+    {
+        m_vertexBuffer = pVertexBuffer;
+        return TS_TRUE;
+    }
+    TsBool SetIndexBuffer(TsIndexBuffer* pIndexBuffer)
+    {
+        m_indexBuffer = pIndexBuffer;
+        return TS_TRUE;
+
+    }
+
 protected:
     //----------------------------------------------------------
     // propery
