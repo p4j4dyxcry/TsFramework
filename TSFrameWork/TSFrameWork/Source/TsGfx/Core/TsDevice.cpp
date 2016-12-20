@@ -236,10 +236,14 @@ TsIndexBuffer* TsDevice::CreateIndexBuffer( __in void * pData ,
                                             __in size_t size )const
 {
     ID3D11Buffer* pBuffer = CreateBuffer( pData , size ,
-                                          D3D11_CPU_ACCESS_WRITE ,
+                                          0 ,
                                           D3D11_BIND_INDEX_BUFFER );
     TsIndexBuffer * pIB = TsNew( TsIndexBuffer() );
     pIB->SetD3DBufferAndSize( pBuffer , size );
+
+    void* pOringData = TsNew(TsByte[size]);
+    memcpy(pOringData, pData, size);
+    pIB->SetOriginData(pOringData);
 
     return pIB;
 }
@@ -263,9 +267,13 @@ TsVertexBuffer* TsDevice::CreateVertexBuffer( __in void * pData ,
                                               TsUint offset )const
 {
     ID3D11Buffer* pBuffer = CreateBuffer( pData , size ,
-                                          D3D11_CPU_ACCESS_WRITE,
+                                          0,
                                           D3D11_BIND_VERTEX_BUFFER );
     TsVertexBuffer * pVB = TsNew( TsVertexBuffer() );
+    void* pOringData = TsNew(TsByte[size]);
+    memcpy(pOringData, pData, size);
+    pVB->SetOriginData(pOringData);
+
     pVB->SetD3DBufferAndSize( pBuffer , size );
     pVB->SetStride( stride );
     pVB->SetOffset( offset );
