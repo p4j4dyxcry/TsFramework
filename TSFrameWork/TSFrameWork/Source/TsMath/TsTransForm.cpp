@@ -161,8 +161,11 @@ TsBool TsTransForm::SetParent(__inout TsTransForm* parent)
 {
     if (parent == nullptr)
     {
-        RemoveOfParantChild();
-        m_parent = nullptr;
+        if (m_parent)
+        {
+            RemoveOfParantChild();
+            m_parent = nullptr;
+        }
         return TS_TRUE;
     }
 
