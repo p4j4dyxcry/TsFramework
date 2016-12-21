@@ -76,3 +76,4 @@ TSFrameWork/TSFrameWork/Extern/EASTL/
 TSFrameWork/TSFrameWork/Extern/Google/
 *.dll
 *.cache
+*.tsm
