@@ -56,7 +56,7 @@ TsBool TsSkeletonBinalizer::Decode(std::ifstream& ifs,
     ifs.read((TsChar*)&boneNum, sizeof(TsUint));
 
     CommonBone* pBones = TsNew(CommonBone[boneNum]);
-
+    ifs.read((TsChar*)pBones, sizeof(CommonBone)*boneNum);
     for (TsUint i = 0; i < boneNum; ++i)
     {
         CommonBone& bone = pBones[i];

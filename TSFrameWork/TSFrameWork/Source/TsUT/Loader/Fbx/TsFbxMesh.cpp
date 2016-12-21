@@ -311,7 +311,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
     m_indexList.reserve( m_faceList.size() * 3 );
     for (TsUint i = 0; i < m_faceList.size(); ++i)
     {
-        for (TsUint j = 0; j < 3; ++j)
+        for (TsUint j = 2; j < 3; --j)
         {
             TsFbxVertex vertex;
             if (!posList.empty())
@@ -343,7 +343,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
             if (!boneIndexList.empty())
                 vertex.boneIndex = boneIndexList[m_faceList[i].posIndex[j]];
             
-#if 1
+#if 0
             // 重複しているか？
             // modelMesh.vertexListは、最初空でだんだん登録されていく（重複していない頂点情報として）
             auto it = tstl::find(m_vertexList.begin(), m_vertexList.end(), vertex);

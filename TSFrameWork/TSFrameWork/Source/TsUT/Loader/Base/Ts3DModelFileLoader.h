@@ -39,7 +39,7 @@ struct TsCommon3DMesh
     TsVector2         * m_pTexcoords;
     TsVector3         * m_pBinormals;
     TsVector3         * m_pTangents;
-    TsFloat3          * m_pColors;
+    TsFloat4          * m_pColors;
     TsInt4            * m_pBoneIndex;
     TsVector4         * m_pWeights;
     TsUint            * m_pIndex;
@@ -48,14 +48,7 @@ struct TsCommon3DMesh
 
     TsAABB3D      m_aabb;
 
-    TsUint m_posCount;
-    TsUint m_normalCount;
-    TsUint m_texcoordCount;
-    TsUint m_binormalCount;
-    TsUint m_tangentCount;
-    TsUint m_colorCount;
-    TsUint m_boneIndexCount;
-    TsUint m_weightCount;
+    TsUint m_vertexCount;
     TsUint m_indexCount;
 
     TsCommon3DMesh()
@@ -72,16 +65,8 @@ struct TsCommon3DMesh
         m_pTransoform = nullptr;
         m_pMaterialRef = nullptr;
 
-        m_posCount = 0;
-        m_normalCount = 0;
-        m_texcoordCount = 0;
-        m_binormalCount = 0;
-        m_tangentCount = 0;
-        m_colorCount = 0;
-        m_boneIndexCount = 0;
-        m_weightCount = 0;
+        m_vertexCount = 0;
         m_indexCount = 0;
-
     }
 
 };

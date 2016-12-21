@@ -255,7 +255,7 @@ TsSkeleton* TsFbxScene::CreateSkeleton()
         return m_pSkeletonCash;
     TsSkeleton* pSkeleton = TsNew( TsSkeleton) ;
 
-    pSkeleton->SetName( m_fileName + ":Skeleton"  );
+    pSkeleton->SetName( m_fileName + ":fbx_Skeleton"  );
 
     auto&& it = GetBoneList();
 

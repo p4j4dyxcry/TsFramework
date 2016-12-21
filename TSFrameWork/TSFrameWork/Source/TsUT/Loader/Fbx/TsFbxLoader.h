@@ -2,46 +2,24 @@
 
 class TsFbxContext;
 class TsTransformBakeAnimation;
-class TsFbxLoader : public TsMeshLoader
+class TsFbxLoader : public Ts3DModelLoader
 {
 public:
     TsFbxLoader();
     virtual~TsFbxLoader();
 
     //! Load From File
-    virtual TsBool LoadFromFile( const TsString& filename ,TsLoadOption& option = TsLoadOption() ) override;
+    virtual TsBool LoadFile(const TsChar* filename)override;
 
-    //! Load From Memory
-    virtual TsBool LoadFromMemory( void* memory , size_t sz ) override;
+    void SetLoadAnimationFlag(TsBool isLoadAnim);
+    void SetLoadGeometoryFlag(TsBool isLoadGeometory);
 
-    //! Get Mesh Num
-    virtual TsInt  GetMeshNum()override;
+    TsTransformBakeAnimation* CreateAnimation(TsInt );
 
-    //! Get Vertex Size by byte
-    virtual TsInt  GetVertexSize( TsInt index ) override;
-
-    //! Get Vertex Buffer by byte
-    virtual void*  GetVertexBuffer( TsInt index ) override;
-
-    //! Get Vertex Stride
-    virtual size_t GetVertexStride() override;
-
-    virtual size_t GetIndexBufferSize(TsInt index)override;
-
-    virtual void* GetIndexBuffer(TsInt index)override;
-
-    TsString      GetAlbedoTexturePath( TsInt index );
-    TsString      GetNormalTexturePath( TsInt index );
-    TsString      GetSpeculerTexturePath( TsInt index );
-
-    TsTransForm*   GetTransform(TsInt index)const;
-
-    TsBool IsSkinMesh( TsInt index );
-
-    TsSkeleton* GetSkeleton()const;
-
-    // Operation test
-    TsTransformBakeAnimation* CreateAnimation( TsInt no );
+    virtual TsBool CreateCommonData()override;
 private:
     TsFbxContext* m_pFbxContext;
+    TsBool m_isLoadGeometory;
+    TsBool m_isLoadAnimation;
+    TsString m_filename;
 };

@@ -29,6 +29,14 @@ public:
     TsInt GetLayersCount( TextureType type );
     static const TsInt MAX_LAYER = 32;
     
+    TsFloat4                    m_diffuse;
+    TsFloat3                    m_specular;
+    TsFloat3                    m_ambient;
+    TsFloat3                    m_emissive;
+    TsF32                       m_specularPower;
+    TsF32                       m_shininess;
+    TsF32                       m_reflectivity;
+
 private:
     TsBool AnalizeTextureName(const FbxProperty & pFbxProperty ,
                                TextureType );
@@ -37,11 +45,5 @@ private:
 
     TSUT::TsFilePathAnalyzer    m_texturename[(TsUint)TextureType::TextureTypeNum][MAX_LAYER];
     TsInt                       m_layersCount[(TsUint)TextureType::TextureTypeNum];
-    TsFloat4                    m_diffuse;
-    TsFloat3                    m_specular;
-    TsFloat3                    m_ambient;
-    TsFloat3                    m_emissive;
-    TsF32                       m_specularPower;
-    TsF32                       m_shininess;
-    TsF32                       m_reflectivity;
+
 };

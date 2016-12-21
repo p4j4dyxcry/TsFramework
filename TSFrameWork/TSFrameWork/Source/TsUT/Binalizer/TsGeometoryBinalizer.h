@@ -24,7 +24,7 @@ public:
 #pragma pack()
     TsBool Binalize(TsDevice* pDev,
                     std::ofstream& ofs, 
-                    const TsGeometryObject* pData,
+                    TsGeometryObject** pData,
                     TsUint count);
     TsBool Decode(TsDevice* pDev,
                   std::ifstream& ifs,

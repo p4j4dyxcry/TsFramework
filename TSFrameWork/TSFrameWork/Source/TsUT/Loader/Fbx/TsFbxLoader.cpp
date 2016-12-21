@@ -2,6 +2,8 @@
 #include "../../../../TsAfx.h"
 
 TsFbxLoader::TsFbxLoader()
+    :m_isLoadGeometory(TS_TRUE)
+    , m_isLoadAnimation(TS_TRUE)
 {
     m_pFbxContext = TsNew( TsFbxContext );
 }
@@ -11,113 +13,124 @@ TsFbxLoader::~TsFbxLoader()
 }
 
 //! Load From File
-TsBool TsFbxLoader::LoadFromFile( const TsString& filename , TsLoadOption& option )
+TsBool TsFbxLoader::LoadFile(const TsChar* filename)
 {
+    m_filename = filename;
     TsFbxContext::TsFbxLoadOption fbxLoadOption;
 
-    fbxLoadOption.loadAnimation = option.loadAnimation;
+    fbxLoadOption.loadAnimation = m_isLoadAnimation;
     fbxLoadOption.loadBiNormal  = 
     fbxLoadOption.loadMesh      = 
     fbxLoadOption.loadTangent   =
-    fbxLoadOption.loadVertexColor = option.loadGeomery;
+    fbxLoadOption.loadVertexColor = m_isLoadGeometory;
 
-    return m_pFbxContext->LoadFBX( filename.c_str() ,fbxLoadOption );
+    return m_pFbxContext->LoadFBX( filename ,fbxLoadOption );
 }
-
-//! Load From Memory
-TsBool TsFbxLoader::LoadFromMemory( void* memory , size_t sz )
+TsBool TsFbxLoader::CreateCommonData()
 {
-    ( void )memory;
-    ( void )sz;
-    return TS_FALSE;
+    TsFbxScene* pScene = m_pFbxContext->GetSceneByIndex(0);
+
+    m_pSkeleton = pScene->CreateSkeleton();
+    if (pScene->GetNodeList().size() > 0)
+        m_pTransform = pScene->GetNodeList()[0]->GetTransform()->GetRootTransform();
+
+    //----------------------------------------------------------
+    //! Convert Material
+    //----------------------------------------------------------
+    std::vector<TsFbxMaterial>&& matList = pScene->GetMaterialList();
+    do{
+        m_materialCount = matList.size();
+        if (m_materialCount == 0)
+            break;
+
+        m_pMaterials = TsNew(TsCommon3DMaterial[m_materialCount]);
+        for (TsInt i = 0; i < m_materialCount; ++i)
+        {
+            TsCommon3DMaterial& common = m_pMaterials[i];
+            TsFbxMaterial&      origin = matList[i];
+
+            common.m_diffuse = origin.m_diffuse;
+            common.m_alpha = origin.m_diffuse.w;
+            common.m_ambient = origin.m_ambient;
+            common.m_name = origin.GetName();
+            common.m_specluer = origin.m_specular;
+            common.m_power = origin.m_specularPower;
+            common.m_albedoTexture = origin.GetAlbedoTextureName().GetFileName();
+            common.m_normalTexture = origin.GetNormalTextureName().GetFileName();
+            common.m_specluerTexture = origin.GetSpecularTextureName().GetFileName();
+            common.m_specluerPowerTexture = "";
+        }
+    } while (0);
+
+    //----------------------------------------------------------
+    //! Convert Vertex
+    //----------------------------------------------------------
+    std::vector<TsFbxMesh*>&& fbxmesh = pScene->GetMeshList();
+    do{
+        if (m_isLoadGeometory == TS_FALSE)
+            break;
+
+        m_meshCount = fbxmesh.size();
+        if (m_meshCount == 0)
+            break;
+
+        m_pMeshs = TsNew(TsCommon3DMesh[m_meshCount]);
+
+        auto Float2ToVec2 = [](TsFloat2 f)
+        {
+            return TsVector2(f.x, f.y);
+        };
+
+        auto Float3ToVec3 = [](TsFloat3 f)
+        {
+            return TsVector3(f.x, f.y, f.z);
+        };
+
+        auto Float4ToVec4 = [](TsFloat4 f)
+        {
+            return TsVector4(f.x, f.y, f.z,f.w);
+        };
+
+        for (TsUint i = 0; i < m_meshCount; ++i)
+        {
+            TsCommon3DMesh& common = m_pMeshs[i];
+            TsFbxMesh*      origin = fbxmesh[i];
+
+            common.m_vertexCount = origin->GetVertexCount();
+            auto&& fbxVertex = origin->GetVertexList();
+
+            common.m_name = origin->GetName();
+
+            common.m_pPositions  = TsNew(TsVector3[common.m_vertexCount]);
+            common.m_pNormals    = TsNew(TsVector3[common.m_vertexCount]);
+            common.m_pBinormals  = TsNew(TsVector3[common.m_vertexCount]);
+            common.m_pTangents   = TsNew(TsVector3[common.m_vertexCount]);
+            common.m_pTexcoords  = TsNew(TsVector2[common.m_vertexCount]);
+            common.m_pColors     = TsNew(TsFloat4[common.m_vertexCount]);
+            common.m_pWeights    = TsNew(TsVector4[common.m_vertexCount]);
+            common.m_pBoneIndex  = TsNew(TsInt4[common.m_vertexCount]);
+
+            common.m_pMaterialRef = &m_pMaterials[origin->GetMaterialIndex()];
+            common.m_pTransoform = origin->GetTransform();
+
+            for (TsUint i = 0; i < common.m_vertexCount; ++i)
+            {
+                common.m_pPositions[i]  = Float3ToVec3(fbxVertex[i].pos);
+                common.m_pNormals[i]    = Float3ToVec3(fbxVertex[i].normal);
+                common.m_pBinormals[i]  = Float3ToVec3(fbxVertex[i].binormal);
+                common.m_pTangents[i]   = Float3ToVec3(fbxVertex[i].tangent);
+                common.m_pTangents[i]   = Float3ToVec3(fbxVertex[i].tangent);
+                common.m_pTexcoords[i]  = Float2ToVec2(fbxVertex[i].uv[0]);
+                common.m_pColors[i]     = fbxVertex[i].color.m_color;
+                common.m_pWeights[i]    = Float4ToVec4(fbxVertex[i].boneWeight);
+                common.m_pBoneIndex[i]  = fbxVertex[i].boneIndex;
+            }           
+        }
+    } while (0);
+
+    return TS_TRUE;
 }
 
-//! Get Mesh Num
-TsInt  TsFbxLoader::GetMeshNum()
-{
-    return m_pFbxContext->GetSceneByIndex( 0 )->GetMeshNum();
-}
-
-//! Get Vertex Size by byte
-TsInt  TsFbxLoader::GetVertexSize( TsInt index )
-{
-    auto meshList = m_pFbxContext->GetSceneByIndex( 0 )->GetMeshList();
-    return GetVertexStride() * meshList[index]->GetVertexCount();
-}
-
-//! Get Vertex Buffer by byte
-void*  TsFbxLoader::GetVertexBuffer( TsInt index )
-{
-    auto meshList = m_pFbxContext->GetSceneByIndex( 0 )->GetMeshList();
-    return meshList[index]->CreateVertexBuffer();
-}
-
-//! Get Vertex Stride
-size_t TsFbxLoader::GetVertexStride()
-{
-    auto meshList = m_pFbxContext->GetSceneByIndex( 0 )->GetMeshList();
-    return meshList[0]->GetVertexStride();
-}
-
-//! GetIndexBuffer
-void*  TsFbxLoader::GetIndexBuffer(TsInt index)
-{
-    auto meshList = m_pFbxContext->GetSceneByIndex(0)->GetMeshList();
-    return meshList[index]->CreateIndexBuffer();
-}
-
-//! GetIndexBufferSize
-size_t TsFbxLoader::GetIndexBufferSize( TsInt index )
-{
-    auto meshList = m_pFbxContext->GetSceneByIndex(0)->GetMeshList();
-    return meshList[index]->GetIndexBufferSize();
-}
-
-TsTransForm* TsFbxLoader::GetTransform( TsInt index )const
-{
-    auto meshList = m_pFbxContext->GetSceneByIndex( 0 )->GetMeshList();
-    return meshList[index]->GetTransform();
-}
-
-//! GetAlbedoTex path
-TsString  TsFbxLoader::GetAlbedoTexturePath( TsInt index )
-{
-    auto&& meshList = m_pFbxContext->GetSceneByIndex( 0 )->GetMeshList();
-    TsInt materialIndex = meshList[index]->GetMaterialIndex();
-    TsFbxMaterial material = m_pFbxContext->GetSceneByIndex( 0 )->GetMaterialList()[materialIndex];
-    return material.GetAlbedoTextureName().GetFileName();
-}
-
-//! GetNormalTex path
-TsString  TsFbxLoader::GetNormalTexturePath( TsInt index )
-{
-    auto&& meshList = m_pFbxContext->GetSceneByIndex( 0 )->GetMeshList();
-    TsInt materialIndex = meshList[index]->GetMaterialIndex();
-    TsFbxMaterial material = m_pFbxContext->GetSceneByIndex( 0 )->GetMaterialList()[materialIndex];
-    return material.GetNormalTextureName().GetFileName();
-}
-
-//! GetSpeculerTex path
-TsString  TsFbxLoader::GetSpeculerTexturePath( TsInt index )
-{
-    auto&& meshList = m_pFbxContext->GetSceneByIndex( 0 )->GetMeshList();
-    TsInt materialIndex = meshList[index]->GetMaterialIndex();
-    TsFbxMaterial material = m_pFbxContext->GetSceneByIndex( 0 )->GetMaterialList()[materialIndex];
-    return material.GetSpecularTextureName().GetFileName();
-}
-
-
-
-TsBool TsFbxLoader::IsSkinMesh( TsInt index )
-{
-    auto&& meshList = m_pFbxContext->GetSceneByIndex( 0 )->GetMeshList();
-    return meshList[index]->IsSkinMesh();
-}
-
-TsSkeleton* TsFbxLoader::GetSkeleton()const
-{
-    return m_pFbxContext->GetSceneByIndex( 0 )->CreateSkeleton();
-}
 TsTransformBakeAnimation* TsFbxLoader::CreateAnimation( TsInt no )
 {
     TsFbxAnimation* pFbxAnim = m_pFbxContext->GetSceneByIndex( 0 )->GetAnimation( no );
@@ -126,4 +139,13 @@ TsTransformBakeAnimation* TsFbxLoader::CreateAnimation( TsInt no )
     pTransAim->SetBakeAnimation( pFbxAnim->GetBoneFrameLibrary() );
     pTransAim->SetFrameRate( frameRate );
     return pTransAim;
+}
+
+void TsFbxLoader::SetLoadAnimationFlag(TsBool isLoadAnim)
+{
+    m_isLoadAnimation = isLoadAnim;
+}
+void TsFbxLoader::SetLoadGeometoryFlag(TsBool isLoadGeometory)
+{
+    m_isLoadGeometory = isLoadGeometory;
 }

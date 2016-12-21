@@ -3,6 +3,7 @@
 TsFbxMaterial::TsFbxMaterial(TsFbxContext* pFbxContext, TsFbxScene* pFbxScene)
 : TsFbxObject(pFbxContext, pFbxScene)
 {
+    m_diffuse = TsFloat4(1, 1, 1, 1);
     m_specularPower =
     m_shininess		= 
     m_reflectivity	= 0.0f;

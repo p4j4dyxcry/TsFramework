@@ -12,7 +12,8 @@ Ts3DModelLoader::Ts3DModelLoader()
 
 Ts3DModelLoader::~Ts3DModelLoader()
 {
-
+//    TsSafeDelete(m_pMeshs);
+//    TsSafeDelete(m_pMaterials)
 }
 
 TsBool Ts3DModelLoader::LoadFile( const TsChar * filename )

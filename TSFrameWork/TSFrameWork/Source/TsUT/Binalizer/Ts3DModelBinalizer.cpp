@@ -98,9 +98,10 @@ TsBool Ts3DModelBinalizer::SaveBinaly(TsDevice* pDev,
         transformBinalizer.Binalize(ofs, m.GetRootTransform());
 
         auto&& matList = m.GetMaterials();
+        auto&& geoList = m.GetGeometrys();
         materialBinalizer.Binalize(ofs, &matList[0],matList.size());
         skeletonBinalizer.Binalize(ofs, m.GetSkeleton());
-        geometoryBinalizer.Binalize(pDev, ofs, m.GetGeometry(0),m.GetGeometryCount());
+        geometoryBinalizer.Binalize(pDev, ofs, &geoList[0], m.GetGeometryCount());
     }
     return TS_TRUE;
 }

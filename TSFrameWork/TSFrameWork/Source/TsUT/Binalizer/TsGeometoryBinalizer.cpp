@@ -16,7 +16,7 @@ TsGeometoryBinalizer::TsGeometoryBinalizer()
 
 TsBool TsGeometoryBinalizer::Binalize(TsDevice* pDev,
                                       std::ofstream& ofs,
-                                      const TsGeometryObject* pGeometory,
+                                      TsGeometryObject** pGeometory,
                                       TsUint count)
 {
     if (WriteHeader(ofs, typeid(*this).name()) == TS_FALSE)
@@ -25,7 +25,7 @@ TsBool TsGeometoryBinalizer::Binalize(TsDevice* pDev,
 
     for (TsUint i = 0; i < count; ++i)
     {
-        const TsGeometryObject* pData = &pGeometory[i];
+        const TsGeometryObject* pData = pGeometory[i];
 
         TsVertexElement* pElement = pData->GetVertexElement();
 

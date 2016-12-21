@@ -224,10 +224,9 @@ TsBool TsStlLoader::CreateCommonData()
 
     m_pMeshs[0].m_name = analizer.GetFileName();
 
-    m_pMeshs[0].m_posCount = m_faceSize * 3;
-    m_pMeshs[0].m_pPositions = TsNew(TsVector3[m_faceSize * 3]);
+    m_pMeshs[0].m_vertexCount = m_faceSize * 3;
 
-    m_pMeshs[0].m_normalCount = m_faceSize * 3;
+    m_pMeshs[0].m_pPositions = TsNew(TsVector3[m_faceSize * 3]);
     m_pMeshs[0].m_pNormals = TsNew(TsVector3[m_faceSize * 3]);
 
     for (TsUint i = 0; i < m_faceSize; ++i)

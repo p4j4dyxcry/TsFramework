@@ -45,6 +45,12 @@ public:
     {
         return m_fbxNode->GetMesh()->GetDeformerCount( FbxDeformer::eSkin ) > 0;
     }
+
+    TsVector<TsFbxVertex> GetVertexList()
+    {
+        return m_vertexList;
+    }
+
 protected:
     template<typename T>
     TsBool MappingToFace(T* p, TsInt startIndex);
