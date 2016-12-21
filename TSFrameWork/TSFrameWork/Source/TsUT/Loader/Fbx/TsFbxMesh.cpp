@@ -579,15 +579,15 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
     TsInt i;
     for (i = 0; i<vertexCount; i++)
     {
-        pIndex4[i].x = 0;
-        pIndex4[i].y = 0;
-        pIndex4[i].z = 0;
-        pIndex4[i].w = 0;
+        pIndex4[i].x = -1;
+        pIndex4[i].y = -1;
+        pIndex4[i].z = -1;
+        pIndex4[i].w = -1;
 
-        pWeight[i].x = 0;
-        pWeight[i].y = 0;
-        pWeight[i].z = 0;
-        pWeight[i].w = 0;
+        pWeight[i].x = -1;
+        pWeight[i].y = -1;
+        pWeight[i].z = -1;
+        pWeight[i].w = -1;
     } // End for
 
     // Parse bones
@@ -683,22 +683,22 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
                 // Insert index and weight
                 if (boneIndexList[idx].x<0)
                 {
-                    boneIndexList[idx].x = (TsByte)boneIndex;
+                    boneIndexList[idx].x = boneIndex;
                     boneWeightList[idx].x = weight;
                 } 
                 else if (boneIndexList[idx].y<0)
                 {
-                    boneIndexList[idx].y = (TsByte)boneIndex;
+                    boneIndexList[idx].y = boneIndex;
                     boneWeightList[idx].y = weight;
                 } 
                 else if (boneIndexList[idx].z<0)
                 {
-                    boneIndexList[idx].z = (TsByte)boneIndex;
+                    boneIndexList[idx].z = boneIndex;
                     boneWeightList[idx].z = weight;
                 } 
                 else if (boneIndexList[idx].w<0)
                 {
-                    boneIndexList[idx].w = (TsByte)boneIndex;
+                    boneIndexList[idx].w = boneIndex;
                     boneWeightList[idx].w = weight;
                 } 
                 else
@@ -718,7 +718,7 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
 
                     if (minWeight<weight)
                     {
-                        boneIndexList[idx][channelIdxToReplace] = (TsByte)boneIndex;
+                        boneIndexList[idx][channelIdxToReplace] = boneIndex;
                         boneWeightList[idx][channelIdxToReplace] = weight;
                     } 
                 } 
@@ -729,7 +729,7 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
     // Now make sure we don' t have any weights in negative values
     for (i = 0; i<vertexCount; i++)
     {
-        boneWeightList[i].x = TsMax(0.0f, boneWeightList[i].x);
+        boneWeightList[i].x = TsMax( 0.0f , boneWeightList[i].x);
         boneWeightList[i].y = TsMax( 0.0f , boneWeightList[i].y );
         boneWeightList[i].z = TsMax( 0.0f , boneWeightList[i].z );
         boneWeightList[i].w = TsMax( 0.0f , boneWeightList[i].w );
