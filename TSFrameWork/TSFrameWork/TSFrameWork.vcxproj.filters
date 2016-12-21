@@ -261,9 +261,6 @@
     <ClCompile Include="Source\TsGfx\Extlibs\TsDirectXTex.cpp">
       <Filter>ソース ファイル\TsGfx\Source\ExtLibs</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsGfx\Geometry\TsMeshFactory.cpp">
-      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsGfx\Geometry\TsMeshObject.cpp">
       <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
     </ClCompile>
@@ -622,9 +619,6 @@
     </ClInclude>
     <ClInclude Include="Source\TsGfx\Extlibs\TsDirectXTex.h">
       <Filter>ソース ファイル\TsGfx\Source\ExtLibs</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsGfx\Geometry\TsMeshFactory.h">
-      <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsGfx\Geometry\TsMeshObject.h">
       <Filter>ソース ファイル\TsGfx\Source\Geometry</Filter>

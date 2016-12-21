@@ -53,7 +53,6 @@
 #include "Material\TsDefaultMaterial.h"
 
 #include "Geometry\TsVertexElement.h"
-#include "Geometry\TsMeshFactory.h"
 #include "Geometry\TsDrawObject.h"
 #include "Geometry\TsGeometryObject.h"
 #include "Geometry\TsMeshObject.h"

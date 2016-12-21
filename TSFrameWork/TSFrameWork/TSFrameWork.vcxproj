@@ -40,7 +40,6 @@
     <ClCompile Include="Source\TsGfx\Geometry\TsColliderRenderObject.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsDrawObject.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsGeometryObject.cpp" />
-    <ClCompile Include="Source\TsGfx\Geometry\TsMeshFactory.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsMeshObject.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsPlaneObject.cpp" />
     <ClCompile Include="Source\TsGfx\Geometry\TsRenderGeometry.cpp" />
@@ -101,7 +100,6 @@
     <ClInclude Include="Source\TsGfx\Geometry\TsColliderRenderObject.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsDrawObject.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsGeometryObject.h" />
-    <ClInclude Include="Source\TsGfx\Geometry\TsMeshFactory.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsMeshObject.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsPlaneObject.h" />
     <ClInclude Include="Source\TsGfx\Geometry\TsScreenObject.h" />

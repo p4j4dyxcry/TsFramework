@@ -10,7 +10,6 @@ class TsMeshFactory;
 
 class TsVertexElement :public TsNameObject
 {
-	friend class TsMeshFactory;
     friend class Ts3DMeshConverter;
 
 public:
