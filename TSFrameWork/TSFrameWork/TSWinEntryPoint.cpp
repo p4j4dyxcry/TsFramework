@@ -115,22 +115,11 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 
     TsDirectioalLight dir;
 
-    TsStlLoader stlLoader;
-
-    //stlLoader.LoadFile("f:\\yl.stl");
-    //stlLoader.CreateCommonData();
-    //stlLoader.SetBinarySaveFlag(TS_FALSE);
-    //stlLoader.SaveFile("f:\\conver.stl");
-
 //    dir.LookAt(TsVector3::front * 100, TsVector3::back, TsVector3::up);
     auto mat = dir.GetWorldMatrix();
     TsApplicationBase api;
     api.Initialize(hInstance, nWinMode);
     TsDevice* pDev = api.GetDevice();
-
-    Ts3DModelBinalizer b;
-    b.LoadBinaly(pDev, "cache\\PC01_Kohaku_18153157856840847600.tsm");
-
 
     auto p = TsDirectXTex::LoadFromFile(pDev->GetDevD3D(), "cubemap.dds");
     ID3D11Resource* ptr;
@@ -160,39 +149,32 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsDrawQueue queue;
     //queue.Add( pSkyBox );
 
-    {
-        Ts3DMeshConverter pConverter;
-        TsMeshObject * pMesh2 = pConverter.ConvertFromFile(pDev, "F:\\cup.STL");
-
-        for (TsInt i = 0; i < pMesh2->GetGeometryCount(); ++i)
-            queue.Add(pMesh2->GetGeometry(i));
-    }
-
-//    const TsBool useAnimation = TS_TRUE;
-    const TsBool useAnimation = TS_FALSE;
 //     factory.LoadModelFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx","Test");
 //     factory.LoadModelFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
 //     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
  //    factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
-    TsResourceManager::RegisterResource(Ts3DMeshConverter::ConvertFromFile(pDev, "SD_unitychan_generic.fbx"), "Test");
+    TsResourceManager::RegisterResource(Ts3DMeshConverter::ConvertFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx"), "Test");
  //         factory.LoadModelFromFile(pDev, "miku.fbx","Test");
      TsMeshObject * pMesh = TsResourceManager::Find<TsMeshObject>("Test");
-     TsSkeleton* pSkeleton = pMesh->GetSkeleton();
      TransformParse(pMesh->GetGeometry(0)->GetTransform()->GetRootTransform());
      TsTransformBakeAnimation* pAnim = nullptr;
+
+     const TsBool useAnimation = TS_TRUE;
+     //    const TsBool useAnimation = TS_FALSE;
      if (useAnimation)
      {
          //     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
          //     auto pAnim = factory.CreateBakeAnimation( "Resource/fbx/Unity-Chan/move_unity.fbx" );
-         //pAnim = factory.CreateBakeAnimation("SD_unitychan_motion_Generic.fbx");
+         TsFbxLoader fbxLoader;
+         fbxLoader.SetLoadGeometoryFlag( TS_FALSE );
+         fbxLoader.SetLoadAnimationFlag( TS_TRUE );
+         fbxLoader.LoadFile( "move_unity.fbx" );
+         pAnim = fbxLoader.CreateAnimation( 0 );
          pAnim->BindTransform(pMesh->GetGeometry(0)->GetTransform()->GetRootTransform());
 
+         TsSkeleton* pSkeleton = pMesh->GetSkeleton();
          pAnim->SetTargetSkeleton(pSkeleton);
      }
-
-     
-
-    pMesh->GetGeometry( 0 )->GetTransform()->GetRootTransform()->m_localScale = TsVector3::one * 0.1f;
 
     for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++ i)   
         queue.Add(pMesh->GetGeometry(i));
@@ -232,9 +214,9 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsCamera* pCamera = pDev->GetDC()->GetMainCamera();
 
 //    pCamera->SetLocalRotate( TsQuaternion::AngleAxis( TsVector3::up , TsRadian( 180.0f ) ) );
-    pCamera->SetLocalPosition(TsVector3(0,25,-50));
-    pCamera->SetLockAt( TsVector3( TsVector3( 0 , 25 , 0 ) ) );
-    pCamera->SetNearAndFar(4, 255);
+    pCamera->SetLocalPosition(TsVector3(0,100,-500));
+    pCamera->SetLockAt( TsVector3( TsVector3( 0 , 100 , 0 ) ) );
+    pCamera->SetNearAndFar(4, 2000);
 
     pCamera->CreateCBuffer(pDev);
 
@@ -250,26 +232,22 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsVector3 obbEuler = TsVector3(45, 45, 0);
 
     TsCollisionOctTree octTree;
-    TsVector<TsAABB3D*> aabbList;
-    TsVector<TsColliderRenderObject*> renderList;
     octTree.Initalize(TsAABB3D(TsVector3(-300, -300, -300), TsVector3(300, 300, 300)), 3);
+
+    TsColliderRenderManager colliderRenderManager;
+    colliderRenderManager.Initialize( pDev );
+    queue.Add( &colliderRenderManager );
+    TsVector<TsAABB3D*> aabbList;
+
+    aabbList.reserve( 1024 );
 
     for (TsInt i = 0; i < 1024; ++i)
     {
-        TsCollisionTreeForCollider* col = TsNew(TsCollisionTreeForCollider);
-        TsAABB3D * aabb = TsNew(TsAABB3D);
-        aabb->SetMin(TsVector3((rand() % 600) - 300, (rand() % 600) - 300, (rand() % 600) - 300));
-        aabb->SetMax(aabb->GetMin() + TsVector3(8, 8, 8));
-        col->SetCollider(aabb);
-        octTree.Register(*aabb, col);
-        
-        TsColliderRenderObject* render;
-        render = TsNew(TsColliderRenderObject);
-        render->CreateRenderObject(pDev, aabb);
-
-        aabbList.push_back(aabb);
-        renderList.push_back(render);
-        //queue.Add(render);
+        TsAABB3D* aabb = TsNew(TsAABB3D);
+        aabb->SetMin( TsVector3( ( rand() % 1500 ) - 750 , ( rand() % 1500 ) - 750 , ( rand() % 1500 ) - 750 ) );
+        aabb->SetMax( aabb->GetMin() + TsVector3( rand() % 50 + 1 , rand() % 50 + 1 , rand() % 50 + 1 ) );
+        colliderRenderManager.AddGeometory( aabb );
+        aabbList.push_back( aabb );
     }
 
 
@@ -286,61 +264,16 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
             //render 
             if ( pAnim ) 
                 pAnim->Update();
-            
-            if (TsWINGetKey(VK_LEFT))
-            {
-                aabb.SetMin(aabb.GetMin() + TsVector3::left);
-                aabb.SetMax(aabb.GetMax() + TsVector3::left);
-            }
-            if (TsWINGetKey(VK_RIGHT))
-            {
-                aabb.SetMin(aabb.GetMin() + TsVector3::right);
-                aabb.SetMax(aabb.GetMax() + TsVector3::right);
-            }
 
-            if (TsWINGetKey(VK_UP))
+            for( auto aabb : aabbList )
             {
-                aabb.SetMin(aabb.GetMin() + TsVector3::front);
-                aabb.SetMax(aabb.GetMax() + TsVector3::front);
-            }
-            if (TsWINGetKey(VK_DOWN))
-            {
-                aabb.SetMin(aabb.GetMin() + TsVector3::back);
-                aabb.SetMax(aabb.GetMax() + TsVector3::back);
-            }
-
-            if (TsWINGetKey('Z'))
-            {
-                obbEuler.y+=4;
-            }
-            obb.SetCenter(obbCenter);
-            obb.SetRotate(TsQuaternion::CreateByEuler(obbEuler));
-
-            if (CollisionOBBAndAABB(obb, aabb))
-            {
-                aabbMesh.SetColor(255, 0, 0, 1);
-                obbMesh.SetColor(1, 0, 0, 1);
-            }
-            else
-            {
-                aabbMesh.SetColor(0, 1, 0, 1);
-                obbMesh.SetColor(0, 1, 0, 1);
-            }
-            //DWORD t = timeGetTime();
-            for (TsInt i = 0; i < 1024; ++i)
-            {
-                auto&& list = octTree.GetCollisionList( *aabbList[i] );
-
-                for (auto it : list)
+                if( rand() % 30 == 0 )
                 {
-
-                    if (it != aabbList[i] && CollisionAABBAndAABB(*(TsAABB3D*)(it), *aabbList[i]))
-                    {
-                        renderList[i]->SetColor(1, 0, 0, 1);
-                    }
+                    aabb->SetMin( TsVector3( ( rand() % 1500 ) - 750 , ( rand() % 1500 ) - 750 , ( rand() % 1500 ) - 750 ) );
+                    aabb->SetMax( aabb->GetMin() + TsVector3( rand() % 50 + 1 , rand() % 50 + 1 , rand() % 50 + 1 ) );
                 }
             }
-
+                     
             size_t z = sizeof(TsLightSetCBuffer::LightData) / sizeof(TsF32);
 
             auto pBlendState = TsResourceManager::Find<TsBlendState>("ALPHA_BLEND");

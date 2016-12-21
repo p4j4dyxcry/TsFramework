@@ -527,10 +527,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>Extern\Google\tcmalloc\include\windows;Extern\Google\tcmalloc\include;Extern\EASTL\include;Extern\FBX SDK\2016.0\include;$(IncludePath)</IncludePath>
     <LibraryPath>Extern\EASTL\lib;Extern\FBX SDK\2016.0\lib\vs2013\x86;Extern\Google\tcmalloc\lib;$(LibraryPath)</LibraryPath>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>Extern\EASTL\include;Extern\Google\tcmalloc\include\windows;Extern\Google\tcmalloc\include;Extern\FBX SDK\2016.0\include;$(IncludePath)</IncludePath>
     <LibraryPath>Extern\EASTL\lib;Extern\FBX SDK\2016.0\lib\vs2013\x86;Extern\Google\tcmalloc\lib;$(LibraryPath)</LibraryPath>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -541,13 +543,15 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>TsAfx.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>TsAfx.h</ForcedIncludeFiles>
+      <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <ForceSymbolReferences>
       </ForceSymbolReferences>
-      <DelayLoadDLLs>__tcmalloc</DelayLoadDLLs>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /r "$(TargetDir)*.cso" "$(ProjectDir)\Resource\Shader"
@@ -568,6 +572,7 @@ xcopy /y /r "$(TargetDir)*.exe" "$(ProjectDir)..\bin"</Command>
       <MinimalRebuild>true</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PreprocessorDefinitions>EA_COMPLER_IS_CPLUSPLUS_0X;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

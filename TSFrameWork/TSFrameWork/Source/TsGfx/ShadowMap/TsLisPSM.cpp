@@ -261,8 +261,8 @@ TsBool TsComputeLisPSM::UpdateShadowMatrix()
     // Compute Light Space Perspective Shadow Map
     ComputeLisPSM();
 
-    m_viewMatrix = TsMatrix::CreateLookAt( m_lightDir *100 , TsVector3::zero , TsVector3::front );
-    m_lightProjectionMatrix = TsMatrix::CreateOrtho( 1024/4, 1024/4, 1 , 500 );
+    //m_viewMatrix = TsMatrix::CreateLookAt( m_lightDir *100 , TsVector3::zero , TsVector3::front );
+    //m_lightProjectionMatrix = TsMatrix::CreateOrtho( 1024/4, 1024/4, 1 , 500 );
     m_lVPMatrix = m_viewMatrix * m_lightProjectionMatrix;
     return TS_TRUE;
 }
