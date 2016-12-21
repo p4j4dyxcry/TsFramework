@@ -600,6 +600,7 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
     {
         FbxCluster* pCluster = pFbxSkin->GetCluster(i);
         FbxNode *pNode = pCluster->GetLink();
+
         ppNode[i] = pNode;
     } // End for
 
@@ -614,6 +615,7 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
             TsInt boneIndex = 0;
 
             TsFbxNode* pBone = m_pFbxScene->FindNodeByName(pFbxNode->GetName());
+           
             if (pBone != NULL)
             {
                 boneIndex = pBone->GetBoneID();
@@ -621,6 +623,7 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
 
             if (boneIndex <0)
             {
+                continue;
                 pBone->SetBoneID(m_pFbxScene->GetMaxBoneID() + 1);
                 boneIndex = pBone->GetBoneID();
             } 
