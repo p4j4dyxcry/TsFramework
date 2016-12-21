@@ -43,11 +43,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
         TsFloat3* pos = &posList[0];
         for (TsInt i = 0; i < positionCount; ++i)
         {
-            pos[i].x = static_cast<TsF32>(fbxPosList[i][0]);
-            pos[i].y = static_cast<TsF32>(fbxPosList[i][1]);
-            pos[i].z = static_cast<TsF32>(fbxPosList[i][2]);
-            
-            TsVector3 v = TsVector3( pos[i].x , pos[i].y , pos[i].z );
+            TsVector3 v = FbxVec4ToTsVec3(fbxPosList[i]);
             pos[i] = m_geometricTransform.ToWorldMatrix().TransformPoint( v );
         }
     }
@@ -70,10 +66,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
                 TsFloat3* pNormal = &normalList[0];
                 for (TsUint i = 0; i<normalList.size(); i++)
                 {
-                    const FbxVector4 &normal = pfbxNormals[i];
-                    pNormal[i].x = static_cast<TsF32>(normal[0]);
-                    pNormal[i].y = static_cast<TsF32>(normal[1]);
-                    pNormal[i].z = static_cast<TsF32>(normal[2]);
+                    pNormal[i] = FbxVec4ToTsFloat3(pfbxNormals[i]);
                 } 
                 vArray.Release(&pfbxNormals, pfbxNormals);
             }
@@ -98,10 +91,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
                 TsFloat3* pTan = &tangentList[0];
                 for (TsUint i = 0; i<tangentList.size(); i++)
                 {
-                    FbxVector4 tangent = pfbxTangents[i];
-                    pTan[i].x = static_cast<TsF32>(tangent[0]);
-                    pTan[i].y = static_cast<TsF32>(tangent[1]);
-                    pTan[i].z = static_cast<TsF32>(tangent[2]);
+                    pTan[i] = FbxVec4ToTsFloat3(pfbxTangents[i]);
                 }
                 vArray.Release(&pfbxTangents, pfbxTangents);
             }
@@ -126,10 +116,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
                 TsFloat3* pBinormal = &binormalList[0];
                 for (TsUint i = 0; i<binormalList.size(); i++)
                 {
-                    FbxVector4 binormal = pfbxBinormals[i];
-                    pBinormal[i].x = static_cast<TsF32>(binormal[0]);
-                    pBinormal[i].y = static_cast<TsF32>(binormal[1]);
-                    pBinormal[i].z = static_cast<TsF32>(binormal[2]);
+                    pBinormal[i] = FbxVec4ToTsFloat3(pfbxBinormals[i]);
                 } 
             }
             vArray.Release(&pfbxBinormals, pfbxBinormals);
@@ -356,7 +343,7 @@ TsBool TsFbxMesh::ParseFbxMesh()
             if (!boneIndexList.empty())
                 vertex.boneIndex = boneIndexList[m_faceList[i].posIndex[j]];
             
-
+#if 1
             // 重複しているか？
             // modelMesh.vertexListは、最初空でだんだん登録されていく（重複していない頂点情報として）
             auto it = tstl::find(m_vertexList.begin(), m_vertexList.end(), vertex);
@@ -378,6 +365,9 @@ TsBool TsFbxMesh::ParseFbxMesh()
                 m_faceList[i].finalIndex[inversIndex] = index;			// インデックス番号（重複頂点した先頭データを指し示している）をインデックスリストにセット
                 m_indexList.push_back(index);
             }
+#else
+            m_vertexList.push_back(vertex);
+#endif
         }
     }
 

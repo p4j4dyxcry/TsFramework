@@ -36,7 +36,6 @@ private:
     TsBool ConvertScene();
     TsBool ComputeNodeTree( TsFbxNode* pTsNode);
     TsBool ComputeBoneIndex();
-    TsBool ParseBindPose();
     TsBool ParseNodeTree();
     TsBool ParseMesh();
     TsBool ParseMaterial();

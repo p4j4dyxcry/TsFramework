@@ -48,10 +48,6 @@ TsBool TsFbxScene::LoadFromFile( const TsString& filename )
     if( m_pFbxContext->GetLoadOptin().loadMesh )
         ParseMesh();
 
-    // バインドポーズ(初期姿勢行列)の解析
-    if( m_pFbxContext->GetLoadOptin().loadSkeleton )
-        ParseBindPose();
-
     return TS_TRUE;
 }
 
@@ -105,24 +101,6 @@ TsBool TsFbxScene::ParseMaterial()
         TsFbxMaterial material(m_pFbxContext, this);
         material.AnalizeForFbxMaterial(m_pFbxScene->GetMaterial(i));
         m_materialList.push_back(material);
-    }
-    return TS_TRUE;
-}
-
-//TsBool TsFbxScene::ParseSkeleton()
-//{
-//    //auto&& meshList = GetMeshList();
-//    //for each( auto it in m_m )
-//
-//    return TS_TRUE;
-//}
-
-TsBool TsFbxScene::ParseBindPose()
-{
-    for each(auto it in m_pNodeList)
-    {
-        if (it->IsSkeleton())
-            ((TsFbxBone*)it)->ComputeBindPose();
     }
     return TS_TRUE;
 }
@@ -277,7 +255,7 @@ TsSkeleton* TsFbxScene::CreateSkeleton()
         return m_pSkeletonCash;
     TsSkeleton* pSkeleton = TsNew( TsSkeleton) ;
 
-    pSkeleton->SetName( m_fileName + "_Skeleton"  );
+    pSkeleton->SetName( m_fileName + ":Skeleton"  );
 
     auto&& it = GetBoneList();
 

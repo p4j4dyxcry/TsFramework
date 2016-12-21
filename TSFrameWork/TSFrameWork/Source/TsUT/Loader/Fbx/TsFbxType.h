@@ -19,6 +19,35 @@ static TsMatrix FbxMatrixToTsMatrix(const FbxMatrix& mtx)
     return m;
 }
 
+static TsFloat2 FbxVec4ToTsFloat2(const FbxVector4& v)
+{
+    return TsFloat2((TsF32)v[0], (TsF32)v[1]);
+}
+
+static TsFloat3 FbxVec4ToTsFloat3(const FbxVector4& v)
+{
+    return TsFloat3((TsF32)v[0], (TsF32)v[1], (TsF32)v[2]);
+}
+
+static TsFloat4 FbxVec4ToTsFloat4(const FbxVector4& v)
+{
+    return TsFloat4((TsF32)v[0], (TsF32)v[1], (TsF32)v[2], (TsF32)v[3]);
+}
+
+static TsVector2 FbxVec4ToTsVec2(const FbxVector4& v)
+{
+    return TsVector2((TsF32)v[0], (TsF32)v[1]);
+}
+
+static TsVector3 FbxVec4ToTsVec3(const FbxVector4& v)
+{
+    return TsVector3((TsF32)v[0], (TsF32)v[1], (TsF32)v[2]);
+}
+
+static TsVector4 FbxVec4ToTsVec4(const FbxVector4& v)
+{
+    return TsVector4((TsF32)v[0], (TsF32)v[1], (TsF32)v[2], (TsF32)v[3]);
+}
 
 static const TsInt TS_FBX_MAX_UV = (6);
 
