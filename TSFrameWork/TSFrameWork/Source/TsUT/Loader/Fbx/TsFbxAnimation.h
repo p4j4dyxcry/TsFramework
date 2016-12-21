@@ -13,7 +13,7 @@ public:
 protected:
     TsInt m_startFrame;
     TsInt m_endFrame;
-    TsFbxBone * m_pRootBone;
+    TsFbxNode * m_pRootBone;
     TsVector<TsMap<TS_HASH , TsMatrix>> m_boneFrameLibrary;
 };
 /*

@@ -57,6 +57,12 @@ public:
     static TsFbxNode* Create( TsFbxContext*  pFbxContext,
                               TsFbxScene*    pFbxScene,
                               FbxNode*       pFbxNode);
+
+    void SetBoneID(TsInt id);
+    void SetBindPose(const TsMatrix& mtx);
+    TsInt GetBoneID()const;
+    TsMatrix GetBindPoseMatrix()const;
+
 protected:
     TS_FBX_Attribute        m_attribute;
     TsFbxNodeAttributeType  m_attributeType;
@@ -66,4 +72,9 @@ protected:
     TsFbxNode*              m_subling;
     TsTransForm*            m_pTransform;
     TsTransForm             m_geometricTransform;
+
+
+    TsMatrix                m_bindPoseMatrix;
+    TsInt                   m_boneID;
+    TsBool                  m_isBone;
 };

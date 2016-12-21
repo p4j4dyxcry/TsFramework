@@ -1,10 +1,12 @@
 #include "TsFbxAfx.h"
-TsFbxNode::TsFbxNode( TsFbxContext* pFbxContext , TsFbxScene* pFbxScene)
-:TsFbxObject(pFbxContext, pFbxScene),
+TsFbxNode::TsFbxNode(TsFbxContext* pFbxContext, TsFbxScene* pFbxScene)
+    :TsFbxObject(pFbxContext, pFbxScene),
     m_fbxNode(nullptr),
     m_parent(nullptr),
     m_firstChild(nullptr),
-    m_subling(nullptr)
+    m_subling(nullptr),
+    m_isBone(TS_FALSE),
+    m_boneID(-1)
 {
     memset( &m_attribute , 0 , sizeof( TS_FBX_Attribute ) );
 }
@@ -76,7 +78,7 @@ TsBool TsFbxNode::AnalizeFbxNode( FbxNode* pFbxNode)
 }
 TsBool TsFbxNode::IsSkeleton()const
 {
-    return !!m_attribute.pSkeleton;
+    return !!m_attribute.pSkeleton || m_isBone;
 }
 TsBool TsFbxNode::IsMesh()const
 {
@@ -193,7 +195,7 @@ TsFbxNode* TsFbxNode::Create( TsFbxContext * pFbxContext,
     switch (attributeType)
     {
     case TsFbxNodeAttributeType::eSkeleton:
-        pTsFbxNode = TsNew(TsFbxBone(pFbxContext, pFbxScene));
+        pTsFbxNode = TsNew(TsFbxNode(pFbxContext, pFbxScene));
         break;
     case TsFbxNodeAttributeType::eLight:
         pTsFbxNode = TsNew(TsFbxNode(pFbxContext, pFbxScene));
@@ -217,4 +219,22 @@ TsFbxNode* TsFbxNode::Create( TsFbxContext * pFbxContext,
 TsTransForm* TsFbxNode::GetTransform()const
 {
     return m_pTransform;
+}
+
+void TsFbxNode::SetBoneID(TsInt id)
+{
+    m_isBone = TS_TRUE;
+    m_boneID = id;
+}
+void TsFbxNode::SetBindPose(const TsMatrix& mtx)
+{
+    m_bindPoseMatrix = mtx;
+}
+TsInt TsFbxNode::GetBoneID()const
+{
+    return m_boneID;
+}
+TsMatrix TsFbxNode::GetBindPoseMatrix()const
+{
+    return m_bindPoseMatrix;
 }

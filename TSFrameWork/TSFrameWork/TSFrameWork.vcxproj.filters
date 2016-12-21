@@ -369,9 +369,6 @@
     <ClCompile Include="Source\TsUT\Loader\Fbx\TsFbxBlendShape.cpp">
       <Filter>ソース ファイル\TsUT\Loader\Fbx\source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsUT\Loader\Fbx\TsFbxBone.cpp">
-      <Filter>ソース ファイル\TsUT\Loader\Fbx\source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsUT\Loader\Fbx\TsFbxContext.cpp">
       <Filter>ソース ファイル\TsUT\Loader\Fbx\source</Filter>
     </ClCompile>
@@ -753,9 +750,6 @@
       <Filter>ソース ファイル\TsUT\Loader\Fbx\header</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsUT\Loader\Fbx\TsFbxBlendShape.h">
-      <Filter>ソース ファイル\TsUT\Loader\Fbx\header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsUT\Loader\Fbx\TsFbxBone.h">
       <Filter>ソース ファイル\TsUT\Loader\Fbx\header</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsUT\Loader\Fbx\TsFbxContext.h">

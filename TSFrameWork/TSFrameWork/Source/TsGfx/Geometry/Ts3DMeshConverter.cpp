@@ -191,6 +191,7 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
             }
             pGeometory->SetName(m.m_name);
             pGeometory->SetTransform(m.m_pTransoform);
+            pGeometory->SetAABB(m.m_aabb);
             pMesh->AddGeometry(pGeometory);
         }
         binalizer.SaveBinaly(pDev, cachePath.c_str(),pMesh,1);

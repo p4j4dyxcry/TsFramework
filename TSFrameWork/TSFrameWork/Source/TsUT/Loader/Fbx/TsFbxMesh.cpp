@@ -570,7 +570,7 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
 {
     if (vertexCount <= 0)
         return TS_FALSE;
-
+    
     boneIndexList.resize(vertexCount);
     boneWeightList.resize(vertexCount);
 
@@ -613,16 +613,16 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
             // Compute bone index from FbxNode
             TsInt boneIndex = 0;
 
-            TsFbxBone* pBone = (TsFbxBone*)m_pFbxScene->FindNodeByName(pFbxNode->GetName());
+            TsFbxNode* pBone = m_pFbxScene->FindNodeByName(pFbxNode->GetName());
             if (pBone != NULL)
             {
-                boneIndex = pBone->GetBoneIndex();
+                boneIndex = pBone->GetBoneID();
             } // End if
 
             if (boneIndex <0)
             {
-                // Bone is not found???
-                boneIndex = 0;
+                pBone->SetBoneID(m_pFbxScene->GetMaxBoneID() + 1);
+                boneIndex = pBone->GetBoneID();
             } 
 
             FbxCluster *pCluster = pFbxSkin->GetCluster(clusterIndex);

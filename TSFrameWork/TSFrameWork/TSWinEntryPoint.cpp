@@ -128,6 +128,10 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     api.Initialize(hInstance, nWinMode);
     TsDevice* pDev = api.GetDevice();
 
+    Ts3DModelBinalizer b;
+    b.LoadBinaly(pDev, "cache\\PC01_Kohaku_18153157856840847600.tsm");
+
+
     auto p = TsDirectXTex::LoadFromFile(pDev->GetDevD3D(), "cubemap.dds");
     ID3D11Resource* ptr;
     p.pSrv->GetResource( &ptr );
@@ -160,8 +164,6 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
         Ts3DMeshConverter pConverter;
         TsMeshObject * pMesh2 = pConverter.ConvertFromFile(pDev, "F:\\cup.STL");
 
-
-
         for (TsInt i = 0; i < pMesh2->GetGeometryCount(); ++i)
             queue.Add(pMesh2->GetGeometry(i));
     }
@@ -172,7 +174,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 //     factory.LoadModelFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
 //     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
  //    factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
-    TsResourceManager::RegisterResource(Ts3DMeshConverter::ConvertFromFile(pDev, "PC01_Kohaku.FBX"), "Test");
+    TsResourceManager::RegisterResource(Ts3DMeshConverter::ConvertFromFile(pDev, "SD_unitychan_generic.fbx"), "Test");
  //         factory.LoadModelFromFile(pDev, "miku.fbx","Test");
      TsMeshObject * pMesh = TsResourceManager::Find<TsMeshObject>("Test");
      TsSkeleton* pSkeleton = pMesh->GetSkeleton();
@@ -192,12 +194,8 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 
     pMesh->GetGeometry( 0 )->GetTransform()->GetRootTransform()->m_localScale = TsVector3::one * 0.1f;
 
-    Ts3DModelBinalizer bin;
-    bin.SaveBinaly(pDev, "f:\\mesh.tsm", pMesh, 1);
-    bin.LoadBinaly(pDev, "f:\\mesh.tsm");
-
     for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++ i)   
-        queue.Add(bin.GetMesh()->GetGeometry(i));
+        queue.Add(pMesh->GetGeometry(i));
 
     TsPlaneObject plane;
     TsTransForm planeTransform;

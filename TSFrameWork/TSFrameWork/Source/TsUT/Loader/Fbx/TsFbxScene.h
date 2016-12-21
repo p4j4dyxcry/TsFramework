@@ -13,7 +13,7 @@ public:
     TsVector<TsFbxMesh*> GetMeshList()const;
     TsVector<TsFbxMaterial> GetMaterialList()const;
     TsFbxNode* FindNodeByName(const TsString& name)const;
-    TsVector<TsFbxBone*> GetBoneList();
+    TsVector<TsFbxNode*> GetBoneList();
     TsFbxAnimation* GetAnimation( TsInt index )
     {
         return m_pAnimationList[index];
@@ -30,6 +30,7 @@ public:
 
     TsSkeleton* CreateSkeleton();
     TsF32 GetFrameRate();
+    TsInt GetMaxBoneID()const;
 
 private:
     TsBool ImportScene(const TsString& filename);

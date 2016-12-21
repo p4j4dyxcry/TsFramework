@@ -150,8 +150,7 @@ TsBool TsFbxScene::ComputeBoneIndex()
     {
         if (m_pNodeList[i]->IsSkeleton())
         {
-            TsFbxBone* pBone = (TsFbxBone*)m_pNodeList[i];
-            pBone->SetBoneIndex( boneIndex++ );
+            m_pNodeList[i]->SetBoneID(boneIndex++);
         }
     }
     return TS_TRUE;
@@ -216,14 +215,14 @@ TsVector<TsFbxMaterial> TsFbxScene::GetMaterialList()const
     return m_materialList;
 }
 
-TsVector<TsFbxBone*> TsFbxScene::GetBoneList()
+TsVector<TsFbxNode*> TsFbxScene::GetBoneList()
 {
-    TsVector<TsFbxBone*> result;
+    TsVector<TsFbxNode*> result;
     for( TsUint i = 0; i < m_pNodeList.size(); ++i )
     {
         if( m_pNodeList[i]->IsSkeleton() )
         {
-            result.push_back( ( TsFbxBone* )m_pNodeList[i] );
+            result.push_back( m_pNodeList[i] );
         }
     }
     return result;
@@ -249,6 +248,19 @@ TsF32 TsFbxScene::GetFrameRate()
    return 60.0f;
 }
 
+TsInt TsFbxScene::GetMaxBoneID()const
+{
+    TsInt maxID = -1;
+    for (TsUint i = 0; i < m_pNodeList.size(); ++i)
+    {
+        if (m_pNodeList[i]->IsSkeleton())
+        {
+            maxID = TsMax(maxID, m_pNodeList[i]->GetBoneID());
+        }
+    }
+    return maxID;
+}
+
 TsSkeleton* TsFbxScene::CreateSkeleton()
 {
     if( m_pSkeletonCash )
@@ -263,7 +275,7 @@ TsSkeleton* TsFbxScene::CreateSkeleton()
     {
         pSkeleton->AddBone(
             p->GetTransform() ,
-            p->GetBoneIndex() ,
+            p->GetBoneID() ,
             p->GetBindPoseMatrix());
 
     };
