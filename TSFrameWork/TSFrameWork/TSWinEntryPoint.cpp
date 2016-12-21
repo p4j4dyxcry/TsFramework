@@ -10,19 +10,22 @@
 void TestUpdateCamera(TsCamera* pCamera)
 {
     static TsFloat2 old;
+    
     TsFloat2 pos = TsWINGetMousePos();
 
     TsInt wheel = TsWINGetMouseWheel();
-    TsVector3 diff;
-    diff.y = pos.x - old.x;
-    diff.x = pos.y - old.y;
-
 
     if (TsWINIsLeftClick())
     {
+        TsVector3 diff;
+        diff.y = pos.x - old.x;
+        diff.x = pos.y - old.y;
+
+
         TsVector3 euler = pCamera->GetLocalRotate().ToEuler();
         euler += diff;
         pCamera->SetLocalRotate( TsQuaternion::CreateByEuler(euler)) ;
+
     }
 
 
@@ -30,8 +33,80 @@ void TestUpdateCamera(TsCamera* pCamera)
     fov += wheel * 0.01f;
     fov = TsClamp(fov, 5.0f, 80.0f);
     pCamera->SetFov(fov);
-
     old = pos;
+
+}
+#include <fstream>
+#include <functional>
+#include <iomanip>
+void TransformParse(TsTransForm* root, const char * out = "F:\\data.h")
+{
+    std::ofstream ofs(out);
+
+    std::function<void(TsTransForm*)> write = [&](TsTransForm * parent)
+    {
+        for (auto ptr = parent; ptr->GetParent(); ptr = ptr->GetParent())
+            ofs << "\t";
+        ofs << parent->GetName() << std::endl;
+        auto child = parent->GetFirstChild();
+        auto sub = parent->GetSubling();
+        if (child)
+        {
+            auto ptr = child;
+            write(child);
+        }
+        if (sub)
+        {
+            write(sub);
+        }
+    };
+
+    std::function<void(TsTransForm*)> writepos = [&](TsTransForm * parent)
+    {
+        ofs << parent->GetName() << std::endl;
+        TsMatrix m = parent->ToLocalMatrix();
+        ofs << std::setw(10) << std::fixed << std::setprecision(4) << m._11 << "::" << std::setw(10) << m._12 << "::" << std::setw(10) << m._13 << "::" << std::setw(10) << m._14 << std::endl;
+        ofs << std::setw(10) << std::fixed << std::setprecision(4) << m._21 << "::" << std::setw(10) << m._22 << "::" << std::setw(10) << m._23 << "::" << std::setw(10) << m._24 << std::endl;
+        ofs << std::setw(10) << std::fixed << std::setprecision(4) << m._31 << "::" << std::setw(10) << m._32 << "::" << std::setw(10) << m._33 << "::" << std::setw(10) << m._34 << std::endl;
+        ofs << std::setw(10) << std::fixed << std::setprecision(4) << m._41 << "::" << std::setw(10) << m._42 << "::" << std::setw(10) << m._43 << "::" << std::setw(10) << m._44 << std::endl;
+        ofs << std::endl;
+        auto child = parent->GetFirstChild();
+        auto sub = parent->GetSubling();
+        if (child)
+        {
+            writepos(child);
+        }
+        if (sub)
+        {
+            writepos(sub);
+        }
+    };
+
+    std::function<void(TsTransForm*)> writeSrt = [&](TsTransForm * parent)
+    {
+        ofs << parent->GetName() << std::endl;
+        TsVector3 p = parent->m_localPosition;
+        TsVector3 q = parent->m_localRotate.ToEuler();
+        TsVector3 s = parent->m_localScale;
+        ofs << std::setw(7) << std::fixed << std::setprecision(4) << p.x << "::" << std::setw(7) << p.y << "::" << std::setw(7) << p.z << std::endl;
+        ofs << std::setw(7) << std::fixed << std::setprecision(4) << q.x << "::" << std::setw(7) << q.y << "::" << std::setw(7) << q.z << std::endl;
+        ofs << std::setw(7) << std::fixed << std::setprecision(4) << s.x << "::" << std::setw(7) << s.y << "::" << std::setw(7) << s.z << std::endl;
+        ofs << std::endl;
+        auto child = parent->GetFirstChild();
+        auto sub = parent->GetSubling();
+        if (child)
+        {
+            writeSrt(child);
+        }
+        if (sub)
+        {
+            writeSrt(sub);
+        }
+    };
+
+    write(root);
+    writepos(root);
+    writeSrt(root);
 }
 
 int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lpszArgs , TsInt nWinMode )
@@ -39,6 +114,13 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TSUT::TsLoggerInit();
 
     TsDirectioalLight dir;
+
+    TsStlLoader stlLoader;
+
+    //stlLoader.LoadFile("f:\\yl.stl");
+    //stlLoader.CreateCommonData();
+    //stlLoader.SetBinarySaveFlag(TS_FALSE);
+    //stlLoader.SaveFile("f:\\conver.stl");
 
 //    dir.LookAt(TsVector3::front * 100, TsVector3::back, TsVector3::up);
     auto mat = dir.GetWorldMatrix();
@@ -74,24 +156,48 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsDrawQueue queue;
     //queue.Add( pSkyBox );
 
-    TsMeshFactory factory;
-     factory.LoadModelFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx","Test");
+    {
+        Ts3DMeshConverter pConverter;
+        TsMeshObject * pMesh2 = pConverter.ConvertFromFile(pDev, "F:\\cup.STL");
+
+
+
+        for (TsInt i = 0; i < pMesh2->GetGeometryCount(); ++i)
+            queue.Add(pMesh2->GetGeometry(i));
+    }
+
+//    const TsBool useAnimation = TS_TRUE;
+    const TsBool useAnimation = TS_FALSE;
+//     factory.LoadModelFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx","Test");
 //     factory.LoadModelFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
 //     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
-//     factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
-//       factory.LoadModelFromFile(pDev, "Face.fbx","Test");
-//     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
-//     auto pAnim = factory.CreateBakeAnimation( "Resource/fbx/Unity-Chan/move_unity.fbx" );
-//     auto pAnim = factory.CreateBakeAnimation( "sd_anim.fbx" );
+ //    factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
+    TsResourceManager::RegisterResource(Ts3DMeshConverter::ConvertFromFile(pDev, "PC01_Kohaku.FBX"), "Test");
+ //         factory.LoadModelFromFile(pDev, "miku.fbx","Test");
      TsMeshObject * pMesh = TsResourceManager::Find<TsMeshObject>("Test");
-//     pAnim->BindTransform( pMesh->GetGeometry( 0 )->GetTransform()->GetRootTransform() );
-
      TsSkeleton* pSkeleton = pMesh->GetSkeleton();
+     TransformParse(pMesh->GetGeometry(0)->GetTransform()->GetRootTransform());
+     TsTransformBakeAnimation* pAnim = nullptr;
+     if (useAnimation)
+     {
+         //     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
+         //     auto pAnim = factory.CreateBakeAnimation( "Resource/fbx/Unity-Chan/move_unity.fbx" );
+         //pAnim = factory.CreateBakeAnimation("SD_unitychan_motion_Generic.fbx");
+         pAnim->BindTransform(pMesh->GetGeometry(0)->GetTransform()->GetRootTransform());
 
-//     pAnim->SetTargetSkeleton( pSkeleton );
-     pMesh->GetGeometry( 0 )->GetTransform()->GetRootTransform()->m_localScale = TsVector3::one * 0.1f;
+         pAnim->SetTargetSkeleton(pSkeleton);
+     }
+
+     
+
+    pMesh->GetGeometry( 0 )->GetTransform()->GetRootTransform()->m_localScale = TsVector3::one * 0.1f;
+
+    Ts3DModelBinalizer bin;
+    bin.SaveBinaly(pDev, "f:\\mesh.tsm", pMesh, 1);
+    bin.LoadBinaly(pDev, "f:\\mesh.tsm");
+
     for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++ i)   
-         queue.Add(pMesh->GetGeometry(i));
+        queue.Add(bin.GetMesh()->GetGeometry(i));
 
     TsPlaneObject plane;
     TsTransForm planeTransform;
@@ -128,8 +234,8 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsCamera* pCamera = pDev->GetDC()->GetMainCamera();
 
 //    pCamera->SetLocalRotate( TsQuaternion::AngleAxis( TsVector3::up , TsRadian( 180.0f ) ) );
-    pCamera->SetLocalPosition(TsVector3(0,15,-50));
-    pCamera->SetLockAt( TsVector3( TsVector3( 0 , 15 , 0 ) ) );
+    pCamera->SetLocalPosition(TsVector3(0,25,-50));
+    pCamera->SetLockAt( TsVector3( TsVector3( 0 , 25 , 0 ) ) );
     pCamera->SetNearAndFar(4, 255);
 
     pCamera->CreateCBuffer(pDev);
@@ -165,7 +271,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 
         aabbList.push_back(aabb);
         renderList.push_back(render);
-        queue.Add(render);
+        //queue.Add(render);
     }
 
 
@@ -180,7 +286,8 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
         }
         else {
             //render 
-//            pAnim->Update();
+            if ( pAnim ) 
+                pAnim->Update();
             
             if (TsWINGetKey(VK_LEFT))
             {

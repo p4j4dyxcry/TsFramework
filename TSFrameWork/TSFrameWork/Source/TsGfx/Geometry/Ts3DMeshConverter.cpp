@@ -101,6 +101,9 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
             VertexList.resize(0);
             indexList.resize(0);
             auto & m = commonMesh[i];
+
+            VertexList.reserve(m.m_vertexCount);
+            indexList.reserve(m.m_vertexCount);
             if (m.m_pIndex)
             {
                 for (TsUint j = 0; j < m.m_indexCount; ++j)
@@ -128,14 +131,22 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
             }
             else
             {
+                TsInt percent = 0;
                 for (TsUint j = 0; j < m.m_vertexCount; ++j)
                 {
                     TsUint idx = j;
 
                     TsVertexSkin&& vertex = ConvertVertx(&m, idx);
 
-                    auto it = tstl::find(VertexList.begin(), VertexList.end(), vertex);
+                    auto it = VertexList.end();
 
+                    //! 65535頂点を超える場合は速度優先でIndexBufferの作成をストップする
+                    if (idx < 65535 )
+                    {
+                        it = tstl::find(VertexList.begin(), VertexList.end(), vertex);
+                    }
+
+                    //auto 
                     if (it == VertexList.end())
                     {
                         indexList.push_back(VertexList.size());
@@ -143,6 +154,7 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
                     }
                     else
                     {
+                        percent++;
                         indexList.push_back(tstl::distance(VertexList.begin(), it));
                     }
                 }
@@ -181,9 +193,8 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
             pGeometory->SetTransform(m.m_pTransoform);
             pMesh->AddGeometry(pGeometory);
         }
-        TsSafeDelete(pLoader);
-
         binalizer.SaveBinaly(pDev, cachePath.c_str(),pMesh,1);
+        TsSafeDelete(pLoader);
         return pMesh;
     }
 
