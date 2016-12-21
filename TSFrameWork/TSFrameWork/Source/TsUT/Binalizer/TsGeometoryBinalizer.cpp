@@ -67,8 +67,6 @@ TsBool TsGeometoryBinalizer::Binalize(TsDevice* pDev,
         ref.transformPtr = (TsU64)pTransform;
         ref.aabb = pData->GetAABB();
         ofs.write((TsChar*)&ref, sizeof(ref));
-        TsSafeDelete(pVertexArray);
-        TsSafeDelete(pIndexArray);
     }
 
 

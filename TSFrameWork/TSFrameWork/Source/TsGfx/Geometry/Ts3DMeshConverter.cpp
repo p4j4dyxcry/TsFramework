@@ -1,6 +1,7 @@
 
 #include "../../../TsAfx.h"
-
+#include <direct.h>
+#include <fstream>
 TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
                                                  const TsChar* filename)
 {
@@ -48,6 +49,20 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
     TsVector<TsVertexSkin> VertexList;
     TsMap<TsVertexSkin , TsUint , Hash> hashMap;
     TsVector<TsUint>       indexList;
+    _mkdir("cache");
+
+    TsString& cachePath = GetCachePath(filename);
+    std::ifstream ifs(cachePath.c_str());
+    TsBool exitsCache =  !ifs.fail();
+    ifs.close();
+    Ts3DModelBinalizer binalizer;
+
+    if (exitsCache)
+    {       
+        binalizer.LoadBinaly(pDev, cachePath.c_str());
+        return binalizer.GetMesh();
+    }
+
 
     auto pLoader = ExtencionToModelLoader( analizer.GetExtension().c_str() );
 
@@ -67,6 +82,7 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
         TsTransForm*         pRootTransform = pLoader->GetRootTransformData();
 
         TsUint meshCount = pLoader->GetMeshCount();
+
         TsUint materialCount = pLoader->GetMaterialCount();
       
         TsMeshObject* pMesh = TsNew( TsMeshObject );
@@ -150,10 +166,11 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
             {
                 TsSkinGeometryObject * skin =
                     TsNew(TsSkinGeometryObject);
-                pGeometory = skin;
 
                 skin->CreateGeometryObject(pDev, vertexElement, pMateriaMap[m.m_pMaterialRef]);
                 skin->SetSkeleton(pSkeleton);
+
+                pGeometory = skin;
             }
             else
             {
@@ -165,6 +182,8 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
             pMesh->AddGeometry(pGeometory);
         }
         TsSafeDelete(pLoader);
+
+        binalizer.SaveBinaly(pDev, cachePath.c_str(),pMesh,1);
         return pMesh;
     }
 
@@ -248,4 +267,17 @@ TsVertexSkin Ts3DMeshConverter::ConvertVertx(TsCommon3DMesh* pMesh, TsUint index
         v.boneIndex = pMesh->m_pBoneIndex[index];
 
     return v;
+}
+
+TsString Ts3DMeshConverter::GetCachePath(const TsChar * filename)
+{
+
+    TSUT::TsFilePathAnalyzer analizer(filename);
+    analizer.ReExtencion("");
+    TsString binName = analizer.GetFileName() + "_" +
+        TSUT::U64ToString(TSUT::StringToHash(analizer.GetFullPath())) + ".tsm";
+
+    binName = "cache\\"+ binName;
+    return binName;
+
 }

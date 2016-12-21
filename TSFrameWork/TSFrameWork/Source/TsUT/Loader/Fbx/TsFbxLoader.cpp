@@ -124,6 +124,8 @@ TsBool TsFbxLoader::CreateCommonData()
                 common.m_pColors[i]     = fbxVertex[i].color.m_color;
                 common.m_pWeights[i]    = Float4ToVec4(fbxVertex[i].boneWeight);
                 common.m_pBoneIndex[i]  = fbxVertex[i].boneIndex;
+
+                common.m_aabb.AddPoint(common.m_pPositions[i]);
             }           
         }
     } while (0);

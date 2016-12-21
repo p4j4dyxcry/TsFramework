@@ -27,4 +27,5 @@ protected:
 
     static TsVertexSkin ConvertVertx(TsCommon3DMesh* pMesh, TsUint index);
 
+    static TsString GetCachePath(const TsChar * filename);
 };
