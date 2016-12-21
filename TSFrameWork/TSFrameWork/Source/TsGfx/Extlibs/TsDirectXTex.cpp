@@ -52,6 +52,7 @@ TsDirectXTex::Result TsDirectXTex::LoadFromFile( ID3D11Device* pDev , const TsCh
         TsDebugLogError("Load Error \n\t \"file = %s\" \n", filename);
         return result;
     }
+    TsDebugLog("Load Texture \n\t \"file = %s\" \n", filename);
     result.IsAlphaEnable = image.IsAlphaAllOpaque();
 
     return result;

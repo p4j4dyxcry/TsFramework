@@ -15,7 +15,7 @@ TsFbxLoader::~TsFbxLoader()
 //! Load From File
 TsBool TsFbxLoader::LoadFile(const TsChar* filename)
 {
-    m_filename = filename;
+    Ts3DModelLoader::LoadFile(filename);
     TsFbxContext::TsFbxLoadOption fbxLoadOption;
 
     fbxLoadOption.loadAnimation = m_isLoadAnimation;

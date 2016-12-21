@@ -18,6 +18,7 @@ Ts3DModelBinalizer::Ts3DModelBinalizer()
 
 TsBool Ts3DModelBinalizer::LoadBinaly(TsDevice* pDev,const TsChar* filename)
 {
+    TsDebugLog("Load Model \n\t \"file = %s\" \n", filename);
     std::ifstream ifs(filename, std::ios::binary);
 
     if (ReadHeader(ifs, typeid(*this).name()) == TS_FALSE)
@@ -80,6 +81,7 @@ TsBool Ts3DModelBinalizer::SaveBinaly(TsDevice* pDev,
                                       TsMeshObject* pMeshObjects,
                                       TsUint meshCount)
 {
+    TsDebugLog("Save Model Cache \n\t \"file = %s\" \n", filename);
     std::ofstream ofs(filename, std::ios::binary);
 
     if (WriteHeader(ofs, typeid(*this).name()) == TS_FALSE)
