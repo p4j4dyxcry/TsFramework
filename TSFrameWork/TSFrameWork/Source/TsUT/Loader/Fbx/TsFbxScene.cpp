@@ -119,9 +119,6 @@ TsBool TsFbxScene::ParseMaterial()
 
 TsBool TsFbxScene::ParseBindPose()
 {
-    m_pFbxBindPoseHolder = TsNew(TsFbxBindPoseHolder(m_pFbxContext, this));
-    m_pFbxBindPoseHolder->ParseBindPose(this);
-
     for each(auto it in m_pNodeList)
     {
         if (it->IsSkeleton())

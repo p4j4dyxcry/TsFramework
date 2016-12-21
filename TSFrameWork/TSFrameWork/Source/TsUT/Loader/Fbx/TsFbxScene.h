@@ -27,10 +27,7 @@ public:
     {
         return m_pFbxImporter;
     }
-    TsMatrix* GetBindPoseMatrix(TsString& name)
-    {
-        return m_pFbxBindPoseHolder->GetBindPoseMatrix(name);
-    }
+
     TsSkeleton* CreateSkeleton();
     TsF32 GetFrameRate();
 
@@ -57,7 +54,6 @@ private:
     TsVector<TsFbxNode*>    m_pNodeList;
     TsVector<TsFbxMaterial> m_materialList;
     TsVector<TsFbxAnimation*> m_pAnimationList;
-    TsFbxBindPoseHolder *   m_pFbxBindPoseHolder;
 
     TsString m_fileName;
 private:

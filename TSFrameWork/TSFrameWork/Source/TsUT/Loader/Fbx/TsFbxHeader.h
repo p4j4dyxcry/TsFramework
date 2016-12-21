@@ -9,7 +9,6 @@
 #include "TsFbxType.h"
 #include "TsFbxContext.h"
 #include "TsFbxNode.h"
-#include "TsFbxBindPoseHolder.h"
 #include "TsFbxBone.h"
 #include "TsFbxBlendShape.h"
 #include "TsFbxMesh.h"

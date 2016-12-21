@@ -182,12 +182,6 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TsFbxAfx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsFbxAfx.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="Source\TsUT\Loader\Fbx\TsFbxBindPoseHolder.cpp">
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsFbxAfx.h;</ForcedIncludeFiles>
-      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TsFbxAfx.h;yvals.h</ForcedIncludeFiles>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TsFbxAfx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsFbxAfx.h</PrecompiledHeaderFile>
-    </ClCompile>
     <ClCompile Include="Source\TsUT\Loader\Fbx\TsFbxBlendShape.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsFbxAfx.h;</ForcedIncludeFiles>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">TsFbxAfx.h;yvals.h</ForcedIncludeFiles>
@@ -288,7 +282,6 @@
     <ClInclude Include="Source\TsUT\Loader\dae\TsColladaLoader.h" />
     <ClInclude Include="Source\TsUT\Loader\Fbx\TsFbxAfx.h" />
     <ClInclude Include="Source\TsUT\Loader\Fbx\TsFbxAnimation.h" />
-    <ClInclude Include="Source\TsUT\Loader\Fbx\TsFbxBindPoseHolder.h" />
     <ClInclude Include="Source\TsUT\Loader\Fbx\TsFbxBlendShape.h" />
     <ClInclude Include="Source\TsUT\Loader\Fbx\TsFbxBone.h" />
     <ClInclude Include="Source\TsUT\Loader\Fbx\TsFbxContext.h" />
