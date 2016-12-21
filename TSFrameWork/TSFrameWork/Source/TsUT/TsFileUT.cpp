@@ -2,6 +2,8 @@
 #include "TsFileUT.h"
 #include "../TsOS/TsWindowsUtility.h"
 
+#include <sstream>
+
 using namespace TSUT;
 
 //----------------------------------------------------------
@@ -187,4 +189,35 @@ TsString TSUT::LocalToFullPath( TsString localPath )
         &szFilePart );
 
     return szFullPath;
+}
+
+TsString TSUT::IntToString(TsInt data)
+{
+    std::stringstream ss;
+    ss << data;
+    return ss.str();
+}
+TsString TSUT::UintToString(TsUint data)
+{
+    std::stringstream ss;
+    ss << data;
+    return ss.str();
+}
+TsString TSUT::U64ToString(TsU64 data)
+{
+    std::stringstream ss;
+    ss << data;
+    return ss.str();
+}
+TsString TSUT::F32ToString(TsF32 data)
+{
+    std::stringstream ss;
+    ss << data;
+    return ss.str();
+}
+TsString TSUT::F64ToString(TsF64 data)
+{
+    std::stringstream ss;
+    ss << data;
+    return ss.str();
 }

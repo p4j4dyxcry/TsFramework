@@ -188,4 +188,14 @@ namespace TSUT
         return result;
     }
 
+
+    TsString IntToString(TsInt);
+
+    TsString UintToString(TsUint);
+
+    TsString U64ToString(TsU64);
+
+    TsString F32ToString(TsF32);
+
+    TsString F64ToString(TsF64);
 }
