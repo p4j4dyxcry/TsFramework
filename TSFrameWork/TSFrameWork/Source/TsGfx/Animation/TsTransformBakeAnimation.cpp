@@ -59,7 +59,10 @@ TsBool TsTransformBakeAnimation::Update()
                 end = m_bakedMatrixList[0].find( p->GetHashCode() )->second;;
             }
             TsF32 t = m_localFrame - (TsInt)m_localFrame;
-            *p = TsLerp(begin, end, t).ToLocalMatrix();
+
+            //! この実装だとバグる。要調査
+            // TsLerp( begin , end , 0 ).ToLocalMatrix();
+            *p = begin.ToLocalMatrix();
         }
     }
     

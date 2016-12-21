@@ -168,7 +168,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
          TsFbxLoader fbxLoader;
          fbxLoader.SetLoadGeometoryFlag( TS_FALSE );
          fbxLoader.SetLoadAnimationFlag( TS_TRUE );
-         fbxLoader.LoadFile( "move_unity.fbx" );
+         fbxLoader.LoadFile( "Resource/fbx/Unity-Chan/move_unity.fbx" );
          pAnim = fbxLoader.CreateAnimation( 0 );
          pAnim->BindTransform(pMesh->GetGeometry(0)->GetTransform()->GetRootTransform());
 
