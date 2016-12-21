@@ -16,6 +16,12 @@ TsGeometryObject* TsMeshObject::GetGeometry(TsInt index)const
     return m_pGeometryList[index];
 }
 
+TsVector<TsGeometryObject*> TsMeshObject::GetGeometrys()const
+{
+    return m_pGeometryList;
+}
+
+
 TsBool  TsMeshObject::SetSkeleton(TsSkeleton* pSkeleton)
 {
     m_pSkeleton = pSkeleton;

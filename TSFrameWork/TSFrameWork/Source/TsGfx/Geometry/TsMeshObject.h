@@ -13,7 +13,8 @@ public:
     //! public method
     //--------------------------------------------------
     TsBool AddGeometry(TsGeometryObject* pGeometry);
-    TsGeometryObject* GetGeometry( TsInt index )const;
+    TsGeometryObject*   GetGeometry( TsInt index )const;
+    TsVector<TsGeometryObject*>  GetGeometrys()const;
     TsInt GetGeometryCount()const;
     TsSkeleton*                 GetSkeleton(){ return m_pSkeleton; }
     TsBool  SetSkeleton(TsSkeleton* pSkeleton);

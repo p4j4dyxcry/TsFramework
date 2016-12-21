@@ -70,12 +70,13 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
         TsUint materialCount = pLoader->GetMaterialCount();
       
         TsMeshObject* pMesh = TsNew( TsMeshObject );
+        pMesh->SetSkeleton(pSkeleton);
 
         for (TsUint i = 0; i < materialCount; ++i)
         {
             TsMaterial* pMat = ConvertMaterial(pDev, filename, &commonMaterial[i]);
             pMateriaMap.insert(
-                std::pair<void*, TsMaterial*>(commonMaterial, pMat));
+                std::pair<void*, TsMaterial*>(&commonMaterial[i], pMat));
         }
 
 
@@ -111,7 +112,7 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
             }
             else
             {
-                for (TsUint j = 0; j < m.m_posCount; ++j)
+                for (TsUint j = 0; j < m.m_vertexCount; ++j)
                 {
                     TsUint idx = j;
 
@@ -145,13 +146,14 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
             vertexElement->m_indexBuffer = ib;
 
             TsGeometryObject* pGeometory = nullptr;
-            if (m.m_weightCount > 0)
+            if (m.m_pWeights && m.m_pWeights[0].x > 0)
             {
                 TsSkinGeometryObject * skin =
                     TsNew(TsSkinGeometryObject);
+                pGeometory = skin;
+
                 skin->CreateGeometryObject(pDev, vertexElement, pMateriaMap[m.m_pMaterialRef]);
                 skin->SetSkeleton(pSkeleton);
-                pGeometory = skin;
             }
             else
             {
@@ -175,6 +177,7 @@ Ts3DModelLoader* Ts3DMeshConverter::ExtencionToModelLoader(const TsChar * extenc
     auto ext = TSUT::StringToLower(extencion);
 
     if (ext == ".stl") return TsNew ( TsStlLoader ) ;
+    if (ext == ".fbx") return TsNew ( TsFbxLoader ) ;
 
     return nullptr;
 
