@@ -50,6 +50,13 @@ public:
         m_min = TsMin<T>(point, m_min);
         m_max = TsMax<T>(point, m_max);
     }
+
+    inline void MergeAABB( const TsAABB<T>& aabb )
+    {
+        m_min = TsMin<T>( aabb.m_min , m_min );
+        m_max = TsMax<T>( aabb.m_max , m_max );
+    }
+
 private:
     //=========================================================================
     //! propery
