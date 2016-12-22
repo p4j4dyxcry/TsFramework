@@ -186,21 +186,6 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     plane.SetTransform( &planeTransform );
     queue.Add(&plane);
 
-    TsAABB3D aabb(TsVector3(-15, 0, -15), TsVector3(15, 30, 15));
-    TsLine3D line(TsVector3(-15, -15, -15), TsVector3(15, 15, 15));
-    TsOBB    obb;
-    obb.SetScale(TsVector3(10, 5, 5));
-    obb.SetRotate(TsQuaternion::CreateByEuler(45, 45, 0));
-    obb.SetCenter(TsVector3(15, 2.5f, 0));
-    TsColliderRenderObject obbMesh;
-    obbMesh.CreateRenderObject(pDev, &obb);
-
-    TsColliderRenderObject aabbMesh;
-    aabbMesh.CreateRenderObject(pDev, &aabb);
-    //queue.Add(&aabbMesh);
-
-    //queue.Add(&obbMesh);
-
     TsSphere3D sphere;
     sphere.SetRadius(15);
     sphere.SetCenter( TsVector3::up * 15 );
@@ -234,21 +219,21 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     TsCollisionOctTree octTree;
     octTree.Initalize(TsAABB3D(TsVector3(-300, -300, -300), TsVector3(300, 300, 300)), 3);
 
+
     TsColliderRenderManager colliderRenderManager;
     colliderRenderManager.Initialize( pDev );
     queue.Add( &colliderRenderManager );
     TsVector<TsAABB3D*> aabbList;
-
     aabbList.reserve( 1024 );
 
-    for (TsInt i = 0; i < 1024; ++i)
+    TsAABB3D aabb;
+    for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++i)
     {
-        TsAABB3D* aabb = TsNew(TsAABB3D);
-        aabb->SetMin( TsVector3( ( rand() % 1500 ) - 750 , ( rand() % 1500 ) - 750 , ( rand() % 1500 ) - 750 ) );
-        aabb->SetMax( aabb->GetMin() + TsVector3( rand() % 50 + 1 , rand() % 50 + 1 , rand() % 50 + 1 ) );
-        colliderRenderManager.AddGeometory( aabb );
-        aabbList.push_back( aabb );
+        aabb.MergeAABB( pMesh->GetGeometry( i )->GetAABB() );
+//        aabbList.push_back( aabb );
     }
+    colliderRenderManager.AddGeometory( &aabb );
+
 
 
     while( true )
