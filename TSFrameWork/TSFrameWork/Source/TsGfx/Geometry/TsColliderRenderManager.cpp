@@ -80,7 +80,7 @@ TsBool TsColliderRenderManager::Initialize(TsDevice* pDev)
     {
         TsVertexSkin* pSkin = nullptr;
         TsInt sz;
-        creater.GenerateSprite(&pSkin, sz, TS_CULL_MODE::NONE);
+        creater.GenerateSpriteLine(&pSkin, sz);
 
         TsVertexBuffer* pVB = pDev->CreateVertexBuffer(pSkin, sz*sizeof(TsVertexSkin), sizeof(TsVertexSkin));
             
@@ -95,7 +95,7 @@ TsBool TsColliderRenderManager::Initialize(TsDevice* pDev)
     {
         TsVertexSkin* pSkin = nullptr;
         TsInt sz;
-        creater.GenerateBox3D(&pSkin, sz);
+        creater.GenerateBox3DLine( &pSkin , sz );
 
         TsVertexBuffer* pVB = pDev->CreateVertexBuffer(pSkin, sz*sizeof(TsVertexSkin), sizeof(TsVertexSkin));
 
@@ -109,7 +109,7 @@ TsBool TsColliderRenderManager::Initialize(TsDevice* pDev)
     {
         TsVertexSkin* pSkin = nullptr;
         TsInt sz;
-        creater.GenerateBox3D(&pSkin, sz);
+        creater.GenerateBox3DLine(&pSkin, sz);
 
         TsVertexBuffer* pVB = pDev->CreateVertexBuffer(pSkin, sz*sizeof(TsVertexSkin), sizeof(TsVertexSkin));
 
@@ -123,7 +123,7 @@ TsBool TsColliderRenderManager::Initialize(TsDevice* pDev)
     {
         TsVertexSkin* pSkin = nullptr;
         TsInt sz;
-        creater.GenerateSphere(&pSkin, sz,32);
+        creater.GenerateSphere(&pSkin, sz,9);
 
         TsVertexBuffer* pVB = pDev->CreateVertexBuffer(pSkin, sz*sizeof(TsVertexSkin), sizeof(TsVertexSkin));
 
@@ -303,7 +303,15 @@ TsBool TsColliderRenderManager::Draw(TsDeviceContext* pDC)
             //! draw call
             if (m.m_geometorys.size() > 0)
             {
-                pDC->SetTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+                if( it.first == TsCollider::eType::Collider_TsSphere ||
+                    it.first == TsCollider::eType::Collider_TsCircle )
+                {
+                    pDC->SetTopology( D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
+                }
+                else
+                {
+                    pDC->SetTopology( D3D_PRIMITIVE_TOPOLOGY_LINELIST );
+                }
                 pDC->SetVertexBuffer(it.second);
                 pDC->DrawInstance(it.second->GetVertexCount(), m.m_geometorys.size());
             }
