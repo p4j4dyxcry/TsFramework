@@ -32,7 +32,6 @@
 #include "TsBinaryFile.h"
 
 #include "Loader\Base\Ts3DModelFileLoader.h"
-#include "Loader\virtual\TsMeshLoader.h"
 #include "Loader\XML\TsXML.h"
 
 #include "Loader\dae\TsColladaLoader.h"

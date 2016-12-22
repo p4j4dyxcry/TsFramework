@@ -348,9 +348,6 @@
     <ClCompile Include="Source\TsUT\Loader\Mqo\TsMqoLoader.cpp">
       <Filter>ソース ファイル\TsUT\Loader\Mqo</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TsUT\Loader\virtual\TsMeshLoader.cpp">
-      <Filter>ソース ファイル\TsUT\Loader\base</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TsUT\Loader\x\TsXLoader.cpp">
       <Filter>ソース ファイル\TsUT\Loader\X</Filter>
     </ClCompile>
@@ -724,9 +721,6 @@
     </ClInclude>
     <ClInclude Include="Source\TsUT\Loader\Mqo\TsMqoLoader.h">
       <Filter>ソース ファイル\TsUT\Loader\Mqo</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TsUT\Loader\virtual\TsMeshLoader.h">
-      <Filter>ソース ファイル\TsUT\Loader\base</Filter>
     </ClInclude>
     <ClInclude Include="Source\TsUT\Loader\x\TsXLoader.h">
       <Filter>ソース ファイル\TsUT\Loader\X</Filter>

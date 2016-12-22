@@ -1,6 +1,6 @@
 #pragma once
 
-class TsXLoader : public TsMeshLoader
-{
-
-};
+//class TsXLoader : public TsMeshLoader
+//{
+//
+//};

@@ -5,7 +5,7 @@
 
 TsMqoLoader::TsMqoLoader() :
 m_mqoObject( nullptr ),
-m_loadScale(0.01f),
+m_loadScale(1),
 m_isSmooth(TS_TRUE)
 {
 
@@ -16,13 +16,14 @@ TsMqoLoader::~TsMqoLoader()
     TsSafeDelete( m_mqoObject );
 }
 
-TsBool TsMqoLoader::LoadFromFile( const TsString& filename , TsLoadOption& option )
+TsBool TsMqoLoader::LoadFile( const TsChar* filename )
 {
+    Ts3DModelLoader::LoadFile( filename );
     std::ifstream ifs( filename );
 
     if( ifs.fail() )
     {
-        TsDebugLogError("Load Mqo Fail \n\t file %s \n", filename.c_str());
+        TsDebugLogError("Load Mqo Fail \n\t file %s \n", filename);
         return TS_FALSE;
     }
     
@@ -120,6 +121,61 @@ TsBool TsMqoLoader::LoadFromFile( const TsString& filename , TsLoadOption& optio
 
     m_mqoObject = TsNew( TsMqoObject );
     m_mqoObject->mesh = meshList;
+    return TS_TRUE;
+}
+
+TsBool TsMqoLoader::CreateCommonData()
+{
+    m_meshCount = m_mqoObject->mesh.size();
+    m_materialCount = m_mqoObject->mesh.size();
+
+    m_pMaterials = TsNew( TsCommon3DMaterial[m_materialCount] );
+    m_pMeshs = TsNew( TsCommon3DMesh[m_meshCount] );
+
+    auto  TsFloat2ToTsVector2 = []( TsFloat2 f )
+    {
+        return TsVector2( f.x , f.y );
+    };
+
+    auto  TsFloat3ToTsVector3 =[]( TsFloat3 f )
+    {
+        return TsVector3( f.x , f.y , f.z );
+    };
+
+    for( TsUint i = 0; i < m_materialCount; ++i )
+    {
+        TsCommon3DMaterial& mat = m_pMaterials[i];
+        TsMqoMaterial mqoMat = m_mqoObject->mesh[i].material;
+        mat.m_name = GetName() + "_Material" + TSUT::IntToString( i );
+        mat.m_diffuse = TsFloat3( mqoMat.color.x , mqoMat.color.y , mqoMat.color.z) * mqoMat.diffuse;
+        mat.m_ambient = TsFloat3( mqoMat.ambient , mqoMat.ambient , mqoMat.ambient );
+        mat.m_alpha = mqoMat.color.w;
+        mat.m_specluer = TsFloat3( mqoMat.specular , mqoMat.specular , mqoMat.specular );
+        mat.m_power = mqoMat.specularPower;
+        mat.m_albedoTexture = mqoMat.textureName;
+    }
+
+    for( TsUint i = 0; i < m_meshCount; ++i )
+    {
+        TsCommon3DMesh& mesh = m_pMeshs[i];
+        TsMqoMesh             mqoMesh = m_mqoObject->mesh[i];
+        mesh.m_vertexCount = mqoMesh.vertex.size();
+        mesh.m_pPositions = TsNew( TsVector3[mesh.m_vertexCount] );
+        mesh.m_pNormals = TsNew( TsVector3[mesh.m_vertexCount] );
+        mesh.m_pTexcoords = TsNew( TsVector2[mesh.m_vertexCount]);
+
+        mesh.m_name = GetName() + "_MqoMesh" + TSUT::IntToString( i );
+
+        for( TsUint j = 0; j < mesh.m_vertexCount; ++j )
+        {
+            mesh.m_pPositions[j] = TsFloat3ToTsVector3( mqoMesh.vertex[j].pos);
+            mesh.m_pNormals[j] = TsFloat3ToTsVector3( mqoMesh.vertex[j].normal);
+            mesh.m_pTexcoords[j] = TsFloat2ToTsVector2( mqoMesh.vertex[j].uv);
+            mesh.m_aabb.AddPoint( mesh.m_pPositions[j] );
+        }
+        mesh.m_pMaterialRef = &m_pMaterials[i];
+        mesh.m_pTransoform = TsNew( TsTransForm );
+    }
     return TS_TRUE;
 }
 
@@ -339,39 +395,6 @@ template <typename T> TsVector<T> TsMqoLoader::PickOutMaterial( TsString str , T
     return ts;
 }
 
-TsBool TsMqoLoader::LoadFromMemory( void * memory , size_t sz )
-{
-    ( void )memory;
-    ( void )sz;
-    return TS_FALSE;
-}
-TsInt  TsMqoLoader::GetMeshNum()
-{
-    if( m_mqoObject )
-        return m_mqoObject->mesh.size();
-    else
-        return 0;
-}
-TsInt  TsMqoLoader::GetVertexSize( TsInt index )
-{
-    if( m_mqoObject && m_mqoObject->mesh.size() > (unsigned)index)
-        return m_mqoObject->mesh[index].vertex.size() * sizeof( TsMqoVertex );
-    else
-        return 0;
-}
-void*  TsMqoLoader::GetVertexBuffer( TsInt index )
-{
-    if( m_mqoObject && m_mqoObject->mesh.size() > (unsigned)index )
-        return &m_mqoObject->mesh[index].vertex[0];
-    else
-        return 0;
-}
-
-size_t TsMqoLoader::GetVertexStride()
-{
-    return sizeof( TsMqoVertex );
-}
-
 void TsMqoLoader::SetCenti( TsBool isCenti )
 {
     if( isCenti )
@@ -383,13 +406,4 @@ void TsMqoLoader::SetCenti( TsBool isCenti )
 void TsMqoLoader::SetSmooth( TsBool isSmooth )
 {
     m_isSmooth = isSmooth;
-}
-
-TsInt TsMqoLoader::GetMaterialNum()const
-{
-    return m_mqoObject->mesh.size();
-}
-TsString TsMqoLoader::GetTexturePass( TsInt index )const
-{
-    return m_mqoObject->mesh[index].material.textureName;
 }

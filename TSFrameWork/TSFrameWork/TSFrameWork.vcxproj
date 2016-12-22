@@ -227,7 +227,6 @@
     <ClCompile Include="Source\TsUT\Loader\Mqo\TsMqoLoader.cpp" />
     <ClCompile Include="Source\TsUT\Loader\obj\TsObjLoader.cpp" />
     <ClCompile Include="Source\TsUT\Loader\stl\TsSTLLoader.cpp" />
-    <ClCompile Include="Source\TsUT\Loader\virtual\TsMeshLoader.cpp" />
     <ClCompile Include="Source\TsUT\Loader\XML\TsXML.cpp" />
     <ClCompile Include="Source\TsUT\Loader\x\TsXLoader.cpp" />
     <ClCompile Include="Source\TsUT\TsBinaryFile.cpp" />
@@ -289,7 +288,6 @@
     <ClInclude Include="Source\TsUT\Loader\Mqo\TsMqoLoader.h" />
     <ClInclude Include="Source\TsUT\Loader\obj\TsObjLoader.h" />
     <ClInclude Include="Source\TsUT\Loader\stl\TsSTLLoader.h" />
-    <ClInclude Include="Source\TsUT\Loader\virtual\TsMeshLoader.h" />
     <ClInclude Include="Source\TsUT\Loader\XML\TsXML.h" />
     <ClInclude Include="Source\TsUT\Loader\x\TsXLoader.h" />
     <ClInclude Include="Source\TSUT\TsArrayType.h" />

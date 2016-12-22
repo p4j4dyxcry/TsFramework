@@ -42,21 +42,13 @@ struct TsMqoObject
     TsVector<TsMqoMesh> mesh;
 };
 
-class TsMqoLoader : public TsMeshLoader
+class TsMqoLoader : public Ts3DModelLoader
 {
 public :
     TsMqoLoader();
     virtual ~TsMqoLoader();
-    TsBool LoadFromFile( const TsString& filename , TsLoadOption& option = TsLoadOption() )override;
-    TsBool LoadFromMemory( void * memory , size_t sz )override;
-    virtual TsInt  GetMeshNum() override;
-    virtual TsInt  GetVertexSize( TsInt index ) override;
-    virtual void*  GetVertexBuffer( TsInt index ) override;
-    virtual size_t GetVertexStride() override;
-    
-    TsInt GetMaterialNum()const;
-    TsString GetTexturePass(TsInt index)const;
-        
+    TsBool LoadFile( const TsChar* filename )override;
+    TsBool CreateCommonData()override;
 
     //==========================================================
     //  !SetScale
