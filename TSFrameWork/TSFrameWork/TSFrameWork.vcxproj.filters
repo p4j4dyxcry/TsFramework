@@ -486,6 +486,9 @@
     <ClCompile Include="Source\TsUT\Binalizer\TsSkeletonBinalizer.cpp">
       <Filter>ソース ファイル\TsUT\TsBinalizer</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsMath\TsAnimationKey.cpp">
+      <Filter>ソース ファイル\TsMath\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -853,6 +856,9 @@
     </ClInclude>
     <ClInclude Include="Source\TsUT\Binalizer\TsGeometoryBinalizer.h">
       <Filter>ソース ファイル\TsUT\TsBinalizer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsMath\TsAnimationKey.h">
+      <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

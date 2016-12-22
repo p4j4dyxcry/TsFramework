@@ -19,3 +19,5 @@
 #include "TsCollision.h"
 #include "TsCollisionQuadTree.h"
 #include "TsCollisionOctTree.h"
+
+#include "TsAnimationKey.h"
