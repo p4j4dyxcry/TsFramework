@@ -31,10 +31,20 @@ public:
                                   TsInt& outVertexCount,
                                   TS_CULL_MODE cullMode = TS_CULL_MODE::BACK);
 
+    static TsBool GenerateSpriteLine( TsVertexSkin** ppOutVertex ,
+                                  TsInt& outVertexCount);
+    static TsBool GenerateSpriteLine( TsVertexDefault** ppOutVertex ,
+                                  TsInt& outVertexCount  );
+
     static TsBool GenerateBox3D ( TsVertexSkin** ppOutVertex ,
                                   TsInt& outVertexCount);
     static TsBool GenerateBox3D ( TsVertexDefault** ppOutVertex ,
                                   TsInt& outVertexCount);
+
+    static TsBool GenerateBox3DLine( TsVertexSkin** ppOutVertex ,
+                                 TsInt& outVertexCount );
+    static TsBool GenerateBox3DLine( TsVertexDefault** ppOutVertex ,
+                                 TsInt& outVertexCount );
 
     static TsBool GenrateInvBox3D( TsVertexSkin** ppOutVertex ,
                                    TsInt& outVertexCount);

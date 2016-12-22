@@ -176,6 +176,115 @@ TsBool GenerateBox3DTemplate( T** pOut,
     return TS_TRUE;
 }
 
+template <typename T>
+TsBool GenerateSpriteLineTemplate( T** pOut ,
+                               TsInt& outCount)
+{
+    T * pVertex = nullptr;
+
+    outCount = 8;
+
+    pVertex = TsNew( T[outCount] );
+
+    memset( pVertex , 0 , sizeof( T )* outCount );
+
+    TsVector3 left_up = TsVector3( -0.5 , 0.5 , 0 );
+    TsVector3 left_down = TsVector3( -0.5 , -0.5 , 0 );
+    TsVector3 right_up = TsVector3( 0.5 , 0.5 , 0 );
+    TsVector3 right_down = TsVector3( 0.5 , -0.5 , 0 );
+
+    TsInt index = 0;
+
+
+    pVertex[index++].pos = left_up;
+    pVertex[index++].pos = left_down;
+
+    pVertex[index++].pos = left_up;
+    pVertex[index++].pos = right_up;
+
+    pVertex[index++].pos = right_up;
+    pVertex[index++].pos = right_down;
+
+    pVertex[index++].pos = right_down;
+    pVertex[index++].pos = left_down;
+
+
+    *pOut = pVertex;
+
+    return TS_TRUE;
+}
+
+template <typename T>
+TsBool GenerateBox3DLineTemplate( T** pOut ,
+                              TsInt& outCount )
+{
+    T * pVertex = nullptr;
+
+    outCount = 24;
+
+    pVertex = TsNew( T[outCount] );
+
+    memset( pVertex , 0 , sizeof( T )* outCount );
+
+
+    TsVector3 left_up_back = TsVector3( -0.5 , 0.5 , 0.5 );
+    TsVector3 left_down_back = TsVector3( -0.5 , -0.5 , 0.5 );
+    TsVector3 left_up_front = TsVector3( -0.5 , 0.5 , -0.5 );
+    TsVector3 left_down_front = TsVector3( -0.5 , -0.5 , -0.5 );
+    TsVector3 right_up_back = TsVector3( 0.5 , 0.5 , 0.5 );
+    TsVector3 right_down_back = TsVector3( 0.5 , -0.5 , 0.5 );
+    TsVector3 right_up_front = TsVector3( 0.5 , 0.5 , -0.5 );
+    TsVector3 right_down_front = TsVector3( 0.5 , -0.5 , -0.5 );
+
+    TsInt i = 0;
+    //ç∂ë§ÇÃÇSï”
+    {
+        pVertex[i++].pos = left_up_back;
+        pVertex[i++].pos = left_down_back;
+
+        pVertex[i++].pos = left_up_front;
+        pVertex[i++].pos = left_down_front;
+
+        pVertex[i++].pos = left_up_front;
+        pVertex[i++].pos = left_up_back;
+
+        pVertex[i++].pos = left_down_front;
+        pVertex[i++].pos = left_down_back;
+    }
+    //âEë§ÇÃÇSï”
+    {
+        pVertex[i++].pos = right_up_back;
+        pVertex[i++].pos = right_down_back;
+
+        pVertex[i++].pos = right_up_front;
+        pVertex[i++].pos = right_down_front;
+
+        pVertex[i++].pos = right_up_front;
+        pVertex[i++].pos = right_up_back;
+
+        pVertex[i++].pos = right_down_front;
+        pVertex[i++].pos = right_down_back;
+    }
+    //íÜâõÇÃÇSï”
+    {
+        pVertex[i++].pos = left_up_back;
+        pVertex[i++].pos = right_up_back;
+
+        pVertex[i++].pos = left_down_back;
+        pVertex[i++].pos = right_down_back;
+
+        pVertex[i++].pos = left_up_front;
+        pVertex[i++].pos = right_up_front;
+
+        pVertex[i++].pos = left_down_front;
+        pVertex[i++].pos = right_down_front;
+    }
+
+    *pOut = pVertex;
+
+    return TS_TRUE;
+}
+
 TsBool TsPrimitiveMeshCreater::GenerateSphere(TsVertexSkin** pOutVertex,
                                               TsInt& outVertexCount,
                                               TsInt div)
@@ -207,24 +316,46 @@ TsBool TsPrimitiveMeshCreater::GenerateBox3D(TsVertexSkin** pOutVertex,
 {
     return GenerateBox3DTemplate(pOutVertex, outVertexCount);
 }
-TsBool GenerateBox3D(TsVertexDefault** pOutVertex,
+TsBool TsPrimitiveMeshCreater::GenerateBox3D( TsVertexDefault** pOutVertex ,
                        TsInt& outVertexCount)
 {
     return GenerateBox3DTemplate(pOutVertex, outVertexCount);
 }
 
-TsBool GenrateInvBox3D(TsVertexSkin** pOutVertex,
+TsBool TsPrimitiveMeshCreater::GenrateInvBox3D( TsVertexSkin** pOutVertex ,
                        TsInt& outVertexCount)
 {
     return TS_FALSE;
 }
-TsBool GenrateInvBox3D(TsVertexDefault** pOutVertex,
+TsBool TsPrimitiveMeshCreater::GenrateInvBox3D( TsVertexDefault** pOutVertex ,
                         TsInt& outVertexCount)
 {
     return TS_FALSE;
 }
-TsBool GenrateInvBox3D(TSVertexSkyBox** pOutVertex,
+TsBool TsPrimitiveMeshCreater::GenrateInvBox3D( TSVertexSkyBox** pOutVertex ,
                        TsInt& outVertexCount)
 {
     return TS_FALSE;
+}
+
+TsBool TsPrimitiveMeshCreater::GenerateSpriteLine( TsVertexSkin** ppOutVertex ,
+                                                   TsInt& outVertexCount )
+{
+    return GenerateSpriteLineTemplate( ppOutVertex , outVertexCount );
+}
+TsBool TsPrimitiveMeshCreater::GenerateSpriteLine( TsVertexDefault** ppOutVertex ,
+                                                   TsInt& outVertexCount )
+{
+    return GenerateSpriteLineTemplate( ppOutVertex , outVertexCount );
+}
+
+TsBool TsPrimitiveMeshCreater::GenerateBox3DLine( TsVertexSkin** ppOutVertex ,
+                             TsInt& outVertexCount )
+{
+    return GenerateBox3DLineTemplate( ppOutVertex , outVertexCount );
+}
+TsBool TsPrimitiveMeshCreater::GenerateBox3DLine( TsVertexDefault** ppOutVertex ,
+                             TsInt& outVertexCount )
+{
+    return GenerateBox3DLineTemplate( ppOutVertex , outVertexCount );
 }
