@@ -3,7 +3,7 @@
 
 TsFbxLoader::TsFbxLoader()
     :m_isLoadGeometory(TS_TRUE)
-    , m_isLoadAnimation(TS_TRUE)
+    , m_isLoadAnimation(TS_FALSE)
 {
     m_pFbxContext = TsNew( TsFbxContext );
 }
