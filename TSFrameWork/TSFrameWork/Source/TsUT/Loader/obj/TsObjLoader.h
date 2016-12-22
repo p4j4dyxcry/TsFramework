@@ -76,26 +76,29 @@ struct TsObjFace
     TsInt3 idx_pos;
     TsInt3 idx_normal;
     TsInt3 idx_texcoord;
-    TsString  material_name;
+    
     TsObjFace() :
         idx_pos(-1, -1, -1),
         idx_normal(-1, -1, -1),
         idx_texcoord(-1, -1, -1){};
 };
 
-class TsOBJLoader : public TsMeshLoader
+struct TsObjMesh
+{
+    std::vector<TsObjFace> m_face;
+    TsString  material_name;
+    TsString  name;
+};
+
+class TsOBJLoader : public Ts3DModelLoader
 {
 public:
     TsOBJLoader();
-    virtual ~TsOBJLoader();
-    TsBool LoadFromFile(const TsString& filename, TsLoadOption& option = TsLoadOption())override;
-    TsBool LoadFromMemory(void * memory, size_t sz)override;
-    virtual TsInt  GetMeshNum() override;
-    virtual TsInt  GetVertexSize(TsInt index) override;
-    virtual void*  GetVertexBuffer(TsInt index) override;
-    virtual size_t GetVertexStride() override;
+    virtual ~TsOBJLoader(); 
+    TsBool LoadFile( const TsChar * filename )override;
+    TsBool SaveFile( const TsChar* filename )override;
 
-    TsBool SaveFile(const char* filename);
+    virtual TsBool CreateCommonData()override;
 
 protected:
 
@@ -108,5 +111,5 @@ protected:
     TsVector<TsVector3>     m_posList;
     TsVector<TsVector3>     m_normalList;
     TsVector<TsVector2>     m_texcoordList;
-    TsVector<TsObjFace>     m_faceList;
+    TsVector<TsObjMesh>     m_objMesh;
 };

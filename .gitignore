@@ -78,3 +78,6 @@ TSFrameWork/TSFrameWork/Extern/Google/
 *.cache
 *.tsm
 *.dds
+*.stl
+*.bmp
+*.mtl

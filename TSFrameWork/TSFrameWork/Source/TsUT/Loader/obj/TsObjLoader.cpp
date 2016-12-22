@@ -2,49 +2,29 @@
 #include <fstream>
 TsOBJLoader::TsOBJLoader(){}
 TsOBJLoader::~TsOBJLoader(){}
-TsBool TsOBJLoader::LoadFromFile(const TsString& filename, TsLoadOption& option )
+TsBool TsOBJLoader::LoadFile( const TsChar* filename )
 {
-    (void)option;
-    return LoadObj(filename.c_str());
-}
-TsBool TsOBJLoader::LoadFromMemory(void * memory, size_t sz)
-{
-    return TS_FALSE;
-}
-TsInt  TsOBJLoader::GetMeshNum()
-{
-    return 0;
-}
-TsInt TsOBJLoader::GetVertexSize(TsInt index)
-{
-    return 0;
-}
-void*  TsOBJLoader::GetVertexBuffer(TsInt index)
-{
-    return 0;
-}
-size_t TsOBJLoader::GetVertexStride()
-{
-    return 0;
+    Ts3DModelLoader::LoadFile( filename );
+    return LoadObj(filename);
 }
 
-TsBool TsOBJLoader::SaveMaterial(const char* filename)
+TsBool TsOBJLoader::SaveMaterial(const TsChar* filename)
 {
     std::ofstream ofs(filename);
 
-    auto WriteFloat1 = [](std::ofstream& ofs, const char* head, TsF32 param)
+    auto WriteFloat1 = [](std::ofstream& ofs, const TsChar* head, TsF32 param)
     {
         ofs << head << " " << param << std::endl;
     };
 
-    auto WriteFloat3 = [](std::ofstream& ofs, const char* head, TsFloat3& param)
+    auto WriteFloat3 = [](std::ofstream& ofs, const TsChar* head, TsFloat3& param)
     {
         ofs << head << " " << param.x << 
                        " " << param.y << 
                        " " << param.z << std::endl;
     };
 
-    auto WritePath = [](std::ofstream& ofs, const char* head, TsString& param)
+    auto WritePath = [](std::ofstream& ofs, const TsChar* head, TsString& param)
     {
         if (param.size() > 0)
             ofs << head << " " << param << std::endl;
@@ -91,19 +71,19 @@ TsBool TsOBJLoader::SaveMaterial(const char* filename)
     return TS_TRUE;
 }
 
-TsBool TsOBJLoader::SaveFile(const char* filename)
+TsBool TsOBJLoader::SaveFile(const TsChar* filename)
 {
     TsDebugLog("Save obj ->%s \n", filename);
 
     std::ofstream ofs( filename );
 
-    auto WriteFloat2 = [](std::ofstream& ofs, const char* head, TsVector2& param)
+    auto WriteFloat2 = [](std::ofstream& ofs, const TsChar* head, TsVector2& param)
     {
         ofs << head << " " << param.x << 
                        " " << param.y << std::endl;
     };
 
-    auto WriteFloat3 = [](std::ofstream& ofs, const char* head, TsVector3& param)
+    auto WriteFloat3 = [](std::ofstream& ofs, const TsChar* head, TsVector3& param)
     {
         ofs << head << " " << param.x << 
                        " " << param.y << 
@@ -135,70 +115,73 @@ TsBool TsOBJLoader::SaveFile(const char* filename)
     flag |= m_posList.size() > 0 ? 1 : 0;
     flag |= m_normalList.size() > 0 ? 2 : 0;
     flag |= m_texcoordList.size() > 0 ? 4 : 0;
-    TsString currentMaterial = "";
 
-    for (auto f : m_faceList)
+    for( auto m : m_objMesh )
     {
-        if (currentMaterial != f.material_name)
+        if( m.name.size() > 0 )
         {
-            ofs << "usemtl" << " " << f.material_name << std::endl;
-            currentMaterial = f.material_name;
+            ofs << "g" << " " << m.name << std::endl;
         }
-        ofs << "f" << " ";
-        if (flag == 0x07)
+        if( m.material_name.size() > 0 )
         {
-            ofs << f.idx_pos.x      << "/"
-                << f.idx_texcoord.x << "/"
-                << f.idx_normal.x   << "/" << " "
-
-                << f.idx_pos.y      << "/"
-                << f.idx_texcoord.y << "/"
-                << f.idx_normal.y   << "/" << " "
-
-                << f.idx_pos.z      << "/"
-                << f.idx_texcoord.z << "/"
-                << f.idx_normal.z   <<  std::endl;
+            ofs << "usemtl" << " " << m.material_name << std::endl;
         }
-
-        if (flag == 0x03)
+        for( auto f : m.m_face )
         {
-            ofs << f.idx_pos.x      << "/"
-                << f.idx_normal.x   << " "
 
-                << f.idx_pos.y      << "/"
-                << f.idx_normal.y   << " "
+            ofs << "f" << " ";
+            if( flag == 0x07 )
+            {
+                ofs << f.idx_pos.x << "/"
+                    << f.idx_texcoord.x << "/"
+                    << f.idx_normal.x << "/" << " "
 
-                << f.idx_pos.z      << "/"
-                << f.idx_normal.z   <<  std::endl;
+                    << f.idx_pos.y << "/"
+                    << f.idx_texcoord.y << "/"
+                    << f.idx_normal.y << "/" << " "
+
+                    << f.idx_pos.z << "/"
+                    << f.idx_texcoord.z << "/"
+                    << f.idx_normal.z << std::endl;
+            }
+
+            if( flag == 0x03 )
+            {
+                ofs << f.idx_pos.x << "/"
+                    << f.idx_normal.x << " "
+
+                    << f.idx_pos.y << "/"
+                    << f.idx_normal.y << " "
+
+                    << f.idx_pos.z << "/"
+                    << f.idx_normal.z << std::endl;
+            }
+
+            if( flag == 0x05 )
+            {
+                ofs << f.idx_pos.x << "/"
+                    << f.idx_texcoord.x << " "
+
+                    << f.idx_pos.y << "/"
+                    << f.idx_texcoord.y << " "
+
+                    << f.idx_pos.z << "/"
+                    << f.idx_texcoord.z << std::endl;
+            }
+
+            if( flag == 1 )
+            {
+                ofs << f.idx_pos.x << " "
+                    << f.idx_pos.y << " "
+                    << f.idx_pos.z << std::endl;
+            }
         }
-
-        if (flag == 0x05)
-        {
-            ofs << f.idx_pos.x      << "/"
-                << f.idx_texcoord.x << " "
-
-                << f.idx_pos.y      << "/"
-                << f.idx_texcoord.y << " "
-
-                << f.idx_pos.z      << "/"
-                << f.idx_texcoord.z <<  std::endl;
-        }
-
-        if (flag == 1)
-        {
-            ofs << f.idx_pos.x << " "
-                << f.idx_pos.y << " "
-                << f.idx_pos.z << std::endl;
-        }
-
     }
-
-    return 1;
+    return TS_TRUE;
 }
 
-TsBool TsOBJLoader::LoadObj(const char* filename)
+TsBool TsOBJLoader::LoadObj(const TsChar* filename)
 {
-    TsDebugLog("Load obj ->%s \n", filename);
     std::ifstream ifs(filename);
 
     if (ifs.fail())
@@ -212,7 +195,6 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
     int useMaterialIndex = -1;
 
     TsString buf;
-    TsString currentMaterial;
 
     BYTE flag = 0;
     enum
@@ -222,7 +204,7 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
         USE_UV      = 0x04,
     };
 
-    auto ReadVec2 = [](const TsString& source, const char* element, TsVector2& result)
+    auto ReadVec2 = [](const TsString& source, const TsChar* element, TsVector2& result)
     {
         TsInt strPos = TsString::npos;
         strPos = source.find(element);
@@ -238,7 +220,7 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
         return TS_FALSE;
     };
 
-    auto ReadVec3 = [](const TsString& source, const char* element, TsVector3& result)
+    auto ReadVec3 = [](const TsString& source, const TsChar* element, TsVector3& result)
     {
         TsInt strPos = TsString::npos;
         strPos = source.find(element);
@@ -258,7 +240,7 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
     //------------------------------------------------------------
     // File Loop
     //------------------------------------------------------------
-    while (ifs.eof() == false)
+    while (ifs.eof() == TS_FALSE)
     {
         // Get File Line
         std::getline(ifs, buf);
@@ -279,7 +261,7 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
         if (ReadVec3(buf, "vn ", tempNormal))
         {
             m_normalList.push_back(tempNormal);
-            flag |= USE_POS;
+            flag |= USE_NORMAL;
             continue;
         }
 
@@ -307,7 +289,16 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
         //------------------------------------------------------------
         if (buf.find("usemtl ") == 0)
         {
-            currentMaterial = buf.substr(7);
+            if( m_objMesh.empty() )
+                m_objMesh.push_back( TsObjMesh() );
+            m_objMesh[m_objMesh.size()-1].material_name = buf.substr( 7 );
+            continue;
+        }
+
+        if( buf.find( "g " ) == 0 )
+        {
+            m_objMesh.push_back( TsObjMesh() );
+            m_objMesh[m_objMesh.size() - 1].name = buf.substr( 2 );
             continue;
         }
 
@@ -316,12 +307,13 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
         //------------------------------------------------------------
         if (buf.find("f ") == 0)
         {
+            if( m_objMesh.empty() )
+                m_objMesh.push_back( TsObjMesh() );
+            TsVector<TsObjFace>& faceList = m_objMesh[m_objMesh.size() - 1].m_face;
             TsObjFace f;
             bool usePos = (flag&USE_POS) > 0;
             bool useNormal = (flag&USE_NORMAL) > 0;
             bool useUV = (flag&USE_UV) > 0;
-
-            f.material_name = currentMaterial;
 
             //------------------------------------------------------------
             //! Count of face controll points
@@ -361,7 +353,7 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
                     TsDebugLogError("対応していない面の形式です。");
                     return TS_FALSE;
                 }
-                m_faceList.push_back(f);
+                faceList.push_back( f );
                 continue;
             }
 
@@ -381,7 +373,7 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
                     TsDebugLog("対応していない面の形式です。");
                     return TS_FALSE;
                 }
-                m_faceList.push_back(f);
+                faceList.push_back( f );
                 continue;
 
             }
@@ -402,7 +394,7 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
                     return TS_FALSE;
 
                 }
-                m_faceList.push_back(f);
+                faceList.push_back( f );
                 continue;
             }
 
@@ -419,7 +411,7 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
                     TsDebugLogError("対応していない面の形式です。");
                     return TS_FALSE;
                 }
-                m_faceList.push_back(f);
+                faceList.push_back( f );
                 continue;
             }
             else
@@ -432,20 +424,19 @@ TsBool TsOBJLoader::LoadObj(const char* filename)
     }
     return TS_TRUE;
 }
-TsBool TsOBJLoader::LoadMtl(const char* filename)
+TsBool TsOBJLoader::LoadMtl(const TsChar* filename)
 {
+    Ts3DModelLoader::LoadFile( filename );
     std::ifstream ifs(filename);
 
-    TsDebugLog("Load mtl ->%s \n", filename);
-
-    if (ifs.is_open() == false)
+    if (ifs.is_open() == TS_FALSE)
     {
-        OutputDebugString("ObjLoader::Load Mtl File Open Error");
-        return false;
+        TsDebugLogError("Load Faild \n\t\"%s\"",filename);
+        return TS_FALSE;
     }
     TSUT::TsFilePathAnalyzer analizer(filename);
 
-    auto ReadFloat1 = [](const TsString& source, const char* element, TsF32& result)
+    auto ReadFloat1 = [](const TsString& source, const TsChar* element, TsF32& result)
     {
         TsInt strPos = TsString::npos;
         strPos = source.find(element);
@@ -459,7 +450,7 @@ TsBool TsOBJLoader::LoadMtl(const char* filename)
         return TS_FALSE;
     };
 
-    auto ReadFloat3 = [](const TsString& source, const char* element, TsFloat3& result)
+    auto ReadFloat3 = [](const TsString& source, const TsChar* element, TsFloat3& result)
     {
         TsInt strPos = TsString::npos;
         strPos = source.find(element);
@@ -476,7 +467,7 @@ TsBool TsOBJLoader::LoadMtl(const char* filename)
         return TS_FALSE;
     };
 
-    auto ReadTexPath = [&](const TsString& source, const char* element, TsString& result)
+    auto ReadTexPath = [&](const TsString& source, const TsChar* element, TsString& result)
     {
         TsInt strPos = TsString::npos;
         strPos = source.find(element);
@@ -489,14 +480,12 @@ TsBool TsOBJLoader::LoadMtl(const char* filename)
         return TS_FALSE;
     };
 
-   
-
     TsString buf;
 
     //------------------------------------------------------------
     // Loop Material File
     //------------------------------------------------------------
-    while (ifs.eof() == false)
+    while (ifs.eof() == TS_FALSE)
     {
         // Get File Line
         std::getline(ifs, buf);
@@ -513,7 +502,7 @@ TsBool TsOBJLoader::LoadMtl(const char* filename)
             //------------------------------------------------------------
             // Load Material Parameters
             //------------------------------------------------------------
-            while (ifs.eof() == false &&
+            while( ifs.eof() == TS_FALSE &&
                 buf != "")
             {
                 std::getline(ifs, buf);
@@ -625,5 +614,108 @@ TsBool TsOBJLoader::LoadMtl(const char* filename)
             m_materialList.push_back(temp);
         }// End if
     }//End while
-    return true;
+    return TS_TRUE;
+}
+
+TsBool TsOBJLoader::CreateCommonData()
+{
+    m_pMeshs = TsNew( TsCommon3DMesh[m_objMesh.size()] );
+    m_meshCount = m_objMesh.size();
+
+    TSUT::TsFilePathAnalyzer analizer( GetName() );
+    analizer.ReExtencion( "" );
+
+    if( m_materialList.size() == 0 )
+    {
+        m_pMaterials = TsNew( TsCommon3DMaterial );
+    }
+    else
+    {
+        m_materialCount = m_materialList.size() + 1;
+        m_pMaterials = TsNew( TsCommon3DMaterial[m_materialCount] );
+        m_pMaterials[0].m_name = analizer.GetFileName() + ":NullMaterial";
+
+        for( TsInt i = 1; i < m_materialCount; ++i )
+        {
+            auto & cm = m_pMaterials[i];
+            auto & or = m_materialList[i-1];
+            cm.m_diffuse = or.diffuse;
+            cm.m_alpha = or.alpha;
+            cm.m_ambient = or.ambient;
+            cm.m_name = or.name;
+            cm.m_power = or.power;
+            cm.m_specluer = or.specluer;
+            cm.m_albedoTexture = or.diffuseMap;
+            cm.m_specluerTexture = or.specluerMap;
+            cm.m_normalTexture = or.bumpMap;
+            cm.m_specluerPowerTexture = "";
+        }
+    }
+
+    for( TsInt mId =0; mId < m_meshCount; ++mId )
+    {
+        auto& fList = m_objMesh[mId].m_face;
+        m_pMeshs[mId].m_name = analizer.GetFileName() +":" + m_objMesh[mId].name;
+
+        if( m_objMesh[mId].material_name.size() == 0 )
+        {
+            m_pMeshs[mId].m_pMaterialRef = &m_pMaterials[0];
+        }
+        else
+        {
+            for( TsInt i = 1; i < m_materialCount; ++i )
+            {
+                if( m_objMesh[mId].material_name == m_pMaterials[i].m_name )
+                {
+                    m_pMeshs[mId].m_pMaterialRef = &m_pMaterials[i];
+                }
+            }
+            if( m_pMeshs[mId].m_pMaterialRef == nullptr )
+            {
+                m_pMeshs[mId].m_pMaterialRef = &m_pMaterials[0];
+            }
+        }
+
+        m_pMeshs[mId].m_vertexCount = fList.size() * 3;
+        m_pMeshs[mId].m_pTransoform = TsNew( TsTransForm );
+        m_pMeshs[mId].m_pPositions = TsNew( TsVector3[fList.size() * 3] );
+        if( m_normalList.size() >0 )
+            m_pMeshs[mId].m_pNormals = TsNew( TsVector3[fList.size() * 3] );
+        if( m_texcoordList.size() >0 )
+            m_pMeshs[mId].m_pTexcoords = TsNew( TsVector2[fList.size() * 3] );
+        for( TsUint i = 0; i < fList.size(); ++i )
+            for( TsUint j = 0; j < 3; ++j )
+            {
+                TsUint index = ( i * 3 ) + ( j );      //インデックス
+                TsUint invIndex = ( 2 - j );              //右手系 -> 左手系の　面変換用
+
+                TsUint pIDx = fList[i].idx_pos[invIndex] -1;
+                TsUint nIdx = fList[i].idx_normal[invIndex] -1;
+                TsUint tIdx = fList[i].idx_texcoord[invIndex] -1;
+
+                TsVector3 & p = m_pMeshs[mId].m_pPositions[index];
+                p = m_posList[pIDx];
+                p.x *= -1;
+
+                if( m_normalList.size() > 0 )
+                {
+                    TsVector3 & n = m_pMeshs[mId].m_pNormals[index];
+                    n = m_normalList[nIdx];
+                    n.x *= -1;
+                }
+
+                if( m_texcoordList.size() > 0 )
+                {
+                    TsVector2 & t = m_pMeshs[mId].m_pTexcoords[index];
+                    t = m_texcoordList[tIdx];
+                    t.y = 1 - t.y;
+                }
+
+                //! AABBの作成
+                m_pMeshs[mId].m_aabb.AddPoint( p );
+            }
+    }
+
+    return TS_TRUE;
+
 }

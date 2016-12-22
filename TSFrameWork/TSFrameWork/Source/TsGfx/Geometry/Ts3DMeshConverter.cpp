@@ -207,6 +207,7 @@ Ts3DModelLoader* Ts3DMeshConverter::ExtencionToModelLoader(const TsChar * extenc
 
     if (ext == ".stl") return TsNew ( TsStlLoader ) ;
     if (ext == ".fbx") return TsNew ( TsFbxLoader ) ;
+    if( ext == ".obj" ) return TsNew( TsOBJLoader );
 
     return nullptr;
 
