@@ -246,7 +246,12 @@ TsBool TsComputeLisPSM::ComputeLisPSM()
         // ビュー座標系からシャドウマップ座標系への変換行列を計算
         m_lightProjectionMatrix = mtxViewLight * mtxLightShadow;
         m_lightViewMatrix = m_viewMatrix;
-        m_lVPMatrix = m_viewMatrix * m_lightProjectionMatrix;
+
+        TsMatrix linearProj = m_lightProjectionMatrix;
+        linearProj._22 /= m_far;
+        linearProj._32 /= m_far;
+
+        m_lVPMatrix = m_viewMatrix * linearProj;
     }
 
     return TS_TRUE;

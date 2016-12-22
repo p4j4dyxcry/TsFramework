@@ -15,6 +15,6 @@
 	AntiAlias 	 ="false">
   </Rasterize>   
   <BlendState
-    BlendMode      ="NONE">
+    BlendMode    ="NONE">
   </BlendState>     
 </root>

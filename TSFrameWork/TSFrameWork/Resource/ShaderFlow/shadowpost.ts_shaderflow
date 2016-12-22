@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FLow>
+    
+  <Pass Name ="Clear">
+    <Input>
+      <Slot/>
+    </Input>
+    <Output>
+      <Slot Slot="Main"/>    	
+      <Depth Slot="Main"/>
+    </Output>
+  </Pass>    
+    
+  <Pass Name ="GaussX"
+    Shader ="GaussX">
+    <Input>
+      <Slot Slot ="ShadowMap"/>  
+    </Input>
+    <Output>
+      <Slot Slot="VerianceBluer"/>
+      <Depth Slot="ShadowDepth"/>        
+    </Output>
+  </Pass>
+
+  <Pass Name ="Clear">
+    <Input>
+      <Slot/>
+    </Input>
+    <Output>
+      <Slot Slot="Main"/>    	
+      <Depth Slot="Main"/>
+    </Output>
+  </Pass>       
+    
+  <Pass Name ="GaussY"
+    Shader ="GaussY">
+    <Input>
+      <Slot Slot ="VerianceBluer"/>  
+    </Input>
+    <Output>
+      <Slot Slot ="ShadowMap"/>
+      <Depth Slot="ShadowDepth"/>        
+    </Output>  
+  </Pass>        
+    
   <Pass Name ="pass2"
         Shader ="DrawShadow">
     <Input>

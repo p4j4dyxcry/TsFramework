@@ -3,11 +3,24 @@
 #include "../TsMath.hlsli"
 #include "TsSS_common.hlsli"
 
+float Variance( Texture2D shadowMap,
+                SamplerState linearSampler ,
+                float3 shadowUV)
+{
+    float4 shadowMapDepth = shadowMap.Sample(linearSampler, shadowUV.xy);
+    float depth_sq = shadowMapDepth.x * shadowMapDepth.x;
+    float variance = shadowMapDepth.y - depth_sq;
+    float md = shadowUV.z - shadowMapDepth.x;
+    float p = variance / (variance + (md * md));
+    
+    return saturate(max(p, shadowMapDepth.x >= shadowUV.z));
+}
+
 float PCF8(Texture2D shadowMap,
            SamplerComparisonState ShadowSmp ,
            float3 shadowUV)
 {
-    float  shadowBias = 0.0008f;
+    float  shadowBias = 0.005f;
     float cmp = (shadowUV.z - shadowBias);
 
     float sampleScale = 1.5f;
@@ -87,13 +100,17 @@ float4 main( PS_SS_INPUT_UVx1 In ,
     shadowUV.x = ( shadowUV.x + 1.0f ) * 0.5f;
     shadowUV.y = ( 1.0f - shadowUV.y ) * 0.5f;
 
+#if 0
     float s = PCF8(ShadowMap, ShadowSmp, float3(shadowUV, shadowPos.z));
-    
-    s = lerp(0.5, 1, s);
-    float3 dir = g_LightData[0].dir.xyz ;
-    float d = max(dot((dir), normalize(normal)),0)*0.5+0.5;
+#else
+    float s = Variance(ShadowMap, linearSample, float3(shadowUV, shadowPos.z));
+#endif
 
-    d = min(d,s);
+    s = s*0.5 + 0.5;
+    //float3 dir = g_LightData[0].dir.xyz ;
+    //float d = max(dot((dir), normalize(normal)),0)*0.5+0.5;
+
+    //d = min(d,s);
 
     return float4(s,s,s, 1);
 }
