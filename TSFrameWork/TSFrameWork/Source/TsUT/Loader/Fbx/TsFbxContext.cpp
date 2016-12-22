@@ -42,7 +42,11 @@ TsBool TsFbxContext::LoadFBX( const TsChar * filename ,
     }
 
     TsFbxScene* pScene = TsNew( TsFbxScene( this ) );
-    pScene->LoadFromFile( filename );
+    if (pScene->LoadFromFile(filename) == TS_FALSE)
+    {
+        TsDebugLogError("Load Faild \n\t\"%s\"\n", filename);
+        return TS_FALSE;
+    }
     m_pFbxScenes.push_back( pScene );
     return TS_TRUE;
 }

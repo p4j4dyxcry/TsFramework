@@ -68,13 +68,11 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
 
     if (pLoader != nullptr)
     {
-        TsBool hr = pLoader->LoadFile(filename);
+        if (pLoader->LoadFile(filename) == TS_FALSE)
+            return TS_FALSE;
+
         pLoader->CreateCommonData();
 
-        if (hr == TS_FALSE)
-        {
-            return TS_FALSE;
-        }
 
         TsCommon3DMesh*      commonMesh = pLoader->GetMeshData();
         TsCommon3DMaterial*  commonMaterial = pLoader->GetMaterialData();

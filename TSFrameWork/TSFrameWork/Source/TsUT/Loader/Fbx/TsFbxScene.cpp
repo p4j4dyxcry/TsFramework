@@ -14,7 +14,8 @@ TsFbxScene::TsFbxScene(TsFbxContext * pContext,TsFbxScene* pFbxScene /* nullptr 
 TsBool TsFbxScene::LoadFromFile( const TsString& filename )
 {
     // FbxからScene 情報の読み込み
-    ImportScene(filename);
+    if (ImportScene(filename) == TS_FALSE)
+        return TS_FALSE;
 
     // FbxのSceneを読みやすいようにコンバート
     ConvertScene();
@@ -73,9 +74,9 @@ TsBool TsFbxScene::ImportScene(const TsString& filename)
     m_fileName = filename;
     m_pFbxImporter = FbxImporter::Create(m_pFbxContext->GetFbxManager(), filename.c_str());
     m_pFbxScene = FbxScene::Create(m_pFbxContext->GetFbxManager(), (filename + "Scene").c_str());
-    m_pFbxImporter->Initialize(filename.c_str());
+    TsBool hr = m_pFbxImporter->Initialize(filename.c_str());
     m_pFbxImporter->Import(m_pFbxScene);
-    if (m_pFbxScene == nullptr)
+    if (m_pFbxScene == nullptr || hr == TS_FALSE)
     {
         return TS_FALSE;
     }
@@ -150,7 +151,7 @@ TsBool TsFbxScene::ComputeBoneIndex()
     {
         if (m_pNodeList[i]->IsSkeleton())
         {
-            m_pNodeList[i]->SetBoneID(boneIndex++);
+        //    m_pNodeList[i]->SetBoneID(boneIndex++);
         }
     }
     return TS_TRUE;
@@ -273,11 +274,15 @@ TsSkeleton* TsFbxScene::CreateSkeleton()
 
     for each( auto p in it )
     {
+        if (p->GetBoneID() < 0)
+        {
+            TsDebugLogError("warning 不正なボーンが検出されました。処理をスキップします\n\t BoneName = \"%s\"\n\t ID =%d \n", p->GetName().c_str(),p->GetBoneID());
+            continue;
+        }
         pSkeleton->AddBone(
             p->GetTransform() ,
             p->GetBoneID() ,
-            p->GetBindPoseMatrix());
-
+            p->GetBindPoseMatrix());        
     };
     return m_pSkeletonCash = pSkeleton;
 }

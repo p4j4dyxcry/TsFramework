@@ -623,7 +623,6 @@ TsBool TsFbxMesh::ParseSkin(FbxSkin* pFbxSkin, TsInt vertexCount,
 
             if (boneIndex <0)
             {
-                continue;
                 pBone->SetBoneID(m_pFbxScene->GetMaxBoneID() + 1);
                 boneIndex = pBone->GetBoneID();
             } 
