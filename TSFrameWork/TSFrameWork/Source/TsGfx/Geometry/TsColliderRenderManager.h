@@ -42,7 +42,7 @@ private:
     //----------------------------------------------------------
     // Define
     //----------------------------------------------------------
-    static const TsInt MAX_OBJECT = 8192;
+    static const TsInt MAX_OBJECT = 4096;
 
     struct Geometory
     {
