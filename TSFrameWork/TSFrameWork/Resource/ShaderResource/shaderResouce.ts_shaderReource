@@ -29,20 +29,20 @@
     Name  ="ShadowMap"
     Type  ="Texture2D"
     Format="FLOAT_R32G32"
-    Size ="8192 8192">            
+    Size ="2048 2048">            
   </RenderTarget>
     
   <RenderTarget
     Name  ="VerianceBluer"
     Type  ="Texture2D"
     Format="FLOAT_R32G32"
-    Size ="8192 8192">            
+    Size ="2048 2048">            
   </RenderTarget>    
 
     <Depth
       Name ="ShadowDepth"
       Format ="UNORM_D24_UINT_S8"
-      Size="8192 8192">
+      Size="2048 2048">
     </Depth>
     
     
