@@ -232,7 +232,9 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
         aabb.MergeAABB( pMesh->GetGeometry( i )->GetAABB() );
 //        aabbList.push_back( aabb );
     }
+    TsAABB3D scene = TsAABB3D( TsVector3( -250 , -10 , -250 ) , TsVector3( 250 , 300 , 250 ) );
     colliderRenderManager.AddGeometory( &aabb );
+    colliderRenderManager.AddGeometory( &scene );
 
 
 

@@ -8,6 +8,27 @@ TsComputeLisPSM::TsComputeLisPSM()
     m_near = 0.1f;
 
 }
+TsBool TsComputeLisPSM::ComputeUSM()
+{
+    TsVector3 center = m_sceneBoundingBox.GetCenter();
+    TsF32     aabbSize = ( m_sceneBoundingBox.GetMax() - center ).Length() * 2;
+    TsMatrix lightView = TsMatrix::CreateLookAt( m_lightDir * aabbSize + center ,
+                                                 center ,
+                                                 m_lightDir == TsVector3::front ? TsVector3::up : TsVector3::front);
+    TsMatrix invLightView = lightView.Inversed();
+
+    TsVector3 max = m_sceneBoundingBox.GetMax() *2;
+    TsVector3 min = m_sceneBoundingBox.GetMin() *2;
+
+    m_lightViewMatrix = lightView;
+    TsF32 n = aabbSize / 2;
+    TsF32 f = max.z - min.z + aabbSize;
+
+    m_lightProjectionMatrix = TsMatrix::CreateOrtho( max.x - min.x , max.y - min.y , n ,f);
+    m_lVPMatrix = m_lightViewMatrix *m_lightProjectionMatrix;
+
+    return TS_TRUE;
+}
 
 TsBool TsComputeLisPSM::ComputeLisPSM()
 {
@@ -40,7 +61,13 @@ TsBool TsComputeLisPSM::ComputeLisPSM()
 
         // 視線と光線が同じ方向を向く場合には直行するベクトルleftVectorが計算
         // できないので、視線方向をごまかして計算を進める。
-        static const TsF32 th = cosf( TsRadian( 1.0f ) );
+        static const TsF32 th = cosf( TsRadian( 45.0f ) );
+
+        if( th < fabsf( cosGamma ) )
+        {
+            return ComputeUSM();
+        }
+
         if( th < fabsf( cosGamma ) )
         {
             eyeVector = TsVector3( 0.0f , sinf( TsRadian( 1.0f ) ) , cosf( TsRadian( 1.0f ) ) );
@@ -247,11 +274,7 @@ TsBool TsComputeLisPSM::ComputeLisPSM()
         m_lightProjectionMatrix = mtxViewLight * mtxLightShadow;
         m_lightViewMatrix = m_viewMatrix;
 
-        TsMatrix linearProj = m_lightProjectionMatrix;
-        linearProj._22 /= m_far;
-        linearProj._32 /= m_far;
-
-        m_lVPMatrix = m_viewMatrix * linearProj;
+        m_lVPMatrix = m_viewMatrix * m_lightProjectionMatrix;
     }
 
     return TS_TRUE;
@@ -264,11 +287,12 @@ TsBool TsComputeLisPSM::UpdateShadowMatrix()
     m_viewDir = TsVector3( m_viewMatrix._31 , m_viewMatrix._32 , m_viewMatrix._33 );
 
     // Compute Light Space Perspective Shadow Map
-    ComputeLisPSM();
-
+//    ComputeLisPSM();
+    ComputeUSM();
+    
     //m_viewMatrix = TsMatrix::CreateLookAt( m_lightDir *100 , TsVector3::zero , TsVector3::front );
     //m_lightProjectionMatrix = TsMatrix::CreateOrtho( 1024/4, 1024/4, 1 , 500 );
-    m_lVPMatrix = m_viewMatrix * m_lightProjectionMatrix;
+    //m_lVPMatrix = m_viewMatrix * m_lightProjectionMatrix;
     return TS_TRUE;
 }
 

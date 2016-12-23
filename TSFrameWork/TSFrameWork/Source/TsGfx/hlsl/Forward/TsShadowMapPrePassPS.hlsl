@@ -5,5 +5,9 @@ float4 main(float4 pos		: SV_POSITION,
 {
     float z = worldPos.z / worldPos.w;
 
-    return float4(z,z*z,0,1);
+    float dx = ddx( z );
+    float dy = ddy( z );
+    float zz = ( z * z ) + ( 0.25 * ( dx * dx + dy * dy ) );
+
+    return float4(z,zz,0,1);
 }

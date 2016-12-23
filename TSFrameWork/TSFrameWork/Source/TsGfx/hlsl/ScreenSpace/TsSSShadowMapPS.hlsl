@@ -13,65 +13,20 @@ float Variance( Texture2D shadowMap,
     float md = shadowUV.z - shadowMapDepth.x;
     float p = variance / (variance + (md * md));
     
-    return saturate(max(p, shadowMapDepth.x >= shadowUV.z));
+    return pow(saturate(max(p, shadowMapDepth.x >= shadowUV.z)),16);
 }
 
 float PCF8(Texture2D shadowMap,
            SamplerComparisonState ShadowSmp ,
            float3 shadowUV)
 {
-    float  shadowBias = 0.005f;
+    float  shadowBias = 0.1f;
     float cmp = (shadowUV.z - shadowBias);
-
-    float sampleScale = 1.5f;
-
-    //! texelのサイズを求める
-    float2 n = 1.0f / GetTextureSize( shadowMap ) * sampleScale;
 
     float s = shadowMap.SampleCmpLevelZero(
                         ShadowSmp, 
                         shadowUV.xy , 
-                        cmp);
-
-    //! 8点をサンプリングする
-    s += shadowMap.SampleCmpLevelZero(
-                        ShadowSmp, 
-                        shadowUV.xy + n * float2(0,1), 
-                        cmp);
-    s += shadowMap.SampleCmpLevelZero(
-                        ShadowSmp, 
-                        shadowUV.xy + n * float2(0, -1),
-                        cmp);
-
-    s += shadowMap.SampleCmpLevelZero(
-                        ShadowSmp, 
-                        shadowUV.xy + n * float2(1, 0),
-                        cmp);
-    s += shadowMap.SampleCmpLevelZero(
-                        ShadowSmp, 
-                        shadowUV.xy + n * float2(-1, 0),
-                        cmp);
-
-    s += shadowMap.SampleCmpLevelZero(
-                        ShadowSmp, 
-                        shadowUV.xy + n * float2(1, 1),
-                        cmp);
-    s += shadowMap.SampleCmpLevelZero(
-                        ShadowSmp, 
-                        shadowUV.xy + n * float2(1, -1),
-                        cmp);
-
-    s += shadowMap.SampleCmpLevelZero(
-                        ShadowSmp, 
-                        shadowUV.xy + n * float2(-1, 1),
-                        cmp);
-    s += shadowMap.SampleCmpLevelZero(
-                        ShadowSmp, 
-                        shadowUV.xy + n * float2(-1, -1),
-                        cmp);
-
-    s /= 9.0f;
-
+                        shadowUV.z );
     return s;
 }
 
@@ -105,12 +60,11 @@ float4 main( PS_SS_INPUT_UVx1 In ,
 #else
     float s = Variance(ShadowMap, linearSample, float3(shadowUV, shadowPos.z));
 #endif
-
-    s = s*0.5 + 0.5;
+    s = lerp( 0.3f , 1 , s);
+    //s = s*0.5 + 0.5;
     //float3 dir = g_LightData[0].dir.xyz ;
     //float d = max(dot((dir), normalize(normal)),0)*0.5+0.5;
 
     //d = min(d,s);
-
     return float4(s,s,s, 1);
 }

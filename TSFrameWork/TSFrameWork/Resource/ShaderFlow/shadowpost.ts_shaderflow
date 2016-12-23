@@ -2,16 +2,6 @@
 
 <FLow>
     
-  <Pass Name ="Clear">
-    <Input>
-      <Slot/>
-    </Input>
-    <Output>
-      <Slot Slot="Main"/>    	
-      <Depth Slot="Main"/>
-    </Output>
-  </Pass>    
-    
   <Pass Name ="GaussX"
     Shader ="GaussX">
     <Input>
@@ -22,16 +12,7 @@
       <Depth Slot="ShadowDepth"/>        
     </Output>
   </Pass>
-
-  <Pass Name ="Clear">
-    <Input>
-      <Slot/>
-    </Input>
-    <Output>
-      <Slot Slot="Main"/>    	
-      <Depth Slot="Main"/>
-    </Output>
-  </Pass>       
+ 
     
   <Pass Name ="GaussY"
     Shader ="GaussY">
@@ -52,6 +33,7 @@
     </Input>
     <Output>
         <Slot Slot="Temp"/>
+        <Depth Slot="Main"/>
     </Output>
   </Pass> 
     
@@ -63,6 +45,7 @@
     </Input>
     <Output>
         <Slot Slot="Main"/>
+        <Depth Slot="Main"/>
     </Output>
   </Pass>     
 </FLow>
