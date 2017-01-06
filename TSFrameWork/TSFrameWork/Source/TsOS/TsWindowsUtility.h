@@ -35,7 +35,8 @@ TsBool TsWINGetKey(TsU8 key);
 
 TsFloat2 TsWINGetMousePos();
 TsBool TsWINIsLeftClick();
-
 TsBool TsWINIsRightCkick();
+TsBool TsWINIsCenterCkick();
 
-TsInt TsWINGetMouseWheel();
+void SetTsWIN_MouseWheelFunc( void(*func)(TsF32 delta ) );
+

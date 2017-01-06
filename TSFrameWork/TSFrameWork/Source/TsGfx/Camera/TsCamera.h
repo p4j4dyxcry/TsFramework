@@ -83,6 +83,8 @@ public:
     //  設定されているアスペクトト比の除算結果を取得します。
     TsF32 GetAspect(){ return m_aspect; }
 
+    TsVector3 GetLookAt()const{ return m_lookAt; }
+
     //==========================================================
     //  !SetLockAt
     //  注視点を設定します。

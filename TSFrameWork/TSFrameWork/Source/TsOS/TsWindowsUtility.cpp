@@ -17,9 +17,12 @@ namespace
 
     static TsBool   g_IsLClick;
     static TsBool   g_IsRClick;
-    static TsInt    g_Wheel;
-    static TsFloat2 g_MousePos;
+    static TsBool   g_IsCClick;
     static TsBool   g_keyDown[128];
+
+    static void DefaultTsWinWheelFunc(TsF32 delta){(void)delta;}
+
+    void(*g_DefaultTsWinWheelFunc)(TsF32 delta) = DefaultTsWinWheelFunc;
 }
 
 //==============================================
@@ -111,7 +114,9 @@ TsBool TsWINGetKey(TsU8 key)
 
 TsFloat2 TsWINGetMousePos()
 {
-    return g_MousePos;
+    POINT p;
+    GetCursorPos(&p);
+    return TsFloat2(p.x, p.y);
 }
 
 TsBool TsWINIsLeftClick()
@@ -124,9 +129,14 @@ TsBool TsWINIsRightCkick()
     return g_IsRClick;
 }
 
-TsInt TsWINGetMouseWheel()
+TsBool TsWINIsCenterCkick()
 {
-    return g_Wheel;
+    return g_IsCClick;
+}
+
+void SetTsWIN_MouseWheelFunc(void(*func)(TsF32 delta))
+{
+    g_DefaultTsWinWheelFunc = func;
 }
 
 //Default windowproc
@@ -135,11 +145,6 @@ LRESULT CALLBACK TSDefaultWindowProc( HWND hWnd ,
                                       WPARAM wParam , 
                                       LPARAM lParam )
 {
-    TsUint x, y;
-    x = LOWORD(lParam);
-    y = HIWORD(lParam);
-    g_MousePos = TsFloat2((TsF32)x, (TsF32)y);
-    g_Wheel = GET_WHEEL_DELTA_WPARAM(wParam);
     switch( message )
     {
         case WM_DESTROY:
@@ -147,6 +152,12 @@ LRESULT CALLBACK TSDefaultWindowProc( HWND hWnd ,
             break;
         case WM_LBUTTONDOWN:
             g_IsLClick = TS_TRUE;
+            break;
+        case WM_MOUSEWHEEL:
+        {
+            TsF32 delta = GET_WHEEL_DELTA_WPARAM(wParam);
+            g_DefaultTsWinWheelFunc(delta);
+        }
             break;
         case WM_LBUTTONUP:
             g_IsLClick = TS_FALSE;
@@ -162,6 +173,13 @@ LRESULT CALLBACK TSDefaultWindowProc( HWND hWnd ,
             break;
         case WM_KEYUP:
             g_keyDown[wParam] = TS_FALSE;
+            break;
+        case WM_MBUTTONDOWN:
+            g_IsCClick = TS_TRUE;
+            break;
+        case WM_MBUTTONUP:
+            g_IsCClick = TS_FALSE;
+            break;
         default:
             return DefWindowProc( hWnd , message , wParam , lParam );
     }

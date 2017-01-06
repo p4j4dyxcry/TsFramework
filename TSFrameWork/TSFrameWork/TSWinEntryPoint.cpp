@@ -7,34 +7,54 @@
 //=======================================================
 #include "TsAfx.h"
 #include "Source\TsOS\TsWindowsUtility.h"
+
+TsCamera * g_pCamera = nullptr;
+
+void FovFuncTest(TsF32 delta)
+{
+    if (g_pCamera)
+    {
+        TsF32 fov = g_pCamera->GetFov();
+        fov += -delta / 45.0f;
+        fov = TsClamp(fov, 9.0f, 75.0f);
+        g_pCamera->SetFov(fov);
+    }
+}
+
 void TestUpdateCamera(TsCamera* pCamera)
 {
     static TsFloat2 old;
     
     TsFloat2 pos = TsWINGetMousePos();
 
-    TsInt wheel = TsWINGetMouseWheel();
+    TsVector3 diff;
+    diff.y = pos.x - old.x;
+    diff.x = pos.y - old.y;
 
-    if (TsWINIsLeftClick())
+
+    if (TsWINIsCenterCkick())
     {
-        TsVector3 diff;
-        diff.y = pos.x - old.x;
-        diff.x = pos.y - old.y;
+        TsF32 fov = g_pCamera->GetFov() / 90.0f;
 
+        TsVector3 xAxis = pCamera->GetXAxis() * fov;
+        TsVector3 yAxis = pCamera->GetYAxis() * fov;
 
-        TsVector3 euler = pCamera->GetLocalRotate().ToEuler();
-        euler += diff;
-        pCamera->SetLocalRotate( TsQuaternion::CreateByEuler(euler)) ;
+        TsVector3 lookAt = pCamera->GetLookAt();
+        TsVector3 pos = pCamera->GetLocalPosition();
+
+        pCamera->SetLockAt(lookAt + xAxis * -diff.y + yAxis * diff.x);
+        pCamera->SetLocalPosition(pos + xAxis * -diff.y + yAxis * diff.x);
 
     }
 
+    if (TsWINIsLeftClick())
+    {
+        TsVector3 euler = pCamera->GetLocalRotate().ToEuler();
+        euler += diff;
+        pCamera->SetLocalRotate( TsQuaternion::CreateByEuler(euler)) ;
+    }
 
-    TsF32 fov = pCamera->GetFov();
-    fov += wheel * 0.01f;
-    fov = TsClamp(fov, 5.0f, 80.0f);
-    pCamera->SetFov(fov);
     old = pos;
-
 }
 #include <fstream>
 #include <functional>
@@ -112,7 +132,6 @@ void TransformParse(TsTransForm* root, const char * out = "F:\\data.h")
 int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lpszArgs , TsInt nWinMode )
 {
     TSUT::TsLoggerInit();
-
     TsDirectioalLight dir;
 
 //    dir.LookAt(TsVector3::front * 100, TsVector3::back, TsVector3::up);
@@ -153,14 +172,14 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 //     factory.LoadModelFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
 //     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
  //    factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
-    TsResourceManager::RegisterResource(Ts3DMeshConverter::ConvertFromFile(pDev, "Resource/fbx/Unity-Chan/unitychan.fbx"), "Test");
+    TsResourceManager::RegisterResource(Ts3DMeshConverter::ConvertFromFile(pDev, "F:\\test\\yl.obj"), "Test");
  //         factory.LoadModelFromFile(pDev, "miku.fbx","Test");
      TsMeshObject * pMesh = TsResourceManager::Find<TsMeshObject>("Test");
      TransformParse(pMesh->GetGeometry(0)->GetTransform()->GetRootTransform());
      TsTransformBakeAnimation* pAnim = nullptr;
 
-     const TsBool useAnimation = TS_TRUE;
-     //    const TsBool useAnimation = TS_FALSE;
+     //const TsBool useAnimation = TS_TRUE;
+         const TsBool useAnimation = TS_FALSE;
      if (useAnimation)
      {
          //     auto pAnim = factory.CreateBakeAnimation( "move.fbx");
@@ -184,7 +203,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     planeTransform.m_localScale = TsVector3( 500 , 1 , 500 );
     plane.Create( pDev );
     plane.SetTransform( &planeTransform );
-    queue.Add(&plane);
+    //queue.Add(&plane);
 
     TsSphere3D sphere;
     sphere.SetRadius(15);
@@ -234,9 +253,10 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     }
     TsAABB3D scene = TsAABB3D( TsVector3( -250 , -10 , -250 ) , TsVector3( 250 , 300 , 250 ) );
     colliderRenderManager.AddGeometory( &aabb );
-    colliderRenderManager.AddGeometory( &scene );
+    //colliderRenderManager.AddGeometory( &scene );
 
-
+    g_pCamera = pCamera;
+    SetTsWIN_MouseWheelFunc(FovFuncTest);
 
     while( true )
     {
