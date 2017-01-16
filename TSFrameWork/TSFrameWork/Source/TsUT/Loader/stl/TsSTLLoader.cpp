@@ -1,7 +1,11 @@
 #include "../../../../TsAfx.h"
 #include <fstream>
-TsStlLoader::TsStlLoader(){}
-TsStlLoader:: ~TsStlLoader(){}
+TsStlLoader::TsStlLoader():
+m_faceList(nullptr){}
+TsStlLoader:: ~TsStlLoader()
+{
+    TsSafeDelete(m_faceList);
+}
 
 TsBool TsStlLoader::LoadFile(const TsChar* filename)
 {
@@ -79,6 +83,65 @@ TsBool TsStlLoader::LoadFromBinary( const TsChar * filename )
     ifs.read((TsChar*)m_faceList, sizeof(TsStlFace) * m_faceSize);
 
     return true;
+}
+
+//----------------------------------------------------------
+//! オリジンメッシュから*.stl形式にデータをコンバートする
+//----------------------------------------------------------
+TsBool TsStlLoader::Encode(TsMeshObject* pMesh)
+{
+    TsVector<TsStlFace> faceList;
+
+    for (auto p : pMesh->GetGeometrys())
+    {
+        TsVertexSkin* pVB = (TsVertexSkin*)p->GetVertexElement()->GetVertexBuffer()->GetOriginData();
+        TsUint* pIB = (TsUint*)p->GetVertexElement()->GetIndexBuffer()->GetOriginData();
+        TsUint verexCount = p->GetVertexElement()->GetVertexNum();
+        TsUint indexCount = p->GetVertexElement()->GetIndexNum();
+
+        if (indexCount > 0)
+        {
+            for (TsInt i = 0; i < indexCount / 3; ++i)
+            {
+                TsStlFace f;
+                f.pos[2] = pVB[pIB[i * 3 + 0]].pos;
+                f.pos[1] = pVB[pIB[i * 3 + 1]].pos;
+                f.pos[0] = pVB[pIB[i * 3 + 2]].pos;
+
+                f.normal = TsComputeFaceNormal(f.pos[2], f.pos[1], f.pos[0]);
+
+                f.pos[0].x *= -1;
+                f.pos[1].x *= -1;
+                f.pos[2].x *= -1;
+                f.normal.x *= -1;
+
+                faceList.push_back(f);
+            }
+        }
+        else
+        {
+            for (TsInt i = 0; i < verexCount / 3; ++i)
+            {
+                TsStlFace f;
+                f.pos[2] = pVB[i * 3 + 0].pos;
+                f.pos[1] = pVB[i * 3 + 1].pos;
+                f.pos[0] = pVB[i * 3 + 2].pos;
+
+                f.normal = TsComputeFaceNormal(f.pos[2], f.pos[1], f.pos[0]);
+
+                f.pos[0].x *= -1;
+                f.pos[1].x *= -1;
+                f.pos[2].x *= -1;
+                f.normal.x *= -1;
+
+                faceList.push_back(f);
+            }
+        }
+    }
+    m_faceList = TsNew(TsStlFace[faceList.size()]);
+    m_faceSize = faceList.size();
+    memcpy(m_faceList, &faceList[0], sizeof(TsStlFace) * m_faceSize);
+    return TS_TRUE;
 }
 
 //----------------------------------------------------------

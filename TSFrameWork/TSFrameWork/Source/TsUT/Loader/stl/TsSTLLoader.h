@@ -21,6 +21,7 @@ public:
     void SetBinarySaveFlag(TsBool flag);
 
     TsBool CreateCommonData()override;
+    TsBool Encode(TsMeshObject* pMesh)override;
 
 protected:
     TsBool     m_isBinarySave;
