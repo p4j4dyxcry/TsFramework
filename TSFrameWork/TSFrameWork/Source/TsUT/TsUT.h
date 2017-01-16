@@ -22,6 +22,7 @@
 #include "TsArrayType.h"
 #include "TsLogger.h"
 
+#include "TsGeometoryUT.h"
 #include "TsFileUT.h"
 #include "TsHelper.h"
 #include "TsNameObject.h"
@@ -41,6 +42,7 @@
 #include "Loader\x\TsXLoader.h"
 #include "Loader\stl\TsSTLLoader.h"
 #include "Loader\obj\TsObjLoader.h"
+#include "Loader\ply\TsPlyLoader.h"
 
 #include "Binalizer\TsBinalizerBase.h"
 #include "Binalizer\Ts3DModelBinalizer.h"

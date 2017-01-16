@@ -66,6 +66,7 @@
     <ClCompile Include="Source\TsGfx\ShaderResources\TsRenderTarget.cpp" />
     <ClCompile Include="Source\TsGfx\ShaderResources\TsSamplerState.cpp" />
     <ClCompile Include="Source\TsGfx\ShaderResources\TsShaderResource.cpp" />
+    <ClCompile Include="Source\TsGfx\ShaderResources\TsTexture.cpp" />
     <ClCompile Include="Source\TsGfx\Shader\TsShader.cpp" />
     <ClCompile Include="Source\TsGfx\Shader\TsShaderEffect.cpp" />
     <ClCompile Include="Source\TsGfx\Shader\TsShaderReflection.cpp" />
@@ -226,6 +227,7 @@
     <ClCompile Include="Source\TsUT\Loader\hdr\TsHDRTextureAnalizer.cpp" />
     <ClCompile Include="Source\TsUT\Loader\Mqo\TsMqoLoader.cpp" />
     <ClCompile Include="Source\TsUT\Loader\obj\TsObjLoader.cpp" />
+    <ClCompile Include="Source\TsUT\Loader\ply\TsPlyLoader.cpp" />
     <ClCompile Include="Source\TsUT\Loader\stl\TsSTLLoader.cpp" />
     <ClCompile Include="Source\TsUT\Loader\XML\TsXML.cpp" />
     <ClCompile Include="Source\TsUT\Loader\x\TsXLoader.cpp" />
@@ -287,6 +289,7 @@
     <ClInclude Include="Source\TsUT\Loader\hdr\TsHDRTextureAnalizer.h" />
     <ClInclude Include="Source\TsUT\Loader\Mqo\TsMqoLoader.h" />
     <ClInclude Include="Source\TsUT\Loader\obj\TsObjLoader.h" />
+    <ClInclude Include="Source\TsUT\Loader\ply\TsPlyLoader.h" />
     <ClInclude Include="Source\TsUT\Loader\stl\TsSTLLoader.h" />
     <ClInclude Include="Source\TsUT\Loader\XML\TsXML.h" />
     <ClInclude Include="Source\TsUT\Loader\x\TsXLoader.h" />
@@ -294,6 +297,7 @@
     <ClInclude Include="Source\TsUT\TsBinaryFile.h" />
     <ClInclude Include="Source\TsUT\TsEASTL.h" />
     <ClInclude Include="Source\TsUT\TsFileUT.h" />
+    <ClInclude Include="Source\TsUT\TsGeometoryUT.h" />
     <ClInclude Include="Source\TsUT\TsHelper.h" />
     <ClInclude Include="Source\TSUT\TsLogger.h" />
     <ClInclude Include="Source\TsUT\TsNameObject.h" />

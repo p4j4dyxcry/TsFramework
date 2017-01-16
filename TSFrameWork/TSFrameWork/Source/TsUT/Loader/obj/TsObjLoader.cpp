@@ -1,5 +1,7 @@
 #include "../../../../TsAfx.h"
 #include <fstream>
+#include <sstream>
+#include <algorithm>
 TsOBJLoader::TsOBJLoader(){}
 TsOBJLoader::~TsOBJLoader(){}
 TsBool TsOBJLoader::LoadFile( const TsChar* filename )
@@ -310,7 +312,7 @@ TsBool TsOBJLoader::LoadObj(const TsChar* filename)
             if( m_objMesh.empty() )
                 m_objMesh.push_back( TsObjMesh() );
             TsVector<TsObjFace>& faceList = m_objMesh[m_objMesh.size() - 1].m_face;
-            TsObjFace f;
+            
             bool usePos = (flag&USE_POS) > 0;
             bool useNormal = (flag&USE_NORMAL) > 0;
             bool useUV = (flag&USE_UV) > 0;
@@ -325,10 +327,11 @@ TsBool TsOBJLoader::LoadObj(const TsChar* filename)
                     indexCount++;
             }
 
+            static const TsInt maxFace = 128;
             //------------------------------------------------------------
             // triangle face only
             //------------------------------------------------------------
-            if (indexCount != 3)
+            if (indexCount > maxFace)
             {
                 TsDebugLogError("対応していない面の形式です。");
                 return TS_FALSE;
@@ -339,21 +342,50 @@ TsBool TsOBJLoader::LoadObj(const TsChar* filename)
             //------------------------------------------------------------
             if (usePos && useNormal && useUV)
             {
-                if (sscanf_s(&buf[2], "%d/%d/%d %d/%d/%d %d/%d/%d",
-                    &f.idx_pos[0],
-                    &f.idx_texcoord[0],
-                    &f.idx_normal[0],
-                    &f.idx_pos[1],
-                    &f.idx_texcoord[1],
-                    &f.idx_normal[1],
-                    &f.idx_pos[2],
-                    &f.idx_texcoord[2],
-                    &f.idx_normal[2]) != 9)
+                // 区切り文字の置き換え
+                std::replace(buf.begin()+2, buf.end(), '/', ' ');
+                std::stringstream ss(&buf[2]);
+
+                TsUint posIndexList[maxFace];
+                TsUint nomIndexList[maxFace];
+                TsUint uv0IndexList[maxFace];
+
+                TsUint cv_posIndexList[maxFace * 3];
+                TsUint cv_nomIndexList[maxFace * 3];
+                TsUint cv_uv0IndexList[maxFace * 3];
+
+                //データを抽出
+                for (TsInt i = 0; i < indexCount; ++i)
                 {
-                    TsDebugLogError("対応していない面の形式です。");
-                    return TS_FALSE;
+                   ss >> posIndexList[i] >>
+                         uv0IndexList[i] >>
+                         nomIndexList[i];                   
                 }
-                faceList.push_back( f );
+
+                //トライアングルにコンバート
+                TSUT::ConvertGeometoryToTriangleList(cv_nomIndexList, nomIndexList, indexCount);
+                TSUT::ConvertGeometoryToTriangleList(cv_posIndexList, posIndexList, indexCount);
+                TSUT::ConvertGeometoryToTriangleList(cv_uv0IndexList, uv0IndexList, indexCount);
+
+                for (TsInt i = 0; i < indexCount - 2; ++i)
+                {
+                    TsObjFace f;
+
+                    f.idx_pos[0] = cv_posIndexList[i*3 + 0];
+                    f.idx_pos[1] = cv_posIndexList[i*3 + 1];
+                    f.idx_pos[2] = cv_posIndexList[i*3 + 2];
+
+                    f.idx_texcoord[0] = cv_uv0IndexList[i * 3 + 0];
+                    f.idx_texcoord[1] = cv_uv0IndexList[i * 3 + 1];
+                    f.idx_texcoord[2] = cv_uv0IndexList[i * 3 + 2];
+
+                    f.idx_normal[0] = cv_nomIndexList[i * 3 + 0];
+                    f.idx_normal[1] = cv_nomIndexList[i * 3 + 1];
+                    f.idx_normal[2] = cv_nomIndexList[i * 3 + 2];
+
+                    faceList.push_back(f);
+                }
+               
                 continue;
             }
 
@@ -362,18 +394,42 @@ TsBool TsOBJLoader::LoadObj(const TsChar* filename)
             //------------------------------------------------------------
             else if (usePos && useNormal)
             {
-                if (sscanf_s(&buf[2], "%d/%d %d/%d %d/%d",
-                    &f.idx_pos[0],
-                    &f.idx_normal[0],
-                    &f.idx_pos[1],
-                    &f.idx_normal[1],
-                    &f.idx_pos[2],
-                    &f.idx_normal[2]) != 6)
+                // 区切り文字の置き換え
+                std::replace(buf.begin() + 2, buf.end(), '/', ' ');
+                std::stringstream ss(&buf[2]);
+
+                TsUint posIndexList[maxFace];
+                TsUint nomIndexList[maxFace];
+
+                TsUint cv_posIndexList[maxFace * 3];
+                TsUint cv_nomIndexList[maxFace * 3];
+
+                //データを抽出
+                for (TsInt i = 0; i < indexCount; ++i)
                 {
-                    TsDebugLog("対応していない面の形式です。");
-                    return TS_FALSE;
+                    ss >> posIndexList[i] >>
+                        nomIndexList[i];
                 }
-                faceList.push_back( f );
+
+                //トライアングルにコンバート
+                TSUT::ConvertGeometoryToTriangleList(cv_nomIndexList, nomIndexList, indexCount);
+                TSUT::ConvertGeometoryToTriangleList(cv_posIndexList, posIndexList, indexCount);
+
+                for (TsInt i = 0; i < indexCount - 2; ++i)
+                {
+                    TsObjFace f;
+
+                    f.idx_pos[0] = cv_posIndexList[i * 3 + 0];
+                    f.idx_pos[1] = cv_posIndexList[i * 3 + 1];
+                    f.idx_pos[2] = cv_posIndexList[i * 3 + 2];
+
+                    f.idx_normal[0] = cv_nomIndexList[i * 3 + 0];
+                    f.idx_normal[1] = cv_nomIndexList[i * 3 + 1];
+                    f.idx_normal[2] = cv_nomIndexList[i * 3 + 2];
+
+                    faceList.push_back(f);
+                }
+
                 continue;
 
             }
@@ -382,19 +438,42 @@ TsBool TsOBJLoader::LoadObj(const TsChar* filename)
             //------------------------------------------------------------
             else if (usePos && useUV)
             {
-                if (sscanf_s(&buf[2], "%d/%d %d/%d %d/%d",
-                    &f.idx_pos[0],
-                    &f.idx_texcoord[0],
-                    &f.idx_pos[1],
-                    &f.idx_texcoord[1],
-                    &f.idx_pos[2],
-                    &f.idx_texcoord[2]) != 6)
-                {
-                    TsDebugLogError("対応していない面の形式です。");
-                    return TS_FALSE;
+                // 区切り文字の置き換え
+                std::replace(buf.begin() + 2, buf.end(), '/', ' ');
+                std::stringstream ss(&buf[2]);
 
+                TsUint posIndexList[maxFace];
+                TsUint uv0IndexList[maxFace];
+
+                TsUint cv_posIndexList[maxFace * 3];
+                TsUint cv_uv0IndexList[maxFace * 3];
+
+                //データを抽出
+                for (TsInt i = 0; i < indexCount; ++i)
+                {
+                    ss >> posIndexList[i] >>
+                        uv0IndexList[i];
                 }
-                faceList.push_back( f );
+
+                //トライアングルにコンバート
+                TSUT::ConvertGeometoryToTriangleList(cv_posIndexList, posIndexList, indexCount);
+                TSUT::ConvertGeometoryToTriangleList(cv_uv0IndexList, uv0IndexList, indexCount);
+
+                for (TsInt i = 0; i < indexCount - 2; ++i)
+                {
+                    TsObjFace f;
+
+                    f.idx_pos[0] = cv_posIndexList[i * 3 + 0];
+                    f.idx_pos[1] = cv_posIndexList[i * 3 + 1];
+                    f.idx_pos[2] = cv_posIndexList[i * 3 + 2];
+
+                    f.idx_texcoord[0] = cv_uv0IndexList[i * 3 + 0];
+                    f.idx_texcoord[1] = cv_uv0IndexList[i * 3 + 1];
+                    f.idx_texcoord[2] = cv_uv0IndexList[i * 3 + 2];
+
+                    faceList.push_back(f);
+                }
+
                 continue;
             }
 
@@ -403,15 +482,33 @@ TsBool TsOBJLoader::LoadObj(const TsChar* filename)
             //------------------------------------------------------------
             else if (usePos)
             {
-                if (sscanf_s(&buf[2], "%d %d %d",
-                    &f.idx_pos[0],
-                    &f.idx_pos[1],
-                    &f.idx_pos[2]) != 3)
+                // 区切り文字の置き換え
+                std::stringstream ss(&buf[2]);
+
+                TsUint posIndexList[maxFace];
+
+                TsUint cv_posIndexList[maxFace * 3];
+
+                //データを抽出
+                for (TsInt i = 0; i < indexCount; ++i)
                 {
-                    TsDebugLogError("対応していない面の形式です。");
-                    return TS_FALSE;
+                    ss >> posIndexList[i];
                 }
-                faceList.push_back( f );
+
+                //トライアングルにコンバート
+                TSUT::ConvertGeometoryToTriangleList(cv_posIndexList, posIndexList, indexCount);
+
+                for (TsInt i = 0; i < indexCount - 2; ++i)
+                {
+                    TsObjFace f;
+
+                    f.idx_pos[0] = cv_posIndexList[i * 3 + 0];
+                    f.idx_pos[1] = cv_posIndexList[i * 3 + 1];
+                    f.idx_pos[2] = cv_posIndexList[i * 3 + 2];
+
+                    faceList.push_back(f);
+                }
+
                 continue;
             }
             else
@@ -627,7 +724,9 @@ TsBool TsOBJLoader::CreateCommonData()
 
     if( m_materialList.size() == 0 )
     {
+        m_materialCount = 1;
         m_pMaterials = TsNew( TsCommon3DMaterial );
+        m_pMaterials->m_name = analizer.GetFileName() + ":NullMaterial";
     }
     else
     {
@@ -715,6 +814,9 @@ TsBool TsOBJLoader::CreateCommonData()
                 m_pMeshs[mId].m_aabb.AddPoint( p );
             }
     }
+
+    //todo test
+    SaveFile("F:\\cube2.obj");
 
     return TS_TRUE;
 

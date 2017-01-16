@@ -172,6 +172,9 @@
     <Filter Include="ソース ファイル\TsUT\TsBinalizer">
       <UniqueIdentifier>{7beb1d13-30cc-4f15-839b-ee220a916e37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\TsUT\Loader\ply">
+      <UniqueIdentifier>{0ea532df-e8b3-4ae8-927d-99c77e5e1780}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TSWinEntryPoint.cpp">
@@ -485,6 +488,12 @@
     </ClCompile>
     <ClCompile Include="Source\TsMath\TsAnimationKey.cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsGfx\ShaderResources\TsTexture.cpp">
+      <Filter>ソース ファイル\TsGfx\Source\ShaderResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TsUT\Loader\ply\TsPlyLoader.cpp">
+      <Filter>ソース ファイル\TsUT\Loader\ply</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -853,6 +862,12 @@
     </ClInclude>
     <ClInclude Include="Source\TsMath\TsAnimationKey.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\Loader\ply\TsPlyLoader.h">
+      <Filter>ソース ファイル\TsUT\Loader\ply</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsUT\TsGeometoryUT.h">
+      <Filter>ソース ファイル\TsUT\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

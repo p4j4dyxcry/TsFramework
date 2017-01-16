@@ -53,6 +53,12 @@ public:
     TsTexture2D() :
         TsTexture(), 
         m_tex2d( nullptr ){};
+    TsBool CreateTextureFromBinary( TsDevice* pDevice,
+                                    void* pBinary,
+                                    size_t sz,
+                                    DXGI_FORMAT format,
+                                    TsUint width,
+                                    TsUint height);
     virtual ~TsTexture2D()
     {
         TsSafeRelease( m_tex2d );
