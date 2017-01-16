@@ -40,15 +40,15 @@ struct TsObjMaterial
     TsFloat3 ambient;  // Ka ambient
     TsFloat3 diffuse;  // Kd diffuse
     TsFloat3 specluer; // Ks Specluer
-    TsF32    power;    // Ns Specluer Power
+    TsF32    power = 0;    // Ns Specluer Power
 
-    TsF32    alpha;    //0 ~ 1 通常は d で定義されるが Tr(反転)も存在する
-    TsF32    lum;      // illum 輝度
-    TsF32    sharpness;// 0〜1000　デフォルト60 ,100を超えると不正な結果になることがある
+    TsF32    alpha = 1;    //0 ~ 1 通常は d で定義されるが Tr(反転)も存在する
+    TsF32    lum = 0;      // illum 輝度
+    TsF32    sharpness = 60;// 0〜1000　デフォルト60 ,100を超えると不正な結果になることがある
                        //値が大きいほどレフレクションマップのオブジェクトが明確に表示される
 
-    TsF32    Ni;        //光の屈折率　0.001~10で定義される 1以下の値は推奨されない
-    TsF32    Ns;        //鏡面指数  0〜1000 指数が高いと、タイトで集中したハイライト
+    TsF32    Ni = 0;        //光の屈折率　0.001~10で定義される 1以下の値は推奨されない
+    TsF32    Ns = 0;        //鏡面指数  0〜1000 指数が高いと、タイトで集中したハイライト
     TsFloat3 Tf;        //スペクトル係数
 
 

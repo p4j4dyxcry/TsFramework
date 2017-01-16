@@ -28,14 +28,15 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
             h.data= key.pos.x * 2.1245f +
             key.pos.y * 4.215f +
             key.pos.z * 3.1415f +
-            key.uv.x  * 50.25f +
-            key.uv.y  * 2048.5f +
-            key.normal.x * 32.5f +
-            key.normal.y * 12.2f +
-            key.weight.x * 15.5f +
-            key.weight.y * 62.5f +
-            key.weight.z * 85.1f +
-            key.weight.w * 55.0f +
+            key.uv.x  * 50.2502f +
+            key.uv.y  * 2048.513f +
+            key.normal.x * 32.514f +
+            key.normal.y * 12.362f +
+            key.normal.z * 31.562f +
+            key.weight.x * 15.563f +
+            key.weight.y * 62.5231f +
+            key.weight.z * 85.1742f +
+            key.weight.w * 55.0521f +
             key.boneIndex.x * 5 +
             key.boneIndex.y * 25 +
             key.boneIndex.z * 125 +
@@ -55,10 +56,11 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
     std::ifstream ifs(cachePath.c_str());
     TsBool exitsCache =  !ifs.fail();
     ifs.close();
-    Ts3DModelBinalizer binalizer;
+
 
     if (exitsCache)
     {       
+        Ts3DModelBinalizer binalizer;
         binalizer.LoadBinaly(pDev, cachePath.c_str());
         return binalizer.GetMesh();
     }
@@ -192,6 +194,7 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
             pGeometory->SetAABB(m.m_aabb);
             pMesh->AddGeometry(pGeometory);
         }
+        Ts3DModelBinalizer binalizer;
         binalizer.SaveBinaly(pDev, cachePath.c_str(),pMesh,1);
         TsSafeDelete(pLoader);
         return pMesh;

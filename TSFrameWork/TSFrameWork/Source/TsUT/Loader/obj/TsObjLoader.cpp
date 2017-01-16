@@ -301,6 +301,8 @@ TsBool TsOBJLoader::LoadObj(const TsChar* filename)
         {
             m_objMesh.push_back( TsObjMesh() );
             m_objMesh[m_objMesh.size() - 1].name = buf.substr( 2 );
+            if (m_objMesh.size() > 1)
+                m_objMesh[m_objMesh.size() - 1].material_name = m_objMesh[m_objMesh.size() - 2].material_name;
             continue;
         }
 
