@@ -12,6 +12,9 @@ public:
     static TsMeshObject* ConvertFromFile( TsDevice* pDev,
                                           const TsChar * filename);
 
+    static TsBool ConvertFileFromMesh( TsMeshObject* pMesh,
+                                 const TsChar * output);
+
 protected:
     //----------------------------------------------------------
     // peropery

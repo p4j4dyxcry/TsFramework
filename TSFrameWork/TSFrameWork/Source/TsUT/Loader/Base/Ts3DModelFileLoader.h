@@ -6,6 +6,7 @@
 
 #pragma once
 
+class TsMeshObject;
 
 struct TsCommon3DMaterial
 {
@@ -133,6 +134,11 @@ public:
     }
 
     virtual TsBool CreateCommonData()
+    {
+        return TS_FALSE;
+    }
+
+    virtual TsBool Encode( TsMeshObject* pMesh )
     {
         return TS_FALSE;
     }

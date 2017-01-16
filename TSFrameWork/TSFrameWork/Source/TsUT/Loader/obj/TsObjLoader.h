@@ -99,13 +99,13 @@ public:
     TsBool SaveFile( const TsChar* filename )override;
 
     virtual TsBool CreateCommonData()override;
+    virtual TsBool Encode(TsMeshObject* pMesh)override;
 
 protected:
+    TsBool LoadObj(const TsChar* filename);
+    TsBool LoadMtl(const TsChar* filename);
 
-    TsBool LoadObj(const char* filename);
-    TsBool LoadMtl(const char* filename);
-
-    TsBool SaveMaterial(const char* filename);
+    TsBool SaveMaterial(const TsChar* filename);
 
     TsVector<TsObjMaterial> m_materialList;
     TsVector<TsVector3>     m_posList;

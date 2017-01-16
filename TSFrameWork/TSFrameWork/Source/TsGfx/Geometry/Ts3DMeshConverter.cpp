@@ -5,10 +5,7 @@
 TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
                                                  const TsChar* filename)
 {
-
     TSUT::TsFilePathAnalyzer analizer(filename);
-
-
     TsMap<void*, TsMaterial*> pMateriaMap;
 
     struct Hash
@@ -62,6 +59,7 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
     {       
         Ts3DModelBinalizer binalizer;
         binalizer.LoadBinaly(pDev, cachePath.c_str());
+
         return binalizer.GetMesh();
     }
 
@@ -203,6 +201,8 @@ TsMeshObject* Ts3DMeshConverter::ConvertFromFile(TsDevice* pDev,
     return nullptr;
    
 }
+
+
 
 Ts3DModelLoader* Ts3DMeshConverter::ExtencionToModelLoader(const TsChar * extencion)
 {
