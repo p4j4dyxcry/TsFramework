@@ -4,19 +4,21 @@
 struct PLY_VERTEX
 {
     TsVector3 pos;
-    TsFloat3  color;
+    TsFloat3  normal;
+    TsFloat4  color;
 };
 
 struct PLY_EDGE
 {
     TsInt     vertexID[2];
-    TsFloat3  color;
+    TsFloat4  color;
 };
 
 
 struct PLY_FACE
 {
-    TsInt vertexID[8];
+    TsInt       vertexID[8];
+    TsVector2   uv[8];
 
     PLY_FACE()
     {
