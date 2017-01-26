@@ -53,7 +53,7 @@ TsBool TsDevice::CreateDevice( HWND hWnd , TsInt width , TsInt height )
     TsUint numFeatureLevels = ARRAYSIZE( featureLevels );
 
     TsUint devCreateFlag = 0;// Device Create flag
-    //	   devCreateFlag |= D3D11_CREATE_DEVICE_DEBUG;
+    	   devCreateFlag |= D3D11_CREATE_DEVICE_DEBUG;
 
     ID3D11DeviceContext * pDevContext;
 
