@@ -22,7 +22,7 @@ public:
     //=============================================
     // ! GetBuffer
     // Dx11　形式でバッファポインタを取得
-    // @return true is success
+    // @return true is successID
     ID3D11Buffer* GetBuffer()const{ return m_buffer; };
 
     //=============================================
