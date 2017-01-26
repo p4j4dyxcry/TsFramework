@@ -21,6 +21,7 @@
 #include "TsType.h"
 #include "TsArrayType.h"
 #include "TsLogger.h"
+#include "TsTimer.h"
 
 #include "TsGeometoryUT.h"
 #include "TsFileUT.h"

@@ -235,6 +235,7 @@
     <ClCompile Include="Source\TsUT\TsFileUT.cpp" />
     <ClCompile Include="Source\TSUT\TsLogger.cpp" />
     <ClCompile Include="Source\TsUT\TsNameObject.cpp" />
+    <ClCompile Include="Source\TsUT\TsTimer.cpp" />
     <ClCompile Include="TsAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsAfx.h</PrecompiledHeaderFile>
@@ -301,6 +302,7 @@
     <ClInclude Include="Source\TsUT\TsHelper.h" />
     <ClInclude Include="Source\TSUT\TsLogger.h" />
     <ClInclude Include="Source\TsUT\TsNameObject.h" />
+    <ClInclude Include="Source\TsUT\TsTimer.h" />
     <ClInclude Include="Source\TSUT\TsType.h" />
     <ClInclude Include="Source\TSUT\TsUT.h" />
     <ClInclude Include="TsAfx.h" />
