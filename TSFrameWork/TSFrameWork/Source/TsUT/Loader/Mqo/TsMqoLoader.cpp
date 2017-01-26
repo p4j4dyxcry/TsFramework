@@ -274,7 +274,7 @@ TsVector<TsMqoFace> TsMqoLoader::LoadObject(TsVector<TsFloat3>& position,
                     TsInt4 idx;
                     ss >> idx[3] >> idx[2] >> idx[1] >> idx[0];
 
-                    for( int i = 0; i < 3; ++i )
+                    for (TsInt i = 0; i < 3; ++i)
                         face[0].index[i] = idx[i];
 
                     face[1].index[0] = idx[3];
@@ -302,7 +302,7 @@ TsVector<TsMqoFace> TsMqoLoader::LoadObject(TsVector<TsFloat3>& position,
                         >> uv[1].x >> uv[1].y
                         >> uv[0].x >> uv[0].y;
 
-                    for( int i = 0; i < 3; ++i )
+                    for (TsInt i = 0; i < 3; ++i)
                         face[0].uv[i] = uv[i];
                     face[1].uv[0] = uv[3];
                     face[1].uv[1] = uv[0];
@@ -373,11 +373,11 @@ TsVector<TsMqoMaterial> TsMqoLoader::LoadMaterial( std::ifstream & ifs )
 
     return result;
 }
-template <typename T> TsVector<T> TsMqoLoader::PickOutMaterial( TsString str , TsString name , int num )
+template <typename T> TsVector<T> TsMqoLoader::PickOutMaterial(TsString str, TsString name, TsInt num)
 {
     TsVector<T> ts;
     T t;
-    int offset = str.find( "(" , str.find( name , str.find( "\"" , str.find( "\"" ) ) ) );// "材質名"の後の、nameの後の、括弧の位置
+    TsInt offset = str.find("(", str.find(name, str.find("\"", str.find("\""))));// "材質名"の後の、nameの後の、括弧の位置
 
     if( offset == TsString::npos )
         return ts;
@@ -387,7 +387,7 @@ template <typename T> TsVector<T> TsMqoLoader::PickOutMaterial( TsString str , T
     TsInt count = str.find( ")" , offset ) - offset;	// offsetから閉じ括弧までの長さ
     TsString s = str.substr( offset , count );		// 指定した名前のデータを抽出
     std::stringstream ss( s );
-    for( int i = 0; i < num; ++i )
+    for (TsInt i = 0; i < num; ++i)
     {
         ss >> t;
         ts.push_back( t );
