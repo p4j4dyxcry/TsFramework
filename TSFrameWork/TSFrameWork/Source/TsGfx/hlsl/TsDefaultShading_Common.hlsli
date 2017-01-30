@@ -11,7 +11,7 @@
 
 cbuffer BoneMatrixs : register (CBUFFER_SKIN_REGISTER)
 {
-    float4x4 g_BoneMatrix[512];
+    float4x4 g_BoneMatrix[512] ;
 }
 
 cbuffer matrixs : register ( CBUFFER_INSTANCE_REGISTER )

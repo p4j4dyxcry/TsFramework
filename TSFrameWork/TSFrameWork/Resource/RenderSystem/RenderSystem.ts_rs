@@ -3,6 +3,6 @@
 <RenderSystem>
   <Resource resource ="shaderResouce.ts_shaderReource"/>
   <PreRender flow=""/>
-  <Render flow="shadow.ts_shaderflow"/>
-  <PostRender flow="shadowpost.ts_shaderflow"/>
+  <Render flow="flow.ts_shaderflow"/>
+  <PostRender flow="postflow.ts_shaderflow"/>
 </RenderSystem>

@@ -172,11 +172,15 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 //     factory.LoadModelFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
 //     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
  //    factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
-    TsResourceManager::RegisterResource(Ts3DMeshConverter::ConvertFromFile(pDev, "F:\\test\\yl.obj"), "Test");
+    TsResourceManager::RegisterResource( Ts3DMeshConverter::ConvertFromFile( pDev , "Resource/fbx/Unity-Chan/unitychan.fbx" ) , "Test" );
  //         factory.LoadModelFromFile(pDev, "miku.fbx","Test");
      TsMeshObject * pMesh = TsResourceManager::Find<TsMeshObject>("Test");
      TransformParse(pMesh->GetGeometry(0)->GetTransform()->GetRootTransform());
      TsTransformBakeAnimation* pAnim = nullptr;
+
+     TsStlLoader objLoader;
+     objLoader.Encode( pMesh );
+     objLoader.SaveFile( "test." );
 
      //const TsBool useAnimation = TS_TRUE;
          const TsBool useAnimation = TS_FALSE;
@@ -203,7 +207,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     planeTransform.m_localScale = TsVector3( 500 , 1 , 500 );
     plane.Create( pDev );
     plane.SetTransform( &planeTransform );
-    //queue.Add(&plane);
+    queue.Add(&plane);
 
     TsSphere3D sphere;
     sphere.SetRadius(15);

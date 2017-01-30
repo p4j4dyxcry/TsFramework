@@ -9,93 +9,13 @@
     <Output>
       <Slot Slot="SSAO"/>
     </Output>
-  </Pass> 
-    
-  <Pass Name ="GaussX"
-    Shader ="GaussX">
-    <Input>
-      <Slot Slot ="Color"/>  
-    </Input>
-    <Output>
-      <Slot Slot="SSAO_Half2"/>
-    </Output>
   </Pass>
 
-  <Pass Name ="GaussY"
-    Shader ="GaussY">
+    <Pass Name ="Blend"
+    Shader ="Blend">
     <Input>
-      <Slot Slot ="SSAO_Half2"/>  
-    </Input>
-    <Output>
-      <Slot Slot ="SSAO_Half"/>
-    </Output>  
-  </Pass>    
-    
-  <Pass Name ="GaussX"
-    Shader ="GaussX">
-    <Input>
-      <Slot Slot ="SSAO_Half"/>  
-    </Input>
-    <Output>
-      <Slot Slot="SSAO_Half2"/>
-    </Output>
-  </Pass>
-
-  <Pass Name ="GaussY"
-    Shader ="GaussY">
-    <Input>
-      <Slot Slot ="SSAO_Half2"/>  
-    </Input>
-    <Output>
-      <Slot Slot ="SSAO_Half"/>
-    </Output>  
-  </Pass>      
-    
-  <Pass Name ="GaussX"
-    Shader ="GaussX">
-    <Input>
-      <Slot Slot ="Color"/>  
-    </Input>
-    <Output>
-      <Slot Slot="Temp1/2_1"/>
-    </Output>
-  </Pass>
-
-  <Pass Name ="GaussY"
-    Shader ="GaussY">
-    <Input>
-      <Slot Slot ="Temp1/2_1"/>  
-    </Input>
-    <Output>
-      <Slot Slot ="Temp1/2_2"/>
-    </Output>  
-  </Pass>    
-
-  <Pass Name ="GaussX"
-    Shader ="GaussX">
-    <Input>
-      <Slot Slot ="Temp1/2_2"/>  
-    </Input>
-    <Output>
-      <Slot Slot="Temp1/4_1"/>
-    </Output>
-  </Pass>
-
-  <Pass Name ="GaussY"
-    Shader ="GaussY">
-    <Input>
-      <Slot Slot ="Temp1/4_1"/>  
-    </Input>
-    <Output> 
-      <Slot Slot="Temp1/4_2"/>
-    </Output>
-  </Pass>   
-
-  <Pass Name ="Add"
-    Shader ="Add">
-    <Input>
-      <Slot Slot ="Temp1/4_2"/>
-      <Slot Slot ="Temp1/4_2"/>
+      <Slot Slot ="SSAO"/>
+      <Slot Slot ="Color"/>
     </Input>
     <Output>
       <Slot Slot="Main"/>
