@@ -71,14 +71,14 @@ TsBool TsShader<T>::CompileFromFile(
         &error);
     if (error)
     {
-        TsDebugLogError("File Read Error -> \"%ls\"\nCompile Error \n%s\n",
-            filename, (TsChar*)error->GetBufferPointer());
+        TsDebugLogLoadError(filename);
+        TsDebugLogError("Compile Error \n%s\n",(TsChar*)error->GetBufferPointer());
         return TS_FALSE;
     }
 
     if (pBlob == nullptr)
     {
-        TsDebugLogError("File Read Error -> \"%ls\"\n", filename);
+        TsDebugLogLoadError(filename);
         return TS_FALSE;
     }
 
@@ -113,7 +113,7 @@ TsBool TsShader<T>::LoadFromCSO(ID3D11Device* pd3dDevice, const TsChar* filename
     if (!isSuccess)
         return TS_FALSE;
 
-    TsDebugLog("Load Success -> \"%s\"\n", filename);
+    TsDebugLogLoadSuccess(filename);
 
     TsString name;
     name = TSUT::PassToFileName(filename);

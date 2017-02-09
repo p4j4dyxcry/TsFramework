@@ -24,7 +24,7 @@ TsDrawObject* TsDrawQueue::FindGeometoryByName( TsString name )
     for( auto it : m_drawObjList )
         if( hash == it->GetHashCode() )
             return it;
-    TsDebugLogError("Find Fail\n");
+    TsDebugLogError("Find Failed Geometory\n");
     return nullptr;
 }
 

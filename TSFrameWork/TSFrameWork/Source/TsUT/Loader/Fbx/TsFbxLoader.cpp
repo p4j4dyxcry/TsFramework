@@ -44,7 +44,7 @@ TsBool TsFbxLoader::CreateCommonData()
             break;
 
         m_pMaterials = TsNew(TsCommon3DMaterial[m_materialCount]);
-        for (TsInt i = 0; i < m_materialCount; ++i)
+        for (TsUint i = 0; i < m_materialCount; ++i)
         {
             TsCommon3DMaterial& common = m_pMaterials[i];
             TsFbxMaterial&      origin = matList[i];

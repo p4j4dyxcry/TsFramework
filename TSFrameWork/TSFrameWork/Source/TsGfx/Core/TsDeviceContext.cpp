@@ -178,7 +178,7 @@ TsBool TsDeviceContext::SetShader( TsShaderEffect* se )
     if( ( m_activeShaders[VS_IDX] &&
           m_activeShaders[PS_IDX] ) == TS_FALSE )
     {
-        TsDebugLogError("VertexShader OR PixelShader = null\n");
+        TsDebugLogError("VertexShader OR PixelShader is nullptr\n");
         return TS_FALSE;
     }
     m_bindShaderEffect = se;
@@ -193,7 +193,7 @@ TsBool TsDeviceContext::SetRT( TsInt index , TsRenderTarget* view )
 
     if( ( unsigned )index > MAX_RTs )
     {
-        TsDebugLogError("Out Of Range\n");
+        TsDebugLogError("Out of range for RenderTarget\n");
         return TS_FALSE;
     }
     m_renderTarget[index] = view;
@@ -226,7 +226,7 @@ TsBool TsDeviceContext::ApplyRenderTargets()
 
     if( rtNum == 0 )
     {
-        TsDebugLogError("RenderTargets = null\n");
+        TsDebugLogError("RenderTargets is nullptr\n");
         return TS_FALSE;
     }
 

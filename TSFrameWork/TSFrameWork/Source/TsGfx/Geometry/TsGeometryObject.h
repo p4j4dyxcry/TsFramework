@@ -23,7 +23,7 @@ public:
     // @param in pMaterial  Material
     virtual TsBool CreateGeometryObject( TsDevice* pDev ,
                                          TsVertexElement * pVertexElement ,
-                                         TsMaterial* pMaterial );
+                                         TsMaterial* pMaterial = nullptr);
 
     //! public Override Methods
     virtual TsBool UpdateTransform( TsDeviceContext* context )override;
@@ -40,7 +40,7 @@ public:
     //! Set Method
     TsBool SetMaterial( TsMaterial* pMaterial );
     TsBool SetTransform( TsTransForm * pTransform );
-    TsBool SetMesh( TsVertexElement* );
+    TsBool SetVertexElement( TsVertexElement* );
 
     //! Get Method
     TsTransForm* GetTransform()const;
@@ -49,11 +49,11 @@ public:
     virtual TsMatrix GetLocalMatrix()const;
     TsVertexElement* GetVertexElement()const
     {
-        return m_mesh;
+        return m_pVertexElement;
     }
     TsMaterial* GetMaterial()const
     {
-        return m_material;
+        return m_pMaterial;
     }
 
     const TsAABB3D& GetAABB()const
@@ -69,9 +69,9 @@ public:
 private:
 
     //! propery
-    TsTransForm*            m_transform;
-    TsVertexElement*        m_mesh;
-    TsMaterial*             m_material;
-    TsTransformCBuffer*     m_transformCBuffer;
+    TsTransForm*            m_pTransform;
+    TsVertexElement*        m_pVertexElement;
+    TsMaterial*             m_pMaterial;
+    TsTransformCBuffer*     m_pTransformCBuffer;
     TsAABB3D m_aabb;
 };

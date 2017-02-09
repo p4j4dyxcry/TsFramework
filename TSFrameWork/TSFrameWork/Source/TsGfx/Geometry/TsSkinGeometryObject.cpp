@@ -16,7 +16,7 @@ TsBool TsSkinGeometryObject::CreateGeometryObject( TsDevice* pDev ,
                                                TsVertexElement * pMesh ,
                                                TsMaterial* pMaterial )
 {
-    TsGeometryObject::CreateGeometryObject(pDev, pMesh, pMaterial);
+    TsGeometryObject::CreateGeometryObject(pDev, pMesh, pMaterial );
     m_boneCBuffer = TsNew( TsBoneCBuffer );
     m_boneCBuffer->CreateBoneCBuffer(pDev);
 

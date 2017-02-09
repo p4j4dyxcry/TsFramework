@@ -46,6 +46,19 @@ static HWND FindConsoleHandle()
     return( hwndFound );
 }
 
+void SetConsoleFontSize(TsInt sz)
+{
+    CONSOLE_FONT_INFOEX cfi;
+    cfi.cbSize = sizeof(cfi);
+    cfi.nFont = 0;
+    cfi.dwFontSize.X = 0;                   // Width of each character in the font
+    cfi.dwFontSize.Y = sz;                  // Height
+    cfi.FontFamily = FF_DONTCARE;
+    cfi.FontWeight = FW_NORMAL;
+    std::wcscpy(cfi.FaceName, L"メイリオ"); // Choose your font
+    SetCurrentConsoleFontEx(g_hTsLoggerOutput, FALSE, &cfi);
+}
+
 //======================================
 // ! CreateConsole()
 //======================================
@@ -60,15 +73,22 @@ static void CreateConsole()
     // Get Handle
     g_hTsLoggerOutput = GetStdHandle( STD_OUTPUT_HANDLE );
     g_hTsLoggerInput = GetStdHandle( STD_INPUT_HANDLE );
-    
+
     //バッファサイズと描画領域設定
-    SMALL_RECT rectConsoleWindow = { 512 , 0 , 800 , 500 };
-    COORD crd = { 512 , 75 };
-    SetConsoleWindowInfo( g_hTsLoggerOutput , FALSE , &rectConsoleWindow );
+    COORD crd = { 128 , 9999 };
     SetConsoleScreenBufferSize( g_hTsLoggerOutput , crd );
 
     g_hLogger = FindConsoleHandle();
-    MoveWindow( g_hLogger , 1024 , 0 , 1024 , 768 , TRUE );
+    RECT rect;
+
+    TsInt dispx = GetSystemMetrics(SM_CXSCREEN);
+    TsInt dispy = GetSystemMetrics(SM_CYSCREEN);
+
+    // - 16 ~ 16
+    TsInt fontSize = 10;
+    GetWindowRect(g_hLogger, &rect); //stores the console's current dimensions
+    MoveWindow(g_hLogger, dispx - 768, 0, 1024, dispy * 1.6 , TRUE);
+    SetConsoleFontSize(fontSize);
     SetConsoleTitle( "Ts Debug Logger" );
 }
 

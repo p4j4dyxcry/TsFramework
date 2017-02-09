@@ -319,7 +319,10 @@ TsXML::TsXML(const TsString& filename)
 TsBool TsXML::LoadXML(const TsString& filename)
 {
     if (m_docment.LoadFile(filename.c_str()) != tinyxml2::XMLError::XML_SUCCESS)
+    {
+        TsDebugLogLoadError(filename.c_str());
         return TS_FALSE;
+    }
 
     m_rootNode = TsNew(TsXMLElement);
     m_rootNode->SetElement( m_docment.RootElement() );
@@ -348,6 +351,7 @@ TsBool TsXML::LoadXML(const TsString& filename)
     };
     CreateTree(m_rootNode);
 
+    TsDebugLogLoadSuccess(filename.c_str());
     return TS_TRUE;
 }
 

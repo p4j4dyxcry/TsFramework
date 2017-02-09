@@ -25,6 +25,20 @@
         TSUT::TsConsoleColor(TSUT::TS_CONSOLE_COLOR::WHITE);\
     };
 
+#define TsDebugLogSuccess(...)\
+        {\
+        TSUT::TsConsoleColor(TSUT::TS_CONSOLE_COLOR::GREEN);\
+        TSUT::TsLog(__VA_ARGS__);\
+        TSUT::TsLog("\t file::%s \n\t func::%s \n\t line::%d\n",TSUT::PassToFileName(__FILE__).c_str(),__FUNCTION__, __LINE__);\
+        TSUT::TsConsoleColor(TSUT::TS_CONSOLE_COLOR::WHITE);\
+        };
+
+#define TsDebugLogLoadSuccess(data)\
+TsDebugLogSuccess("Load Success -> \"%s\"\n",data);
+
+#define TsDebugLogLoadError(data)\
+TsDebugLogError  ("Load Error   -> \"%s\"\n",data);
+
 // lapping new & app log
 #define TsNew(...) \
 new __VA_ARGS__ ;\

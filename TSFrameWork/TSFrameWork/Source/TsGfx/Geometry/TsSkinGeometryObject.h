@@ -13,7 +13,7 @@ public:
     virtual ~TsSkinGeometryObject();
     TsBool CreateGeometryObject( TsDevice* pDev ,
                                  TsVertexElement * pMesh ,
-                                 TsMaterial* pMaterial )override;
+                                 TsMaterial* pMaterial = nullptr )override;
 
     virtual TsBool UpdateTransform( TsDeviceContext* context )override;
     virtual TsBool ApplyTransForm( TsDeviceContext * context )override;

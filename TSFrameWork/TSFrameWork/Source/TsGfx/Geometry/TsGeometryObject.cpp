@@ -1,41 +1,42 @@
+#include"../../TsCore/TsCore.h"
 #include"../TsGfx.h"
 
 TsGeometryObject::TsGeometryObject():
-m_material(nullptr),
-m_mesh(nullptr),
-m_transform(nullptr),
-m_transformCBuffer(nullptr){}
+m_pMaterial(TsResourceManager::Find<TsMaterial>(TS_HASH_nullptr)),
+m_pVertexElement(nullptr),
+m_pTransform(nullptr),
+m_pTransformCBuffer(nullptr){}
     
 TsGeometryObject::~TsGeometryObject()
 {
-    TsSafeDelete( m_transformCBuffer );
+    TsSafeDelete( m_pTransformCBuffer );
 }
 
 TsBool TsGeometryObject::CreateGeometryObject( TsDevice* pDev ,
                                                TsVertexElement * pMesh ,
                                                TsMaterial* pMaterial )
 {
-    SetMesh( pMesh );
+    SetVertexElement( pMesh );
     SetMaterial( pMaterial );
 
-    m_transformCBuffer = TsNew( TsTransformCBuffer );
-    m_transformCBuffer->CreateTransformCBuffer( pDev );
+    m_pTransformCBuffer = TsNew( TsTransformCBuffer );
+    m_pTransformCBuffer->CreateTransformCBuffer( pDev );
     
     return TS_TRUE;
 }
 
 TsBool TsGeometryObject::UpdateTransform( TsDeviceContext* context )
 {
-    if( m_transformCBuffer )
-        m_transformCBuffer->UpdateCBuffer( context );
+    if( m_pTransformCBuffer )
+        m_pTransformCBuffer->UpdateCBuffer( context );
     else
         return TS_FALSE;
     return TS_TRUE;
 }
 TsBool TsGeometryObject::UpdateMaterial( TsDeviceContext* context )
 {
-    if( m_material )
-        m_material->UpdateMaterial( context );
+    if( m_pMaterial )
+        m_pMaterial->UpdateMaterial( context );
     else
         return TS_FALSE;
     return TS_TRUE;
@@ -53,25 +54,25 @@ TsBool TsGeometryObject::UpdateVertexBuffer( TsDeviceContext* context )
 
 TsBool TsGeometryObject::ApplyTransForm( TsDeviceContext * context )
 {
-    if( m_transformCBuffer )
-        m_transformCBuffer->ApplyCBuffer( context );
+    if( m_pTransformCBuffer )
+        m_pTransformCBuffer->ApplyCBuffer( context );
     else
         return TS_FALSE;
     return TS_TRUE;
 }
 TsBool TsGeometryObject::ApplyMaterial( TsDeviceContext* context )
 {
-    if( m_material )
-        m_material->ApplyMaterial( context );
+    if( m_pMaterial )
+        m_pMaterial->ApplyMaterial( context );
     else
         return TS_FALSE;
     return TS_TRUE;
 }
 TsBool TsGeometryObject::ApplyIndexBuffer( TsDeviceContext* context )
 {
-    if( m_mesh )
+    if( m_pVertexElement )
     {
-        TsIndexBuffer * pIb = m_mesh->GetIndexBuffer();
+        TsIndexBuffer * pIb = m_pVertexElement->GetIndexBuffer();
         if( pIb )
             context->SetIndexBuffer( pIb );
         else
@@ -83,21 +84,21 @@ TsBool TsGeometryObject::ApplyIndexBuffer( TsDeviceContext* context )
 }
 TsBool TsGeometryObject::ApplyVertexBuffer( TsDeviceContext* context )
 {
-    if( m_mesh )
-        context->SetVertexBuffer( m_mesh->GetVertexBuffer() );
+    if( m_pVertexElement )
+        context->SetVertexBuffer( m_pVertexElement->GetVertexBuffer() );
     else
         return TS_FALSE;
     return TS_TRUE;
 }
 TsBool TsGeometryObject::Draw( TsDeviceContext* context )
 {
-    if( m_mesh )
+    if( m_pVertexElement )
     {
         context->SetTopology( D3D_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-        if (m_mesh->GetIndexNum() == 0)
-            context->Draw(m_mesh->GetVertexNum());
+        if (m_pVertexElement->GetIndexNum() == 0)
+            context->Draw(m_pVertexElement->GetVertexNum());
         else
-            context->DrawIndex(m_mesh->GetIndexNum());
+            context->DrawIndex(m_pVertexElement->GetIndexNum());
     }
     else
         return TS_FALSE;
@@ -106,32 +107,35 @@ TsBool TsGeometryObject::Draw( TsDeviceContext* context )
 
 TsBool TsGeometryObject::SetMaterial( TsMaterial* pMaterial )
 {
-    m_material = pMaterial;
+    if (pMaterial == nullptr)
+        m_pMaterial = TsResourceManager::Find<TsMaterial>(TS_HASH_nullptr);
+    else 
+        m_pMaterial = pMaterial;
     return TS_TRUE;
 }
-TsBool TsGeometryObject::SetMesh( TsVertexElement* pMesh)
+TsBool TsGeometryObject::SetVertexElement( TsVertexElement* pMesh)
 {
-    m_mesh = pMesh;
+    m_pVertexElement = pMesh;
     return TS_TRUE;
 }
 
 TsBool TsGeometryObject::SetTransform( TsTransForm* pTransform )
 {
-    m_transform = pTransform;
-    m_transformCBuffer->SetTransform( pTransform );
+    m_pTransform = pTransform;
+    m_pTransformCBuffer->SetTransform( pTransform );
     return TS_TRUE;
 }
 
 TsTransForm* TsGeometryObject::GetTransform()const
 {
-    return m_transform;
+    return m_pTransform;
 }
 
 TsMatrix TsGeometryObject::GetWorldMatrix()const
 {
-    return m_transform->ToWorldMatrix();
+    return m_pTransform->ToWorldMatrix();
 }
 TsMatrix TsGeometryObject::GetLocalMatrix()const
 {
-    return m_transform->ToLocalMatrix();
+    return m_pTransform->ToLocalMatrix();
 }
