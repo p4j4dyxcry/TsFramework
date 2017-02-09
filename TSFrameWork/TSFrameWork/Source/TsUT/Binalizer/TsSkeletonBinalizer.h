@@ -24,12 +24,11 @@ public:
     // public method
     //----------------------------------------------------------
     TsSkeletonBinalizer();
+    virtual ~TsSkeletonBinalizer();
 
     TsBool Binalize(std::ofstream& ofs, TsSkeleton* pData);
-    TsBool Decode(std::ifstream& ifs, 
-                  TsTransformBinalizer* pTransformBinalizer,
-                  TsBool readHeader = TS_FALSE);
-
+    TsBool Decode(std::ifstream& ifs);
+    TsBool BuildSkeleton(TsTransformBinalizer* pTransformBinalizer);
     TsSkeleton* GetSkeleton()const
     {
         return m_pSkeleton;
@@ -39,4 +38,6 @@ protected:
     // peropery
     //----------------------------------------------------------
     TsSkeleton* m_pSkeleton;
+    CommonBone* m_pCommonBones;
+    TsInt       m_boneNum;
 };

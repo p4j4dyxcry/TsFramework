@@ -1,7 +1,7 @@
 ﻿//!*******************************************************
 //! TsTransformBinalizer.h
 //!
-//! Transformをバイナリ化するクラス.
+//! Materialをバイナリ化するクラス.
 //!
 //! © 2016 Yuki Tsuneyama
 #pragma once
@@ -16,7 +16,7 @@ public:
     // Define
     //----------------------------------------------------------
 #pragma pack(1)
-    struct MaterialCommon
+    struct CommonMaterial
     {
         TsChar   name[128];
         TsFloat4 diffuse;     
@@ -39,9 +39,12 @@ public:
     //----------------------------------------------------------
 
     TsMaterialBinalizer();
+    virtual ~TsMaterialBinalizer();
 
     TsBool Binalize(std::ofstream& ofs, TsDefaultMaterial** pData,TsUint count);
-    TsBool Decode( TsDevice* pDev, std::ifstream& ifs, TsBool readHeader = TS_FALSE);
+    TsBool Decode(std::ifstream& ifs);
+
+    TsBool BuildMaterial(TsDevice* pDev);
 
     TsDefaultMaterial* GetMaterials()const
     {
@@ -58,5 +61,6 @@ protected:
     // peropery
     //----------------------------------------------------------
     TsDefaultMaterial* m_pMaterials;
+    CommonMaterial*    m_pCommonMaterials;
     TsUint             m_materialNum;
 };

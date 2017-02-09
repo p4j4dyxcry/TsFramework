@@ -5,8 +5,15 @@
 #include <fstream>
 TsSkeletonBinalizer::TsSkeletonBinalizer()
     :m_pSkeleton(nullptr)
+    , m_boneNum(0)
+    , m_pCommonBones(nullptr)
 {
 
+}
+
+TsSkeletonBinalizer::~TsSkeletonBinalizer()
+{
+    TsSafeDelete(m_pCommonBones);
 }
 
 TsBool TsSkeletonBinalizer::Binalize(std::ofstream& ofs, TsSkeleton* pData)
@@ -19,7 +26,7 @@ TsBool TsSkeletonBinalizer::Binalize(std::ofstream& ofs, TsSkeleton* pData)
     if (boneList.empty())
         return TS_FALSE;
 
-    if (WriteHeader(ofs, typeid(*this).name()) == TS_FALSE)
+    if (WriteHeader(ofs, TS_BIN_HEADER) == TS_FALSE)
         return TS_FALSE;  
 
     TsUint boneNum = boneList.size();
@@ -40,30 +47,24 @@ TsBool TsSkeletonBinalizer::Binalize(std::ofstream& ofs, TsSkeleton* pData)
 
     return TS_TRUE;
 }
-TsBool TsSkeletonBinalizer::Decode(std::ifstream& ifs,
-                                   TsTransformBinalizer* pTransformBinalizer,
-                                   TsBool readHeader )
+TsBool TsSkeletonBinalizer::Decode(std::ifstream& ifs)
 {
-    if (readHeader)
+    ifs.read((TsChar*)&m_boneNum, sizeof(TsUint));
+
+    m_pCommonBones = TsNew(CommonBone[m_boneNum]);
+    ifs.read((TsChar*)m_pCommonBones, sizeof(CommonBone)*m_boneNum);
+
+    return TS_TRUE;
+}
+
+TsBool TsSkeletonBinalizer::BuildSkeleton( TsTransformBinalizer* pTransformBinalizer )
+{
+    for (TsUint i = 0; i < m_boneNum; ++i)
     {
-        if (ReadHeader(ifs, typeid(*this).name()) == TS_FALSE)
-            return TS_FALSE;
-    }
-
-    TsUint boneNum = 0;
-    m_pSkeleton = TsNew(TsSkeleton);
-
-    ifs.read((TsChar*)&boneNum, sizeof(TsUint));
-
-    CommonBone* pBones = TsNew(CommonBone[boneNum]);
-    ifs.read((TsChar*)pBones, sizeof(CommonBone)*boneNum);
-    for (TsUint i = 0; i < boneNum; ++i)
-    {
-        CommonBone& bone = pBones[i];
+        CommonBone& bone = m_pCommonBones[i];
         TsTransForm* pTransform = pTransformBinalizer->FindByBinalyPtr(bone.transformPtr);
 
-        m_pSkeleton->AddBone(pTransform,bone.id,bone.bindPoseMatrix);
+        m_pSkeleton->AddBone(pTransform, bone.id, bone.bindPoseMatrix);
     }
-
     return TS_TRUE;
 }

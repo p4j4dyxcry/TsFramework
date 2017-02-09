@@ -60,14 +60,8 @@ TsBool TsTransformBinalizer::Binalize(std::ofstream& ofs, TsTransForm* pData)
     return TS_TRUE;
 }
 
-TsBool TsTransformBinalizer::Decode(std::ifstream& ifs,TsBool readHeader)
+TsBool TsTransformBinalizer::Decode(std::ifstream& ifs )
 {
-    if (readHeader )
-    {
-        if (ReadHeader(ifs, typeid(*this).name()) == TS_FALSE)
-            return TS_FALSE;
-    }
-
     TransformCommon * pCommonData;
 
     TsUint transformCount = 0;
@@ -78,7 +72,7 @@ TsBool TsTransformBinalizer::Decode(std::ifstream& ifs,TsBool readHeader)
     ifs.read((TsChar*)pCommonData, sizeof(TransformCommon) * transformCount);
    
     // nullptr ÇéQè∆Ç≈Ç´ÇÈÇÊÇ§Ç…Ç∑ÇÈ
-    m_transformMap.insert(std::pair<TsU64, TsTransForm*>(0, nullptr));
+    m_transformMap.insert(std::pair<TsU64, TsTransForm*>(0x00, nullptr));
 
     for (TsUint i = 0; i < transformCount; ++i)
     {

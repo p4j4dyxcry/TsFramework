@@ -3,6 +3,12 @@
 
 #include <fstream>
 
+TsBinalizer::BinalizerHeader TsBinalizer::GetBinaryHeader()const
+{
+    BinalizerHeader result = { 0 };
+    strcpy_s(result.m_header, TS_BIN_HEADER);
+    return result;
+}
 
 TsBool TsBinalizer::WriteHeader(std::ofstream& ofs, const TsChar* header)
 {

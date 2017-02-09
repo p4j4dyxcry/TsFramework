@@ -13,19 +13,28 @@ TsGeometoryBinalizer::TsGeometoryBinalizer()
 
 }
 
+TsGeometoryBinalizer::~TsGeometoryBinalizer()
+{
+    for each (auto g in m_pGeometoryRef)
+    {
+        TsSafeDelete(g.m_pVertexArray);
+        TsSafeDelete(g.m_pIndexArray);
+    }
+}
 
-TsBool TsGeometoryBinalizer::Binalize(TsDevice* pDev,
-                                      std::ofstream& ofs,
-                                      TsGeometryObject** pGeometory,
+
+
+TsBool TsGeometoryBinalizer::Binalize(std::ofstream& ofs,
+                                      TsGeometryObject** ppGeometory,
                                       TsUint count)
 {
-    if (WriteHeader(ofs, typeid(*this).name()) == TS_FALSE)
+    if (WriteHeader(ofs, TS_BIN_HEADER) == TS_FALSE)
         return TS_FALSE;
     ofs.write((TsChar*)&count, sizeof(TsUint));
 
     for (TsUint i = 0; i < count; ++i)
     {
-        const TsGeometryObject* pData = pGeometory[i];
+        const TsGeometryObject* pData = ppGeometory[i];
 
         TsVertexElement* pElement = pData->GetVertexElement();
 
@@ -73,23 +82,14 @@ TsBool TsGeometoryBinalizer::Binalize(TsDevice* pDev,
     return TS_TRUE;
 
 }
-TsBool TsGeometoryBinalizer::Decode(TsDevice* pDev,
-                  std::ifstream& ifs,
-                  TsTransformBinalizer* pTransformBinalizer,
-                  TsMaterialBinalizer * pMaterialBinalizer,
-                  TsSkeletonBinalizer * pSkeletonBinalizer,
-                  TsBool readHeader )
+TsBool TsGeometoryBinalizer::Decode( std::ifstream& ifs )
 {
-    if (readHeader)
-    {
-        if (ReadHeader(ifs, typeid(*this).name()) == TS_FALSE)
-            return TS_FALSE;
-    }
-
     ifs.read((TsChar*)&m_geometoryCount, sizeof(TsUint));
 
     m_pGeometoryObject = TsNew(TsGeometryObject*[m_geometoryCount]);
 
+    m_pGeometoryRef.resize(m_geometoryCount);
+    m_pCommonRef.resize(m_geometoryCount);
     for (TsUint geoIndex = 0; geoIndex < m_geometoryCount; ++geoIndex)
     {
         TsUint vertexSize = 0;
@@ -98,57 +98,121 @@ TsBool TsGeometoryBinalizer::Decode(TsDevice* pDev,
         ifs.read((TsChar*)&vertexSize, sizeof(TsUint));
         ifs.read((TsChar*)&indexSize, sizeof(TsUint));
 
-        TsVertexSkin* pVertex = nullptr;
-        TsUint *      pIndex = nullptr;
+        m_pGeometoryRef[geoIndex].m_vertexCount = vertexSize / sizeof(TsVertexSkin);
+        m_pGeometoryRef[geoIndex].m_indexCount = indexSize / sizeof(TsUint);
 
-        TsVertexElement* pElement = TsNew(TsVertexElement);
         if (vertexSize)
         {
-            pVertex = TsNew(TsVertexSkin[vertexSize / sizeof(TsVertexSkin)]);
-            ifs.read((TsChar*)pVertex, vertexSize);
-            auto pVB = pDev->CreateVertexBuffer(pVertex, vertexSize, sizeof(TsVertexSkin));
-            pElement->SetVertexBuffer(pVB);
+            m_pGeometoryRef[geoIndex].m_pVertexArray = TsNew(TsVertexSkin[vertexSize / sizeof(TsVertexSkin)]);
+            ifs.read((TsChar*)m_pGeometoryRef[geoIndex].m_pVertexArray, vertexSize);
         }
         if (indexSize)
         {
-            pIndex = TsNew(TsUint[indexSize / sizeof(TsUint)]);
-            ifs.read((TsChar*)pIndex, indexSize);
-            auto pIB = pDev->CreateIndexBuffer(pIndex, indexSize);
+            m_pGeometoryRef[geoIndex].m_pIndexArray = TsNew(TsUint[indexSize / sizeof(TsUint)]);
+            ifs.read((TsChar*)m_pGeometoryRef[geoIndex].m_pIndexArray, indexSize);
+        }
+        ifs.read((TsChar*)&m_pCommonRef[geoIndex], sizeof(CommonRef));
+    }
+
+    return TS_TRUE;
+}
+
+//! 頂点バッファ・インデックスバッファを含むメッシュ作成
+TsBool TsGeometoryBinalizer::BuildGeometory(TsDevice * pDev)
+{
+    for (TsInt i = 0; i < m_geometoryCount; ++i)
+    {
+        TsVertexElement* pElement = TsNew(TsVertexElement);
+
+        TsVertexSkin* pVertex = m_pGeometoryRef[i].m_pVertexArray;
+        TsInt         vertexSize = m_pGeometoryRef[i].m_vertexCount * sizeof(TsVertexSkin);
+        TsUint*       pIndex = m_pGeometoryRef[i].m_pIndexArray;
+        TsInt         indexSize = m_pGeometoryRef[i].m_indexCount * sizeof(TsUint);
+
+
+        if (vertexSize > 0)
+        {
+            TsVertexBuffer* pVB = pDev->CreateVertexBuffer(pVertex, vertexSize, sizeof(TsVertexSkin));
+            pElement->SetVertexBuffer(pVB);
+        }
+
+        if (indexSize > 0)
+        {
+
+            TsIndexBuffer* pIB = pDev->CreateIndexBuffer(pIndex, indexSize);
             pElement->SetIndexBuffer(pIB);
         }
 
-        CommonRef ref;
-        ifs.read((TsChar*)&ref, sizeof(ref));
-
-        TsDefaultMaterial* pMatArray = pMaterialBinalizer->GetMaterials();
-        TsDefaultMaterial * m = nullptr;
-        TsUint matCount = pMaterialBinalizer->GetMaterialCount();
-
-        for (TsUint i = 0; i < matCount; ++i)
+        if (vertexSize && pVertex[0].weight.x > 0)
         {
-            if (pMatArray[i].GetName() == ref.matName)
-            {
-                m = &pMatArray[i];
-                break;
-            }
+            TsSkinGeometryObject* p = TsNew(TsSkinGeometryObject);
+            p->CreateGeometryObject(pDev, pElement);
+            m_pGeometoryObject[i] = p;
         }
-
-
-        if (pVertex[0].weight.x > 0)
+        else if ( vertexSize )
         {
-            auto p = TsNew(TsSkinGeometryObject);
-            p->CreateGeometryObject(pDev, pElement, m);
-            p->SetSkeleton(pSkeletonBinalizer->GetSkeleton());
-            m_pGeometoryObject[geoIndex] = p;
+            m_pGeometoryObject[i] = TsNew(TsGeometryObject);
+            m_pGeometoryObject[i]->CreateGeometryObject(pDev, pElement);
         }
         else
         {
-            m_pGeometoryObject[geoIndex] = TsNew(TsGeometryObject);
-            m_pGeometoryObject[geoIndex]->CreateGeometryObject(pDev, pElement, m);
+            return TS_FALSE;
         }
-        TsTransForm* pTransform = pTransformBinalizer->FindByBinalyPtr( ref.transformPtr );
-        m_pGeometoryObject[geoIndex]->SetTransform( pTransform );
-        m_pGeometoryObject[geoIndex]->SetAABB( ref.aabb );
+
+        m_pGeometoryObject[i]->SetAABB(m_pCommonRef[i].aabb);
+        m_pGeometoryObject[i]->SetName(m_pCommonRef[i].name);
+    }
+
+    return TS_TRUE;
+}
+
+//! トランスフォームをバインドする
+TsBool TsGeometoryBinalizer::BindTransform(TsTransformBinalizer* pTransformBinalizer)
+{
+    for (TsInt i = 0; i < m_geometoryCount; ++i)
+    {
+        TsTransForm* pTransform = pTransformBinalizer->FindByBinalyPtr(m_pCommonRef[i].transformPtr);
+        m_pGeometoryObject[i]->SetTransform(pTransform);
+    }
+
+    return TS_TRUE;
+}
+
+//! マテリアルをバインドする
+TsBool TsGeometoryBinalizer::BindMaterial(TsMaterialBinalizer * pMaterialBinalizer)
+{
+    TsDefaultMaterial* pMatArray = pMaterialBinalizer->GetMaterials();
+    TsDefaultMaterial * m = nullptr;
+    TsUint matCount = pMaterialBinalizer->GetMaterialCount();
+
+    for (TsUint geometoryIdx = 0; geometoryIdx < m_geometoryCount; ++geometoryIdx)
+    {
+        for (TsUint i = 0; i < matCount; ++i)
+        {
+            if (pMatArray[i].GetName() == m_pCommonRef[i].matName)
+            {
+                m_pGeometoryObject[geometoryIdx]->SetMaterial(&pMatArray[i]);
+                break;
+            }
+        }
+    }
+
+
+    return TS_TRUE;
+}
+
+//! スケルトンをバインドする
+TsBool TsGeometoryBinalizer::BindSkeleton(TsSkeletonBinalizer* pSkeletonBinalizer)
+{
+    
+    for (TsUint geometoryIdx = 0; geometoryIdx < m_geometoryCount; ++geometoryIdx)
+    {
+        TsVertexSkin* pOrigin = (TsVertexSkin*)m_pGeometoryObject[geometoryIdx]->GetVertexElement()->GetVertexBuffer()->GetOriginData();
+        if (pOrigin->weight.x > 0)
+        {
+            TsSkinGeometryObject* p = dynamic_cast<TsSkinGeometryObject*>(m_pGeometoryObject[geometoryIdx]);
+            p->SetSkeleton(pSkeletonBinalizer->GetSkeleton());
+        }
     }
 
     return TS_TRUE;

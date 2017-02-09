@@ -17,18 +17,15 @@ Ts3DModelBinalizer::Ts3DModelBinalizer()
 }
 
 TsBool Ts3DModelBinalizer::LoadBinaly(TsDevice* pDev,const TsChar* filename)
-{
-    TsDebugLog("Load Model \n\t \"file = %s\" \n", filename);
+{    
     std::ifstream ifs(filename, std::ios::binary);
 
-    if (ReadHeader(ifs, typeid(*this).name()) == TS_FALSE)
+    if (ReadHeader(ifs, TS_BIN_HEADER) == TS_FALSE)
         return TS_FALSE;
 
     ifs.read((TsChar*)&m_meshCount, sizeof(TsUint));
 
     m_pMeshObjects = TsNew(TsMeshObject[m_meshCount]);
-
-
 
     for (TsUint i = 0; i < m_meshCount; ++i)
     {
@@ -36,42 +33,45 @@ TsBool Ts3DModelBinalizer::LoadBinaly(TsDevice* pDev,const TsChar* filename)
         TsMaterialBinalizer  materialBinalizer;
         TsSkeletonBinalizer  skeletonBinalizer;
         TsGeometoryBinalizer geometoryBinalizer;
-
-        
-
+       
         while (!ifs.eof())
         {
-            TsChar header[HEADER_SIZE]="";
-            ifs.read(header, HEADER_SIZE);
-            if (strcmp(header, typeid(TsTransformBinalizer).name()) == 0)
+            TsBinalizer::BinalizerHeader header;
+            memset(&header, 0, sizeof(header));
+            ifs.read((TsChar*)&header, HEADER_SIZE);
+
+            if ( header == transformBinalizer.GetBinaryHeader() )
                 transformBinalizer.Decode(ifs);
 
-            if (strcmp(header, typeid(TsMaterialBinalizer).name()) == 0)
-                materialBinalizer.Decode(pDev, ifs);
-
-            if (strcmp(header, typeid(TsSkeletonBinalizer).name()) == 0)
+            if (header == materialBinalizer.GetBinaryHeader())
             {
-                skeletonBinalizer.Decode(ifs, &transformBinalizer);
+                materialBinalizer.Decode(ifs);
+                materialBinalizer.BuildMaterial(pDev);
+            }
+
+            if (header == skeletonBinalizer.GetBinaryHeader())
+            {
+                skeletonBinalizer.Decode(ifs);
+                skeletonBinalizer.BuildSkeleton(&transformBinalizer);
                 m_pMeshObjects[i].SetSkeleton(skeletonBinalizer.GetSkeleton());
             }
 
-            if (strcmp(header, typeid(TsGeometoryBinalizer).name()) == 0)
+            if (header == geometoryBinalizer.GetBinaryHeader())
             {
-                geometoryBinalizer.Decode(pDev,
-                    ifs,
-                    &transformBinalizer,
-                    &materialBinalizer,
-                    &skeletonBinalizer);
+                geometoryBinalizer.Decode(ifs);
+                geometoryBinalizer.BuildGeometory(pDev);
+                geometoryBinalizer.BindMaterial(&materialBinalizer);
+                geometoryBinalizer.BindTransform(&transformBinalizer);
+                geometoryBinalizer.BindSkeleton(&skeletonBinalizer);
 
                 TsGeometryObject** pGeo = geometoryBinalizer.GetGeometry();
                 for (TsUint j = 0; j < geometoryBinalizer.GetGeometoryCount(); ++j)
                     m_pMeshObjects[i].AddGeometry(pGeo[j]);
-
             }
         }
 
     }
-
+    TsDebugLogLoadSuccess(filename);
     return TS_TRUE;
 
 }
@@ -81,10 +81,10 @@ TsBool Ts3DModelBinalizer::SaveBinaly(TsDevice* pDev,
                                       TsMeshObject* pMeshObjects,
                                       TsUint meshCount)
 {
-    TsDebugLog("Save Model Cache \n\t \"file = %s\" \n", filename);
+    TsDebugLog("Save Model Cache -> \"file = %s\" \n", filename);
     std::ofstream ofs(filename, std::ios::binary);
 
-    if (WriteHeader(ofs, typeid(*this).name()) == TS_FALSE)
+    if (WriteHeader(ofs, TS_BIN_HEADER) == TS_FALSE)
         return TS_FALSE;
 
     TsTransformBinalizer transformBinalizer;
@@ -103,7 +103,8 @@ TsBool Ts3DModelBinalizer::SaveBinaly(TsDevice* pDev,
         auto&& geoList = m.GetGeometrys();
         materialBinalizer.Binalize(ofs, &matList[0],matList.size());
         skeletonBinalizer.Binalize(ofs, m.GetSkeleton());
-        geometoryBinalizer.Binalize(pDev, ofs, &geoList[0], m.GetGeometryCount());
+        geometoryBinalizer.Binalize(ofs, &geoList[0], m.GetGeometryCount());
     }
+    TsDebugLogSuccess("Save Success -> \"file = %s\" \n", filename);
     return TS_TRUE;
 }

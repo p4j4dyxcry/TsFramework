@@ -33,7 +33,7 @@ public:
     TsTransformBinalizer();
     
     TsBool Binalize(std::ofstream& ofs,TsTransForm* pData);
-    TsBool Decode( std::ifstream& ifs,TsBool readHeader = TS_FALSE );
+    TsBool Decode( std::ifstream& ifs );
 
     TsTransForm* GetRootTransform()const
     {
