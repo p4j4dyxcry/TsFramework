@@ -1,33 +1,48 @@
 #include "../../TsAfx.h"
 
-#define ASSIGN_INTERFACE( T ,Name )\
-TsMap<TS_HASH,T*> TsResourceManager::Name;\
+#define ASSIGN_INTERFACE( CLASS )\
+TsMap< TS_HASH , CLASS *> TsResourceManager::m_##CLASS##Library;\
 /*--------------------------------------*/\
-/*Register Resource---------------------*/\
+/*Register Resource-of-name-------------*/\
 /*--------------------------------------*/\
 template<>\
-TsBool TsResourceManager::RegisterResource( T* p , const TsString& name)\
+TsBool TsResourceManager::RegisterResource( CLASS * p , const TsString& name)\
 {\
-    return TsResourceManager_Register( Name , p , name );\
+    return TsResourceManager_Register<CLASS>( m_##CLASS##Library , p , name );\
 }\
 /*--------------------------------------*/\
-/*Find Resource-------------------------*/\
+/*Register Resource-of-hash-------------*/\
 /*--------------------------------------*/\
 template<>\
-T* TsResourceManager::Find( const TsString& name)\
+TsBool TsResourceManager::RegisterResource( CLASS * p , const TS_HASH hash)\
 {\
-    return TsResourceManager_Find( Name , name );\
+    return TsResourceManager_Register<CLASS>( m_##CLASS##Library , p , hash );\
+}\
+/*--------------------------------------*/\
+/*Find Resource-of-name-----------------*/\
+/*--------------------------------------*/\
+template<>\
+CLASS * TsResourceManager::Find( const TsString& name)\
+{\
+    return TsResourceManager_Find( m_##CLASS##Library , name );\
+}\
+/*--------------------------------------*/\
+/*Find Resource-of-hash-----------------*/\
+/*--------------------------------------*/\
+template<>\
+CLASS * TsResourceManager::Find( const TS_HASH hash)\
+{\
+    return TsResourceManager_Find( m_##CLASS##Library , hash );\
 }\
 
 //-------------------------------------------------------------------------------
-//  Find Resource Manager Template
+//  Register Resource Manager Template 
 //-------------------------------------------------------------------------------
 template<class T>
 TsBool TsResourceManager_Register( TsMap<TS_HASH , T*>& map ,
                                    T* pObj ,
-                                   const TsString& name )
+                                   const TS_HASH hash )
 {
-    TS_HASH hash = TSUT::StringToHash( name );
     TsBool hResult = map.find( hash ) == map.end();
     if( hResult == TS_TRUE )
     {
@@ -42,7 +57,34 @@ TsBool TsResourceManager_Register( TsMap<TS_HASH , T*>& map ,
 }
 
 //-------------------------------------------------------------------------------
-//  Register Resource Manager Template
+//  Register Resource Manager Template 
+//-------------------------------------------------------------------------------
+template<class T>
+TsBool TsResourceManager_Register( TsMap<TS_HASH , T*>& map ,
+                                   T* pObj ,
+                                   const TsString& name )
+{
+    TS_HASH hash = TSUT::StringToHash( name );
+
+    return TsResourceManager_Register(map,pObj,hash);
+}
+
+//-------------------------------------------------------------------------------
+//  Find Resource Manager Template
+//-------------------------------------------------------------------------------
+template<class T>
+T* TsResourceManager_Find( TsMap<TS_HASH , T*>& map ,
+                           const TS_HASH hash )
+{
+    auto it = map.find( hash );
+    if( it == map.end() )
+        return nullptr;
+
+    return it->second;
+}
+
+//-------------------------------------------------------------------------------
+//  Find Resource Manager Template
 //-------------------------------------------------------------------------------
 template<class T>
 T* TsResourceManager_Find( TsMap<TS_HASH , T*>& map ,
@@ -50,11 +92,7 @@ T* TsResourceManager_Find( TsMap<TS_HASH , T*>& map ,
 {
     TS_HASH hash = TSUT::StringToHash( name );
 
-    auto it = map.find( hash );
-    if( it == map.end() )
-        return nullptr;
-
-    return it->second;
+    return TsResourceManager_Find(map,hash);
 }
 
 //-------------------------------------------------------------------------------
@@ -70,6 +108,18 @@ static TsBool TsResourceManager::RegisterResource( T* pObject , const TsString& 
 }
 
 //-------------------------------------------------------------------------------
+//  Register No Type
+//-------------------------------------------------------------------------------
+template<typename T>
+static TsBool TsResourceManager::RegisterResource(T* pObject, const TS_HASH hash)
+{
+    TsDebugLogError("ResouceManagerへの追加失敗。型\"%s\"はサポートされていません。\n", typeid(T).name());
+    (void)pObject;
+    (void)hash;
+    return TS_FALSE;
+}
+
+//-------------------------------------------------------------------------------
 //  Find No Type
 //-------------------------------------------------------------------------------
 template<typename T>
@@ -79,11 +129,50 @@ static T* TsResourceManager::Find( const TsString& name )
     return nullptr;
 }
 
+template<typename T>
+static T* TsResourceManager::Find(const TS_HASH hash)
+{
+    (void)name;
+    return nullptr;
+}
+
+TsDevice* TsResourceManager::m_pDevice = nullptr;
+//! ResourceManagerに新しい管理対象を追加する場合は
+
+ASSIGN_INTERFACE(TsSamplerState)
+ASSIGN_INTERFACE(TsMeshObject)
+ASSIGN_INTERFACE(TsTexture)
+ASSIGN_INTERFACE(TsSkeleton)
+ASSIGN_INTERFACE(TsBlendState)
+ASSIGN_INTERFACE(TsMaterial)
+
+//-------------------------------------------------------------------------------
+//! GlobalHash
+//-------------------------------------------------------------------------------
+#define INITIALIZE_PRE_HASH(name) (TS_HASH)TS_HASH_##name = TSUT::StringToHash(#name) ;
+
+void InitializeGlobalHash()
+{
+    INITIALIZE_PRE_HASH(Default)
+    INITIALIZE_PRE_HASH(nullptr)
+
+    INITIALIZE_PRE_HASH(Cube)
+    INITIALIZE_PRE_HASH(Shadow)
+
+    INITIALIZE_PRE_HASH(NONE)
+    INITIALIZE_PRE_HASH(ALPHA_BLEND)
+    INITIALIZE_PRE_HASH(ADD)
+    INITIALIZE_PRE_HASH(SUBTRACT)
+}
+
+
 TsBool TsResourceManager::Initialize( TsDevice* pDev )
 {
     m_pDevice = pDev;
+    InitializeGlobalHash();
     InitializeSampler( pDev );
     InitializeBlendState( pDev );
+    InitializeMaterial(pDev);
     return TS_TRUE;
 }
 
@@ -94,8 +183,7 @@ TsBool TsResourceManager::InitializeBlendState( TsDevice* pDev )
         TsBlendState* pBlendState = nullptr;
         pBlendState = TsNew( TsBlendState );
         pBlendState->CreateBlendState( pDev , TS_BLEND_MODE::NONE );
-        std::pair<TS_HASH , TsBlendState*> pair( TSUT::StringToHash( "NONE" ) , pBlendState );
-        m_blendStateLibrary.insert( pair );
+        RegisterResource(pBlendState, TS_PRE_HASH(NONE));
     }
 
     //アルファブレンド
@@ -103,8 +191,7 @@ TsBool TsResourceManager::InitializeBlendState( TsDevice* pDev )
         TsBlendState* pBlendState = nullptr;
         pBlendState = TsNew( TsBlendState );
         pBlendState->CreateBlendState( pDev , TS_BLEND_MODE::ALPHA_BLEND );
-        std::pair<TS_HASH , TsBlendState*> pair( TSUT::StringToHash( "ALPHA_BLEND" ) , pBlendState );
-        m_blendStateLibrary.insert( pair );
+        RegisterResource(pBlendState, TS_PRE_HASH(ALPHA_BLEND));
     }
 
     //加算合成
@@ -112,8 +199,7 @@ TsBool TsResourceManager::InitializeBlendState( TsDevice* pDev )
         TsBlendState* pBlendState = nullptr;
         pBlendState = TsNew( TsBlendState );
         pBlendState->CreateBlendState( pDev , TS_BLEND_MODE::ADD );
-        std::pair<TS_HASH , TsBlendState*> pair( TSUT::StringToHash( "ADD" ) , pBlendState );
-        m_blendStateLibrary.insert( pair );
+        RegisterResource(pBlendState, TS_PRE_HASH(ADD));
     }
 
     //減算合成
@@ -121,8 +207,7 @@ TsBool TsResourceManager::InitializeBlendState( TsDevice* pDev )
         TsBlendState* pBlendState = nullptr;
         pBlendState = TsNew( TsBlendState );
         pBlendState->CreateBlendState( pDev , TS_BLEND_MODE::SUBTRACT );
-        std::pair<TS_HASH , TsBlendState*> pair( TSUT::StringToHash( "SUBTRACT" ) , pBlendState );
-        m_blendStateLibrary.insert( pair );
+        RegisterResource(pBlendState, TS_PRE_HASH(SUBTRACT));
     }
 
     return TS_TRUE;
@@ -151,8 +236,10 @@ TsBool TsResourceManager::InitializeSampler( TsDevice * pDev )
         desc.MaxLOD = D3D11_FLOAT32_MAX;
 
         desc.MipLODBias = 0;
-        std::pair<TS_HASH , TsSamplerState*> pair( TSUT::StringToHash( "Default" ) , pDev->CreateSamplerState( desc ) );
 
+        TsSamplerState* pSamplerState = pDev->CreateSamplerState(desc);
+        pSamplerState->SetName(TS_STR_Default);        
+        RegisterResource(pSamplerState, TS_STR_Default);
     }
 
     //! Cube Map Sampler
@@ -176,9 +263,9 @@ TsBool TsResourceManager::InitializeSampler( TsDevice * pDev )
         desc.MaxLOD = D3D11_FLOAT32_MAX;
 
         desc.MipLODBias = 0;
-        std::pair<TS_HASH , TsSamplerState*> pair( TSUT::StringToHash( "Cube" ) , pDev->CreateSamplerState( desc ) );
-
-        m_samplerLibrary.insert( pair );
+        TsSamplerState* pSamplerState = pDev->CreateSamplerState(desc);
+        pSamplerState->SetName(TS_STR_Cube);
+        RegisterResource(pSamplerState, TS_STR_Cube);
     }
 
     //! Shadow Sampler
@@ -200,24 +287,21 @@ TsBool TsResourceManager::InitializeSampler( TsDevice * pDev )
         desc.MipLODBias = 0;
         desc.MinLOD = -FLT_MAX;
         desc.MaxLOD = +FLT_MAX;
-
-        std::pair<TS_HASH , TsSamplerState*> pair( TSUT::StringToHash( "Shadow" ) , pDev->CreateSamplerState( desc ) );
-
-        m_samplerLibrary.insert( pair );
+        TsSamplerState* pSamplerState = pDev->CreateSamplerState(desc);
+        pSamplerState->SetName(TS_STR_Shadow);
+        RegisterResource(pSamplerState, TS_STR_Shadow);
     }
-
-
     return TS_TRUE;
 }
 
+TsBool TsResourceManager::InitializeMaterial(TsDevice * pDev)
+{
+    TsDefaultMaterial* pMaterial = TsNew(TsDefaultMaterial);
+    pMaterial->CreateMaterial(pDev);
+    pMaterial->SetName( TS_STR_nullptr );
+    pMaterial->SetColor(TsFloat4(1, 0, 0.5, 1));
 
-//! ResourceManagerに新しい管理対象を追加する場合は
-//  static TsMap<TS_HASH , [管理対象型]> m_変数名を追加後;
-//　下記にASSIGN_INTERFACE( [管理対象型] , m_変数名)を追加することで基本メソッドが生成されます。
+    RegisterResource<TsMaterial>(pMaterial, TS_STR_nullptr);
 
-TsDevice* TsResourceManager::m_pDevice = nullptr;
-ASSIGN_INTERFACE( TsSamplerState , m_samplerLibrary );
-ASSIGN_INTERFACE( TsMeshObject , m_meshLibrary );
-ASSIGN_INTERFACE( TsTexture , m_fileTextureLibray );
-ASSIGN_INTERFACE( TsSkeleton , m_skeletonLibrary );
-ASSIGN_INTERFACE( TsBlendState , m_blendStateLibrary );
+    return TS_TRUE;
+}

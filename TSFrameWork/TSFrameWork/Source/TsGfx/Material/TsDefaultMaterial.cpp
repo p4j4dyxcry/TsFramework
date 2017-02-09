@@ -45,9 +45,9 @@ TsBool TsDefaultMaterial::ApplyMaterial( TsDeviceContext* pContext)
     if( m_pSpeclurTexture )
         pContext->SetTexture( SpecuerTextureRegister , m_pSpeclurTexture , TS_SHADER_TYPE::PIXEL_SHADER );
 
-    pContext->SetSamplerState( TsResourceManager::Find<TsSamplerState>( "Default" ) , 0 );
-    pContext->SetSamplerState( TsResourceManager::Find<TsSamplerState>( "Shadow" ) , 3 );
-    pContext->SetSamplerState( TsResourceManager::Find<TsSamplerState>( "Cube" ) , 4 );
+    pContext->SetSamplerState( TsResourceManager::Find<TsSamplerState>( TS_HASH_Default) , 0 );
+    pContext->SetSamplerState( TsResourceManager::Find<TsSamplerState>( TS_HASH_Shadow), 3);
+    pContext->SetSamplerState( TsResourceManager::Find<TsSamplerState>( TS_HASH_Cube), 4);
     return TS_TRUE;
 }
 
