@@ -175,6 +175,9 @@
     <Filter Include="ソース ファイル\TsUT\Loader\ply">
       <UniqueIdentifier>{0ea532df-e8b3-4ae8-927d-99c77e5e1780}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\TsGfx\hlsl\Paticle">
+      <UniqueIdentifier>{cf27b9a1-0e79-4e91-9682-3e20e679dc22}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TSWinEntryPoint.cpp">
@@ -1035,6 +1038,24 @@
     </FxCompile>
     <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsSSShadowMapPS.hlsl">
       <Filter>ソース ファイル\TsGfx\hlsl\ScreenSpace\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\Particle\TsParticleEmitterCS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\Paticle</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\Particle\TsParticleGS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\Paticle</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\Particle\TsParticlePS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\Paticle</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\Particle\TsParticleUpdateCS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\Paticle</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\Particle\TsParticleVS.hlsl">
+      <Filter>ソース ファイル\TsGfx\hlsl\Paticle</Filter>
+    </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\Particle\TsParticleCommon.hlsli">
+      <Filter>ソース ファイル\TsGfx\hlsl\Paticle</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

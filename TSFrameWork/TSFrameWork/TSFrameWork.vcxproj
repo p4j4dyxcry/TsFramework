@@ -418,6 +418,12 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="Source\TsGfx\hlsl\Particle\TsParticleCommon.hlsli" />
+    <FxCompile Include="Source\TsGfx\hlsl\Particle\TsParticleEmitterCS.hlsl" />
+    <FxCompile Include="Source\TsGfx\hlsl\Particle\TsParticleGS.hlsl" />
+    <FxCompile Include="Source\TsGfx\hlsl\Particle\TsParticlePS.hlsl" />
+    <FxCompile Include="Source\TsGfx\hlsl\Particle\TsParticleUpdateCS.hlsl" />
+    <FxCompile Include="Source\TsGfx\hlsl\Particle\TsParticleVS.hlsl" />
     <FxCompile Include="Source\TsGfx\hlsl\ScreenSpace\TsDefferedShadingPS.hlsl">
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>

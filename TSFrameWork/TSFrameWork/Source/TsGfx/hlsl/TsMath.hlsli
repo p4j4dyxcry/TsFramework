@@ -31,7 +31,7 @@ hlsl —p‚Ì Utility ŠÖ”ŒQ
 
 //! 3Ÿ•âŠ®
 #define Cubic( t ) \
-    (t * t(3.0f - 2.0f + t))
+    (t * t * (3.0f - 2.0f + t))
 
 //! 5Ÿ•âŠ®
 #define HexLerp \
