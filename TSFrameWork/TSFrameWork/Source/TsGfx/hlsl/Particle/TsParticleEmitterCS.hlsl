@@ -1,7 +1,7 @@
 #include "TsParticleCommon.hlsli"
 
-RWStructuredBuffer<ParticleEmitter> emitters;
-RWStructuredBuffer<Particle> particles;
+RWStructuredBuffer<ParticleEmitter> emitters    : register(t6);
+RWStructuredBuffer<Particle> particles          : register(u0);
 
 void Emit(ParticleEmitter emitter, Particle particle )
 {

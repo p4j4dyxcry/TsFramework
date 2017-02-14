@@ -1,3 +1,18 @@
+//-------------------------------------------------------------------------
+//
+// パーティクルの処理フローについて
+// ・CPUからエミッタ情報を入力
+// ■ ComputeShaderでパーティクルのエミット
+//    ->structuredBufferにエミッタ情報を格納
+//    ->RWStructuredBufferに粒子情報を出力
+// ■ComputeShaderでパーティクルのアップデート
+//    ->RWStructuredBufferから粒子情報を入力
+//    ->RWStructuredBufferに粒子情報を出力
+// ■VertexShaderでRWstructuredBufferをstructuredBuffer
+//  としてGeometryShaderにデータを流す
+// ■GeometoryShaderで入力された頂点を4つに変換しView＆Projection変換を行う
+// ■PielShaderで出力
+//-------------------------------------------------------------------------
 
 //! float1のエミットパラメータ
 struct float1EmitterParam
@@ -153,5 +168,40 @@ float4 ToAdditional(float4EmitterParam value, float life)
     return lerp(value.start, value.end, ComputeTFunc(1.0f / life));
 }
 
+//---------------------------------------------------------------
+//! 頂点シェーダの入力
+//---------------------------------------------------------------
+struct PARTICLE_VS_IN
+{
+    uint InstanceID : SV_InstanceID;
+};
 
+//---------------------------------------------------------------
+//! 頂点シェーダの出力 & ジオメトリシェーダの入力
+//---------------------------------------------------------------
+struct PARTICLE_VS_OUT
+{
+    float3 position : SV_Position;
+    float4 color    : COLOR0;
+    float  size     : TEXCOORD0;
+};
+#define PARTICLE_GS_IN PARTICLE_VS_OUT
 
+//---------------------------------------------------------------
+//! ジオメトリシェーダの出力 & ピクセルシェーダの入力 
+//---------------------------------------------------------------
+struct PARTICLE_GS_OUT
+{
+    float3 position : SV_Position;
+    float4 color    : COLOR0;
+    float size      : TEXCOORD0;
+};
+#define PARTICLE_PS_IN PARTICLE_GS_OUT
+
+//---------------------------------------------------------------
+//! ピクセルシェーダの出力
+//---------------------------------------------------------------
+struct PARTICLE_PS_OUT
+{
+    float4 color : SV_Target0;
+};
