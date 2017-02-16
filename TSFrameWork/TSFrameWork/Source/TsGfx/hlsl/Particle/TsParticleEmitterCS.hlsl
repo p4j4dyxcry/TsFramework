@@ -2,9 +2,8 @@
 
 //---------------------------------------------------------------
 //! GPU‚©‚çRead & Write‰Â”\‚È—Ìˆæ
-//---------------------------------------------------------------
-RWStructuredBuffer<ParticleEmitter> emitters;
-RWStructuredBuffer<Particle> particles;
+RWStructuredBuffer<ParticleEmitter> emitters    : register(t6);
+RWStructuredBuffer<Particle> particles          : register(u0);
 
 //---------------------------------------------------------------
 // Particle‚ğ”­¶‚³‚¹‚é
