@@ -186,10 +186,38 @@ float4 ToAdditional(float4EmitterParam value, float life)
     return lerp(value.start, value.end, ComputeTFunc(1.0f / life));
 }
 
+float RandomInitialize(float3 value, float1EmitterParam emitterParam, float seed)
+{
+    return emitterParam.start +
+           emitterParam.randomRange +
+           ParticleRand(value, seed);
+}
+
+float2 RandomInitialize(float3 value, float2EmitterParam emitterParam, float seed)
+{
+    return emitterParam.start +
+           emitterParam.randomRange +
+           ParticleRand(value, seed);
+}
+
+float3 RandomInitialize(float3 value, float3EmitterParam emitterParam, float seed)
+{
+    return emitterParam.start +
+           emitterParam.randomRange +
+           ParticleRand(value, seed);
+}
+
+float4 RandomInitialize(float3 value, float4EmitterParam emitterParam, float seed)
+{
+    return emitterParam.start +
+           emitterParam.randomRange +
+           ParticleRand(value, seed);
+}
+
 //---------------------------------------------------------------
 //! 頂点シェーダの入力
 //---------------------------------------------------------------
-float RandomInitialize(float3 value, float1EmitterParam emitterParam, float seed)
+struct PARTICLE_VS_IN
 {
     uint InstanceID : SV_InstanceID;
 };
@@ -205,12 +233,6 @@ struct PARTICLE_VS_OUT
 };
 #define PARTICLE_GS_IN PARTICLE_VS_OUT
 
-float3 RandomInitialize(float3 value, float3EmitterParam emitterParam , float seed )
-{
-    return emitterParam.start +
-           emitterParam.randomRange +
-           ParticleRand(value, seed);
-}
 //---------------------------------------------------------------
 //! ジオメトリシェーダの出力 & ピクセルシェーダの入力 
 //---------------------------------------------------------------
@@ -228,10 +250,4 @@ struct PARTICLE_GS_OUT
 struct PARTICLE_PS_OUT
 {
     float4 color : SV_Target0;
-float4 RandomInitialize(float3 value, float4EmitterParam emitterParam, float seed)
-{
-    return emitterParam.start +
-           emitterParam.randomRange +
-           ParticleRand(value, seed);
-}
 };
