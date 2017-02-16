@@ -6,6 +6,7 @@ struct float1EmitterParam
     float randomRange;  //振れ幅
     float end;          //終了
 
+    // バイトアライメント調整
     float dumy;
 };
 
@@ -16,6 +17,7 @@ struct float2EmitterParam
     float2 randomRange; //振れ幅
     float2 end;         //終了
 
+    // バイトアライメント調整
     float2 dumy;
 };
 
@@ -26,6 +28,7 @@ struct float3EmitterParam
     float3 randomRange; //振れ幅
     float3 end;         //終了
 
+    // バイトアライメント調整
     float3 dumy;
 };
 
@@ -47,8 +50,6 @@ struct float4EmitterParam
 //  【t】= 正規化残りライフ 【凡例】開始life が10で残りlifeが3 のときは0.3f
 //  【s】= EmitterParam.start + RandomValue
 //　 strat*t + end(1-t)
-//---------------------------------------------------------------
-
 //---------------------------------------------------------------
 //! パーティクルエミッター
 //---------------------------------------------------------------
@@ -87,6 +88,7 @@ struct ParticleEmitter
     //! エミッタの乱数の種
     float m_emitRandomSeed;
 
+    // バイトアライメント調整
     float3 dumy;
 };
 
@@ -95,14 +97,25 @@ struct ParticleEmitter
 //---------------------------------------------------------------
 struct Particle
 {
+    //! 位置を決定する要素
     float3  position;
-    float   radius;
     float3  velocity;
+    float   gravity;
+
+    //! 大きさを決定する要素
+    float   radius;
+    float   addtionalradius;
+
+    //! 寿命を決定する要素
     float   life;
     float   maxLife;
-    float3  gravity;
+
+    //! 色を決定する要素
     float4  color;
     float4  addtionalcolor;
+
+    // バイトアライメント調整
+    float   dumy;
 };
 
 //---------------------------------------------------------------
@@ -113,10 +126,12 @@ float ParticleRand(float3 value ,float seed)
     return frac(cos(dot(value ,float3(428.1529f,582.952f,94.00425f)) + seed) * 5343.3414f);
 }
 
+
+
 //---------------------------------------------------------------
 //! 重力計算を変更する際にはこの関数を書き換えます。
 //---------------------------------------------------------------
-float3 ComputeGravity(Particle particle)
+float ComputeGravity(Particle particle)
 {
     //todo : test
     return particle.gravity * 1.08f;
@@ -133,6 +148,9 @@ float ComputeTFunc( float t )
     //return t * t * (3.0f - 2.0f + t);
 }
 
+//---------------------------------------------------------------
+//! 1フレームでの変化量を計算します。
+//---------------------------------------------------------------
 float ToAdditional(float1EmitterParam value , float life)
 {
     return lerp(value.start, value.end, ComputeTFunc(1.0f / life));
@@ -153,5 +171,33 @@ float4 ToAdditional(float4EmitterParam value, float life)
     return lerp(value.start, value.end, ComputeTFunc(1.0f / life));
 }
 
+//---------------------------------------------------------------
+//! パーティクルの成分をベース＋乱数で初期化します。
+//---------------------------------------------------------------
+float RandomInitialize(float3 value, float1EmitterParam emitterParam, float seed)
+{
+    return emitterParam.start +
+           emitterParam.randomRange +
+           ParticleRand(value, seed);
+}
 
+float2 RandomInitialize(float3 value, float2EmitterParam emitterParam, float seed)
+{
+    return emitterParam.start +
+           emitterParam.randomRange +
+           ParticleRand(value, seed);
+}
 
+float3 RandomInitialize(float3 value, float3EmitterParam emitterParam , float seed )
+{
+    return emitterParam.start +
+           emitterParam.randomRange +
+           ParticleRand(value, seed);
+}
+
+float4 RandomInitialize(float3 value, float4EmitterParam emitterParam, float seed)
+{
+    return emitterParam.start +
+           emitterParam.randomRange +
+           ParticleRand(value, seed);
+}

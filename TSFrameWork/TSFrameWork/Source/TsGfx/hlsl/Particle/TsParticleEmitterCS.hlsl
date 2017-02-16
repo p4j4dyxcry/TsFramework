@@ -1,19 +1,25 @@
 #include "TsParticleCommon.hlsli"
 
+//---------------------------------------------------------------
+//! GPUからRead & Write可能な領域
+//---------------------------------------------------------------
 RWStructuredBuffer<ParticleEmitter> emitters;
 RWStructuredBuffer<Particle> particles;
 
+//---------------------------------------------------------------
+// Particleを発生させる
+//---------------------------------------------------------------
 void Emit(ParticleEmitter emitter, Particle particle )
 {
-    particle.life = emitter.m_emitLife.start +
-                    emitter.m_emitLife.randomRange *
-                    ParticleRand(float3(492, 141, 41), emitter.m_emitRandomSeed);
+    particle.maxLife = 
+    particle.life  = (uint)RandomInitialize(float3(512, 215, 52), emitter.m_emitLife, emitter.m_emitRandomSeed);
 
-    particle.life = emitter.m_emitLife.start +
-                    emitter.m_emitLife.randomRange *
-                    ParticleRand(float3(492, 141, 41), emitter.m_emitRandomSeed);
-
-    //...かきかけ・・・寝ます。
+    particle.color = RandomInitialize(float3(17, 63, 96), emitter.m_emitColor, emitter.m_emitRandomSeed);
+    particle.position = RandomInitialize(float3(17, 63, 96), emitter.m_position, emitter.m_emitRandomSeed);
+    particle.radius = RandomInitialize(float3(131, 519, 532), emitter.m_emitRadius, emitter.m_emitRandomSeed);
+    //particle.addtionalcolor = ToAdditional(  )
+    // todo
+    particle.gravity = 0;
 
 }
 
@@ -32,9 +38,7 @@ void main( uint3 threadId : SV_DispatchThreadID )
     emitter.m_elasedTime += elapsed;
 
     //todo : rand計算
-    int emit_num = emitter.m_emitNum.start + 
-                   emitter.m_emitNum.randomRange + 
-                  ParticleRand(float3(3131, 5281, 4437), emitter.m_emitRandomSeed);
+    int emit_num = (int)RandomInitialize(float3(3131, 5281, 4437), emitter.m_emitNum, emitter.m_emitRandomSeed);
 
     if (emitter.m_elasedTime <= emitter.m_emitInterval)
     {
