@@ -166,24 +166,24 @@ float ComputeTFunc( float t )
 //---------------------------------------------------------------
 //! 1フレームでの変化量を計算します。
 //---------------------------------------------------------------
-float ToAdditional(float1EmitterParam value , float life)
+float ToAdditional(float start, float1EmitterParam value, float life)
 {
-    return lerp(value.start, value.end, ComputeTFunc(1.0f / life));
+    return lerp(start, value.end, ComputeTFunc(1.0f / life));
 }
 
-float2 ToAdditional(float2EmitterParam value, float life)
+float2 ToAdditional(float2 start, float2EmitterParam value, float life)
 {
-    return lerp(value.start, value.end, ComputeTFunc(1.0f / life));
+    return lerp(start, value.end, ComputeTFunc(1.0f / life));
 }
 
-float3 ToAdditional(float3EmitterParam value, float life)
+float3 ToAdditional(float3 start, float3EmitterParam value, float life)
 {
-    return lerp(value.start, value.end, ComputeTFunc(1.0f / life));
+    return lerp(start, value.end, ComputeTFunc(1.0f / life));
 }
 
-float4 ToAdditional(float4EmitterParam value, float life)
+float4 ToAdditional(float4 start , float4EmitterParam value, float life)
 {
-    return lerp(value.start, value.end, ComputeTFunc(1.0f / life));
+    return lerp(start, value.end, ComputeTFunc(1.0f / life));
 }
 
 float RandomInitialize(float3 value, float1EmitterParam emitterParam, float seed)

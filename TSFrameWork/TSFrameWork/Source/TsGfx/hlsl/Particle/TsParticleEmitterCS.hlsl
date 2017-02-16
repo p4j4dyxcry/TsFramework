@@ -16,10 +16,13 @@ void Emit(ParticleEmitter emitter, Particle particle )
     particle.color = RandomInitialize(float3(17, 63, 96), emitter.m_emitColor, emitter.m_emitRandomSeed);
     particle.position = RandomInitialize(float3(17, 63, 96), emitter.m_position, emitter.m_emitRandomSeed);
     particle.radius = RandomInitialize(float3(131, 519, 532), emitter.m_emitRadius, emitter.m_emitRandomSeed);
-    //particle.addtionalcolor = ToAdditional(  )
+
     // todo
     particle.gravity = 0;
+    particle.addtionalradius = ToAdditional(particle.radius, emitter.m_emitRadius, particle.life);
+    particle.addtionalcolor  = ToAdditional(particle.color, emitter.m_emitColor, particle.life);
 
+    particle.velocity = ToAdditional(emitter.m_emitVelocity.start, emitter.m_emitVelocity, particle.life);
 }
 
 [numthreads( 1 , 1 , 1 )]
