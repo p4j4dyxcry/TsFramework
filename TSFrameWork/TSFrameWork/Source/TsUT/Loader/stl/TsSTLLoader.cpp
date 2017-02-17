@@ -12,7 +12,7 @@ TsBool TsStlLoader::LoadFile(const TsChar* filename)
     Ts3DModelLoader::LoadFile(filename);
     m_filename = filename;
 
-    if (IsBinary(filename))
+    if (IsBinary(filename,65535))
         return LoadFromBinary(filename);
     else
         return  LoadFromAscii(filename);
