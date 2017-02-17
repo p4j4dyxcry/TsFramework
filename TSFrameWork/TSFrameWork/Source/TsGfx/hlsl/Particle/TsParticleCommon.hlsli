@@ -227,7 +227,7 @@ struct PARTICLE_VS_IN
 //---------------------------------------------------------------
 struct PARTICLE_VS_OUT
 {
-    float3 position : SV_Position;
+    float4 position : SV_Position;
     float4 color    : COLOR0;
     float  size     : TEXCOORD0;
 };
@@ -238,9 +238,9 @@ struct PARTICLE_VS_OUT
 //---------------------------------------------------------------
 struct PARTICLE_GS_OUT
 {
-    float3 position : SV_Position;
+    float4 position : SV_Position;
     float4 color    : COLOR0;
-    float size      : TEXCOORD0;
+    float2 uv       : TEXCOORD0;
 };
 #define PARTICLE_PS_IN PARTICLE_GS_OUT
 

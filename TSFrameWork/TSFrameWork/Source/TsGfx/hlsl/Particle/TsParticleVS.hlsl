@@ -9,7 +9,7 @@ PARTICLE_VS_OUT main(PARTICLE_VS_IN vsIn )
 
     uint idx = vsIn.InstanceID;
     Particle pt = g_particles[idx];
-    vsout.position = pt.position;
+    vsout.position = float4( pt.position,1);
     vsout.color = pt.color;
     vsout.size = pt.radius;
 
