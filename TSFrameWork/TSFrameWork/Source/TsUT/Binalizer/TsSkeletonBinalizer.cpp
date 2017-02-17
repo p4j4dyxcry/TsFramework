@@ -59,6 +59,7 @@ TsBool TsSkeletonBinalizer::Decode(std::ifstream& ifs)
 
 TsBool TsSkeletonBinalizer::BuildSkeleton( TsTransformBinalizer* pTransformBinalizer )
 {
+	m_pSkeleton = TsNew( TsSkeleton );
     for (TsUint i = 0; i < m_boneNum; ++i)
     {
         CommonBone& bone = m_pCommonBones[i];
