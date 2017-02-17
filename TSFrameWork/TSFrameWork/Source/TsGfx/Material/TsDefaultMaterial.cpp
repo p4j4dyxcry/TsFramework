@@ -53,8 +53,8 @@ TsBool TsDefaultMaterial::ApplyMaterial( TsDeviceContext* pContext)
 
 TsBool TsDefaultMaterial::UpdateMaterial( TsDeviceContext* pContext )
 {
-    if( m_isUpdate )
-        pContext->ChangeCBuffer( this , &m_material , GetBufferSize() );
+	if( m_isUpdate )
+		pContext->ChangeCBuffer( this , &m_material , GetBufferSize() );
     m_isUpdate = TS_FALSE;
     return TS_TRUE;
 }
@@ -138,18 +138,24 @@ TsBool TsDefaultMaterial::LoadSpeculerTextureFromFile( TsDevice * pDev , const T
 TsBool TsDefaultMaterial::SetAlbedoTexture( TsTexture* pTex )
 {
     m_pAlbedoTexture = pTex;
+	if( pTex != nullptr )
+		m_material.useDiffuseMap = 1.0f;
     m_isUpdate = TS_TRUE;
     return TS_TRUE;
 }
 TsBool TsDefaultMaterial::SetNormalTexture( TsTexture* pTex )
 {
     m_pNormalTexture = pTex;
+	if( pTex != nullptr )
+		m_material.useNomalMap = 1.0f;
     m_isUpdate = TS_TRUE;
     return TS_TRUE;
 
 }
 TsBool TsDefaultMaterial::SetSpeculerTexture( TsTexture* pTex )
 {
+	if( pTex != nullptr )
+		m_material.useSpeculerMap = 1.0f;
     m_pSpeclurTexture = pTex;
     m_isUpdate = TS_TRUE;
     return TS_TRUE;
