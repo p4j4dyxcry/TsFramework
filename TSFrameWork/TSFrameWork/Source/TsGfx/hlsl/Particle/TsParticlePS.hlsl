@@ -3,5 +3,7 @@
 
 PARTICLE_PS_OUT main( PARTICLE_PS_IN _in )
 {
-    return _in.color;
+    PARTICLE_PS_OUT ps_out;
+    ps_out.color = _in.color;
+    return ps_out;
 }

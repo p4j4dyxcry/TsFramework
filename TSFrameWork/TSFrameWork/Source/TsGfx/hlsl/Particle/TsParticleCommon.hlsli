@@ -53,6 +53,8 @@ struct float4EmitterParam
     float4 start;       //ŠJn
     float4 randomRange; //U‚ê•
     float4 end;         //I—¹
+
+    float4 dumy;
 };
 
 //---------------------------------------------------------------
@@ -189,28 +191,28 @@ float4 ToAdditional(float4 start , float4EmitterParam value, float life)
 float RandomInitialize(float3 value, float1EmitterParam emitterParam, float seed)
 {
     return emitterParam.start +
-           emitterParam.randomRange +
+           emitterParam.randomRange *
            ParticleRand(value, seed);
 }
 
 float2 RandomInitialize(float3 value, float2EmitterParam emitterParam, float seed)
 {
     return emitterParam.start +
-           emitterParam.randomRange +
+           emitterParam.randomRange *
            ParticleRand(value, seed);
 }
 
 float3 RandomInitialize(float3 value, float3EmitterParam emitterParam, float seed)
 {
     return emitterParam.start +
-           emitterParam.randomRange +
+           emitterParam.randomRange *
            ParticleRand(value, seed);
 }
 
 float4 RandomInitialize(float3 value, float4EmitterParam emitterParam, float seed)
 {
     return emitterParam.start +
-           emitterParam.randomRange +
+           emitterParam.randomRange *
            ParticleRand(value, seed);
 }
 
