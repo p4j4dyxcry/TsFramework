@@ -189,7 +189,7 @@ TsBool TsGeometoryBinalizer::BindMaterial(TsMaterialBinalizer * pMaterialBinaliz
     {
         for (TsUint i = 0; i < matCount; ++i)
         {
-            if (pMatArray[i].GetName() == m_pCommonRef[i].matName)
+            if (pMatArray[i].GetName() == m_pCommonRef[geometoryIdx].matName)
             {
                 m_pGeometoryObject[geometoryIdx]->SetMaterial(&pMatArray[i]);
                 break;
