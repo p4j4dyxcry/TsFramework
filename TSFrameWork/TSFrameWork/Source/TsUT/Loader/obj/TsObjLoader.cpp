@@ -358,10 +358,12 @@ TsBool TsOBJLoader::LoadObj(const TsChar* filename)
             //! Count of face controll points
             //------------------------------------------------------------
             TsInt indexCount = 0;
+            TsChar oldBuffer = 0;
             for (UINT i = 0; i < buf.size(); ++i)
             {
-                if (buf[i] == ' ')
+                if (buf[i] != ' ' && oldBuffer == ' ')
                     indexCount++;
+                oldBuffer = buf[i];
             }
 
             static const TsInt maxFace = 128;
@@ -430,7 +432,28 @@ TsBool TsOBJLoader::LoadObj(const TsChar* filename)
             else if (usePos && useNormal)
             {
                 // 区切り文字の置き換え
+
+                if (buf.find("//") != TsString::npos)
+                {
+                    TsDebugLogError("区切り文字//はサポートされていません。");
+                }
+
                 std::replace(buf.begin() + 2, buf.end(), '/', ' ');
+
+                //! ２つ以上空白がつながるケースは重複する空白を破棄する
+                TsChar prev = 0;
+                for (UINT i = 0; i < buf.size(); ++i)
+                {
+                    if (buf[i] == ' ' && prev == ' ')
+                    {
+                        buf.erase(i, 1);
+                        i = 0;
+                        prev = 0;
+                        continue;
+                    }
+                    prev = buf[i];
+                }
+
                 std::stringstream ss(&buf[2]);
 
                 TsUint posIndexList[maxFace];
