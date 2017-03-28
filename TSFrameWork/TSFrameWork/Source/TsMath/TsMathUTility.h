@@ -416,3 +416,35 @@ inline TsF32 Gaussian(TsF32 x, TsF32 mean, TsF32 deviation)
         * expf((-((x - mean) * (x - mean))) / (2.0f * deviation * deviation));
 }
 
+//! 点と線(Ray)の距離の平方を返します
+template< typename VectorT>
+TsF32 DistancePointAndRaySq(const VectorT& point, const VectorT& ray_point1, const VectorT& ray_point2)
+{
+    VectorT v1 = point - ray_point1;
+    VectorT v2 = ray_point2 - ray_point1;
+    TsF32 v1v2 = VectorT::Dot(v1,v2);
+    return v1.LengthSq() - v1v2*v1v2 / v2.LengthSq();
+}
+
+//! 点と線分の距離の平方を計算
+template< typename VectorT>
+TsF32 DistancePointAndLineSq(const VectorT& point, const VectorT& line_begin, const VectorT& line_end)
+{
+    VectorT v1 = point - line_begin;
+    VectorT v2 = line_end - line_begin;
+
+    TsF32 dot_v1v2 = VectorT::Dot(v1, v2);
+    v1.Length();
+    if (dot_v1v2 <= 0.0f)
+    {
+        return v1.LengthSq();
+    }
+    FLOAT dot_v2v2 = v2.LengthSq();
+
+    if (dot_v2v2 <= dot_v1v2) 
+    {
+        VectorT v3 = point - line_end;
+        return v3.LengthSq();
+    }
+    return v1.LengthSq() - dot_v1v2 * dot_v1v2 / dot_v2v2;
+}
