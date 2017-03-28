@@ -990,7 +990,6 @@ TsBool Collision3DCapsuleAndCapsule( const TsCapsule3D& capsule0,
 
     //平行判定
     TsBool isParallel = IsTsVectorParallel(line_cap0, line_cap1);
-
     //平行だったら線と球のあたりに1回トライ
     if (isParallel)
     {
@@ -1022,15 +1021,15 @@ TsBool Collision3DCapsuleAndCapsule( const TsCapsule3D& capsule0,
         if (t0 > 0.0f && t0 < 1.0f &&
             t1 > 0.0f && t1 < 1.0f)
         {
-            TsF32 lengthsq = (t_point1 - t_point0).Length();
-            TsF32 r2 = (radius_cap0 + radius_cap0) *
+            TsF32 lengthsq = (t_point1 - t_point0).LengthSq();
+            TsF32 r01r01 = (radius_cap0 + radius_cap0) *
                        (radius_cap1 + radius_cap1);
-            return  lengthsq <= r2;
+            return  lengthsq <= r01r01;
         }
     }
 
     //線分は衝突していないのでカプセルの↑と↓を判定する
-    //TODO:4回判定しているがこの判定は線分tの位置が求まれば2回で済む。
+    //TODO:4回判定しているがこの判定は線分tの位置が求まれば2回で済むはず。
     {
         TsSphere3D sphere(capsule0.GetTop(), capsule1.GetRadius() + capsule0.GetRadius());
         TsLine3D   line(capsule1.GetTop(), capsule1.GetBottom());
