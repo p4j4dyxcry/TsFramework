@@ -35,6 +35,10 @@ static const TsF32 COLLISION_DEFAULT_TOLERANCE = FLT_EPSILON;
 //  @AABBとレイ             CollisionAABBAndRay()
 //  @AABBと線分             CollisionAABBAndLine()
 //  @AABBと円               CollisionAABBAndSphere()
+//  @カプセルと点(2D)       CollisionCapsuleAndPoint()
+//  @カプセルと球(2D)       CollisionCapsuleAndSphere()
+//  @カプセルとカプセル(2D) CollisionCapsuleAndCapsule()
+//  @カプセルと線分(2D)     CollisionCapsuleAndLine()
 //
 //　@点と点(3D)             CollisionPointAndPoint()
 //  @線と点(3D)             CollisionRayAndPoint()
@@ -58,11 +62,10 @@ static const TsF32 COLLISION_DEFAULT_TOLERANCE = FLT_EPSILON;
 //  @OBBと線分              CollisionOBBAndLine()
 //  @OBBとOBB               CollisionOBBAndOBB()
 //  @OBBとAABB              CollisionOBBAndAABB()
-//
-//  @カプセルと点
-//  @カプセルと球
-//  @カプセルとカプセル     
-//  @カプセルと線分
+//  @カプセルと点(3D)       CollisionCapsuleAndPoint()
+//  @カプセルと球(3D)       CollisionCapsuleAndSphere()
+//  @カプセルとカプセル(3D) CollisionCapsuleAndCapsule()    
+//  @カプセルと線分(3D)     CollisionCapsuleAndLine()
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -355,13 +358,48 @@ TsBool CollisionOBBAndAABB  ( const TsOBB& obb,
                               const TsAABB3D& aabb,
                               TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE);
 
+
+//----------------------------------------------------------
+//! カプセル　と ポイント
+//  @param  capsule0          
+//  @param  point          
+//  @prama  tolerance      誤差許容範囲
+//----------------------------------------------------------
+template<typename T>
+TsBool CollisionCapsuleAndPoint( const TsCapsule<T>& capsule0,
+                                 const T& point,
+                                 TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE);
+
+//----------------------------------------------------------
+//! カプセル　と 線分
+//  @param  capsule0          
+//  @param  line          
+//  @prama  tolerance      誤差許容範囲
+//----------------------------------------------------------
+template<typename T>
+TsBool CollisionCapsuleAndLine( const TsCapsule<T>& capsule0,
+                                const TsLine<T>& line,
+                                TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE);
+
+//----------------------------------------------------------
+//! カプセル　と 球
+//  @param  capsule0          
+//  @param  sphere          
+//  @prama  tolerance      誤差許容範囲
+//----------------------------------------------------------
+template<typename T>
+TsBool CollisionCapsuleAndSphere( const TsCapsule<T>& capsule0,
+                                  const TsSphere<T>& sphere,
+                                  TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE);
+
 //----------------------------------------------------------
 //! カプセル　と カプセル
 //  @param  capsule0          
 //  @param  capsule1          
 //  @prama  tolerance      誤差許容範囲
 //----------------------------------------------------------
-TsBool Collision3DCapsuleAndCapsule( const TsCapsule3D& capsule0,
-                                     const TsCapsule3D& capsule1,
-                                     TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE);
+template<typename T>
+TsBool CollisionCapsuleAndCapsule( const TsCapsule<T>& capsule0,
+                                   const TsCapsule<T>& capsule1,
+                                   TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE);
 
