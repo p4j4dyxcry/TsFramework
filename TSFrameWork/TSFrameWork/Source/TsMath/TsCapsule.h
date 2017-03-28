@@ -29,6 +29,7 @@ public:
     const T& GetBottom()const;
     const T& GetTop()const;
     TsF32 GetRadius()const;
+    T GetBottomToTopVector()const;
 
     virtual TsCollider::eType GetType()const override;
 private:

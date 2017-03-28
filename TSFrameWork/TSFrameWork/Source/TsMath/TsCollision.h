@@ -58,6 +58,11 @@ static const TsF32 COLLISION_DEFAULT_TOLERANCE = FLT_EPSILON;
 //  @OBBと線分              CollisionOBBAndLine()
 //  @OBBとOBB               CollisionOBBAndOBB()
 //  @OBBとAABB              CollisionOBBAndAABB()
+//
+//  @カプセルと点
+//  @カプセルと球
+//  @カプセルとカプセル     
+//  @カプセルと線分
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -349,3 +354,14 @@ TsBool CollisionOBBAndOBB   ( const TsOBB& obb0,
 TsBool CollisionOBBAndAABB  ( const TsOBB& obb,
                               const TsAABB3D& aabb,
                               TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE);
+
+//----------------------------------------------------------
+//! カプセル　と カプセル
+//  @param  capsule0          
+//  @param  capsule1          
+//  @prama  tolerance      誤差許容範囲
+//----------------------------------------------------------
+TsBool Collision3DCapsuleAndCapsule( const TsCapsule3D& capsule0,
+                                     const TsCapsule3D& capsule1,
+                                     TsF32 tolerance = COLLISION_DEFAULT_TOLERANCE);
+

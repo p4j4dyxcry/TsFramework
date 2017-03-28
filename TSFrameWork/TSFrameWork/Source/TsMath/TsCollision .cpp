@@ -73,7 +73,7 @@ inline TsBool CollisionRayAndPoint( const TsRay<T>& ray,  //レイ
     T lineVector = ray.GetVector();
 
     // ２つのベクトルは平行？
-    return fabsf(T::Cross(pointToLineBegin, lineVector).Length()) < tolerance;
+    return IsTsVectorParallel(pointToLineBegin , lineVector,tolerance);
 }
 
 //----------------------------------------------------------
@@ -90,7 +90,7 @@ inline TsBool CollisionLineAndPoint(const TsLine<T>& line,  //線分1
     T lineVector = line.GetVector();
 
     // ２つのベクトルは平行？
-    TsBool isParallel = fabsf(T::Cross(pointToLineBegin, lineVector).Length()) < tolerance;
+    TsBool isParallel = IsTsVectorParallel(pointToLineBegin, lineVector, tolerance);
 
     //ベクトルの向きは反対を向いていない？
     TsBool isSigne = T::Dot(pointToLineBegin, lineVector) >= 0;
@@ -119,10 +119,9 @@ inline TsBool CollisionLineAndLine( const TsLine<T> &line0, // 線分1
 {
 
     T v = line0.GetBegin() - line1.GetBegin();
-    T Crs_v1_v2 = T::Cross(line0.GetVector(), line1.GetVector());
 
     // ２つのベクトルは平行？
-    if (fabsf(Crs_v1_v2.Length()) < tolerance)
+    if (IsTsVectorParallel(line0.GetVector(), line1.GetVector(),tolerance))
         return TS_FALSE;
 
     // ベクトルの外積からsinを取得
@@ -940,9 +939,125 @@ TsBool CollisionOBBAndAABB  ( const TsOBB& obb,
                               const TsAABB3D& aabb,
                               TsF32 tolerance )
 {
+    //! AABB を OBBに変換する
     TsOBB aabbToObb;
     aabbToObb.SetCenter ( aabb.GetCenter() );
     aabbToObb.SetScale  ( (aabb.GetMax() - aabb.GetMin()) /2.0f);
 
     return CollisionOBBAndOBB(obb, aabbToObb, tolerance);
+}
+
+//----------------------------------------------------------
+//! カプセル　と カプセル
+//----------------------------------------------------------
+TsBool Collision3DCapsuleAndCapsule( const TsCapsule3D& capsule0,
+                                     const TsCapsule3D& capsule1,
+                                     TsF32 tolerance )
+{
+    //---------------------------------------------------------------------------
+    //２つのカプセルのどちらかが球とみなせる場合はより軽い別の形状の衝突判定を使う
+    //---------------------------------------------------------------------------
+    TsBool capsule0_is_height0 = capsule0.GetBottomToTopVector().LengthSq() < tolerance;
+    TsBool capsule1_is_height0 = capsule1.GetBottomToTopVector().LengthSq() < tolerance;
+
+    //どちらも高さがないときは球と球のあたり判定を行う
+    if (capsule0_is_height0 && capsule1_is_height0)
+    {
+        TsSphere3D sphere0(capsule0.GetTop(), capsule0.GetRadius());
+        TsSphere3D sphere1(capsule1.GetTop(), capsule1.GetRadius());
+        return CollisionSphereAndSphere(sphere0, sphere1);
+    }
+    //capsule0を球に変換して線分とのあたり判定
+    else if (capsule0_is_height0)
+    {
+        TsSphere3D sphere(capsule0.GetTop(), capsule0.GetRadius() + capsule1.GetRadius());
+        TsLine3D   line(capsule1.GetTop(), capsule1.GetBottom());
+        return CollisionSphereAndLine(sphere, line,tolerance);
+    }
+    //capsule1を球に変換して線分とのあたり判定
+    else if (capsule1_is_height0)
+    {
+        TsSphere3D sphere(capsule1.GetTop(), capsule1.GetRadius() + capsule0.GetRadius());
+        TsLine3D   line(capsule0.GetTop(), capsule0.GetBottom());
+        return CollisionSphereAndLine(sphere, line, tolerance);
+    }
+
+    TsVector3&& line_cap0 = capsule0.GetBottomToTopVector();
+    TsVector3&& line_cap1 = capsule1.GetBottomToTopVector();
+    
+    TsF32 radius_cap0 = capsule0.GetRadius();
+    TsF32 radius_cap1 = capsule1.GetRadius();
+
+    //平行判定
+    TsBool isParallel = IsTsVectorParallel(line_cap0, line_cap1);
+
+    //平行だったら線と球のあたりに1回トライ
+    if (isParallel)
+    {
+        TsSphere3D sphere(capsule1.GetTop(), capsule1.GetRadius() + capsule0.GetRadius());
+        TsLine3D   line(capsule0.GetTop(), capsule0.GetBottom());
+        if (CollisionSphereAndLine(sphere, line, tolerance))
+            return TS_TRUE;
+    }
+    else
+    {
+        //平行していない2つの直線の最短距離を求める
+        TsVector3 line_2 = capsule1.GetBottom() - capsule0.GetBottom();
+
+        TsF32 dot_01 = TsVector3::Dot(line_cap0, line_cap1);
+        TsF32 dot_00 = line_cap0.LengthSq();
+        TsF32 dot_11 = line_cap1.LengthSq();
+
+        TsF32 dot_02 = TsVector3::Dot(line_cap0, line_2);
+        TsF32 dot_12 = TsVector3::Dot(line_cap1, line_2);
+
+        TsF32 t0 = (dot_11* dot_02 - dot_01 * dot_12) / (dot_01 * dot_01 - dot_00 * dot_11);
+        TsVector3 t_point0 = capsule0.GetBottom() + -line_cap0 * t0;
+
+        TsVector3 t_point0_to_capsule1 = capsule1.GetBottom() - t_point0;
+
+        TsF32 t1 = TsVector3::Dot(line_cap1, t_point0_to_capsule1) / dot_11;
+        TsVector3 t_point1 = capsule1.GetBottom() + -line_cap1 * t1;
+
+        if (t0 > 0.0f && t0 < 1.0f &&
+            t1 > 0.0f && t1 < 1.0f)
+        {
+            TsF32 lengthsq = (t_point1 - t_point0).Length();
+            TsF32 r2 = (radius_cap0 + radius_cap0) *
+                       (radius_cap1 + radius_cap1);
+            return  lengthsq <= r2;
+        }
+    }
+
+    //線分は衝突していないのでカプセルの↑と↓を判定する
+    //TODO:4回判定しているがこの判定は線分tの位置が求まれば2回で済む。
+    {
+        TsSphere3D sphere(capsule0.GetTop(), capsule1.GetRadius() + capsule0.GetRadius());
+        TsLine3D   line(capsule1.GetTop(), capsule1.GetBottom());
+        if (CollisionSphereAndLine(sphere, line, tolerance))
+            return TS_TRUE;
+    }
+
+    {
+        TsSphere3D sphere(capsule0.GetBottom(), capsule1.GetRadius() + capsule0.GetRadius());
+        TsLine3D   line(capsule1.GetTop(), capsule1.GetBottom());
+        if (CollisionSphereAndLine(sphere, line, tolerance))
+            return TS_TRUE;
+    }
+
+    {
+        TsSphere3D sphere(capsule1.GetTop(), capsule1.GetRadius() + capsule0.GetRadius());
+        TsLine3D   line(capsule0.GetTop(), capsule0.GetBottom());
+        if (CollisionSphereAndLine(sphere, line, tolerance))
+            return TS_TRUE;
+    }
+
+    {
+        TsSphere3D sphere(capsule1.GetBottom(), capsule1.GetRadius() + capsule0.GetRadius());
+        TsLine3D   line(capsule0.GetTop(), capsule0.GetBottom());
+        if (CollisionSphereAndLine(sphere, line, tolerance))
+            return TS_TRUE;
+    }
+
+    return TS_FALSE;
 }

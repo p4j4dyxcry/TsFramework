@@ -38,18 +38,21 @@ template< typename T>
 TsBool TsCapsule<T>::SetBottom(const T& bottom)
 {
     m_bottom = bottom;
+    return TS_TRUE;
 }
 
 template< typename T>
 TsBool TsCapsule<T>::SetTop(const T& top)
 {
     m_top = top;
+    return TS_TRUE;
 }
 
 template< typename T>
 TsBool TsCapsule<T>::SetRadius(TsF32 radius)
 {
     m_radius = radius;
+    return TS_TRUE;
 }
 
 template< typename T>
@@ -69,6 +72,12 @@ TsF32 TsCapsule<T>::GetRadius()const
 {
     return m_radius;
 }
+template< typename T>
+T TsCapsule<T>::GetBottomToTopVector()const
+{
+    return m_bottom - m_top;
+}
+
 
 template<>
 TsCollider::eType TsCapsule2D::GetType()const
