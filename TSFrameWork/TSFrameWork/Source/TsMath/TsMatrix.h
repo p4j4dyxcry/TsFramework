@@ -54,6 +54,18 @@ public:
     TsBool operator == (const TsMatrix&);
     TsBool operator != (const TsMatrix&);
 
+    TsVector3 GetVec3Row(TsInt collum)const;
+    TsVector3 GetVec3Collum(TsInt row)const;
+
+    TsVector3 GetVec4Row(TsInt collum)const;
+    TsVector3 GetVec4Collum(TsInt row)const;
+
+    void SetVec3Row(TsInt collum, const TsVector3&);
+    void SetVec3Collum(TsInt row, const TsVector3&);
+
+    void SetVec4Row(TsInt collum, const TsVector4&);
+    void SetVec4Collum(TsInt row, const TsVector4&);
+
     static TsMatrix CreateTranslate( FLOAT x, FLOAT y , FLOAT z );
     static TsMatrix CreateTranslate( const TsVector3& translate );
     static TsMatrix CreateRotate( const TsQuaternion& q );
