@@ -54,7 +54,10 @@ public:
     TsBool operator == (const TsMatrix&);
     TsBool operator != (const TsMatrix&);
 
+    //! Vector3 形式で行(横)を設定する
     TsVector3 GetVec3Row(TsInt collum)const;
+
+    //! Vector3 形式で列(縦)を設定する
     TsVector3 GetVec3Collum(TsInt row)const;
 
     TsVector3 GetVec4Row(TsInt collum)const;

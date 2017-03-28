@@ -232,47 +232,47 @@ TsBool TsMatrix::operator!=(const TsMatrix& matrix)
 
 TsVector3 TsMatrix::GetVec3Row(TsInt collum)const
 {
-    return TsVector3(m[0][collum], m[1][collum], m[2][collum]);
+    return TsVector3(m[collum][0], m[collum][1], m[collum][2]);
 }
 TsVector3 TsMatrix::GetVec3Collum(TsInt row)const
 {
-    return TsVector3(m[row][0], m[row][1], m[row][2]);
+    return TsVector3(m[0][row], m[1][row], m[2][row]);
 }
 
 
 TsVector3 TsMatrix::GetVec4Row(TsInt collum)const
 {
-    return TsVector4(m[0][collum], 
-                     m[1][collum], 
-                     m[2][collum], 
-                     m[3][collum]);
+    return TsVector4(m[collum][0], 
+                     m[collum][1], 
+                     m[collum][2], 
+                     m[collum][3]);
 }
 TsVector3 TsMatrix::GetVec4Collum(TsInt row)const
 {
-    return TsVector4(m[row][0], 
-                     m[row][1], 
-                     m[row][2],
-                     m[row][3]);
+    return TsVector4(m[0][row], 
+                     m[1][row], 
+                     m[2][row],
+                     m[3][row]);
 }
 
 void TsMatrix::SetVec3Row(TsInt collum, const TsVector3& row)
 {
     for (TsInt i = 0; i < 3; ++i)
-        m[i][collum] = row[i];
+        m[collum][i] = row[i];
 }
 void TsMatrix::SetVec3Collum(TsInt row, const TsVector3& collum)
 {
     for (TsInt i = 0; i < 3; ++i)
-        m[row][i] = collum[i];
+        m[i][row] = collum[i];
 }
 
 void TsMatrix::SetVec4Row(TsInt collum, const TsVector4& row)
 {
     for (TsInt i = 0; i < 4; ++i)
-        m[i][collum] = row[i];
+        m[collum][i] = row[i];
 }
 void TsMatrix::SetVec4Collum(TsInt row, const TsVector4& collum)
 {
     for (TsInt i = 0; i < 4; ++i)
-        m[row][i] = collum[i];
+        m[i][row] = collum[i];
 }
