@@ -60,6 +60,7 @@ public:
 
     XMVECTOR  ToXMVECTOR()const;
     TsF32 Length()const;
+    TsF32 LengthSq()const;
     TsVector2& Normalize();
     TsVector2  Normalized()const;
 
@@ -132,6 +133,7 @@ public:
     TsVector3& TransformCood(const TsMatrix& mat);
     XMVECTOR  ToXMVECTOR()const;
     TsF32 Length()const;
+    TsF32 LengthSq()const;
     TsVector3& Normalize();
     TsVector3  Normalized()const;
 

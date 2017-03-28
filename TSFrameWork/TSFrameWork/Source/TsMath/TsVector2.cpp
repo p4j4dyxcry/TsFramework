@@ -112,6 +112,12 @@ FLOAT TsVector2::Length ()const
     return ( vLength.m128_f32[0] );
 }
 
+FLOAT TsVector2::LengthSq()const
+{
+    XMVECTOR vLength = XMVector2LengthSq(ToXMVECTOR());
+    return (vLength.m128_f32[0]);
+}
+
 TsVector2& TsVector2::Normalize()
 {
     *this = Normalized();
