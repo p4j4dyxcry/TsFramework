@@ -69,6 +69,12 @@ public:
     void SetVec4Row(TsInt collum, const TsVector4&);
     void SetVec4Collum(TsInt row, const TsVector4&);
 
+    void SetVec3Row(TsInt collum, TsF32 , TsF32 , TsF32 );
+    void SetVec3Collum(TsInt row, TsF32 , TsF32 , TsF32 );
+                                                        
+    void SetVec4Row(TsInt collum, TsF32 , TsF32 , TsF32 ,TsF32);
+    void SetVec4Collum(TsInt row, TsF32 , TsF32 , TsF32 ,TsF32);
+
     static TsMatrix CreateTranslate( FLOAT x, FLOAT y , FLOAT z );
     static TsMatrix CreateTranslate( const TsVector3& translate );
     static TsMatrix CreateRotate( const TsQuaternion& q );

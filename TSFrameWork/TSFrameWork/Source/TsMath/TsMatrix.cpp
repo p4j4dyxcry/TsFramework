@@ -195,7 +195,7 @@ TsVector3 TsMatrix::TransformPoint(const TsVector3& v)const
 TsVector3 TsMatrix::TransformNormal( const TsVector3& vNormal )const
 {
     TsMatrix m = *this;
-    m._41 = 0.0f;  m._42 = 0.0f;  m._43 = 0.0f;
+    m.SetVec4Row(3, TsVector4(0,0,0,1));
 
     return m.TransformVector(vNormal);
 }
@@ -275,4 +275,32 @@ void TsMatrix::SetVec4Collum(TsInt row, const TsVector4& collum)
 {
     for (TsInt i = 0; i < 4; ++i)
         m[i][row] = collum[i];
+}
+
+void TsMatrix::SetVec3Row(TsInt collum, TsF32 f0, TsF32 f1, TsF32 f2)
+{
+    m[collum][0] = f0;
+    m[collum][1] = f1;
+    m[collum][2] = f2;
+}
+void TsMatrix::SetVec3Collum(TsInt row, TsF32 f0, TsF32 f1, TsF32 f2)
+{
+    m[0][row] = f0;
+    m[1][row] = f1;
+    m[2][row] = f2;
+}
+
+void TsMatrix::SetVec4Row(TsInt collum, TsF32 f0, TsF32 f1, TsF32 f2 , TsF32 f3)
+{
+    m[collum][0] = f0;
+    m[collum][1] = f1;
+    m[collum][2] = f2;
+    m[collum][3] = f3;
+}
+void TsMatrix::SetVec4Collum(TsInt row, TsF32 f0, TsF32 f1, TsF32 f2, TsF32 f3)
+{
+    m[0][row] = f0;
+    m[1][row] = f1;
+    m[2][row] = f2;
+    m[3][row] = f3;
 }
