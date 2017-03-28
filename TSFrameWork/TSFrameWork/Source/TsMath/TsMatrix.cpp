@@ -2,10 +2,10 @@
 #include "TsVector.h"
 #include "TsQuaternion.h"
 
-const TsMatrix TsMatrix::identity = XMFLOAT4X4( 1 , 0 , 0 , 0 ,
-                                                0 , 1 , 0 , 0 ,
-                                                0 , 0 , 1 , 0 ,
-                                                0 , 0 , 0 , 1 );
+const TsMatrix TsMatrix::identity = XMFLOAT4X4( 1.0f, 0.0f, 0.0f, 0.0f,
+                                                0.0f, 1.0f, 0.0f, 0.0f ,
+                                                0.0f, 0.0f, 1.0f, 0.0f,
+                                                0.0f, 0.0f, 0.0f, 1.0f);
 
 TsMatrix::TsMatrix( TsF32 m11 , TsF32 m12 , TsF32 m13 , TsF32 m14 ,
                     TsF32 m21 , TsF32 m22 , TsF32 m23 , TsF32 m24 ,
@@ -33,7 +33,7 @@ TsMatrix::TsMatrix( TsVector3& p , TsQuaternion& q , TsVector3& scale )
 //! XNA行列からの変換用
 TsMatrix&  TsMatrix::operator =( const XMMATRIX& i )
 {
-    memcpy( m , i.m , sizeof( FLOAT ) * 16 );
+    memcpy( m , i.m , sizeof( TsF32 ) * 16 );
     return *this;
 }
 
@@ -58,7 +58,7 @@ XMMATRIX  TsMatrix::ToXMMATRIX()const
 TsQuaternion TsMatrix::ToQuaternion()const
 {	
     // 最大成分を検索
-    float elem[4]; // 0:x, 1:y, 2:z, 3:w
+    TsF32 elem[4]; // 0:x, 1:y, 2:z, 3:w
     elem[0] =  _11 - _22 - _33 + 1.0f;
     elem[1] = -_11 + _22 - _33 + 1.0f;
     elem[2] = -_11 - _22 + _33 + 1.0f;
@@ -75,9 +75,9 @@ TsQuaternion TsMatrix::ToQuaternion()const
 
     // 最大要素の値を算出
     TsQuaternion q;
-    float v = sqrtf( elem[biggestIndex] ) * 0.5f;
+    TsF32 v = sqrtf( elem[biggestIndex] ) * 0.5f;
     
-    float mult = 0.25f / v;
+    TsF32 mult = 0.25f / v;
     switch( biggestIndex ) {
         case 0: // x
             q.x =  v;
@@ -131,7 +131,7 @@ TsMatrix TsMatrix::Inversed()
 //! [メソッド] static　メソッド
 
 //! 平行移動行列を生成する
-TsMatrix TsMatrix::CreateTranslate( FLOAT x , FLOAT y , FLOAT z )
+TsMatrix TsMatrix::CreateTranslate( TsF32 x , TsF32 y , TsF32 z )
 {
     return TsMatrix( XMMatrixTranslation( x , y , z ) );
 }
@@ -148,7 +148,7 @@ TsMatrix TsMatrix::CreateRotate( const TsQuaternion& q )
 }
 
 //! 拡縮行列を生成する
-TsMatrix TsMatrix::CreateScale( FLOAT x, FLOAT y ,FLOAT z )
+TsMatrix TsMatrix::CreateScale( TsF32 x, TsF32 y ,TsF32 z )
 {
     return TsMatrix( XMMatrixScaling( x , y , z ));
 }
