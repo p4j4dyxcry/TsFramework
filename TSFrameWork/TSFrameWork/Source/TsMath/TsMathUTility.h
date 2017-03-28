@@ -416,9 +416,15 @@ inline TsF32 Gaussian(TsF32 x, TsF32 mean, TsF32 deviation)
         * expf((-((x - mean) * (x - mean))) / (2.0f * deviation * deviation));
 }
 
+template <typename VectorT>
+TsBool IsTsVectorParallel(const VectorT& v0, const VectorT& v1, TsF32 tolerance = FLT_EPSILON)
+{
+    return fabsf(VectorT::Cross(v0, v1).Length()) < tolerance;
+}
+
 //! 点と線(Ray)の距離の平方を返します
 template< typename VectorT>
-TsF32 DistancePointAndRaySq(const VectorT& point, const VectorT& ray_point1, const VectorT& ray_point2)
+TsF32 TsDistancePointAndRaySq(const VectorT& point, const VectorT& ray_point1, const VectorT& ray_point2)
 {
     VectorT v1 = point - ray_point1;
     VectorT v2 = ray_point2 - ray_point1;
@@ -428,7 +434,7 @@ TsF32 DistancePointAndRaySq(const VectorT& point, const VectorT& ray_point1, con
 
 //! 点と線分の距離の平方を計算
 template< typename VectorT>
-TsF32 DistancePointAndLineSq(const VectorT& point, const VectorT& line_begin, const VectorT& line_end)
+TsF32 TsDistancePointAndLineSq(const VectorT& point, const VectorT& line_begin, const VectorT& line_end)
 {
     VectorT v1 = point - line_begin;
     VectorT v2 = line_end - line_begin;
