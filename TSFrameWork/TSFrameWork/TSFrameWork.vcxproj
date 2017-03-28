@@ -136,6 +136,7 @@
     <ClCompile Include="Source\TsMath\TsAABB.cpp" />
     <ClCompile Include="Source\TsMath\TsAnimationKey.cpp" />
     <ClCompile Include="Source\TsMath\TsBone.cpp" />
+    <ClCompile Include="Source\TsMath\TsCapsule.cpp" />
     <ClCompile Include="Source\TsMath\TsCollision .cpp" />
     <ClCompile Include="Source\TsMath\TsCollisionOctTree.cpp" />
     <ClCompile Include="Source\TsMath\TsCollisionQuadTree.cpp" />
@@ -248,6 +249,7 @@
     <ClInclude Include="Source\TsMath\TsAABB.h" />
     <ClInclude Include="Source\TsMath\TsAnimationKey.h" />
     <ClInclude Include="Source\TsMath\TsBone.h" />
+    <ClInclude Include="Source\TsMath\TsCapsule.h" />
     <ClInclude Include="Source\TsMath\TsCollider.h" />
     <ClInclude Include="Source\TsMath\TsCollision.h" />
     <ClInclude Include="Source\TsMath\TsCollisionOctTree.h" />

@@ -12,6 +12,7 @@
 #include "TsAABB.h"
 #include "TsTriangle.h"
 #include "TsOBB.h"
+#include "TsCapsule.h"
 #include "TsBone.h"
 #include "TsSkeleton.h"
 #include "TsSphereMeshCreater.h"

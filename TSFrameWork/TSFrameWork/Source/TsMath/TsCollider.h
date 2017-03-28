@@ -18,6 +18,8 @@ public:
         Collider_OBB3D,
         Collider_TsCircle,
         Collider_TsSphere,
+        Collider_Capsule2D,
+        Collider_Capsule3D,
         Collider_Unknown,
         Collider_Num,
     };

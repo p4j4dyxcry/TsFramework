@@ -501,6 +501,9 @@
     <ClCompile Include="Source\TsUT\TsTimer.cpp">
       <Filter>ソース ファイル\TsUT\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TsMath\TsCapsule.cpp">
+      <Filter>ソース ファイル\TsMath\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TSWinEntryPoint.h">
@@ -877,6 +880,9 @@
     </ClInclude>
     <ClInclude Include="Source\TsUT\TsTimer.h">
       <Filter>ソース ファイル\TsUT\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TsMath\TsCapsule.h">
+      <Filter>ソース ファイル\TsMath\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
