@@ -42,6 +42,7 @@ protected:
     TsVertexSkin* CreateLineVertex( TsLine<T>* pLine );
 
     TsVertexSkin* CreateSphereVertex();
+    TsVertexSkin* CreateCapsule3DVertex();
     TsVertexSkin* CreateBoxVertex();
     TsVertexSkin* CreateBox2DVertex();
 

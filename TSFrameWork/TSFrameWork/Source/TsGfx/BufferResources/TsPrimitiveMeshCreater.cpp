@@ -359,3 +359,110 @@ TsBool TsPrimitiveMeshCreater::GenerateBox3DLine( TsVertexDefault** ppOutVertex 
 {
     return GenerateBox3DLineTemplate( ppOutVertex , outVertexCount );
 }
+
+TsBool TsPrimitiveMeshCreater::GenerateCapsule3D(TsVertexSkin** ppOutVertex,
+                                                 TsInt& outVertexCount,
+                                                 TsInt slices,TsInt stack)
+{
+    TsF32     inv_stack = 1.0f / stack;
+    TsF32     inv_slice = 1.0f / slices;
+
+    TsInt vertex_count = ( slices * stack + 1 ) * 2;
+
+    TsVector<TsVertexSkin> original_vertices(vertex_count);
+    TsVertexSkin* ptr = &original_vertices[0];
+
+    auto SetVertex = [](TsVertexSkin*& ptr, TsVector3 point, TsVector3 normal)
+    {
+        ptr->pos = point + normal;
+        ptr->normal = normal;
+        ++ptr;
+    };
+
+    //-----------------------------------------------------------------------
+    // 球を2つ作成
+    //-----------------------------------------------------------------------
+
+    //! 上側の半球
+    SetVertex(ptr, TsVector3::up, TsVector3::up);
+    for (TsInt i = 0; i < stack; ++i)
+    {
+        TsF32 t = ( TS_PI * 0.5f) * inv_stack * ( i + 1);
+        TsF32 r = sinf(t);
+        TsVector3 x = TsVector3::right * r;
+        TsVector3 y = TsVector3::front * r;
+        TsVector3 z = TsVector3::up * cosf(t);
+
+        for (TsInt j = 0; j < slices; ++j)
+        {
+            TsF32 u = TS_PI * 2.0f * inv_slice * j;
+            TsVector3 n = x * cosf(u) + y * sinf(u) + z;
+
+            SetVertex(ptr, TsVector3::up, n);
+        }
+    }
+
+    //! 下側の半球
+    for (TsInt i = 0; i < stack; ++i)
+    {
+        TsF32 t = TS_PI * inv_stack * i;
+        TsF32 r = cosf(t);
+        TsVector3 x = TsVector3::right * r;
+        TsVector3 y = TsVector3::front * r;
+        TsVector3 z = TsVector3::up * -sinf(t);
+
+        for (TsInt j = 0; j < slices; ++j)
+        {
+            TsF32 u = TS_PI * 2.0f * inv_slice * j;
+            TsVector3 n = x * cosf(u) + y * sinf(u) + z;
+            SetVertex(ptr, TsVector3::down, n);
+        }
+    }
+    SetVertex(ptr, TsVector3::down, TsVector3::down);
+
+    //------------------------------------------------------------------
+    // 2つの半球をつなげる
+    //------------------------------------------------------------------
+
+    outVertexCount = slices*stack * 2 * 2 * 3;
+    *ppOutVertex = TsNew(TsVertexSkin[outVertexCount]);
+    TsVertexSkin* pOut = ppOutVertex[0];
+
+    // 上半球側端点周りの計算
+    for (UINT i = 0; i<slices; i++)
+    {
+        *(pOut++) = original_vertices[0];
+        *(pOut++) = original_vertices[1 + i];
+        *(pOut++) = original_vertices[1 + (i+1)%slices];
+    }
+
+    // 上半球と下半球をつなげる
+    UINT imax = stack * 2 - 1;
+    for (UINT i = 0; i<imax; i++)
+    {
+        UINT ibase = 1 + slices*i;
+        for (UINT j = 0; j<slices; j++)
+        {
+            UINT jnext = (j + 1) % slices;
+
+            *(pOut++) = original_vertices[ibase + j];
+            *(pOut++) = original_vertices[ibase + j + slices];
+            *(pOut++) = original_vertices[ibase + jnext];
+
+            *(pOut++) = original_vertices[ibase + jnext];
+            *(pOut++) = original_vertices[ibase + j + slices];
+            *(pOut++) = original_vertices[ibase + jnext + slices];
+        }
+    }
+
+    // 下半球の側端点周りの計算
+    UINT ibase = 1 + slices*imax;
+    UINT ilast = vertex_count - 1;
+    for (UINT j = 0; j<slices; j++)
+    {
+        *(pOut++) = original_vertices[ibase + j];
+        *(pOut++) = original_vertices[ilast];
+        *(pOut++) = original_vertices[ibase + (j + 1) % slices];
+    }
+    return TS_TRUE;
+}

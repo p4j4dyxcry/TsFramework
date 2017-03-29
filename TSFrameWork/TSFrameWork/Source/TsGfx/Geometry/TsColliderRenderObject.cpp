@@ -131,6 +131,9 @@ TsBool  TsColliderRenderObject::CreateVertexBuffer(TsDevice* pDev, TsCollider* p
     case TsCollider::Collider_TsSphere:
     case TsCollider::Collider_TsCircle:
         m_pVertex = CreateSphereVertex();
+    case TsCollider::Collider_Capsule2D:
+    case TsCollider::Collider_Capsule3D:
+        m_pVertex = CreateSphereVertex();
         break;        
 
     default:
@@ -192,6 +195,17 @@ TsVertexSkin* TsColliderRenderObject::CreateSphereVertex()
     TsPrimitiveMeshCreater::GenerateSphere(&pVertex, (TsInt&)m_vertexCount,10);
 
     return pVertex;    
+}
+
+//----------------------------------------------------------
+//! ‹…ƒƒbƒVƒ…‚ğì¬‚·‚é
+//----------------------------------------------------------
+TsVertexSkin* TsColliderRenderObject::CreateCapsule3DVertex()
+{
+    TsVertexSkin * pVertex = nullptr;
+    TsPrimitiveMeshCreater::GenerateCapsule3D(&pVertex, (TsInt&)m_vertexCount, 8, 8);
+
+    return pVertex;
 }
 
 //----------------------------------------------------------

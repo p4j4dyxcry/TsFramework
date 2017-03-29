@@ -72,23 +72,41 @@ TsF32 TsCapsule<T>::GetRadius()const
 {
     return m_radius;
 }
+
+template< typename T>
+TsF32 TsCapsule<T>::GetHeight()const
+{
+    return GetBottomToTopVector().Length();
+}
+
 template< typename T>
 T TsCapsule<T>::GetBottomToTopVector()const
 {
     return m_bottom - m_top;
 }
 
+template< typename T>
+TsMatrix TsCapsule<T>::GetGeometoricMatrix()const
+{
+    TsVector3 scale = GetRadius();
+    scale.y += GetHeight();
+    TsVector3 translate = GetTop() - GetBottom();
+
+    TsQuaternion q;
+
+    return TsMatrix::CreateScale(scale) * TsMatrix::CreateTranslate(translate);
+}
 
 template<>
 TsCollider::eType TsCapsule2D::GetType()const
 {
-    return TsCollider::Collider_AABB2D;
+    return TsCollider::Collider_Capsule2D;
 }
 
 template<>
 TsCollider::eType TsCapsule3D::GetType()const
 {
-    return TsCollider::Collider_AABB3D;
+    return TsCollider::Collider_Capsule3D;
 }
 
 template<typename T>

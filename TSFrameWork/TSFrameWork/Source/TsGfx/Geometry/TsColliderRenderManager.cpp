@@ -124,7 +124,7 @@ TsBool TsColliderRenderManager::Initialize(TsDevice* pDev)
         TsVertexSkin* pSkin = nullptr;
         TsInt sz;
         creater.GenerateSphere(&pSkin, sz,9);
-
+        creater.GenerateCapsule3D(&pSkin, sz, 9, 9);
         TsVertexBuffer* pVB = pDev->CreateVertexBuffer(pSkin, sz*sizeof(TsVertexSkin), sizeof(TsVertexSkin));
 
         std::pair<TsCollider::eType, TsVertexBuffer*> pair;

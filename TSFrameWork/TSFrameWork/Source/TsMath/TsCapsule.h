@@ -29,7 +29,10 @@ public:
     const T& GetBottom()const;
     const T& GetTop()const;
     TsF32 GetRadius()const;
+    TsF32 GetHeight()const;
     T GetBottomToTopVector()const;
+
+    virtual TsMatrix GetGeometoricMatrix()const override;
 
     virtual TsCollider::eType GetType()const override;
 private:

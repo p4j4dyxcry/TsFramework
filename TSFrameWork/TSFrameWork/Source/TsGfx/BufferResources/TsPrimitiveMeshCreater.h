@@ -24,6 +24,10 @@ public:
                                   TsInt& outVertexCount,
                                   TsInt div = 10);
 
+    static TsBool GenerateCapsule3D( TsVertexSkin** ppOutVertex,
+                                     TsInt& outVertexCount,
+                                     TsInt slices,TsInt stack);
+
     static TsBool GenerateSprite( TsVertexSkin** ppOutVertex,
                                   TsInt& outVertexCount,
                                   TS_CULL_MODE cullMode = TS_CULL_MODE::BACK);
