@@ -332,8 +332,8 @@ inline TsBool CollisionSphereAndLine( const TsSphere<T>& s,
     if (d > d2)
     {
         T&& v2 = s.GetCenter() - line.GetEnd();
-        TsF32 len = v2.Length();
-        return (len * len) < r2;
+        TsF32 len = v2.LengthSq();
+        return len < r2;
     }
     else
     {
