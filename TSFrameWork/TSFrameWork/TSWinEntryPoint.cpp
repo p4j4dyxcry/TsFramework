@@ -21,112 +21,40 @@ void FovFuncTest(TsF32 delta)
     }
 }
 
-void TestUpdateCamera(TsCamera* pCamera)
+void TestUpdateCamera( TsCamera* pCamera )
 {
-    static TsFloat2 old;
-    
-    TsFloat2 pos = TsWINGetMousePos();
+	static TsFloat2 old;
 
-    TsVector3 diff;
-    diff.y = pos.x - old.x;
-    diff.x = pos.y - old.y;
+	TsFloat2 pos = TsWINGetMousePos();
+
+	TsVector3 diff;
+	diff.y = pos.x - old.x;
+	diff.x = pos.y - old.y;
 
 
-    if (TsWINIsCenterCkick())
-    {
-        TsF32 fov = g_pCamera->GetFov() / 90.0f;
+	if( TsWINIsCenterCkick() )
+	{
+		TsF32 fov = g_pCamera->GetFov() / 90.0f;
 
-        TsVector3 xAxis = pCamera->GetXAxis() * fov;
-        TsVector3 yAxis = pCamera->GetYAxis() * fov;
+		TsVector3 xAxis = pCamera->GetXAxis() * fov;
+		TsVector3 yAxis = pCamera->GetYAxis() * fov;
 
-        TsVector3 lookAt = pCamera->GetLookAt();
-        TsVector3 pos = pCamera->GetLocalPosition();
+		TsVector3 lookAt = pCamera->GetLookAt();
+		TsVector3 pos = pCamera->GetLocalPosition();
 
-        pCamera->SetLockAt(lookAt + xAxis * -diff.y + yAxis * diff.x);
-        pCamera->SetLocalPosition(pos + xAxis * -diff.y + yAxis * diff.x);
+		pCamera->SetLockAt( lookAt + xAxis * -diff.y + yAxis * diff.x );
+		pCamera->SetLocalPosition( pos + xAxis * -diff.y + yAxis * diff.x );
 
-    }
+	}
 
-    if (TsWINIsLeftClick())
-    {
-        TsVector3 euler = pCamera->GetLocalRotate().ToEuler();
-        euler += diff;
-        pCamera->SetLocalRotate( TsQuaternion::CreateByEuler(euler)) ;
-    }
+	if( TsWINIsLeftClick() )
+	{
+		TsVector3 euler = pCamera->GetLocalRotate().ToEuler();
+		euler += diff;
+		pCamera->SetLocalRotate( TsQuaternion::CreateByEuler( euler ) );
+	}
 
-    old = pos;
-}
-#include <fstream>
-#include <functional>
-#include <iomanip>
-void TransformParse(TsTransForm* root, const char * out = "F:\\data.h")
-{
-    std::ofstream ofs(out);
-
-    std::function<void(TsTransForm*)> write = [&](TsTransForm * parent)
-    {
-        for (auto ptr = parent; ptr->GetParent(); ptr = ptr->GetParent())
-            ofs << "\t";
-        ofs << parent->GetName() << std::endl;
-        auto child = parent->GetFirstChild();
-        auto sub = parent->GetSubling();
-        if (child)
-        {
-            auto ptr = child;
-            write(child);
-        }
-        if (sub)
-        {
-            write(sub);
-        }
-    };
-
-    std::function<void(TsTransForm*)> writepos = [&](TsTransForm * parent)
-    {
-        ofs << parent->GetName() << std::endl;
-        TsMatrix m = parent->ToLocalMatrix();
-        ofs << std::setw(10) << std::fixed << std::setprecision(4) << m._11 << "::" << std::setw(10) << m._12 << "::" << std::setw(10) << m._13 << "::" << std::setw(10) << m._14 << std::endl;
-        ofs << std::setw(10) << std::fixed << std::setprecision(4) << m._21 << "::" << std::setw(10) << m._22 << "::" << std::setw(10) << m._23 << "::" << std::setw(10) << m._24 << std::endl;
-        ofs << std::setw(10) << std::fixed << std::setprecision(4) << m._31 << "::" << std::setw(10) << m._32 << "::" << std::setw(10) << m._33 << "::" << std::setw(10) << m._34 << std::endl;
-        ofs << std::setw(10) << std::fixed << std::setprecision(4) << m._41 << "::" << std::setw(10) << m._42 << "::" << std::setw(10) << m._43 << "::" << std::setw(10) << m._44 << std::endl;
-        ofs << std::endl;
-        auto child = parent->GetFirstChild();
-        auto sub = parent->GetSubling();
-        if (child)
-        {
-            writepos(child);
-        }
-        if (sub)
-        {
-            writepos(sub);
-        }
-    };
-
-    std::function<void(TsTransForm*)> writeSrt = [&](TsTransForm * parent)
-    {
-        ofs << parent->GetName() << std::endl;
-        TsVector3 p = parent->m_localPosition;
-        TsVector3 q = parent->m_localRotate.ToEuler();
-        TsVector3 s = parent->m_localScale;
-        ofs << std::setw(7) << std::fixed << std::setprecision(4) << p.x << "::" << std::setw(7) << p.y << "::" << std::setw(7) << p.z << std::endl;
-        ofs << std::setw(7) << std::fixed << std::setprecision(4) << q.x << "::" << std::setw(7) << q.y << "::" << std::setw(7) << q.z << std::endl;
-        ofs << std::setw(7) << std::fixed << std::setprecision(4) << s.x << "::" << std::setw(7) << s.y << "::" << std::setw(7) << s.z << std::endl;
-        ofs << std::endl;
-        auto child = parent->GetFirstChild();
-        auto sub = parent->GetSubling();
-        if (child)
-        {
-            writeSrt(child);
-        }
-        if (sub)
-        {
-            writeSrt(sub);
-        }
-    };
-
-    write(root);
-    writepos(root);
-    writeSrt(root);
+	old = pos;
 }
 
 int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lpszArgs , TsInt nWinMode )
@@ -172,16 +100,10 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 //     factory.LoadModelFromFile( pDev , "Resource/fbx/miku/miku.fbx" );
 //     factory.LoadModelFromFile( pDev , "Idol.fbx","Test" );
  //    factory.LoadModelFromFile(pDev, "SD_unitychan_generic.fbx","Test");
-    TsResourceManager::RegisterResource( Ts3DMeshConverter::ConvertFromFile( pDev , "Resource/fbx/Unity-Chan/unitychan.fbx" ) , "Test" );
+//    TsResourceManager::RegisterResource( Ts3DMeshConverter::ConvertFromFile( pDev , "Resource/fbx/Unity-Chan/unitychan.fbx" ) , "Test" );
  //         factory.LoadModelFromFile(pDev, "miku.fbx","Test");
-     TsMeshObject * pMesh = TsResourceManager::Find<TsMeshObject>("Test");
-     TransformParse(pMesh->GetGeometry(0)->GetTransform()->GetRootTransform());
+//     TsMeshObject * pMesh = TsResourceManager::Find<TsMeshObject>("Test");
      TsTransformBakeAnimation* pAnim = nullptr;
-
-     TsStlLoader objLoader;
-     objLoader.Encode( pMesh );
-     objLoader.SaveFile( "test." );
-
      //const TsBool useAnimation = TS_TRUE;
          const TsBool useAnimation = TS_FALSE;
      if (useAnimation)
@@ -193,14 +115,14 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
          fbxLoader.SetLoadAnimationFlag( TS_TRUE );
          fbxLoader.LoadFile( "Resource/fbx/Unity-Chan/move_unity.fbx" );
          pAnim = fbxLoader.CreateAnimation( 0 );
-         pAnim->BindTransform(pMesh->GetGeometry(0)->GetTransform()->GetRootTransform());
+        // pAnim->BindTransform(pMesh->GetGeometry(0)->GetTransform()->GetRootTransform());
 
-         TsSkeleton* pSkeleton = pMesh->GetSkeleton();
-         pAnim->SetTargetSkeleton(pSkeleton);
+         //TsSkeleton* pSkeleton = pMesh->GetSkeleton();
+         //pAnim->SetTargetSkeleton(pSkeleton);
      }
 
-    for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++ i)   
-        queue.Add(pMesh->GetGeometry(i));
+    //for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++ i)   
+    //    queue.Add(pMesh->GetGeometry(i));
 
     TsPlaneObject plane;
     TsTransForm planeTransform;
@@ -211,11 +133,25 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
 
     TsSphere3D sphere;
     sphere.SetRadius(15);
-    sphere.SetCenter( TsVector3::up * 15 );
+    sphere.SetCenter( TsVector3::up * 15 + TsVector3::left * 30 );
     TsColliderRenderObject sphereMesh;
     sphereMesh.CreateRenderObject(pDev, &sphere);
+    queue.Add(&sphereMesh);
 
-    //queue.Add(&sphereMesh);
+	TsAABB3D aabb3d;
+	aabb3d.SetMin( TsVector3::right * 30 + TsVector3::back * 15);
+	aabb3d.SetMax( TsVector3::right * 60 + TsVector3::up * 30 + TsVector3::front * 15);
+
+	TsColliderRenderObject aabb3d_mesh;
+	aabb3d_mesh.CreateRenderObject( pDev , &aabb3d );
+	queue.Add( &aabb3d_mesh );
+
+	TsCapsule3D capsule( TsVector3( 15 , 0 , 0 ) + TsVector3::zero , 
+						 TsVector3( 15 , 0 , 0 ) + TsVector3::up * 15 , 7.5f );
+
+	TsColliderRenderObject capsule3d;
+	capsule3d.CreateRenderObject( pDev,&capsule );
+	queue.Add( &capsule3d );
 
     rs.SetDrawQue( &queue );
 
@@ -250,9 +186,9 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
     aabbList.reserve( 1024 );
 
     TsAABB3D aabb;
-    for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++i)
+    //for (TsInt i = 0; i < pMesh->GetGeometryCount(); ++i)
     {
-        aabb.MergeAABB( pMesh->GetGeometry( i )->GetAABB() );
+    //    aabb.MergeAABB( pMesh->GetGeometry( i )->GetAABB() );
 //        aabbList.push_back( aabb );
     }
     TsAABB3D scene = TsAABB3D( TsVector3( -250 , -10 , -250 ) , TsVector3( 250 , 300 , 250 ) );

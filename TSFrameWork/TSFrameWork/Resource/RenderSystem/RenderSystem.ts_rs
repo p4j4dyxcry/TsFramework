@@ -3,6 +3,6 @@
 <RenderSystem>
   <Resource resource ="shaderResouce.ts_shaderReource"/>
   <PreRender flow=""/>
-  <Render flow="flow.ts_shaderflow"/>
-  <PostRender flow="postflow.ts_shaderflow"/>
+  <Render flow="skyTest.ts_shaderflow"/>
+  <PostRender flow=""/>
 </RenderSystem>
