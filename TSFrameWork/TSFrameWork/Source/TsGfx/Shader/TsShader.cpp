@@ -254,6 +254,7 @@ TsBool TsVertexShader::CreateInputLayout(ID3D11Device* pDev)
             case U32:elementDesc.Format = DXGI_FORMAT_R32_UINT; break;
             case S32:elementDesc.Format = DXGI_FORMAT_R32_SINT; break;
             case F32:elementDesc.Format = DXGI_FORMAT_R32_FLOAT; break;
+            default: ;
             }
         }
         //2Dデータ
@@ -264,6 +265,7 @@ TsBool TsVertexShader::CreateInputLayout(ID3D11Device* pDev)
             case U32:elementDesc.Format = DXGI_FORMAT_R32G32_UINT; break;
             case S32:elementDesc.Format = DXGI_FORMAT_R32G32_SINT; break;
             case F32:elementDesc.Format = DXGI_FORMAT_R32G32_FLOAT; break;
+            default: ;
             }
         }
         //3Dデータ
@@ -274,6 +276,7 @@ TsBool TsVertexShader::CreateInputLayout(ID3D11Device* pDev)
             case U32:elementDesc.Format = DXGI_FORMAT_R32G32B32_UINT; break;
             case S32:elementDesc.Format = DXGI_FORMAT_R32G32B32_SINT; break;
             case F32:elementDesc.Format = DXGI_FORMAT_R32G32B32_FLOAT; break;
+            default: ;
             }
         }
         //4Dデータ
@@ -284,6 +287,7 @@ TsBool TsVertexShader::CreateInputLayout(ID3D11Device* pDev)
             case U32:elementDesc.Format = DXGI_FORMAT_R32G32B32A32_UINT; break;
             case S32:elementDesc.Format = DXGI_FORMAT_R32G32B32A32_SINT; break;
             case F32:elementDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT; break;
+            default: ;
             }
         }
 

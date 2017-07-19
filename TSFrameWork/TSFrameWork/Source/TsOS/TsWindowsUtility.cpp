@@ -6,21 +6,21 @@ LRESULT CALLBACK TSDefaultWindowProc( HWND hWnd  , UINT message ,WPARAM wParam ,
 // ! Grobal Space
 namespace 
 {
-    static	HWND	g_MainWindowHandle = nullptr;
-    static  TsBool	g_isInitialize;
+    HWND	g_MainWindowHandle = nullptr;
+    TsBool	g_isInitialize;
 
-    static	const TsInt2	g_defaultWindowSize( 1980 , 1024 );
-    static  WNDPROC g_windowProc = TSDefaultWindowProc;
-    static  TsUint  g_windowStyle = CS_HREDRAW | CS_VREDRAW;
+    const TsInt2	g_defaultWindowSize( 1980 , 1024 );
+    WNDPROC g_windowProc = TSDefaultWindowProc;
+    TsUint  g_windowStyle = CS_HREDRAW | CS_VREDRAW;
 
-    static TsString g_windowName ="TsFramework";
+    TsString g_windowName ="TsFramework";
 
-    static TsBool   g_IsLClick;
-    static TsBool   g_IsRClick;
-    static TsBool   g_IsCClick;
-    static TsBool   g_keyDown[128];
+    TsBool   g_IsLClick;
+    TsBool   g_IsRClick;
+    TsBool   g_IsCClick;
+    TsBool   g_keyDown[128];
 
-    static void DefaultTsWinWheelFunc(TsF32 delta){(void)delta;}
+    void DefaultTsWinWheelFunc(TsF32 delta){(void)delta;}
 
     void(*g_DefaultTsWinWheelFunc)(TsF32 delta) = DefaultTsWinWheelFunc;
 }
@@ -38,11 +38,11 @@ TsBool TsWINCreateMainWindow( HINSTANCE hIns , TsInt cmd , TsInt2 sz /* = 0,0 */
     wc.hInstance = hIns;                                //アプリケーションのインスタンスを登録
     wc.lpszClassName = "TsFrameworkMainWindow";         //名前を設定
     wc.lpfnWndProc = g_windowProc;                      //プロシージャの登録
-    wc.hIcon = LoadIcon( NULL , IDI_APPLICATION );      //アイコンを設定
-    wc.hIconSm = LoadIcon( NULL , IDI_APPLICATION );
-    wc.hCursor = LoadCursor( NULL , IDC_ARROW );        //カーソルを設定
-    wc.hbrBackground = ( HBRUSH )( COLOR_WINDOW + 1 );  //BGカラーの設定
-    wc.lpszMenuName = NULL;                             //メニューの名前を設定
+    wc.hIcon = LoadIcon(nullptr , IDI_APPLICATION );      //アイコンを設定
+    wc.hIconSm = LoadIcon(nullptr , IDI_APPLICATION );
+    wc.hCursor = LoadCursor(nullptr , IDC_ARROW );        //カーソルを設定
+    wc.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);  //BGカラーの設定
+    wc.lpszMenuName = nullptr;                             //メニューの名前を設定
     wc.cbClsExtra = 0;
     wc.cbWndExtra = 0;
 

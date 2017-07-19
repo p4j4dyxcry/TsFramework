@@ -30,7 +30,7 @@ TsRenderPass* TsRenderFlow::GetRenderPass(TsString name)
 }
 TsRenderPass* TsRenderFlow::GetRenderPass(TsInt index)
 {
-    if ((unsigned)index > m_renderPass.size())
+    if (static_cast<unsigned>(index) > m_renderPass.size())
         return nullptr;
     else
         return m_renderPass[index];
@@ -38,7 +38,7 @@ TsRenderPass* TsRenderFlow::GetRenderPass(TsInt index)
 
 TsBool TsRenderFlow::SetRenderPass(TsRenderPass* pass, TsInt index)
 {
-    if ((unsigned)index >= m_renderPass.size())
+    if (static_cast<unsigned>(index) >= m_renderPass.size())
         m_renderPass.push_back(pass);
     else
         m_renderPass[index] = pass;
@@ -46,17 +46,16 @@ TsBool TsRenderFlow::SetRenderPass(TsRenderPass* pass, TsInt index)
     return TS_TRUE;
 }
 
-TsInt		  TsRenderFlow::GetFlowSize()
+TsInt TsRenderFlow::GetFlowSize() const
 {
     return m_renderPass.size();
 }
 
-TsBool	TsRenderFlow::LoadFlowFromXML( TsDevice* pDev, const TsString& file )
+TsBool TsRenderFlow::LoadFlowFromXML( TsDevice* pDev, const TsString& file )
 {
     TsXML xml;
 
     xml.LoadXML( TSUT::Resource::GetShaderFlowDirectory() + file );
-    auto root = xml.GetRootNode();
     auto pElementPass = xml.GetRootNode()->GetFirstChild();
 
     while( pElementPass != nullptr )

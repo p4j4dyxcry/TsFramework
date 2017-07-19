@@ -131,9 +131,10 @@ TsBool  TsColliderRenderObject::CreateVertexBuffer(TsDevice* pDev, TsCollider* p
     case TsCollider::Collider_TsSphere:
     case TsCollider::Collider_TsCircle:
         m_pVertex = CreateSphereVertex();
+        break;
     case TsCollider::Collider_Capsule2D:
     case TsCollider::Collider_Capsule3D:
-        m_pVertex = CreateSphereVertex();
+        m_pVertex = CreateCapsule3DVertex();
         break;        
 
     default:

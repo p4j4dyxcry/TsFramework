@@ -35,7 +35,7 @@ public:
 
     TsBool End();
 
-    TsBool Render( TsDeviceContext* );
+    TsBool Render( TsDeviceContext* ) const;
 
 private:
 

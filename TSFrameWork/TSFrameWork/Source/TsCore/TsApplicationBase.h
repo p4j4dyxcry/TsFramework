@@ -17,7 +17,7 @@ public:
 
     TsBool Initialize( HINSTANCE hInstance , TsInt nWinMode );
     TsBool Run();
-    TsDevice* GetDevice();
+    TsDevice* GetDevice() const;
 protected:
     //----------------------------------------------------------
     // propery
