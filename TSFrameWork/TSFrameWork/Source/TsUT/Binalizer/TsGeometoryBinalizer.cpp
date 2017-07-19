@@ -120,7 +120,7 @@ TsBool TsGeometoryBinalizer::Decode( std::ifstream& ifs )
 //! 頂点バッファ・インデックスバッファを含むメッシュ作成
 TsBool TsGeometoryBinalizer::BuildGeometory(TsDevice * pDev)
 {
-    for (TsInt i = 0; i < m_geometoryCount; ++i)
+    for (TsUint i = 0; i < m_geometoryCount; ++i)
     {
         TsVertexElement* pElement = TsNew(TsVertexElement);
 
@@ -169,7 +169,7 @@ TsBool TsGeometoryBinalizer::BuildGeometory(TsDevice * pDev)
 //! トランスフォームをバインドする
 TsBool TsGeometoryBinalizer::BindTransform(TsTransformBinalizer* pTransformBinalizer)
 {
-    for (TsInt i = 0; i < m_geometoryCount; ++i)
+    for (TsUint i = 0; i < m_geometoryCount; ++i)
     {
         TsTransForm* pTransform = pTransformBinalizer->FindByBinalyPtr(m_pCommonRef[i].transformPtr);
         m_pGeometoryObject[i]->SetTransform(pTransform);

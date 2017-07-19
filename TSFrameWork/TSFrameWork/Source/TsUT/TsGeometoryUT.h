@@ -13,7 +13,7 @@ namespace TSUT
         TsUint* p = &pOut[0];
         const TsUint* h = &indexList[0];
         const TsUint* m = &indexList[0] + 1;
-        for (auto i = 0; i < indexCount - 2; ++i)
+        for (TsUint i = 0; i < indexCount - 2; ++i)
         {
             *(p++) = *h;
             *(p++) = *(m++);
@@ -24,7 +24,7 @@ namespace TSUT
     //! ‰EŽèŒn‚Ì–Ê‚ð¶ŽèŒn‚à‚µ‚­‚Í¶ŽèŒn‚Ì–Ê‚ð‰EŽèŒn‚Ì•ÏŠ·‚·‚é
     inline void ReverseFace(TsUint* pInOut, TsUint TriangleCount)
     {
-        for (auto i = 0; i < TriangleCount; ++i)
+        for (TsUint i = 0; i < TriangleCount; ++i)
         {
             TsUint temp = pInOut[i * 3 + 0];
             pInOut[i * 3 + 0] = pInOut[i * 3 + 2];

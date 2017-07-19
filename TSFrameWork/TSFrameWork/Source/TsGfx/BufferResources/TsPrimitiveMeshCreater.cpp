@@ -15,7 +15,7 @@ TsBool GenerateSphereTemplate( T** pOut,
 
     outCount = index.size();
     if (index.empty())
-        return nullptr;
+        return TS_FALSE;
 
     pVertex = TsNew(T[outCount]);
     memset(pVertex, 0, sizeof(T)* outCount);
@@ -362,7 +362,7 @@ TsBool TsPrimitiveMeshCreater::GenerateBox3DLine( TsVertexDefault** ppOutVertex 
 
 TsBool TsPrimitiveMeshCreater::GenerateCapsule3D(TsVertexSkin** ppOutVertex,
                                                  TsInt& outVertexCount,
-                                                 TsInt slices,TsInt stack)
+                                                 TsUint slices, TsUint stack)
 {
     TsF32     inv_stack = 1.0f / stack;
     TsF32     inv_slice = 1.0f / slices;
@@ -385,7 +385,7 @@ TsBool TsPrimitiveMeshCreater::GenerateCapsule3D(TsVertexSkin** ppOutVertex,
 
     //! 上側の半球
     SetVertex(ptr, TsVector3::up, TsVector3::up);
-    for (TsInt i = 0; i < stack; ++i)
+    for (TsUint i = 0; i < stack; ++i)
     {
         TsF32 t = ( TS_PI * 0.5f) * inv_stack * ( i + 1);
         TsF32 r = sinf(t);
@@ -393,7 +393,7 @@ TsBool TsPrimitiveMeshCreater::GenerateCapsule3D(TsVertexSkin** ppOutVertex,
         TsVector3 y = TsVector3::front * r;
         TsVector3 z = TsVector3::up * cosf(t);
 
-        for (TsInt j = 0; j < slices; ++j)
+        for (TsUint j = 0; j < slices; ++j)
         {
             TsF32 u = TS_PI * 2.0f * inv_slice * j;
             TsVector3 n = x * cosf(u) + y * sinf(u) + z;
@@ -403,7 +403,7 @@ TsBool TsPrimitiveMeshCreater::GenerateCapsule3D(TsVertexSkin** ppOutVertex,
     }
 
     //! 下側の半球
-    for (TsInt i = 0; i < stack; ++i)
+    for (TsUint i = 0; i < stack; ++i)
     {
         TsF32 t = TS_PI * inv_stack * i;
         TsF32 r = cosf(t);
@@ -411,7 +411,7 @@ TsBool TsPrimitiveMeshCreater::GenerateCapsule3D(TsVertexSkin** ppOutVertex,
         TsVector3 y = TsVector3::front * r;
         TsVector3 z = TsVector3::up * -sinf(t);
 
-        for (TsInt j = 0; j < slices; ++j)
+        for (TsUint j = 0; j < slices; ++j)
         {
             TsF32 u = TS_PI * 2.0f * inv_slice * j;
             TsVector3 n = x * cosf(u) + y * sinf(u) + z;
@@ -429,7 +429,7 @@ TsBool TsPrimitiveMeshCreater::GenerateCapsule3D(TsVertexSkin** ppOutVertex,
     TsVertexSkin* pOut = ppOutVertex[0];
 
     // 上半球側端点周りの計算
-    for (UINT i = 0; i<slices; i++)
+    for (TsUint i = 0; i<slices; i++)
     {
         *(pOut++) = original_vertices[0];
         *(pOut++) = original_vertices[1 + i];
@@ -437,13 +437,13 @@ TsBool TsPrimitiveMeshCreater::GenerateCapsule3D(TsVertexSkin** ppOutVertex,
     }
 
     // 上半球と下半球をつなげる
-    UINT imax = stack * 2 - 1;
-    for (UINT i = 0; i<imax; i++)
+    TsUint imax = stack * 2 - 1;
+    for (TsUint i = 0; i<imax; i++)
     {
-        UINT ibase = 1 + slices*i;
-        for (UINT j = 0; j<slices; j++)
+        TsUint ibase = 1 + slices*i;
+        for (TsUint j = 0; j<slices; j++)
         {
-            UINT jnext = (j + 1) % slices;
+            TsUint jnext = (j + 1) % slices;
 
             *(pOut++) = original_vertices[ibase + j];
             *(pOut++) = original_vertices[ibase + j + slices];
@@ -456,9 +456,9 @@ TsBool TsPrimitiveMeshCreater::GenerateCapsule3D(TsVertexSkin** ppOutVertex,
     }
 
     // 下半球の側端点周りの計算
-    UINT ibase = 1 + slices*imax;
-    UINT ilast = vertex_count - 1;
-    for (UINT j = 0; j<slices; j++)
+    TsUint ibase = 1 + slices*imax;
+    TsUint ilast = vertex_count - 1;
+    for (TsUint j = 0; j<slices; j++)
     {
         *(pOut++) = original_vertices[ibase + j];
         *(pOut++) = original_vertices[ilast];

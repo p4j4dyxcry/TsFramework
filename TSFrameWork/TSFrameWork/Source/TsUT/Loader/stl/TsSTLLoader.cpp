@@ -101,7 +101,7 @@ TsBool TsStlLoader::Encode(TsMeshObject* pMesh)
 
         if (indexCount > 0)
         {
-            for (TsInt i = 0; i < indexCount / 3; ++i)
+            for (TsUint i = 0; i < indexCount / 3; ++i)
             {
                 TsStlFace f;
                 f.pos[2] = pVB[pIB[i * 3 + 0]].pos;
@@ -120,7 +120,7 @@ TsBool TsStlLoader::Encode(TsMeshObject* pMesh)
         }
         else
         {
-            for (TsInt i = 0; i < verexCount / 3; ++i)
+            for (TsUint i = 0; i < verexCount / 3; ++i)
             {
                 TsStlFace f;
                 f.pos[2] = pVB[i * 3 + 0].pos;

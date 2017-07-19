@@ -26,7 +26,7 @@ public:
 
     static TsBool GenerateCapsule3D( TsVertexSkin** ppOutVertex,
                                      TsInt& outVertexCount,
-                                     TsInt slices,TsInt stack);
+                                     TsUint slices, TsUint stack);
 
     static TsBool GenerateSprite( TsVertexSkin** ppOutVertex,
                                   TsInt& outVertexCount,

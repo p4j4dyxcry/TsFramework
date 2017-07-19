@@ -783,8 +783,8 @@ TsBool TsOBJLoader::Encode(TsMeshObject* pMesh)
 {
     m_objMesh.resize(pMesh->GetGeometryCount());
     m_meshCount = m_objMesh.size();
-    TsInt startLocation = 1;
-    for (TsInt i = 0; i < m_objMesh.size(); ++i)
+    TsUint startLocation = 1;
+    for (TsUint i = 0; i < m_objMesh.size(); ++i)
     {
         auto * pElement = pMesh->GetGeometry(i)->GetVertexElement();
         TsVertexSkin* pVertexList = (TsVertexSkin*)pElement->GetVertexBuffer()->GetOriginData();
@@ -942,7 +942,7 @@ TsBool TsOBJLoader::CreateCommonData()
         m_pMaterials = TsNew( TsCommon3DMaterial[m_materialCount] );
         m_pMaterials[0].m_name = analizer.GetFileName() + ":NullMaterial";
 
-        for( TsInt i = 1; i < m_materialCount; ++i )
+        for( TsUint i = 1; i < m_materialCount; ++i )
         {
             auto & cm = m_pMaterials[i];
             auto & or = m_materialList[i-1];
@@ -959,7 +959,7 @@ TsBool TsOBJLoader::CreateCommonData()
         }
     }
 
-    for( TsInt mId =0; mId < m_meshCount; ++mId )
+    for (TsUint mId = 0; mId < m_meshCount; ++mId)
     {
         auto& fList = m_objMesh[mId].m_face;
         m_pMeshs[mId].m_name = analizer.GetFileName() +":" + m_objMesh[mId].name;
@@ -970,7 +970,7 @@ TsBool TsOBJLoader::CreateCommonData()
         }
         else
         {
-            for( TsInt i = 1; i < m_materialCount; ++i )
+            for (TsUint i = 1; i < m_materialCount; ++i)
             {
                 if( m_objMesh[mId].material_name == m_pMaterials[i].m_name )
                 {

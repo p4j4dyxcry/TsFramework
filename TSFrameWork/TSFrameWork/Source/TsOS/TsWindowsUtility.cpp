@@ -116,7 +116,7 @@ TsFloat2 TsWINGetMousePos()
 {
     POINT p;
     GetCursorPos(&p);
-    return TsFloat2(p.x, p.y);
+    return TsFloat2(static_cast<TsF32>(p.x), static_cast<TsF32>(p.y));
 }
 
 TsBool TsWINIsLeftClick()
