@@ -99,7 +99,7 @@ T* TsResourceManager_Find( TsMap<TS_HASH , T*>& map ,
 //  Register No Type
 //-------------------------------------------------------------------------------
 template<typename T>
-static TsBool TsResourceManager::RegisterResource( T* pObject , const TsString& name )
+TsBool TsResourceManager::RegisterResource( T* pObject , const TsString& name )
 {
     TsDebugLogError("ResouceManagerへの追加失敗。型\"%s\"はサポートされていません。\n", typeid(T).name());
     ( void )pObject;
@@ -111,7 +111,7 @@ static TsBool TsResourceManager::RegisterResource( T* pObject , const TsString& 
 //  Register No Type
 //-------------------------------------------------------------------------------
 template<typename T>
-static TsBool TsResourceManager::RegisterResource(T* pObject, const TS_HASH hash)
+TsBool TsResourceManager::RegisterResource(T* pObject, const TS_HASH hash)
 {
     TsDebugLogError("ResouceManagerへの追加失敗。型\"%s\"はサポートされていません。\n", typeid(T).name());
     (void)pObject;
@@ -123,14 +123,14 @@ static TsBool TsResourceManager::RegisterResource(T* pObject, const TS_HASH hash
 //  Find No Type
 //-------------------------------------------------------------------------------
 template<typename T>
-static T* TsResourceManager::Find( const TsString& name )
+T* TsResourceManager::Find( const TsString& name )
 {
     ( void )name;
     return nullptr;
 }
 
 template<typename T>
-static T* TsResourceManager::Find(const TS_HASH hash)
+T* TsResourceManager::Find(const TS_HASH hash)
 {
     (void)name;
     return nullptr;

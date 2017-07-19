@@ -21,20 +21,20 @@ public:
 
     TsArrayType2( Type _x = 0 , Type _y = 0 )
     {
-        x = ( Type )_x;
-        y = ( Type )_y;
+        x = static_cast<Type>(_x);
+        y = static_cast<Type>(_y);
     }
     template<typename T>
     TsArrayType2( T* _array )
     {
-        x = ( Type )_array[0];
-        y = ( Type )_array[1];
+        x = static_cast<Type>(_array[0]);
+        y = static_cast<Type>(_array[1]);
     }
     template<typename T>
     TsArrayType2( const T & v )
     {
-        x = ( Type )v.x;
-        y = ( Type )v.y;
+        x = static_cast<Type>(v.x);
+        y = static_cast<Type>(v.y);
     }
 
     inline const Type& operator[]( int n )const
@@ -50,81 +50,81 @@ public:
     template<typename T>
     inline TsArrayType2<Type>& operator = ( const T& v )
     {
-        x = ( Type )v.x;
-        y = ( Type )v.y;
+        x = static_cast<Type>(v.x);
+        y = static_cast<Type>(v.y);
         return *this;
     }
     template<typename T>
     inline TsArrayType2<Type> operator+ ( const T& n )const
     {
-        return TsArrayType2<Type>( x + ( Type )n.x , y + ( Type )n.y );
+        return TsArrayType2<Type>( x + static_cast<Type>(n.x) , y + static_cast<Type>(n.y) );
     }
     template<typename T>
     inline TsArrayType2<Type> operator- ( const T& n )const
     {
-        return TsArrayType2<Type>( x - ( Type )n.x , y - ( Type )n.y );
+        return TsArrayType2<Type>( x - static_cast<Type>(n.x) , y - static_cast<Type>(n.y) );
     }
     template<typename T>
     inline TsArrayType2<Type> operator* ( const T& n )const
     {
-        return TsArrayType2( x*( Type )n.x , y * ( Type )n.y );
+        return TsArrayType2( x*static_cast<Type>(n.x) , y * static_cast<Type>(n.y) );
     }
 
     inline TsArrayType2<Type> operator* ( Type n )const
     {
-        return TsArrayType2( x*( Type )n , y*( Type )n );
+        return TsArrayType2( x*static_cast<Type>(n) , static_cast<Type>(n)*y );
     }
     template<typename T>
     inline TsArrayType2<Type> operator/ ( const T& n )const
     {
-        return TsArrayType2( x / ( Type )n.x , y / ( Type )n.y );
+        return TsArrayType2( x / static_cast<Type>(n.x) , y / static_cast<Type>(n.y) );
     }
 
     inline TsArrayType2<Type> operator/ ( Type n )const
     {
-        return TsArrayType2( x / ( Type )n , y / ( Type )n );
+        return TsArrayType2( x / static_cast<Type>(n) , y / static_cast<Type>(n) );
     }
 
     template<typename T>
     inline TsArrayType2<Type>& operator+= ( const T& n )
     {
-        x += ( Type )n.x;
-        y += ( Type )n.y;
+        x += static_cast<Type>(n.x);
+        y += static_cast<Type>(n.y);
         return *this;
     }
     template<typename T>
     inline TsArrayType2<Type>& operator-= ( const T& n )
     {
-        x -= ( Type )n.x;
-        y -= ( Type )n.y;
+        x -= static_cast<Type>(n.x);
+        y -= static_cast<Type>(n.y);
         return *this;
     }
     template<typename T>
     inline TsArrayType2<Type>& operator*= ( const T& n )
     {
-        x *= ( Type )n.x;
-        y *= ( Type )n.y;
+        x *= static_cast<Type>(n.x);
+        y *= static_cast<Type>(n.y);
         return *this;
     }
 
     inline TsArrayType2<Type>& operator*= ( Type n )
     {
-        x *= ( Type )n;
-        y *= ( Type )n;
+        x *= static_cast<Type>(n);
+        y *= static_cast<Type>(n);
         return *this;
     }
     template<typename T>
     inline TsArrayType2<Type>& operator/= ( const T& n )
     {
-        x /= ( Type )n.x;
-        y /= ( Type )n.y;
+        x /= static_cast<Type>(n.x);
+        y /= static_cast<Type>(n.y);
         return *this;
     }
 
     inline TsArrayType2<Type>& operator/= ( Type n )
     {
-        x /= ( Type )n;
-        y /= ( Type )n;
+        x /= static_cast<Type>(n);
+        y /= static_cast<Type>(n);
         return *this;
     }
 
@@ -165,9 +165,9 @@ public:
             Type _y = 0 ,
             Type _z = 0 )
     {
-        x = ( Type )_x;
-        y = ( Type )_y;
-        z = ( Type )_z;
+        x = static_cast<Type>(_x);
+        y = static_cast<Type>(_y);
+        z = static_cast<Type>(_z);
     }
 
     TsArrayType3( TsArrayType2<Type> n , Type _z )
@@ -180,9 +180,9 @@ public:
     template<typename T>
     TsArrayType3( T* _array )
     {
-        x = ( Type )_array[0];
-        y = ( Type )_array[1];
-        z = ( Type )_array[2];
+        x = static_cast<Type>(_array[0]);
+        y = static_cast<Type>(_array[1]);
+        z = static_cast<Type>(_array[2]);
     }
     template<typename T>
     TsArrayType3( const T & n )
@@ -203,88 +203,88 @@ public:
     template<typename T>
     inline TsArrayType3<Type>& operator = ( const T& n )
     {
-        x = ( Type )n.x;
-        y = ( Type )n.y;
-        z = ( Type )n.z;
+        x = static_cast<Type>(n.x);
+        y = static_cast<Type>(n.y);
+        z = static_cast<Type>(n.z);
         return *this;
     }
     template<typename T>
     inline TsArrayType3<Type> operator+ ( const T& n )const
     {
-        return TsArrayType3<Type>( x + ( Type )n.x , y + ( Type )n.y , z + ( Type )n.z );
+        return TsArrayType3<Type>( x + static_cast<Type>(n.x) , y + static_cast<Type>(n.y) , z + static_cast<Type>(n.z) );
     }
     template<typename T>
     inline TsArrayType3<Type> operator- ( const T& n )const
     {
-        return TsArrayType3<Type>( x - ( Type )n.x , y - ( Type )n.y , z - ( Type )n.z );
+        return TsArrayType3<Type>( x - static_cast<Type>(n.x) , y - static_cast<Type>(n.y) , z - static_cast<Type>(n.z) );
     }
     template<typename T>
     inline TsArrayType3<Type> operator* ( const T& n )const
     {
-        return TsArrayType3( x*( Type )n.x , y * ( Type )n.y , z*( Type )n.z );
+        return TsArrayType3( static_cast<Type>(n.x)*x , static_cast<Type>(n.y) * y , static_cast<Type>(n.z)*z );
     }
 
     inline TsArrayType3<Type> operator* ( Type n )const
     {
-        return TsArrayType3( x*( Type )n , y*( Type )n , z*( Type )n );
+        return TsArrayType3( x*static_cast<Type>(n) , y*static_cast<Type>(n) , z*static_cast<Type>(n) );
     }
     template<typename T>
     inline TsArrayType3<Type> operator/ ( const T& n )const
     {
-        return TsArrayType3( x / ( Type )n.x , y / ( Type )n.y , z / ( Type )n.z );
+        return TsArrayType3( x / static_cast<Type>(n.x) , y / static_cast<Type>(n.y) , z / static_cast<Type>(n.z) );
     }
 
     inline TsArrayType3<Type> operator/ ( Type n )const
     {
-        return TsArrayType3( x / ( Type )n , y / ( Type )n , z / ( Type )n );
+        return TsArrayType3( x / static_cast<Type>(n) , y / static_cast<Type>(n) , z / static_cast<Type>(n) );
     }
 
     template<typename T>
     inline TsArrayType3<Type>& operator+= ( const T& n )
     {
-        x += ( Type )n.x;
-        y += ( Type )n.y;
-        z += ( Type )n.z;
+        x += static_cast<Type>(n.x);
+        y += static_cast<Type>(n.y);
+        z += static_cast<Type>(n.z);
         return *this;
     }
     template<typename T>
     inline TsArrayType3<Type>& operator-= ( const T& n )
     {
-        x -= ( Type )n.x;
-        y -= ( Type )n.y;
-        z -= ( Type )n.z;
+        x -= static_cast<Type>(n.x);
+        y -= static_cast<Type>(n.y);
+        z -= static_cast<Type>(n.z);
         return *this;
     }
     template<typename T>
     inline TsArrayType3<Type>& operator*= ( const T& n )
     {
-        x *= ( Type )n.x;
-        y *= ( Type )n.y;
-        z *= ( Type )n.z;
+        x *= static_cast<Type>(n.x);
+        y *= static_cast<Type>(n.y);
+        z *= static_cast<Type>(n.z);
         return *this;
     }
 
     inline TsArrayType3<Type>& operator*= ( Type n )
     {
-        x *= ( Type )n;
-        y *= ( Type )n;
-        z *= ( Type )n;
+        x *= static_cast<Type>(n);
+        y *= static_cast<Type>(n);
+        z *= static_cast<Type>(n);
         return *this;
     }
     template<typename T>
     inline TsArrayType3<Type>& operator/= ( const T& n )
     {
-        x /= ( Type )n.x;
-        y /= ( Type )n.y;
-        z /= ( Type )n.z;
+        x /= static_cast<Type>(n.x);
+        y /= static_cast<Type>(n.y);
+        z /= static_cast<Type>(n.z);
         return *this;
     }
 
     inline TsArrayType3<Type>& operator/= ( Type n )
     {
-        x /= ( Type )n;
-        y /= ( Type )n;
-        z /= ( Type )n;
+        x /= static_cast<Type>(n);
+        y /= static_cast<Type>(n);
+        z /= static_cast<Type>(n);
         return *this;
     }
 
@@ -295,7 +295,7 @@ public:
 
     inline Type Length()const
     {
-        return ( Type )pow( ( x * x ) + ( y * y ) + ( z * z ) , 0.5 );
+        return static_cast<Type>(pow((x * x) + (y * y) + (z * z), 0.5));
     }
 
     inline void Normalize()
@@ -343,15 +343,15 @@ public:
         };
     };
 
-    TsArrayType4( Type _x = 0 ,
+    explicit TsArrayType4( Type _x = 0 ,
             Type _y = 0 ,
             Type _z = 0 ,
             Type _w = 0 )
     {
-        x = ( Type )_x;
-        y = ( Type )_y;
-        z = ( Type )_z;
-        w = ( Type )_w;
+        x = static_cast<Type>(_x);
+        y = static_cast<Type>(_y);
+        z = static_cast<Type>(_z);
+        w = static_cast<Type>(_w);
     }
 
     TsArrayType4( TsArrayType3<Type> n , Type _w )
@@ -373,10 +373,10 @@ public:
     template<typename T>
     TsArrayType4( T* _array )
     {
-        x = ( Type )_array[0];
-        y = ( Type )_array[1];
-        z = ( Type )_array[2];
-        w = ( Type )_array[3];
+        x = static_cast<Type>(_array[0]);
+        y = static_cast<Type>(_array[1]);
+        z = static_cast<Type>(_array[2]);
+        w = static_cast<Type>(_array[3]);
     }
     template<typename T>
     TsArrayType4( const T & n )
@@ -398,95 +398,95 @@ public:
     template<typename T>
     inline TsArrayType4<Type>& operator = ( const T& n )
     {
-        x = ( Type )n.x;
-        y = ( Type )n.y;
-        z = ( Type )n.z;
-        w = ( Type )n.w;
+        x = static_cast<Type>(n.x);
+        y = static_cast<Type>(n.y);
+        z = static_cast<Type>(n.z);
+        w = static_cast<Type>(n.w);
         return *this;
     }
     template<typename T>
     inline TsArrayType4<Type> operator+ ( const T& n )const
     {
-        return TsArrayType4<Type>( x + ( Type )n.x , y + ( Type )n.y , z + ( Type )n.z , w + ( Type )n.w );
+        return TsArrayType4<Type>( x + static_cast<Type>(n.x) , y + static_cast<Type>(n.y) , z + static_cast<Type>(n.z) , w + static_cast<Type>(n.w) );
     }
     template<typename T>
     inline TsArrayType4<Type> operator- ( const T& n )const
     {
-        return TsArrayType4<Type>( x - ( Type )n.x , y - ( Type )n.y , z - ( Type )n.z , w + ( Type )n.w );
+        return TsArrayType4<Type>( x - static_cast<Type>(n.x) , y - static_cast<Type>(n.y) , z - static_cast<Type>(n.z) , w + static_cast<Type>(n.w) );
     }
     template<typename T>
     inline TsArrayType4<Type> operator* ( const T& n )const
     {
-        return TsArrayType4( x*( Type )n.x , y * ( Type )n.y , z*( Type )n.z , w + ( Type )n.w );
+        return TsArrayType4( x*static_cast<Type>(n.x) , y * static_cast<Type>(n.y) , z*static_cast<Type>(n.z) , w + static_cast<Type>(n.w) );
     }
 
     inline TsArrayType4<Type> operator* ( Type n )const
     {
-        return TsArrayType4( x*( Type )n , y*( Type )n , z*( Type )n , w*( Type )n );
+        return TsArrayType4( x*static_cast<Type>(n) , y*static_cast<Type>(n) , z*static_cast<Type>(n) , w*static_cast<Type>(n) );
     }
     template<typename T>
     inline TsArrayType4<Type> operator/ ( const T& n )const
     {
-        return TsArrayType4( x / ( Type )n.x , y / ( Type )n.y , z / ( Type )n.z , w / ( Type )n.z );
+        return TsArrayType4( x / static_cast<Type>(n.x) , y / static_cast<Type>(n.y) , z / static_cast<Type>(n.z) , w / static_cast<Type>(n.z) );
     }
 
     inline TsArrayType4<Type> operator/ ( Type n )const
     {
-        return TsArrayType4( x / ( Type )n , y / ( Type )n , z / ( Type )n , w / ( Type )n );
+        return TsArrayType4( x / static_cast<Type>(n) , y / static_cast<Type>(n) , z / static_cast<Type>(n) , w / static_cast<Type>(n) );
     }
 
     template<typename T>
     inline TsArrayType4<Type>& operator+= ( const T& n )
     {
-        x += ( Type )n.x;
-        y += ( Type )n.y;
-        z += ( Type )n.z;
-        w += ( Type )n.w;
+        x += static_cast<Type>(n.x);
+        y += static_cast<Type>(n.y);
+        z += static_cast<Type>(n.z);
+        w += static_cast<Type>(n.w);
         return *this;
     }
     template<typename T>
     inline TsArrayType4<Type>& operator-= ( const T& n )
     {
-        x -= ( Type )n.x;
-        y -= ( Type )n.y;
-        z -= ( Type )n.z;
-        w -= ( Type )n.w;
+        x -= static_cast<Type>(n.x);
+        y -= static_cast<Type>(n.y);
+        z -= static_cast<Type>(n.z);
+        w -= static_cast<Type>(n.w);
         return *this;
     }
     template<typename T>
     inline TsArrayType4<Type>& operator*= ( const T& n )
     {
-        x *= ( Type )n.x;
-        y *= ( Type )n.y;
-        z *= ( Type )n.z;
-        w *= ( Type )n.w;
+        x *= static_cast<Type>(n.x);
+        y *= static_cast<Type>(n.y);
+        z *= static_cast<Type>(n.z);
+        w *= static_cast<Type>(n.w);
         return *this;
     }
 
     inline TsArrayType4<Type>& operator*= ( Type n )
     {
-        x *= ( Type )n;
-        y *= ( Type )n;
-        z *= ( Type )n;
-        w *= ( Type )n;
+        x *= static_cast<Type>(n);
+        y *= static_cast<Type>(n);
+        z *= static_cast<Type>(n);
+        w *= static_cast<Type>(n);
         return *this;
     }
     template<typename T>
     inline TsArrayType4<Type>& operator/= ( const T& n )
     {
-        x /= ( Type )n.x;
-        y /= ( Type )n.y;
-        z /= ( Type )n.z;
-        w /= ( Type )n.w;
+        x /= static_cast<Type>(n.x);
+        y /= static_cast<Type>(n.y);
+        z /= static_cast<Type>(n.z);
+        w /= static_cast<Type>(n.w);
         return *this;
     }
 
     inline TsArrayType4<Type>& operator/= ( Type n )
     {
-        x /= ( Type )n;
-        y /= ( Type )n;
-        z /= ( Type )n;
-        w /= ( Type )n;
+        x /= static_cast<Type>(n);
+        y /= static_cast<Type>(n);
+        z /= static_cast<Type>(n);
+        w /= static_cast<Type>(n);
         return *this;
     }
 
