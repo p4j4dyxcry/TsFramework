@@ -88,8 +88,9 @@ T TsCapsule<T>::GetBottomToTopVector()const
 template< typename T>
 TsMatrix TsCapsule<T>::GetGeometoricMatrix()const
 {
-    TsVector3 scale = GetRadius();
-    scale.y += GetHeight();
+	TsF32 r = GetRadius();
+	TsVector3 scale = TsVector3::one * r;
+//    scale.y += GetHeight();
     TsVector3 translate = GetTop() - GetBottom();
 
     TsQuaternion q;
