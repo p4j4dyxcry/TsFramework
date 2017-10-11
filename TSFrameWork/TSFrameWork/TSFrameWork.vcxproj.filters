@@ -178,6 +178,9 @@
     <Filter Include="ソース ファイル\TsGfx\hlsl\Paticle">
       <UniqueIdentifier>{cf27b9a1-0e79-4e91-9682-3e20e679dc22}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\TsUT\Gui">
+      <UniqueIdentifier>{8e874fec-33b4-4d88-af6c-4089b67afa63}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TSWinEntryPoint.cpp">
@@ -503,6 +506,9 @@
     </ClCompile>
     <ClCompile Include="Source\TsMath\TsCapsule.cpp">
       <Filter>ソース ファイル\TsMath\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TsImGui.cpp">
+      <Filter>ソース ファイル\TsUT\Gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -883,6 +889,9 @@
     </ClInclude>
     <ClInclude Include="Source\TsMath\TsCapsule.h">
       <Filter>ソース ファイル\TsMath\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TsImGui.h">
+      <Filter>ソース ファイル\TsUT\Gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

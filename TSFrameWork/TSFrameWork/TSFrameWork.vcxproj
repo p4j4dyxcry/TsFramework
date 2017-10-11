@@ -242,6 +242,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">TsAfx.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TsImGui.cpp" />
     <ClCompile Include="TSWinEntryPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -308,6 +309,7 @@
     <ClInclude Include="Source\TSUT\TsType.h" />
     <ClInclude Include="Source\TSUT\TsUT.h" />
     <ClInclude Include="TsAfx.h" />
+    <ClInclude Include="TsImGui.h" />
     <ClInclude Include="TSWinEntryPoint.h" />
   </ItemGroup>
   <ItemGroup>
