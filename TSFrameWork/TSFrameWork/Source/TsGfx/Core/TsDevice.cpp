@@ -215,8 +215,8 @@ ID3D11Buffer* TsDevice::CreateBuffer( __in void * pData ,
 
 }
 
-TsCBuffer* TsDevice::CreateCBuffer(__in void * pData ,
-                                   __in size_t size )const
+CBufferBase* TsDevice::CreateCBuffer( __in void * pData ,
+									  __in size_t size )const
 {
     ID3D11Buffer* pBuffer = CreateBuffer( pData , size , 
                                           D3D11_CPU_ACCESS_WRITE , 
@@ -226,7 +226,7 @@ TsCBuffer* TsDevice::CreateCBuffer(__in void * pData ,
         TsDebugLogError("Create Buffer Error\n");
         return nullptr;
     }
-    TsCBuffer * pCBuffer = TsNew( TsCBuffer() );
+	CBufferBase * pCBuffer = TsNew( CBufferBase );
     pCBuffer->SetD3DBufferAndSize(  pBuffer ,size);
 
     return pCBuffer;

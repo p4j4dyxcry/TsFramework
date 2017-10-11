@@ -5,8 +5,14 @@
 //! © 2016 Yuki Tsuneyama
 
 #pragma once
-
-class TsTransformCBuffer : public TsCBuffer
+//----------------------------------------------------------
+// Define
+//----------------------------------------------------------
+struct MatrixCBuffer
+{
+	TsMatrix m_MtxWorld;
+};
+class TsTransformCBuffer : public TsCBuffer<MatrixCBuffer>
 {
 public:
     //----------------------------------------------------------
@@ -29,19 +35,12 @@ public:
         return TS_TRUE;
     }
 protected:
-    //----------------------------------------------------------
-    // Define
-    //----------------------------------------------------------
-    struct MatrixCBuffer
-    {
-        TsMatrix m_MtxWorld;
-    };
+
     //----------------------------------------------------------
     // propery
     //----------------------------------------------------------
     TsTransForm* m_pTransform;
     TsMatrix	 m_matrixCash;
-    MatrixCBuffer m_matrixCBuffer;
 
     MatrixConvertOrder m_matrixConvertOrder = MTX_CVT_SRT;
 };

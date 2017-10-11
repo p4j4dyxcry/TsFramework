@@ -5,8 +5,14 @@
 //! © 2016 Yuki Tsuneyama
 
 #pragma once
-
-class TsBoneCBuffer : public TsCBuffer
+//----------------------------------------------------------
+// Define
+//----------------------------------------------------------
+struct BoneCBuffer
+{
+	TsMatrix bone[512];
+};
+class TsBoneCBuffer : public TsCBuffer<BoneCBuffer>
 {
 public:
     //! Constructer
@@ -22,19 +28,11 @@ public:
     TsBool CreateBoneCBuffer( TsDevice* pDev );
 
 protected:
-    //----------------------------------------------------------
-    // Define
-    //----------------------------------------------------------
-    struct BoneCBuffer
-    {
-        TsMatrix bone[512];
-    };
+
 
     //----------------------------------------------------------
     // propery
     //----------------------------------------------------------
     TsSkeleton*         m_pSkeleton;
     TsTransForm*        m_worldTransform;
-    BoneCBuffer         m_boneCBuffer;
-    
 };

@@ -14,6 +14,9 @@ class TsBlendState;
 class TsTexture;
 class TsShaderEffect;
 class TsBuffer;
+
+class CBufferBase;
+template<typename T>
 class TsCBuffer;
 class TsViewport;
 class TsCamera;
@@ -149,13 +152,13 @@ public:
     // ! SetCBuffer
     // CBuffer をパイプラインにセットする
     // @return True on Success
-    TsBool SetCBuffer(const TsCBuffer * cbuffer);
+    TsBool SetCBuffer(const CBufferBase * cbuffer);
 
     //=============================================
     // ! ChangeCBuffer
     // CBuffer の更新をロックし更新する
     // @return True on Success
-    TsBool ChangeCBuffer(TsCBuffer * cbuffer, void * pData, size_t sz);
+	TsBool ChangeCBuffer( CBufferBase * cbuffer , void * pData , size_t sz );
 
     void* Map(TsBuffer* pBuffer,D3D11_MAP mapType);
 
@@ -165,7 +168,7 @@ public:
     // ! SetAndChangeCBuffer
     // CBuffer の更新　かつ　パイプラインにセットする
     // @return True on Success
-    TsBool SetAndChangeCBuffer( TsCBuffer* cbuffer , 
+	TsBool SetAndChangeCBuffer( CBufferBase* cbuffer ,
                                void * pData , 
                                size_t size );
 

@@ -24,7 +24,7 @@ TsBool TsSkinGeometryObject::CreateGeometryObject( TsDevice* pDev ,
     //! スキンメッシュはTransformを使用しないのでダミーとして単位行列を送る
     // ※　直接Transform の値を変更すると階層構造にえ
     //=========================================================================
-    m_pdumyTranform = TsNew( TsCBuffer );
+	m_pdumyTranform = TsNew( CBufferBase );
 
     TsMatrix identity = TsMatrix::identity;
 

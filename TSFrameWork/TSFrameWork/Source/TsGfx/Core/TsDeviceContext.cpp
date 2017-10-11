@@ -267,7 +267,7 @@ TsBool TsDeviceContext::SetMainDepthStencil( TsDepthStencilView* dsv )
 }
 
 // ! Set & Change the CBuffer.
-TsBool TsDeviceContext::SetAndChangeCBuffer( TsCBuffer* cbuffer ,
+TsBool TsDeviceContext::SetAndChangeCBuffer( CBufferBase* cbuffer ,
                                              void * pData ,
                                              size_t size )
 {
@@ -285,7 +285,7 @@ TsBool TsDeviceContext::SetAndChangeCBuffer( TsCBuffer* cbuffer ,
 }
 
 //! Set CBuffer
-TsBool TsDeviceContext::SetCBuffer(const TsCBuffer * cbuffer )
+TsBool TsDeviceContext::SetCBuffer(const CBufferBase * cbuffer )
 {
     if( m_pDeviceContext == nullptr )
         return TS_FALSE;
@@ -348,7 +348,7 @@ TsBool TsDeviceContext::UnMap(TsBuffer* pBuffer)
 }
 
 //! Change CBuffer
-TsBool TsDeviceContext::ChangeCBuffer( TsCBuffer * cbuffer , void * pData , size_t sz )
+TsBool TsDeviceContext::ChangeCBuffer( CBufferBase * cbuffer , void * pData , size_t sz )
 {
     if( m_pDeviceContext == nullptr )
         return TS_FALSE;

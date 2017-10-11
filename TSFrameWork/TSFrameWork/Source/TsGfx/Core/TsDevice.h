@@ -14,7 +14,10 @@ class TsDeviceContext;
 class TsTexture;
 class TsRenderTarget;
 
+class CBufferBase;
+template<typename T>
 class TsCBuffer;
+
 class TsIndexBuffer;
 class TsVertexBuffer;
 class TsSamplerState;
@@ -88,8 +91,8 @@ public:
 #endif
     TsSamplerState* CreateSamplerState( const D3D11_SAMPLER_DESC& desc );
 
-    TsCBuffer* CreateCBuffer(__in void * pData ,
-                             __in size_t size )const;
+	CBufferBase* CreateCBuffer( __in void * pData ,
+                                __in size_t size )const;
 
     ID3D11Buffer*	CreateBuffer( __in void * pData ,
                                   __in size_t size ,

@@ -5,6 +5,20 @@
 //! © 2016 Yuki Tsuneyama
 #pragma once
 
+struct DefaultMatrial
+{
+	TsFloat4 diffuse;       // xyz = diffuse w = alphaTest
+	TsFloat4 specluar;      // xyz = color w = power
+	TsFloat4 ambient;       // xyz = color w = not using
+	TsFloat3 emissive;      // xyz = emissive w
+	TsF32    mataric;       // mataric
+	TsF32    roughness;     // roughness
+
+	TsF32   useDiffuseMap; // true on using albedo map
+	TsF32   useNomalMap;   // true on using nomal map
+	TsF32   useSpeculerMap;// true on using speclur map
+};
+
 class TsDefaultMaterial : public TsMaterial
 {
 public:
@@ -15,19 +29,7 @@ public:
     static const TsUint NormalTextureRegister  = 9;
     static const TsUint SpecuerTextureRegister = 10;
 
-    struct DefaultMatrial
-    {
-        TsFloat4 diffuse;       // xyz = diffuse w = alphaTest
-        TsFloat4 specluar;      // xyz = color w = power
-        TsFloat4 ambient;       // xyz = color w = not using
-        TsFloat3 emissive;      // xyz = emissive w
-        TsF32    mataric;       // mataric
-        TsF32    roughness;     // roughness
 
-        TsF32   useDiffuseMap; // true on using albedo map
-        TsF32   useNomalMap;   // true on using nomal map
-        TsF32   useSpeculerMap;// true on using speclur map
-    };
     //=========================================================================
     //! public method
     //=========================================================================

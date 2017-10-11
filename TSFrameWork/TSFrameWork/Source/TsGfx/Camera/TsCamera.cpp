@@ -61,7 +61,7 @@ TsBool TsCamera::UpdateForCBuffer(TsDevice* pDevice)
 //! GetCBuffer
 //  Constant Buffer �̎擾
 //=========================================================================
-const TsCBuffer* TsCamera::GetCBuffer()const
+const CBufferBase* TsCamera::GetCBuffer()const
 {
     return m_pViewCBuffer;
 }

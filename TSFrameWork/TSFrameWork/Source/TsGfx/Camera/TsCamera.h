@@ -51,7 +51,7 @@ public:
     //==========================================================
     //  !GetCBuffer
     //  CBuffer　を取得します。
-    const TsCBuffer* GetCBuffer()const;
+    const CBufferBase* GetCBuffer()const;
 
     //==========================================================
     //  !SetFov
@@ -127,7 +127,7 @@ protected:
     TsF32 m_near;
     TsF32 m_far;
 
-    TsCBuffer*      m_pViewCBuffer;
+    CBufferBase*    m_pViewCBuffer;
     ViewCBuffer     m_bufferResource;
 
     //注視点設定用

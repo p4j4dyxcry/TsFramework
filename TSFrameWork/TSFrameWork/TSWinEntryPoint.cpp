@@ -7,7 +7,7 @@
 //=======================================================
 #include "TsAfx.h"
 #include "Source\TsOS\TsWindowsUtility.h"
-
+#include <stdlib.h>
 TsCamera * g_pCamera = nullptr;
 
 void FovFuncTest(TsF32 delta)
@@ -221,7 +221,7 @@ int APIENTRY WinMain( HINSTANCE hInstance , HINSTANCE 	hPrevInstance , LPSTR lps
                 }
             }
                      
-            size_t z = sizeof(TsLightSetCBuffer::LightData) / sizeof(TsF32);
+            size_t z = sizeof(LightData) / sizeof(TsF32);
 
             auto pBlendState = TsResourceManager::Find<TsBlendState>("ALPHA_BLEND");
             //auto pBlendState = TsResourceManager::Find<TsBlendState>( "NONE" );

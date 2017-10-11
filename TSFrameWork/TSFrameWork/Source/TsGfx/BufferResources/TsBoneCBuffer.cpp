@@ -9,9 +9,9 @@ TsBool TsBoneCBuffer::UpdateCBuffer( TsDeviceContext * pContext )
 
     TsVector<TsBone*>& boneList = m_pSkeleton->GetBoneList();
     for each( auto pBone in boneList )
-        m_boneCBuffer.bone[pBone->GetBoneID()] = pBone->GetBoneMatrix().Transposed();
+        m_CBufferData.bone[pBone->GetBoneID()] = pBone->GetBoneMatrix().Transposed();
 
-    ChangedCBuffer(pContext, &m_boneCBuffer);
+	ChangedCBuffer( pContext , &m_CBufferData );
     return TS_TRUE;
 }
 
@@ -29,7 +29,7 @@ TsBool TsBoneCBuffer::SetWorldTransform( TsTransForm * pTransform)
 
 TsBool TsBoneCBuffer::CreateBoneCBuffer( TsDevice * pDev )
 {
-    CreateCBuffer(pDev, &m_boneCBuffer, SkinBoneCB, VERTEX_SHADER);
+	CreateCBuffer( pDev , &m_CBufferData , SkinBoneCB , VERTEX_SHADER );
 
     return TS_TRUE;
 }

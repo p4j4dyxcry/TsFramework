@@ -22,5 +22,5 @@ public:
 private:
     TsBoneCBuffer*     m_boneCBuffer;
     TsSkeleton*        m_pSkeleton;
-    TsCBuffer*         m_pdumyTranform;
+    CBufferBase*         m_pdumyTranform;
 };
