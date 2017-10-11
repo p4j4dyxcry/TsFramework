@@ -44,13 +44,6 @@ TsBool TsCamera::UpdateForCBuffer(TsDevice* pDevice)
     m_bufferResource.m_viewProjMatrix = GetViewProjMatrix().Transposed();
     m_bufferResource.m_dumy = 0;
 
-    TsVector4 test = TsVector4( 100 , 200 , 300 , 1 );
-
-    test *= GetViewProjMatrix();
-
-    test *= GetProjMatrix().Inversed();
-    test *= GetViewMatrix().Inversed();
-
     //call map & unmap
     pDevice->GetDC()->ChangeCBuffer(m_pViewCBuffer, &m_bufferResource, sizeof(ViewCBuffer));
 

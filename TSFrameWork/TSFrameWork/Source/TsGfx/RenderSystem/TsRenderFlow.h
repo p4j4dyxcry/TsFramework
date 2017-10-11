@@ -15,11 +15,12 @@ public:
     virtual TsBool Render( TsDeviceContext* pDC,  TsDrawQueue* pQue );
     TsRenderPass*  GetRenderPass(TsString);
     TsRenderPass*  GetRenderPass(TsInt index);
-    TsInt          GetFlowSize();
+    TsInt          GetFlowSize() const;
     TsBool         SetRenderPass(TsRenderPass *, TsInt pass = -1);
 
     TsBool         LoadFlowFromXML( TsDevice* pDev , const TsString& file );
 protected:
+    ~TsRenderFlow() = default;
     //----------------------------------------------------------
     // propery
     //----------------------------------------------------------

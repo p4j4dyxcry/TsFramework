@@ -22,7 +22,7 @@ public:
     void SetMaxRecode(TsInt m);
 protected:
     std::chrono::system_clock::time_point m_startTime;
-    TsInt m_maxRecode = 15;
+    TsUint m_maxRecode = 15;
     TsList<std::chrono::system_clock::time_point> m_recode;  
 };
 

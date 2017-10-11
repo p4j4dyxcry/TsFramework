@@ -30,11 +30,12 @@ TsDrawObject* TsDrawQueue::FindGeometoryByName( TsString name )
 
 TsDrawObject* TsDrawQueue::FindGeometoryByIndex(TsInt index)
 {
-    if (m_drawObjList.size() > (unsigned)index)
+    if (m_drawObjList.size() > static_cast<unsigned>(index))
         return m_drawObjList[index];
-    else
-        return nullptr;
+    
+    return nullptr;
 }
+
 TsBool TsDrawQueue::Remove( TsDrawObject * obj )
 {
     for( auto it = m_drawObjList.begin(); it != m_drawObjList.end(); ++it )
@@ -55,6 +56,7 @@ TsBool TsDrawQueue::Begin( TsDeviceContext * pDc ,
                            D3D11_CULL_MODE cullMopde )
 {
     //todo dc set data
+    ( void )pDc;
     ( void )zEnable;
     ( void )zWriteEnable;
     ( void )cullMopde;
@@ -68,7 +70,7 @@ TsBool TsDrawQueue::End()
     return TS_TRUE;
 }
 
-TsBool TsDrawQueue::Render( TsDeviceContext* pDc)
+TsBool TsDrawQueue::Render( TsDeviceContext* pDc) const
 {
     for each ( auto var in m_drawObjList )
     {

@@ -50,10 +50,10 @@ public:
     TsBool operator != ( const TsRasterizerState& rasterizer );
 
     ID3D11RasterizerState* GetRSS(){ return m_pD3DRasterizerState; }
-    TS_CULL_MODE GetCullMode(){ return m_cullMode; }
-    TS_FILL_MODE GetFillMode(){ return m_fillMode; }
+    TS_CULL_MODE GetCullMode() const { return m_cullMode; }
+    TS_FILL_MODE GetFillMode() const { return m_fillMode; }
 
-    TsBool       GetAntiAlias(){ return m_antiAlias; }
+    TsBool       GetAntiAlias() const { return m_antiAlias; }
 private:
     //----------------------------------------------------------
     // propery

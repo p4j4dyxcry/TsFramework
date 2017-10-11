@@ -9,6 +9,7 @@
 class TsNameObject
 {
 public:
+    virtual ~TsNameObject() = default;
     //! 名前を取得
     virtual TsString GetName()const{ return m_name; }
 

@@ -69,13 +69,13 @@ TsRenderTarget* TsRenderTarget::CrateScreenRTV( const TsDevice& dev )
     IDXGISwapChain * pSC = dev.GetSC();
 
     // Swap Chain から　バックバッファへのポインタを取得
-    ID3D11Texture2D* pBackBuffer = NULL;
+    ID3D11Texture2D* pBackBuffer = nullptr;
     ID3D11RenderTargetView* pD3Drtv;
-    HRESULT hr = pSC->GetBuffer( 0 , __uuidof( ID3D11Texture2D ) , ( LPVOID* )&pBackBuffer );
+    HRESULT hr = pSC->GetBuffer( 0 , __uuidof( ID3D11Texture2D ) , reinterpret_cast<LPVOID*>(&pBackBuffer) );
     RTV_CREATE_ERR_TO_RETURN;
 
     // バックバッファへのポインタを指定してRTVを作成
-    hr = pDev->CreateRenderTargetView( pBackBuffer , NULL , &pD3Drtv );
+    hr = pDev->CreateRenderTargetView( pBackBuffer , nullptr , &pD3Drtv );
     D3D11_TEXTURE2D_DESC desc;
     pBackBuffer->GetDesc( &desc );
 

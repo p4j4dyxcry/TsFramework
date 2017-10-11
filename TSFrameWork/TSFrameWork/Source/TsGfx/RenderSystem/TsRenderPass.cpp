@@ -225,7 +225,7 @@ TsBool TsRenderPass::LoadIOSlotFromXMLElement( TsDevice* pDev , TsXMLElement * p
         if( inputSlot->GetName() == "Slot" )
         {
             TsString rtName = slot->GetStringValue();
-            TsRenderTarget* rtv = nullptr;
+            TsRenderTarget* rtv;
             if( rtName == "Main" )
                 rtv = pDev->GetDC()->GetMainRTV();
             else
@@ -245,7 +245,7 @@ TsBool TsRenderPass::LoadIOSlotFromXMLElement( TsDevice* pDev , TsXMLElement * p
         else if( inputSlot->GetName() == "Depth" )
         {
             TsString rtName = slot->GetStringValue();
-            TsDepthStencilView* dsv = nullptr;
+            TsDepthStencilView* dsv;
             if( rtName == "Main" )
                 dsv = pDev->GetDC()->GetMainDSV();
             else
@@ -270,7 +270,7 @@ TsBool TsRenderPass::LoadIOSlotFromXMLElement( TsDevice* pDev , TsXMLElement * p
         TsString rtName = slot->GetStringValue();
         if( outputSlot->GetName() == "Slot" )
         {
-            TsRenderTarget* rtv = nullptr;
+            TsRenderTarget* rtv;
             if( rtName == "Main" )
                 rtv = pDev->GetDC()->GetMainRTV();
             else
@@ -281,7 +281,7 @@ TsBool TsRenderPass::LoadIOSlotFromXMLElement( TsDevice* pDev , TsXMLElement * p
         }
         else if( outputSlot->GetName() == "Depth" )
         {
-            TsDepthStencilView* rtv = nullptr;
+            TsDepthStencilView* rtv;
             if( rtName == "Main" )
                 rtv = pDev->GetDC()->GetMainDSV();
             else

@@ -210,7 +210,8 @@ struct PLY_FILE
             else if (token == "property")       ReadPropery(ls);
             else return TS_FALSE;
         }
-    }
+        return TS_TRUE;
+    }    
 };
 
 TsBool TsPlyLoader::LoadFile(const TsChar * filename)
@@ -221,7 +222,7 @@ TsBool TsPlyLoader::LoadFile(const TsChar * filename)
         return TS_FALSE;
 
     PLY_FILE file(ifs);
-
+    return TS_TRUE;
 }
 
 TsBool TsPlyLoader::AnalizeHeader(std::ofstream& ofs)

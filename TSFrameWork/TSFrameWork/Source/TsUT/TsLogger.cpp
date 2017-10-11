@@ -87,7 +87,7 @@ static void CreateConsole()
     // - 16 ~ 16
     TsInt fontSize = 10;
     GetWindowRect(g_hLogger, &rect); //stores the console's current dimensions
-    MoveWindow(g_hLogger, dispx - 768, 0, 1024, dispy * 1.6 , TRUE);
+    MoveWindow(g_hLogger, dispx - 768, 0, 1024, static_cast<TsInt>(dispy * 1.6f) , TRUE);
     SetConsoleFontSize(fontSize);
     SetConsoleTitle( "Ts Debug Logger" );
 }

@@ -49,7 +49,7 @@ TsBool TsApplicationBase::Initialize( HINSTANCE hInstance , TsInt nWinMode )
     return TS_TRUE;
 }
 
-TsDevice* TsApplicationBase::GetDevice()
+TsDevice* TsApplicationBase::GetDevice() const
 {
     return m_pGfxDevice;
 }
