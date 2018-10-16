@@ -1,3 +1,4 @@
+#include "../../../../TsAfx.h"
 #include "TsImGui.h"
 #include "Extern\ImGui\include\imgui.h"
 void TsImGui::Initialize( TsDevice* pDevice )
